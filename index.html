@@ -7,196 +7,115 @@
   <meta name="description" content="Professional notary and international document authentication services. Apostille, notarization, and certified translations for Hague Convention countries worldwide." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- ===================== HEADER ===================== -->
+  <!-- ===== HEADER ===== -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
 
-      <!-- Logo -->
       <a href="#home" class="header-logo" aria-label="Ink & Seal Notary Pros — Home">
         <img src="images/ink-seal-logo.png" alt="Ink & Seal Notary Pros" />
       </a>
 
-      <!-- Desktop Navigation -->
       <nav class="header-nav" aria-label="Primary navigation">
         <ul>
-          <li><a href="#home" class="nav-link active">Home</a></li>
-          <li class="nav-dropdown">
-            <a href="#services" class="nav-link">Services</a>
-          </li>
+          <li><a href="#home"         class="nav-link active">Home</a></li>
+          <li><a href="#services"     class="nav-link">Services</a></li>
           <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-          <li><a href="#about" class="nav-link">About Us</a></li>
-          <li><a href="#faq" class="nav-link">FAQ</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#about"        class="nav-link">About Us</a></li>
+          <li><a href="#faq"          class="nav-link">FAQ</a></li>
+          <li><a href="#contact"      class="nav-link">Contact</a></li>
         </ul>
       </nav>
 
-      <!-- CTA + Hamburger -->
       <div class="header-actions">
-        <a href="#contact" class="btn btn-nav-cta">Start Your Request</a>
-        <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
-          <span></span>
-          <span></span>
-          <span></span>
+        <a href="#contact" class="btn-cta-nav">Start Your Request</a>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
         </button>
       </div>
 
     </div>
 
-    <!-- Mobile Navigation Drawer -->
+    <!-- Mobile drawer -->
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
       <ul>
-        <li><a href="#home" class="mobile-nav-link">Home</a></li>
-        <li><a href="#services" class="mobile-nav-link">Services</a></li>
-        <li><a href="#how-it-works" class="mobile-nav-link">How It Works</a></li>
-        <li><a href="#about" class="mobile-nav-link">About Us</a></li>
-        <li><a href="#faq" class="mobile-nav-link">FAQ</a></li>
-        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
-        <li class="mobile-nav-cta-item">
-          <a href="#contact" class="btn btn-primary mobile-nav-cta">Start Your Request</a>
-        </li>
+        <li><a href="#home"         class="mobile-link">Home</a></li>
+        <li><a href="#services"     class="mobile-link">Services</a></li>
+        <li><a href="#how-it-works" class="mobile-link">How It Works</a></li>
+        <li><a href="#about"        class="mobile-link">About Us</a></li>
+        <li><a href="#faq"          class="mobile-link">FAQ</a></li>
+        <li><a href="#contact"      class="mobile-link">Contact</a></li>
+        <li><a href="#contact"      class="mobile-link mobile-link--cta">Start Your Request</a></li>
       </ul>
     </nav>
   </header>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero" id="home" aria-label="Hero section">
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
     <div class="hero-inner">
 
-      <!-- Left Column -->
-      <div class="hero-content">
-        <p class="hero-eyebrow">
-          <span class="eyebrow-line"></span>
-          Trusted. Secure. Professional.
-          <span class="eyebrow-line"></span>
-        </p>
+      <!-- Left: copy -->
+      <div class="hero-copy">
+
+        <p class="eyebrow">Trusted. Secure. Professional.</p>
 
         <h1 class="hero-headline">
-          International Document<br />
-          Authentication &amp;<br />
+          International Document<br>
+          Authentication &amp;<br>
           Notary Services
         </h1>
 
-        <div class="hero-divider" aria-hidden="true">
-          <span class="divider-line"></span>
-          <span class="divider-diamond">◆</span>
-          <span class="divider-line"></span>
+        <div class="gold-rule" aria-hidden="true">
+          <span></span><span class="diamond">◆</span><span></span>
         </div>
 
-        <p class="hero-subheadline">
-          We help individuals, families, and businesses authenticate documents for use in Hague Convention countries with confidence, security, and care.
+        <p class="hero-sub">
+          We help individuals, families, and businesses authenticate documents
+          for use in Hague Convention countries with confidence and ease.
         </p>
 
-        <ul class="hero-trust-points" aria-label="Key benefits">
+        <ul class="trust-list" aria-label="Key benefits">
           <li>
             <span class="trust-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </span>
-            <span>Secure &amp; Confidential</span>
+            Secure &amp; Confidential
           </li>
           <li>
             <span class="trust-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             </span>
-            <span>Hague Convention Countries</span>
+            Hague Convention Countries Worldwide
           </li>
           <li>
             <span class="trust-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </span>
-            <span>Fast, Reliable Turnaround</span>
+            Fast, Reliable Turnaround
           </li>
         </ul>
 
-        <a href="#contact" class="btn btn-primary hero-cta">
+        <a href="#contact" class="btn-cta-hero">
           Start Your Request
-          <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
+
       </div>
 
-      <!-- Right Column -->
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-image-frame">
-          <div class="hero-image-inner">
-            <!-- Elegant document authentication illustration -->
-            <div class="hero-doc-stack">
-              <div class="doc doc-back"></div>
-              <div class="doc doc-mid">
-                <div class="doc-header-bar"></div>
-                <div class="doc-seal-area">
-                  <div class="doc-seal">
-                    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="40" cy="40" r="36" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="4 3"/>
-                      <circle cx="40" cy="40" r="28" stroke="#C9A84C" stroke-width="1"/>
-                      <circle cx="40" cy="40" r="20" fill="#C9A84C" fill-opacity="0.08" stroke="#C9A84C" stroke-width="1"/>
-                      <text x="40" y="36" text-anchor="middle" font-family="serif" font-size="6" fill="#C9A84C" font-weight="600">INK &amp; SEAL</text>
-                      <text x="40" y="46" text-anchor="middle" font-family="serif" font-size="4.5" fill="#C9A84C">NOTARY PROS</text>
-                    </svg>
-                  </div>
-                </div>
-                <div class="doc-lines">
-                  <div class="doc-line long"></div>
-                  <div class="doc-line medium"></div>
-                  <div class="doc-line long"></div>
-                  <div class="doc-line short"></div>
-                </div>
-                <div class="doc-apostille-badge">
-                  <span>APOSTILLE</span>
-                </div>
-              </div>
-              <div class="doc doc-front">
-                <div class="doc-header-bar"></div>
-                <div class="doc-lines">
-                  <div class="doc-line long"></div>
-                  <div class="doc-line medium"></div>
-                  <div class="doc-line long"></div>
-                  <div class="doc-line short"></div>
-                  <div class="doc-line long"></div>
-                  <div class="doc-line medium"></div>
-                </div>
-                <div class="doc-sig-line"></div>
-              </div>
-            </div>
-
-            <!-- Floating credential badge -->
-            <div class="hero-badge hero-badge--auth">
-              <span class="badge-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </span>
-              <div>
-                <div class="badge-title">Authenticated</div>
-                <div class="badge-subtitle">Hague Convention Ready</div>
-              </div>
-            </div>
-
-            <!-- Floating trust badge -->
-            <div class="hero-badge hero-badge--secure">
-              <span class="badge-icon">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </span>
-              <div>
-                <div class="badge-title">SSL Secure</div>
-                <div class="badge-subtitle">End-to-End Protected</div>
-              </div>
-            </div>
-
-            <!-- Decorative gold corner accents -->
-            <span class="corner corner-tl"></span>
-            <span class="corner corner-tr"></span>
-            <span class="corner corner-bl"></span>
-            <span class="corner corner-br"></span>
-          </div>
-        </div>
+      <!-- Right: real hero photo -->
+      <div class="hero-visual">
+        <img
+          src="images/ink-seal-hero.png"
+          alt="Ink & Seal notary stamp resting on official apostille documents"
+          class="hero-img"
+        />
       </div>
 
     </div>
-
-    <!-- Subtle background decoration -->
-    <div class="hero-bg-accent" aria-hidden="true"></div>
   </section>
 
   <script src="js/main.js"></script>
