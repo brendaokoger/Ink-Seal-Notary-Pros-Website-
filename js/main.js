@@ -45,11 +45,10 @@
     });
   }
 
-  /* active nav highlight on scroll */
+  /* active nav on scroll */
   var sections = Array.from(document.querySelectorAll('section[id]'));
   var navLinks  = Array.from(document.querySelectorAll('.nav-link'));
-  var hh = parseInt(getComputedStyle(document.documentElement)
-                    .getPropertyValue('--hh')) || 90;
+  var hh = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hh')) || 96;
 
   function updateNav() {
     var y = window.scrollY, id = '';
