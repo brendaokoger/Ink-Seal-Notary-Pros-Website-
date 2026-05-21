@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ink & Seal Notary Pros — International Document Authentication</title>
-  <meta name="description" content="Professional notary and international document authentication services. Apostille, notarization, and certified translations for Hague Convention countries worldwide." />
+  <title>Ink &amp; Seal Notary Pros — International Document Authentication</title>
+  <meta name="description" content="Professional notary and international document authentication. Apostille, notarization, and certified translations for Hague Convention countries worldwide." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- ============================================================
+  <!-- ═══════════════════════════════════════════
        HEADER
-  ============================================================ -->
+  ═══════════════════════════════════════════ -->
   <header class="site-header" id="site-header">
     <div class="header-inner">
 
       <!-- Logo -->
-      <a href="#home" class="header-logo" aria-label="Ink & Seal Notary Pros — Home">
-        <img src="images/ink-seal-logo.png" alt="Ink & Seal Notary Pros" width="auto" height="52" />
+      <a href="#home" class="header-logo" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-logo.png"
+             alt="Ink &amp; Seal Notary Pros"
+             class="logo-img" />
       </a>
 
-      <!-- Desktop Nav -->
-      <nav class="header-nav" aria-label="Primary navigation">
-        <ul>
+      <!-- Desktop Navigation -->
+      <nav class="header-nav" aria-label="Main navigation">
+        <ul class="nav-list">
           <li><a href="#home"         class="nav-link active">Home</a></li>
           <li><a href="#services"     class="nav-link">Services</a></li>
           <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
@@ -36,116 +38,129 @@
       </nav>
 
       <!-- CTA + Hamburger -->
-      <div class="header-actions">
-        <a href="#contact" class="btn-header-cta">Start Your Request</a>
-        <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span>
-          <span></span>
-          <span></span>
+      <div class="header-right">
+        <a href="#contact" class="btn-cta-header">Start Your Request</a>
+        <button class="hamburger" id="hamburger"
+                aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
         </button>
       </div>
 
-    </div>
+    </div><!-- /header-inner -->
 
-    <!-- Mobile Nav Drawer -->
-    <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation" aria-hidden="true">
-      <ul>
+    <!-- Mobile Drawer -->
+    <nav class="mobile-nav" id="mobile-nav"
+         aria-label="Mobile navigation" aria-hidden="true">
+      <ul class="mob-list">
         <li><a href="#home"         class="mob-link">Home</a></li>
         <li><a href="#services"     class="mob-link">Services</a></li>
         <li><a href="#how-it-works" class="mob-link">How It Works</a></li>
         <li><a href="#about"        class="mob-link">About Us</a></li>
         <li><a href="#faq"          class="mob-link">FAQ</a></li>
         <li><a href="#contact"      class="mob-link">Contact</a></li>
-        <li class="mob-cta-wrap">
-          <a href="#contact" class="btn-mob-cta">Start Your Request</a>
-        </li>
       </ul>
-    </div>
+      <div class="mob-cta-wrap">
+        <a href="#contact" class="btn-cta-mob">Start Your Request</a>
+      </div>
+    </nav>
   </header>
 
-  <!-- ============================================================
-       HERO
-  ============================================================ -->
-  <main>
-    <section class="hero" id="home" aria-label="Hero">
-      <div class="hero-grid">
+  <!-- ═══════════════════════════════════════════
+       HERO — Section 1 only
+  ═══════════════════════════════════════════ -->
+  <section class="hero" id="home" aria-labelledby="hero-heading">
+    <div class="hero-grid">
 
-        <!-- LEFT — Copy -->
-        <div class="hero-copy" data-animate="fade-up">
+      <!-- LEFT: Copy -->
+      <div class="hero-copy">
 
-          <p class="eyebrow">
-            <span class="eyebrow-dash"></span>
-            Trusted. Secure. Professional.
-          </p>
+        <p class="eyebrow">
+          <span class="eyebrow-bar" aria-hidden="true"></span>
+          Trusted. Secure. Professional.
+        </p>
 
-          <h1 class="hero-headline">
-            International Document<br>
-            Authentication &amp;<br>
-            Notary Services
-          </h1>
+        <h1 class="headline" id="hero-heading">
+          International Document<br>
+          Authentication &amp;<br>
+          Notary Services
+        </h1>
 
-          <div class="accent-rule" aria-hidden="true">
-            <span class="rule-line"></span>
-            <span class="rule-gem">◆</span>
-            <span class="rule-line"></span>
-          </div>
-
-          <p class="hero-sub">
-            We help individuals, families, and businesses worldwide authenticate
-            documents for use in Hague Convention countries with confidence and ease.
-          </p>
-
-          <!-- Trust Points — horizontal row -->
-          <ul class="trust-row" aria-label="Key benefits">
-            <li class="trust-item">
-              <span class="t-icon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              </span>
-              <span class="t-label">Secure &amp; Confidential</span>
-            </li>
-            <li class="trust-item">
-              <span class="t-icon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
-              </span>
-              <span class="t-label">Hague Convention<br>Countries Worldwide</span>
-            </li>
-            <li class="trust-item">
-              <span class="t-icon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                </svg>
-              </span>
-              <span class="t-label">Fast, Reliable<br>Turnaround</span>
-            </li>
-          </ul>
-
-          <a href="#contact" class="btn-hero-cta">
-            Start Your Request
-            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-            </svg>
-          </a>
-
+        <div class="gold-divider" aria-hidden="true">
+          <span></span>
+          <span class="gem">◆</span>
+          <span></span>
         </div>
 
-        <!-- RIGHT — Real Hero Image -->
-        <div class="hero-img-wrap" data-animate="fade-in" aria-hidden="true">
-          <img
-            src="images/ink-seal-hero.png"
-            alt="Ink & Seal notary stamp resting on official apostille documents"
-            class="hero-img"
-            loading="eager"
-          />
-        </div>
+        <p class="subheadline">
+          We help individuals, families, and businesses worldwide
+          authenticate documents for use in Hague Convention countries
+          with confidence and ease.
+        </p>
 
+        <!-- Trust Row -->
+        <ul class="trust-row" aria-label="Key benefits">
+          <li class="trust-item">
+            <span class="trust-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </span>
+            <span>Secure &amp; Confidential</span>
+          </li>
+          <li class="trust-divider" aria-hidden="true"></li>
+          <li class="trust-item">
+            <span class="trust-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10
+                         15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </span>
+            <span>Hague Convention Countries Worldwide</span>
+          </li>
+          <li class="trust-divider" aria-hidden="true"></li>
+          <li class="trust-item">
+            <span class="trust-icon" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="1.8"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </span>
+            <span>Fast, Reliable Turnaround</span>
+          </li>
+        </ul>
+
+        <a href="#contact" class="btn-cta-hero">
+          Start Your Request
+          <svg class="btn-arrow" width="15" height="15" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+
+      </div><!-- /hero-copy -->
+
+      <!-- RIGHT: Real hero image only -->
+      <div class="hero-img-col">
+        <img src="images/ink-seal-hero.png"
+             alt="Ink &amp; Seal notary stamp resting on apostille documents"
+             class="hero-img"
+             loading="eager" />
       </div>
-    </section>
-  </main>
+
+    </div><!-- /hero-grid -->
+  </section>
 
   <script src="js/main.js"></script>
 </body>
