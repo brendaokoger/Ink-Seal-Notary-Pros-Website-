@@ -1,72 +1,65 @@
 (function () {
   'use strict';
 
-  var header    = document.getElementById('site-header');
-  var hamburger = document.getElementById('hamburger');
-  var mobileNav = document.getElementById('mobile-nav');
+  var header = document.getElementById('header');
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
 
-  /* Scroll shadow on header */
-  function handleScroll() {
+  /* scroll shadow */
+  function onScroll() {
     header.classList.toggle('scrolled', window.scrollY > 10);
   }
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  /* Hamburger toggle */
-  function openMenu() {
-    hamburger.classList.add('is-open');
-    mobileNav.classList.add('is-open');
-    hamburger.setAttribute('aria-expanded', 'true');
-    mobileNav.setAttribute('aria-hidden', 'false');
+  /* mobile menu */
+  function open()  {
+    burger.classList.add('open');
+    drawer.classList.add('open');
+    burger.setAttribute('aria-expanded', 'true');
+    drawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
   }
-  function closeMenu() {
-    hamburger.classList.remove('is-open');
-    mobileNav.classList.remove('is-open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    mobileNav.setAttribute('aria-hidden', 'true');
+  function close() {
+    burger.classList.remove('open');
+    drawer.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
 
-  if (hamburger && mobileNav) {
-    hamburger.addEventListener('click', function () {
-      hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
+  if (burger && drawer) {
+    burger.addEventListener('click', function () {
+      burger.classList.contains('open') ? close() : open();
     });
-    mobileNav.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', closeMenu);
+    drawer.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', close);
     });
     document.addEventListener('click', function (e) {
-      if (
-        mobileNav.classList.contains('is-open') &&
-        !mobileNav.contains(e.target) &&
-        !hamburger.contains(e.target)
-      ) { closeMenu(); }
+      if (drawer.classList.contains('open')
+          && !drawer.contains(e.target)
+          && !burger.contains(e.target)) { close(); }
     });
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
-        closeMenu();
-        hamburger.focus();
-      }
+      if (e.key === 'Escape') { close(); burger.focus(); }
     });
   }
 
-  /* Active nav link tracking */
+  /* active nav */
   var sections = Array.from(document.querySelectorAll('section[id]'));
-  var navLinks = Array.from(document.querySelectorAll('.nav-link'));
-  var hh = parseFloat(
-    getComputedStyle(document.documentElement).getPropertyValue('--hh')
-  ) || 88;
+  var navAs    = Array.from(document.querySelectorAll('.nav-a'));
+  var hh = parseInt(getComputedStyle(document.documentElement)
+                    .getPropertyValue('--hh')) || 90;
 
-  function updateActive() {
-    var y = window.scrollY;
-    var current = sections.reduce(function (acc, sec) {
-      return y >= sec.offsetTop - hh - 40 ? sec.id : acc;
-    }, sections[0] ? sections[0].id : '');
-    navLinks.forEach(function (link) {
-      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  function updateNav() {
+    var y = window.scrollY, id = '';
+    sections.forEach(function (s) {
+      if (y >= s.offsetTop - hh - 40) id = s.id;
+    });
+    navAs.forEach(function (a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
     });
   }
-  window.addEventListener('scroll', updateActive, { passive: true });
-  updateActive();
-
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 }());
