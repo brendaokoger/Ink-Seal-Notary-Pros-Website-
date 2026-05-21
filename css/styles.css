@@ -15,9 +15,9 @@ ul    { list-style: none; }
 :root {
   --navy:       #0B1829;
   --navy-2:     #162B47;
-  --gold:       #B89040;
-  --gold-dim:   rgba(184,144,64,.22);
-  --gold-faint: rgba(184,144,64,.09);
+  --gold:       #9B7020;
+  --gold-dim:   rgba(155,112,32,.28);
+  --gold-faint: rgba(155,112,32,.11);
   --ivory:      #F7F4EE;
   --ivory-2:    #EEE9DF;
   --border:     #E4E1DB;
@@ -137,6 +137,7 @@ ul    { list-style: none; }
   gap: 16px;
 }
 .btn-nav {
+  display: inline-flex; align-items: center; gap: 10px;
   background: var(--navy);
   color: #fff;
   font-size: .65rem;
@@ -148,24 +149,29 @@ ul    { list-style: none; }
   transition: background .2s var(--ease), box-shadow .2s var(--ease);
 }
 .btn-nav:hover { background: var(--navy-2); box-shadow: 0 4px 20px rgba(11,24,41,.2); }
+.btn-nav-arrow {
+  width: 14px; height: 14px;
+  color: var(--gold);
+  flex-shrink: 0;
+  stroke-width: 1.8;
+  transition: transform .2s var(--ease);
+}
+.btn-nav:hover .btn-nav-arrow { transform: translateX(4px); }
 
 .burger {
   display: none;
-  flex-direction: column; justify-content: center; gap: 5px;
-  width: 40px; height: 40px; padding: 6px;
+  flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  width: 42px; height: 42px; padding: 9px;
   background: none; border: none; cursor: pointer; flex-shrink: 0;
 }
 .burger span {
-  display: block; height: 1.5px; background: var(--navy); border-radius: 2px;
-  transition: transform .26s var(--ease), opacity .26s var(--ease);
-  transform-origin: left center;
+  display: block; width: 100%; height: 2px; background: var(--navy); border-radius: 1px;
+  transition: transform .28s var(--ease), opacity .22s var(--ease);
+  transform-origin: center center;
 }
-.burger span:nth-child(1) { width: 100%; }
-.burger span:nth-child(2) { width: 68%; }
-.burger span:nth-child(3) { width: 100%; }
-.burger.open span:nth-child(1) { transform: rotate(42deg); }
+.burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.burger.open span:nth-child(3) { transform: rotate(-42deg); }
+.burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 .drawer {
   display: none;
@@ -233,12 +239,15 @@ ul    { list-style: none; }
 
 /* "Notary Services" in elegant italic gold script */
 .gold-script {
+  display: block;
   font-family: var(--script);
   font-style: italic;
   font-weight: 300;
   color: var(--gold);
-  letter-spacing: .01em;
-  line-height: 1.1;
+  font-size: 1.06em;
+  letter-spacing: .02em;
+  line-height: 1.18;
+  margin-top: .04em;
 }
 
 .hero-sub {
@@ -261,7 +270,7 @@ ul    { list-style: none; }
 .ht-icon {
   flex-shrink: 0;
   width: 34px; height: 34px;
-  border: 1px solid rgba(184,144,64,.32);
+  border: 1px solid rgba(155,112,32,.50);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   padding: 7px; color: var(--gold);
@@ -352,7 +361,7 @@ ul    { list-style: none; }
 }
 .svc-card:first-child { border-color: var(--gold-dim); }
 .svc-card:hover {
-  border-color: rgba(184,144,64,.3);
+  border-color: rgba(155,112,32,.40);
   box-shadow: 0 6px 28px rgba(11,24,41,.06);
 }
 
@@ -467,7 +476,7 @@ ul    { list-style: none; }
 }
 .step-circle {
   width: 82px; height: 82px;
-  border: 1px solid rgba(184,144,64,.45);
+  border: 1px solid rgba(155,112,32,.55);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--ivory); color: var(--gold);
@@ -516,7 +525,7 @@ ul    { list-style: none; }
 .trust-icon {
   flex-shrink: 0;
   width: 46px; height: 46px;
-  border: 1px solid rgba(184,144,64,.40);
+  border: 1px solid rgba(155,112,32,.54);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: var(--gold);
@@ -633,7 +642,7 @@ ul    { list-style: none; }
   .header-inner { padding: 0 18px; gap: 10px; }
   .logo         { width: 186px; height: 124px; }
   .nav          { display: none; }
-  .btn-nav      { font-size: .57rem; padding: 10px 15px; letter-spacing: .09em; }
+  .btn-nav      { display: none; }
   .burger       { display: flex; }
   .drawer       { display: block; top: var(--hh-sm); }
 
@@ -651,7 +660,6 @@ ul    { list-style: none; }
     font-size: clamp(2.1rem, 7.5vw, 3.2rem);
     margin-bottom: 18px;
   }
-  .gold-script { line-height: 1.15; }
   .hero-sub {
     max-width: 100%;
     font-size: .91rem;
@@ -719,7 +727,6 @@ ul    { list-style: none; }
 @media (max-width: 580px) {
   .container  { padding: 0 18px; }
   .logo       { width: 174px; height: 116px; }
-  .btn-nav    { font-size: .54rem; padding: 9px 12px; letter-spacing: .07em; }
 
   .hero-left  { padding: 36px 18px 32px; }
   .h-hero     { font-size: clamp(2rem, 8.5vw, 2.8rem); line-height: 1.08; }
