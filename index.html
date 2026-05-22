@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="images/ink-seal-hero.png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -16,7 +17,7 @@
   <header class="header" id="header">
     <div class="header-inner">
       <a href="#home" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros">
-        <img src="images/ink-seal-logo.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
+        <img src="images/ink-seal-logo.png" alt="Ink &amp; Seal Notary Pros" class="logo" width="612" height="356" decoding="async" />
       </a>
       <nav class="nav" aria-label="Primary navigation">
         <a href="#home"         class="nav-link active">Home</a>
@@ -28,20 +29,12 @@
       </nav>
       <div class="header-end">
         <a href="#contact" class="btn-nav">Start Your Request<svg class="btn-nav-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg></a>
-        <button class="burger" id="burger" aria-label="Open navigation" aria-expanded="false">
-          <span></span><span></span><span></span>
+        <button class="burger" id="burger" aria-label="Open navigation menu" aria-controls="drawer" aria-expanded="false">
+          <span class="menu-label">Menu</span>
         </button>
       </div>
     </div>
-    <div class="drawer" id="drawer" aria-hidden="true">
-      <a href="#home"         class="drawer-link">Home</a>
-      <a href="#services"     class="drawer-link">Services</a>
-      <a href="#how-it-works" class="drawer-link">How It Works</a>
-      <a href="#about"        class="drawer-link">About Us</a>
-      <a href="#faq"          class="drawer-link">FAQ</a>
-      <a href="#contact"      class="drawer-link">Contact</a>
-      <a href="#contact"      class="btn-drawer">Start Your Request</a>
-    </div>
+    <div class="drawer" id="drawer" aria-hidden="true"></div>
   </header>
 
   <!-- ═══ HERO ═════════════════════════════════════════════ -->
@@ -51,13 +44,13 @@
       <p class="eyebrow">Trusted. Secure. Professional.</p>
 
       <h1 class="h-hero">
-        International Apostille &amp;
-        <span class="gold-script">Notary Services</span>
+        Apostille Services &amp;
+        <span class="gold-italic">Notary Services</span>
       </h1>
 
       <p class="hero-sub">
-        We help individuals, families, and businesses worldwide process apostilles,
-        notarizations, and international documents with confidence and ease.
+        We help individuals, families, and businesses process apostilles, notarizations, and
+        international documents with confidence and ease.
       </p>
 
       <div class="hero-trust">
@@ -92,6 +85,9 @@
     <div class="hero-right">
       <img src="images/ink-seal-hero.png"
            alt="Ink &amp; Seal notary stamp resting on an authenticated apostille document"
+           width="1400" height="980"
+           fetchpriority="high"
+           decoding="async"
            class="hero-img" />
     </div>
 
@@ -356,7 +352,7 @@
 
       <div class="footer-brand">
         <a href="#home" class="footer-logo-wrap">
-          <img src="images/ink-seal-logo.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
+          <img src="images/ink-seal-logo.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" width="516" height="344" loading="lazy" decoding="async" />
         </a>
         <div class="social-row">
           <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
