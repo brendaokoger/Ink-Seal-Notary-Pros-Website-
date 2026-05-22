@@ -242,24 +242,26 @@ ul    { list-style: none; }
   font-family: var(--serif);
   font-size: clamp(2.4rem, 3.8vw, 4.2rem);
   font-weight: 700;
-  line-height: 1.06;
+  line-height: 1.08;
   color: var(--navy);
-  letter-spacing: -.03em;
+  letter-spacing: -.01em;
   max-width: 100%;
   margin-bottom: 0;
+  white-space: nowrap;
 }
 
-/* second line — editorial gold italic, intentionally larger for visual dominance */
+/* second line — gold italic, larger for editorial dominance */
 .gold-script {
   display: block;
   font-family: var(--script);
   font-style: italic;
   font-weight: 300;
-  color: var(--gold);
-  font-size: 1.32em;
-  letter-spacing: .02em;
-  line-height: 1.12;
-  margin-top: .04em;
+  color: var(--gold-2);
+  font-size: 1.48em;
+  letter-spacing: .01em;
+  line-height: 1.1;
+  margin-top: .02em;
+  white-space: nowrap;
 }
 
 /* ornamental rule between headline and body copy */
@@ -320,27 +322,27 @@ ul    { list-style: none; }
 .btn-hero {
   display: inline-flex; align-items: center; gap: 14px; align-self: flex-start;
   background: var(--navy);
-  border: 1px solid rgba(184,135,43,.6);
+  border: 1px solid var(--gold-2);
   color: #fff;
-  font-size: .66rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+  font-size: .66rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
   padding: 19px 44px;
   box-shadow: 0 4px 28px rgba(11,24,41,.18);
-  transition: background .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease), transform .2s var(--ease);
+  transition: background .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease), transform .22s var(--ease);
 }
 .btn-hero:hover {
   background: var(--navy-2);
-  border-color: var(--gold);
-  box-shadow: 0 12px 44px rgba(11,24,41,.24);
-  transform: translateY(-2px);
+  border-color: var(--gold-3);
+  box-shadow: 0 14px 48px rgba(11,24,41,.28), 0 0 24px rgba(184,135,43,.14);
+  transform: translateY(-3px);
 }
 .btn-arrow {
   width: 18px; height: 18px;
-  color: var(--gold);
+  color: var(--gold-3);
   flex-shrink: 0;
-  stroke-width: 1.6;
-  transition: transform .22s var(--ease);
+  stroke-width: 1.5;
+  transition: transform .24s var(--ease);
 }
-.btn-hero:hover .btn-arrow { transform: translateX(5px); }
+.btn-hero:hover .btn-arrow { transform: translateX(6px); }
 
 .hero-locale {
   margin-top: 20px;
@@ -722,7 +724,9 @@ ul    { list-style: none; }
     font-size: clamp(1.8rem, 6.2vw, 2.6rem);
     line-height: 1.12;
     margin-bottom: 0;
+    white-space: normal;
   }
+  .gold-script { white-space: normal; }
   .hero-rule { margin: 20px 0 24px; max-width: 260px; }
   .hero-sub {
     max-width: 100%;
