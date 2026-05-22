@@ -31,8 +31,8 @@ ul    { list-style: none; }
   --serif:      'Playfair Display', Georgia, serif;
   --script:     'Cormorant Garamond', Georgia, serif;
   --sans:       'Inter', system-ui, sans-serif;
-  --hh:         152px;
-  --hh-sm:      124px;
+  --hh:         196px;
+  --hh-sm:      130px;
   --ease:       cubic-bezier(.4,0,.2,1);
   --max:        1360px;
 }
@@ -102,8 +102,8 @@ ul    { list-style: none; }
 
 .logo-wrap { flex-shrink: 0; }
 .logo {
-  width: 228px;
-  height: 152px;
+  width: 290px;
+  height: 193px;
   object-fit: contain;
   object-position: left center;
   display: block;
@@ -240,11 +240,11 @@ ul    { list-style: none; }
 
 .h-hero {
   font-family: var(--serif);
-  font-size: clamp(2.5rem, 4.4vw, 5rem);
+  font-size: clamp(2.6rem, 5vw, 5.8rem);
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.08;
   color: var(--navy);
-  letter-spacing: -.028em;
+  letter-spacing: -.03em;
   max-width: 100%;
   margin-bottom: 32px;
 }
@@ -256,10 +256,10 @@ ul    { list-style: none; }
   font-style: italic;
   font-weight: 300;
   color: var(--gold);
-  font-size: 1.04em;
-  letter-spacing: .01em;
-  line-height: 1.2;
-  margin-top: .06em;
+  font-size: 0.92em;
+  letter-spacing: .02em;
+  line-height: 1.22;
+  margin-top: .08em;
 }
 
 .hero-sub {
@@ -339,8 +339,8 @@ ul    { list-style: none; }
   content: '';
   position: absolute;
   top: 0; left: 0; bottom: 0;
-  width: 42%;
-  background: linear-gradient(to right, #F7F4EE 0%, rgba(247,244,238,.55) 55%, rgba(247,244,238,0) 100%);
+  width: 50%;
+  background: linear-gradient(to right, #F7F4EE 0%, rgba(247,244,238,.60) 50%, rgba(247,244,238,0) 100%);
   z-index: 3;
   pointer-events: none;
 }
@@ -646,9 +646,9 @@ ul    { list-style: none; }
 @media (max-width: 1200px) {
   .container    { padding: 0 36px; }
   .header-inner { padding: 0 36px; gap: 24px; }
-  .logo         { width: 210px; height: 140px; }
+  .logo         { width: 258px; height: 172px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
-  .h-hero       { font-size: clamp(2.3rem, 4vw, 4.6rem); }
+  .h-hero       { font-size: clamp(2.4rem, 4.4vw, 5.2rem); }
   .svc-grid     { gap: 14px; }
   .trust-inner  { gap: 56px; }
   .trust-right  { gap: 32px 40px; }
@@ -661,7 +661,7 @@ ul    { list-style: none; }
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
   .nav-link     { padding: 8px 10px; font-size: .62rem; }
-  .logo         { width: 192px; height: 128px; }
+  .logo         { width: 224px; height: 149px; }
   .svc-grid     { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .steps-row    { flex-wrap: wrap; justify-content: center; gap: 0 16px; }
   .step         { max-width: 140px; margin-bottom: 32px; }
@@ -678,10 +678,11 @@ ul    { list-style: none; }
 @media (max-width: 840px) {
   :root { --hh: var(--hh-sm); }
 
-  .header-inner { padding: 0 18px; gap: 10px; }
-  .logo         { width: 186px; height: 124px; }
+  .header-inner { padding: 0 20px; gap: 12px; justify-content: space-between; }
+  .logo         { width: 190px; height: 127px; }
   .nav          { display: none; }
-  .btn-nav      { display: none; }
+  .btn-nav      { font-size: .5rem; padding: 9px 15px; letter-spacing: .1em; gap: 8px; }
+  .btn-nav-arrow { width: 12px; height: 12px; }
   .burger       { display: flex; }
   .drawer       { display: block; top: var(--hh-sm); }
 
@@ -767,7 +768,9 @@ ul    { list-style: none; }
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
   .container  { padding: 0 18px; }
-  .logo       { width: 174px; height: 116px; }
+  .logo       { width: 168px; height: 112px; }
+  .btn-nav    { font-size: .47rem; padding: 8px 12px; letter-spacing: .08em; gap: 0; }
+  .btn-nav-arrow { display: none; }
 
   .hero-left  { padding: 36px 18px 32px; }
   .h-hero     { font-size: clamp(1.95rem, 8.2vw, 2.8rem); line-height: 1.1; }
@@ -803,8 +806,8 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  .header-inner { padding: 0 14px; gap: 6px; }
-  .logo         { width: 156px; height: 104px; }
+  .header-inner { padding: 0 14px; gap: 6px; justify-content: space-between; }
+  .logo         { width: 155px; height: 103px; }
   .btn-nav      { display: none; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
