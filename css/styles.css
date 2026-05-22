@@ -121,6 +121,12 @@ ul    { list-style: none; }
   position: relative;
   transition: color .2s var(--ease);
 }
+.nav-chevron {
+  width: 8px; height: 5px;
+  display: inline-block; vertical-align: middle;
+  margin-left: 4px; margin-top: -1px;
+  opacity: .55;
+}
 .nav-link::after {
   content: '';
   position: absolute;
