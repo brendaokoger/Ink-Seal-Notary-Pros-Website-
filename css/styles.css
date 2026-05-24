@@ -717,48 +717,62 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (hamburger, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: var(--hh-sm); }
+  :root { --hh: 116px; }
 
-  .header-inner { padding: 0 20px; gap: 8px; justify-content: space-between; }
-  .logo         { width: 174px; height: 116px; }
-  .nav          { display: none; }
-  .header-end   { gap: 8px; }
-  .btn-nav      { font-size: .46rem; padding: 8px 12px; letter-spacing: .1em; gap: 6px; }
-  .btn-nav-arrow { width: 11px; height: 11px; }
-
-  /* refined MENU control — replaces hamburger entirely */
-  .burger {
-    display: flex !important;
-    flex-direction: row;
+  /* ── two-row compact nav: [logo | btn] / [scrollable links] ── */
+  .header-inner {
+    flex-wrap: wrap;
+    align-content: flex-start;
     align-items: center;
-    justify-content: center;
-    width: auto;
+    padding: 8px 16px 0;
+    gap: 0;
+    justify-content: flex-start;
     height: auto;
-    padding: 9px 16px;
-    background: transparent;
-    border: 1px solid rgba(184,135,43,.55);
-    border-radius: 0;
-    cursor: pointer;
-    flex-shrink: 0;
+  }
+  .logo-wrap { order: 1; flex-shrink: 0; }
+  .logo      { width: 104px; height: 69px; }
+  .header-end {
+    order: 2;
+    margin-left: auto;
+    gap: 8px;
+  }
+  .btn-nav {
+    font-size: .44rem;
+    padding: 8px 12px;
+    letter-spacing: .09em;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .btn-nav-arrow { width: 10px; height: 10px; }
+
+  /* scrollable nav row */
+  .nav {
+    order: 3;
+    display: flex !important;
+    flex: 0 0 100%;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+    padding: 0 0 4px;
     gap: 0;
   }
-  .burger span { display: none !important; }
-  .burger::after {
-    content: 'Menu';
-    font-family: var(--sans);
-    font-size: .45rem;
-    font-weight: 600;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--navy);
-    line-height: 1;
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-link {
+    font-size: .5rem;
+    padding: 9px 12px;
+    letter-spacing: .12em;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
-  .burger.open,
-  .burger:focus-visible { border-color: var(--gold-2); outline: none; }
-  .burger.open::after   { content: 'Close'; color: var(--gold-2); }
+  .nav-link::after { left: 12px; right: 12px; bottom: 4px; }
 
-  /* luxury ivory dropdown */
-  .drawer { display: block; top: var(--hh-sm); }
+  /* no hamburger, no drawer */
+  .burger { display: none !important; }
+  .drawer { display: none !important; }
 
   /* hero: single column */
   .hero {
@@ -840,9 +854,11 @@ ul    { list-style: none; }
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
   .container  { padding: 0 18px; }
-  .logo       { width: 168px; height: 112px; }
-  .btn-nav    { font-size: .47rem; padding: 8px 12px; letter-spacing: .08em; gap: 0; }
+  .logo       { width: 92px; height: 61px; }
+  .btn-nav    { font-size: .41rem; padding: 7px 10px; letter-spacing: .07em; gap: 0; }
   .btn-nav-arrow { display: none; }
+  .nav-link   { font-size: .46rem; padding: 8px 10px; }
+  .nav-link::after { left: 10px; right: 10px; }
 
   .hero-left  { padding: 36px 18px 32px; }
   .h-hero     { font-size: clamp(1.55rem, 6.8vw, 2rem); }
@@ -879,9 +895,12 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  .header-inner { padding: 0 14px; gap: 6px; justify-content: space-between; }
-  .logo         { width: 155px; height: 103px; }
-  .btn-nav      { display: none; }
+  .header-inner { padding: 6px 12px 0; }
+  .logo         { width: 84px; height: 56px; }
+  .btn-nav      { font-size: .38rem; padding: 6px 8px; letter-spacing: .06em; }
+  .btn-nav-arrow { display: none; }
+  .nav-link     { font-size: .43rem; padding: 7px 9px; }
+  .nav-link::after { left: 9px; right: 9px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
   .svc-card     { padding: 34px 16px 28px; }
