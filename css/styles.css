@@ -580,9 +580,9 @@ ul    { list-style: none; }
 }
 .trust-h {
   font-family: var(--serif);
-  font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
   font-weight: 700; color: #fff;
-  line-height: 1.15; margin-bottom: 18px;
+  line-height: 1.2; margin-bottom: 18px;
 }
 .trust-rule { width: 52px; height: 1px; background: var(--gold); margin-bottom: 6px; }
 
