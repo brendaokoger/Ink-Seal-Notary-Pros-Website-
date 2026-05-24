@@ -713,44 +713,58 @@ ul    { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — ≤ 840px  (single-row nav, stacked hero)
+   RESPONSIVE — ≤ 840px  (two-row compact nav, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 88px; }
+  :root { --hh: 116px; }
 
-  /* ── single-row: [logo] [scrollable nav] [btn] ── */
+  /* ── Row 1: [logo] [btn]  Row 2: [scrollable nav links] ── */
   .header-inner {
-    padding: 0 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px 0;
     gap: 0;
+    height: var(--hh);
+    align-content: flex-start;
   }
-  .logo-wrap { flex-shrink: 0; }
-  .logo      { width: 108px; height: 72px; }
-  .header-end { gap: 0; }
+  .logo-wrap { order: 1; flex-shrink: 0; }
+  .logo      { width: 104px; height: 69px; }
+  .header-end {
+    order: 2;
+    margin-left: auto;
+    gap: 8px;
+  }
   .btn-nav {
     font-size: .44rem;
-    padding: 8px 12px;
+    padding: 8px 14px;
     letter-spacing: .09em;
     gap: 6px;
     white-space: nowrap;
   }
   .btn-nav-arrow { width: 10px; height: 10px; }
 
-  /* scrollable middle nav */
+  /* row 2: full-width horizontally scrollable nav */
   .nav {
-    flex: 1;
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
     justify-content: flex-start;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0 8px;
+    border-top: 1px solid var(--border);
+    margin-top: 6px;
+    padding: 0 0 4px;
+    gap: 0;
   }
   .nav::-webkit-scrollbar { display: none; }
   .nav-link {
     font-size: .5rem;
-    padding: 9px 10px;
+    padding: 9px 12px;
     letter-spacing: .12em;
   }
-  .nav-link::after { left: 10px; right: 10px; bottom: 4px; }
+  .nav-link::after { left: 12px; right: 12px; bottom: 4px; }
 
   /* no hamburger, no drawer */
   .burger { display: none !important; }
@@ -835,14 +849,14 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 72px; }
+  :root { --hh: 102px; }
   .container  { padding: 0 18px; }
-  .header-inner { padding: 0 14px; }
-  .logo       { width: 84px; height: 56px; }
+  .header-inner { padding: 6px 14px 0; }
+  .logo       { width: 88px; height: 59px; }
   .btn-nav    { font-size: .41rem; padding: 7px 10px; letter-spacing: .07em; gap: 0; }
   .btn-nav-arrow { display: none; }
-  .nav-link   { font-size: .46rem; padding: 8px 9px; letter-spacing: .11em; }
-  .nav-link::after { left: 9px; right: 9px; bottom: 3px; }
+  .nav-link   { font-size: .46rem; padding: 8px 10px; letter-spacing: .12em; }
+  .nav-link::after { left: 10px; right: 10px; bottom: 3px; }
 
   .hero-left  { padding: 36px 18px 32px; }
   .h-hero     { font-size: clamp(1.55rem, 6.8vw, 2rem); }
@@ -879,13 +893,13 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  :root { --hh: 64px; }
-  .header-inner { padding: 0 10px; }
-  .logo         { width: 78px; height: 52px; }
-  .btn-nav      { font-size: .38rem; padding: 6px 8px; letter-spacing: .06em; }
+  :root { --hh: 96px; }
+  .header-inner { padding: 5px 10px 0; }
+  .logo         { width: 80px; height: 53px; }
+  .btn-nav      { font-size: .38rem; padding: 6px 9px; letter-spacing: .06em; }
   .btn-nav-arrow { display: none; }
-  .nav-link     { font-size: .42rem; padding: 7px 8px; }
-  .nav-link::after { left: 8px; right: 8px; }
+  .nav-link     { font-size: .43rem; padding: 7px 9px; }
+  .nav-link::after { left: 9px; right: 9px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
   .svc-card     { padding: 34px 16px 28px; }
