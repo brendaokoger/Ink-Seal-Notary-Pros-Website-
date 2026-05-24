@@ -18,16 +18,19 @@
       <a href="#home" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros">
         <img src="images/ink-seal-logo.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#home"         class="nav-link active">Home</a>
-        <a href="#services"     class="nav-link">Services</a>
-        <a href="#how-it-works" class="nav-link">How It Works</a>
-        <a href="#about"        class="nav-link">About Us</a>
-        <a href="#faq"          class="nav-link">FAQ</a>
-        <a href="#contact"      class="nav-link">Contact</a>
-      </nav>
-      <div class="header-end">
-        <a href="#contact" class="btn-nav">Start Your Request<svg class="btn-nav-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="10" x2="16" y2="10"/><polyline points="11 5 16 10 11 15"/></svg></a>
+      <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-bar"></span>
+        <span class="burger-text">MENU</span>
+      </button>
+    </div>
+    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
+      <div class="drawer-inner">
+        <a href="#about"    class="drawer-link">About Us</a>
+        <a href="#services" class="drawer-link">Services</a>
+        <a href="#faq"      class="drawer-link">FAQs</a>
+        <a href="#contact"  class="drawer-link">Contact</a>
       </div>
     </div>
   </header>
