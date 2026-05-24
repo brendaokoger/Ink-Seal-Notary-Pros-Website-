@@ -109,7 +109,7 @@ ul    { list-style: none; }
   display: block;
 }
 
-.nav { flex: 1; display: flex; justify-content: center; align-items: center; }
+.nav { flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; }
 .nav-link {
   display: inline-block;
   padding: 10px 18px;
@@ -119,6 +119,7 @@ ul    { list-style: none; }
   text-transform: uppercase;
   color: var(--navy);
   position: relative;
+  flex-shrink: 0;
   transition: color .2s var(--ease);
   white-space: nowrap;
 }
@@ -712,28 +713,19 @@ ul    { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   RESPONSIVE — ≤ 840px  (hamburger, stacked hero)
+   RESPONSIVE — ≤ 840px  (single-row nav, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 116px; }
+  :root { --hh: 88px; }
 
-  /* ── two-row compact nav: [logo | btn] / [scrollable links] ── */
+  /* ── single-row: [logo] [scrollable nav] [btn] ── */
   .header-inner {
-    flex-wrap: wrap;
-    align-content: flex-start;
-    align-items: center;
-    padding: 8px 16px 0;
+    padding: 0 16px;
     gap: 0;
-    justify-content: flex-start;
-    height: auto;
   }
-  .logo-wrap { order: 1; flex-shrink: 0; }
-  .logo      { width: 104px; height: 69px; }
-  .header-end {
-    order: 2;
-    margin-left: auto;
-    gap: 8px;
-  }
+  .logo-wrap { flex-shrink: 0; }
+  .logo      { width: 108px; height: 72px; }
+  .header-end { gap: 0; }
   .btn-nav {
     font-size: .44rem;
     padding: 8px 12px;
@@ -743,30 +735,22 @@ ul    { list-style: none; }
   }
   .btn-nav-arrow { width: 10px; height: 10px; }
 
-  /* scrollable nav row */
+  /* scrollable middle nav */
   .nav {
-    order: 3;
-    display: flex !important;
-    flex: 0 0 100%;
-    width: 100%;
+    flex: 1;
     justify-content: flex-start;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    border-top: 1px solid var(--border);
-    margin-top: 6px;
-    padding: 0 0 4px;
-    gap: 0;
+    padding: 0 8px;
   }
   .nav::-webkit-scrollbar { display: none; }
   .nav-link {
     font-size: .5rem;
-    padding: 9px 12px;
+    padding: 9px 10px;
     letter-spacing: .12em;
-    white-space: nowrap;
-    flex-shrink: 0;
   }
-  .nav-link::after { left: 12px; right: 12px; bottom: 4px; }
+  .nav-link::after { left: 10px; right: 10px; bottom: 4px; }
 
   /* no hamburger, no drawer */
   .burger { display: none !important; }
@@ -851,12 +835,14 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
+  :root { --hh: 72px; }
   .container  { padding: 0 18px; }
-  .logo       { width: 92px; height: 61px; }
+  .header-inner { padding: 0 14px; }
+  .logo       { width: 84px; height: 56px; }
   .btn-nav    { font-size: .41rem; padding: 7px 10px; letter-spacing: .07em; gap: 0; }
   .btn-nav-arrow { display: none; }
-  .nav-link   { font-size: .46rem; padding: 8px 10px; letter-spacing: .12em; }
-  .nav-link::after { left: 10px; right: 10px; bottom: 3px; }
+  .nav-link   { font-size: .46rem; padding: 8px 9px; letter-spacing: .11em; }
+  .nav-link::after { left: 9px; right: 9px; bottom: 3px; }
 
   .hero-left  { padding: 36px 18px 32px; }
   .h-hero     { font-size: clamp(1.55rem, 6.8vw, 2rem); }
@@ -893,12 +879,13 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  .header-inner { padding: 6px 12px 0; }
-  .logo         { width: 84px; height: 56px; }
+  :root { --hh: 64px; }
+  .header-inner { padding: 0 10px; }
+  .logo         { width: 78px; height: 52px; }
   .btn-nav      { font-size: .38rem; padding: 6px 8px; letter-spacing: .06em; }
   .btn-nav-arrow { display: none; }
-  .nav-link     { font-size: .43rem; padding: 7px 9px; }
-  .nav-link::after { left: 9px; right: 9px; }
+  .nav-link     { font-size: .42rem; padding: 7px 8px; }
+  .nav-link::after { left: 8px; right: 8px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
   .svc-card     { padding: 34px 16px 28px; }
