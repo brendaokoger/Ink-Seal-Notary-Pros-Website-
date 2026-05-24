@@ -245,20 +245,28 @@ ul    { list-style: none; }
   margin-bottom: 24px;
 }
 
+/* headline container — sets the scale for both lines */
 .h-hero {
-  font-family: var(--serif);
   font-size: clamp(2.4rem, 3.8vw, 4.2rem);
+  line-height: 1;
+  margin-bottom: 0;
+  max-width: 100%;
+}
+
+/* line 1 — deep navy luxury serif */
+.headline-main {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1em;
   font-weight: 700;
-  line-height: 1.08;
   color: var(--navy);
   letter-spacing: -.01em;
-  max-width: 100%;
-  margin-bottom: 0;
+  line-height: 1.08;
   white-space: nowrap;
 }
 
-/* second line — gold italic, larger for editorial dominance */
-.gold-script {
+/* line 2 — antique gold italic, larger for visual dominance */
+.headline-gold {
   display: block;
   font-family: var(--script);
   font-style: italic;
@@ -266,8 +274,8 @@ ul    { list-style: none; }
   color: var(--gold-2);
   font-size: 1.48em;
   letter-spacing: .01em;
-  line-height: 1.1;
-  margin-top: .02em;
+  line-height: 1.08;
+  margin-top: .06em;
   white-space: nowrap;
 }
 
@@ -681,7 +689,7 @@ ul    { list-style: none; }
   .header-inner { padding: 0 36px; gap: 24px; }
   .logo         { width: 258px; height: 172px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
-  .h-hero       { font-size: clamp(2.2rem, 3.6vw, 3.8rem); }
+  .h-hero       { font-size: clamp(2.2rem, 3.4vw, 3.8rem); }
   .svc-grid     { gap: 14px; }
   .trust-inner  { gap: 56px; }
   .trust-right  { gap: 32px 40px; }
@@ -718,27 +726,38 @@ ul    { list-style: none; }
   .btn-nav      { font-size: .46rem; padding: 8px 12px; letter-spacing: .1em; gap: 6px; }
   .btn-nav-arrow { width: 11px; height: 11px; }
 
-  /* refined MENU text trigger — no hamburger bars */
+  /* refined MENU control — replaces hamburger entirely */
   .burger {
-    display: flex;
-    flex-direction: row; align-items: center; justify-content: center;
-    width: auto; height: auto; gap: 0;
-    padding: 8px 14px;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 9px 16px;
     background: transparent;
-    border: 1px solid rgba(184,135,43,.5);
-    cursor: pointer; flex-shrink: 0;
+    border: 1px solid rgba(184,135,43,.55);
+    border-radius: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    gap: 0;
   }
-  .burger span { display: none; }
+  .burger span { display: none !important; }
   .burger::after {
     content: 'Menu';
     font-family: var(--sans);
-    font-size: .46rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+    font-size: .45rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
     color: var(--navy);
+    line-height: 1;
   }
-  .burger.open { border-color: var(--gold-2); }
-  .burger.open::after { content: 'Close'; color: var(--gold); }
+  .burger.open,
+  .burger:focus-visible { border-color: var(--gold-2); outline: none; }
+  .burger.open::after   { content: 'Close'; color: var(--gold-2); }
 
-  /* luxury dropdown drawer */
+  /* luxury ivory dropdown */
   .drawer { display: block; top: var(--hh-sm); }
 
   /* hero: single column */
@@ -750,15 +769,10 @@ ul    { list-style: none; }
     padding: 48px 28px 44px;
     order: 1;
   }
-  .h-hero {
-    max-width: 100%;
-    font-size: clamp(1.8rem, 6.2vw, 2.6rem);
-    line-height: 1.12;
-    margin-bottom: 0;
-    white-space: normal;
-  }
-  .gold-script { white-space: normal; }
-  .hero-rule { margin: 20px 0 24px; max-width: 260px; }
+  .h-hero        { font-size: clamp(1.8rem, 6.2vw, 2.6rem); }
+  .headline-main { white-space: normal; line-height: 1.1; }
+  .headline-gold { white-space: normal; line-height: 1.1; margin-top: .02em; }
+  .hero-rule     { margin: 20px 0 24px; max-width: 260px; }
   .hero-sub {
     max-width: 100%;
     font-size: .91rem;
@@ -831,7 +845,7 @@ ul    { list-style: none; }
   .btn-nav-arrow { display: none; }
 
   .hero-left  { padding: 36px 18px 32px; }
-  .h-hero     { font-size: clamp(1.65rem, 7.2vw, 2.2rem); line-height: 1.1; }
+  .h-hero     { font-size: clamp(1.55rem, 6.8vw, 2rem); }
   .hero-rule  { margin: 16px 0 20px; max-width: 220px; }
   .hero-sub   { font-size: .88rem; }
   .hero-trust { margin-bottom: 26px; }
