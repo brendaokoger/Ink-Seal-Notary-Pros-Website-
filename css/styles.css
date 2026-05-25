@@ -1094,6 +1094,69 @@ ul    { list-style: none; }
   color: var(--navy); line-height: 1.6;
 }
 
+/* ── About hero (portrait card layout) ── */
+.about-hero-section {
+  padding-top: var(--hh);
+  background: var(--ivory);
+  padding-bottom: 100px;
+  border-bottom: 1px solid var(--border);
+}
+.about-hero-inner {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 80px;
+  align-items: center;
+  padding-top: 80px;
+}
+.about-portrait-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.about-portrait-card {
+  width: 100%;
+  max-width: 360px;
+  border: 1px solid rgba(184,135,43,.28);
+  box-shadow: 0 16px 64px rgba(11,24,41,.14), 0 2px 8px rgba(11,24,41,.06);
+  overflow: hidden;
+}
+.about-portrait-img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.about-portrait-caption {
+  background: var(--navy);
+  padding: 18px 24px;
+  text-align: center;
+  border-top: 2px solid rgba(184,135,43,.4);
+}
+.about-portrait-name {
+  font-family: var(--serif);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 5px;
+}
+.about-portrait-role {
+  font-size: .72rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.65);
+  letter-spacing: .06em;
+  line-height: 1.5;
+}
+.about-hero-text {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE — ≤ 1200px
    ═══════════════════════════════════════════════════════════ */
@@ -1110,6 +1173,8 @@ ul    { list-style: none; }
   .footer-logo  { width: 180px; height: 120px; }
   .about-text-col { padding: calc(var(--hh) + 52px) 64px 64px 60px; }
   .about-heading  { font-size: clamp(2.8rem, 4vw, 5rem); }
+  .about-hero-inner { grid-template-columns: 320px 1fr; gap: 60px; }
+  .about-portrait-img { height: 420px; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1129,6 +1194,11 @@ ul    { list-style: none; }
   .about-split  { grid-template-columns: 1fr; min-height: auto; }
   .about-img-col { height: 70vw; max-height: 560px; min-height: 320px; }
   .about-text-col { padding: 52px 44px 60px; justify-content: flex-start; }
+  .about-hero-inner { grid-template-columns: 1fr; gap: 48px; padding-top: 60px; }
+  .about-portrait-wrap { justify-content: center; }
+  .about-portrait-card { max-width: 340px; }
+  .about-portrait-img { height: 400px; }
+  .about-hero-section { padding-bottom: 72px; }
   .about-mission-inner { grid-template-columns: 80px 1fr; }
   .ab-mission-quill { display: none; }
   .ab-svc-grid  { grid-template-columns: repeat(3, 1fr); }
@@ -1228,6 +1298,9 @@ ul    { list-style: none; }
   .about-text-col { padding: 44px 28px 52px; }
   .about-heading  { font-size: clamp(2.2rem, 8vw, 3.5rem); }
   .about-watermark { display: none; }
+  .about-hero-section { padding-bottom: 60px; }
+  .about-hero-inner { gap: 36px; padding-top: 44px; }
+  .about-portrait-img { height: 360px; }
   .about-mission  { padding: 68px 0; }
   .about-mission-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
   .ab-mission-icon { justify-content: center; }
@@ -1287,6 +1360,10 @@ ul    { list-style: none; }
   .about-text-col { padding: 36px 18px 44px; }
   .about-services { padding: 52px 0 60px; }
   .ab-svc-grid  { grid-template-columns: repeat(2, 1fr); }
+  .about-hero-inner { padding-top: 36px; gap: 28px; }
+  .about-portrait-card { max-width: 100%; }
+  .about-portrait-img { height: 300px; }
+  .about-hero-section { padding-bottom: 52px; }
 
   /* faq */
   .faq-section, .faq-preview { padding: 52px 0 60px; }
@@ -1299,6 +1376,7 @@ ul    { list-style: none; }
   .footer-logo  { width: 160px; height: 107px; }
   .footer-top   { grid-template-columns: 1fr; gap: 24px; padding-top: 44px; }
   .footer-bar-inner { flex-direction: column; gap: 8px; text-align: center; }
+  .social-row   { justify-content: space-evenly; gap: 0; margin-top: 12px; margin-bottom: 12px; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1314,4 +1392,5 @@ ul    { list-style: none; }
   .svc-card     { padding: 34px 16px 28px; }
   .footer-logo  { width: 152px; height: 101px; }
   .ab-svc-grid  { grid-template-columns: 1fr; }
+  .about-portrait-img { height: 260px; }
 }
