@@ -278,7 +278,7 @@ ul    { list-style: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 80px 72px 80px clamp(36px, 4.8vw, 88px);
+  padding: 100px 80px 100px clamp(40px, 5.2vw, 96px);
   background: var(--ivory);
 }
 
@@ -288,12 +288,12 @@ ul    { list-style: none; }
   letter-spacing: .42em;
   text-transform: uppercase;
   color: var(--gold-2);
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
 /* headline container — sets the scale for both lines */
 .h-hero {
-  font-size: clamp(2.4rem, 3.8vw, 4.2rem);
+  font-size: clamp(2.5rem, 4.2vw, 4.6rem);
   line-height: 1;
   margin-bottom: 0;
   max-width: 100%;
@@ -306,23 +306,36 @@ ul    { list-style: none; }
   font-size: 1em;
   font-weight: 700;
   color: var(--navy);
-  letter-spacing: -.01em;
-  line-height: 1.06;
+  letter-spacing: -.022em;
+  line-height: 1.04;
   white-space: nowrap;
 }
 
-/* line 2 — antique gold bold italic, same visual size as line 1 */
+/* line 2 — metallic antique gold italic, same visual dominance as line 1 */
 .headline-gold {
   display: block;
   font-family: var(--script);
   font-style: italic;
   font-weight: 700;
-  color: var(--gold-2);
-  font-size: 1.18em;
-  letter-spacing: .03em;
-  line-height: 1.08;
-  margin-top: .04em;
+  font-size: 1.32em;
+  letter-spacing: .028em;
+  line-height: 1.0;
+  margin-top: -.01em;
   white-space: nowrap;
+  color: var(--gold-2);
+  background: linear-gradient(
+    135deg,
+    #7A5016 0%,
+    #B8872B 18%,
+    #D4A84B 34%,
+    #EDD07A 50%,
+    #D4A84B 66%,
+    #B8872B 82%,
+    #7A5016 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ornamental rule between headline and body copy */
@@ -330,7 +343,7 @@ ul    { list-style: none; }
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 28px 0 32px;
+  margin: 36px 0 38px;
   max-width: 320px;
 }
 .hero-rule::before,
@@ -352,10 +365,10 @@ ul    { list-style: none; }
 .hero-sub {
   font-size: .94rem;
   font-weight: 300;
-  line-height: 1.88;
+  line-height: 1.92;
   color: var(--txt-b);
   max-width: 480px;
-  margin-bottom: 40px;
+  margin-bottom: 52px;
 }
 
 .hero-trust {
@@ -418,13 +431,14 @@ ul    { list-style: none; }
 
 .hero-btns {
   display: flex;
-  gap: 14px;
+  gap: 18px;
   align-self: flex-start;
   flex-wrap: wrap;
+  margin-bottom: 4px;
 }
 
 .hero-locale {
-  margin-top: 20px;
+  margin-top: 30px;
   font-size: .8rem;
   color: var(--txt-m);
   letter-spacing: .02em;
