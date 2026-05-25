@@ -312,14 +312,14 @@ ul    { list-style: none; }
   white-space: nowrap;
 }
 
-/* line 2 — antique gold bold italic, balanced with line 1 */
+/* line 2 — antique gold bold italic, same visual size as line 1 */
 .headline-gold {
   display: block;
   font-family: var(--script);
   font-style: italic;
   font-weight: 700;
   color: var(--gold-2);
-  font-size: 1.15em;
+  font-size: 1em;
   letter-spacing: .03em;
   line-height: 1.08;
   margin-top: .06em;
@@ -647,9 +647,9 @@ ul    { list-style: none; }
 }
 .trust-h {
   font-family: var(--serif);
-  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  font-size: clamp(1.35rem, 1.8vw, 1.9rem);
   font-weight: 700; color: #fff;
-  line-height: 1.2; margin-bottom: 18px;
+  line-height: 1.25; margin-bottom: 18px;
 }
 .trust-rule { width: 52px; height: 1px; background: var(--gold); margin-bottom: 6px; }
 
