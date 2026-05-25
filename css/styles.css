@@ -84,7 +84,7 @@ ul    { list-style: none; }
   top: 0; left: 0; right: 0;
   z-index: 500;
   height: var(--hh);
-  background: rgba(255,255,255,.98);
+  background: #ffffff;
   border-bottom: 1px solid var(--border);
   transition: box-shadow .3s var(--ease);
 }
@@ -114,10 +114,10 @@ ul    { list-style: none; }
 .nav { flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; }
 .nav-link {
   display: inline-block;
-  padding: 10px 18px;
-  font-size: .72rem;
+  padding: 10px 24px;
+  font-size: .88rem;
   font-weight: 600;
-  letter-spacing: .14em;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--navy);
   position: relative;
@@ -128,9 +128,9 @@ ul    { list-style: none; }
 .nav-link::after {
   content: '';
   position: absolute;
-  bottom: 4px; left: 18px; right: 18px;
+  bottom: 4px; left: 24px; right: 24px;
   height: 1px;
-  background: var(--gold-2);
+  background: var(--gold);
   transform: scaleX(0);
   transform-origin: center;
   transition: transform .26s var(--ease);
@@ -799,7 +799,7 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 960px
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
-  .nav-link     { padding: 8px 10px; font-size: .66rem; }
+  .nav-link     { padding: 8px 14px; font-size: .78rem; }
   .svc-grid     { grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .steps-row    { flex-wrap: wrap; justify-content: center; gap: 0 16px; }
   .step         { max-width: 140px; margin-bottom: 32px; }
