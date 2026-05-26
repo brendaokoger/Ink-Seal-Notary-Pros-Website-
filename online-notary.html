@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remote Online Notarization Request | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Request your Remote Online Notarization appointment with Ink &amp; Seal Notary Pros. Secure, convenient, and professional online notarization from anywhere in the U.S." />
+  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/online-notary.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html"          class="nav-link">Home</a>
+        <a href="about.html"          class="nav-link">About Us</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="faq.html"            class="nav-link">FAQs</a>
+        <a href="index.html#contact"  class="nav-link">Contact</a>
+      </nav>
+      <div class="header-end">
+        <a href="index.html#contact" class="btn-nav">Start My Apostille</a>
+        <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-text">MENU</span>
+        </button>
+      </div>
+    </div>
+    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
+      <div class="drawer-inner">
+        <a href="index.html"          class="drawer-link">Home</a>
+        <a href="about.html"          class="drawer-link">About Us</a>
+        <a href="index.html#services" class="drawer-link">Services</a>
+        <a href="faq.html"            class="drawer-link">FAQs</a>
+        <a href="index.html#contact"  class="drawer-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
+  <section class="page-hero on-hero">
+    <div class="container">
+      <p class="eyebrow">Secure &middot; Convenient &middot; Professional</p>
+      <h1 class="h-page">Remote Online Notarization Request</h1>
+      <div class="on-hero-rule">
+        <span class="on-hero-line"></span>
+        <span class="on-hero-gem">◆</span>
+        <span class="on-hero-line"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
+  <section class="on-form-section">
+    <div class="container">
+
+      <!-- Intro copy -->
+      <div class="on-intro">
+        <p class="on-intro-p">Complete the secure form below to request your Remote Online Notarization appointment with Ink &amp; Seal Notary Pros.</p>
+        <p class="on-intro-p">Once your request has been submitted, you will receive a secure invitation link from our Online Notarization Platform for your selected appointment date and time. A reminder invitation may also be sent prior to your session.</p>
+        <p class="on-intro-p">Authentication can be completed from either a mobile device or computer. We recommend using a computer for the smoothest experience.</p>
+        <p class="on-intro-p">Signers may join the session using either a phone or computer. Please ensure your device audio and camera permissions are enabled and functioning properly before your appointment begins.</p>
+        <p class="on-intro-p">Once the session is created, the invitation link will be sent immediately prior to the scheduled appointment time. Sessions may also be rescheduled if needed.</p>
+      </div>
+
+      <!-- FORM -->
+      <form class="on-form" id="onForm" novalidate>
+
+        <!-- ── A. Signer Information ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">A</span>
+            <h2 class="on-card-title">Signer Information</h2>
+          </div>
+
+          <div class="on-field-row">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="signerName">Full Legal Name</label>
+              <input type="text" id="signerName" name="signerName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="signerEmail">Email Address</label>
+              <input type="email" id="signerEmail" name="signerEmail" class="on-input" placeholder="your@email.com" required autocomplete="email" />
+            </div>
+          </div>
+
+          <div class="on-field-row" style="margin-top:22px">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="signerPhone">Mobile Phone Number</label>
+              <input type="tel" id="signerPhone" name="signerPhone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="signerState">State of Residence</label>
+              <select id="signerState" name="signerState" class="on-select" required>
+                <option value="" disabled selected>Select your state</option>
+                <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                <option>Arkansas</option><option>California</option><option>Colorado</option>
+                <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                <option>Texas</option><option>Utah</option><option>Vermont</option>
+                <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                <option>Wisconsin</option><option>Wyoming</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="on-field-row on-field-row--3" style="margin-top:22px">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="apptDate">Preferred Appointment Date</label>
+              <input type="date" id="apptDate" name="apptDate" class="on-input" required />
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="apptTime">Preferred Appointment Time</label>
+              <input type="time" id="apptTime" name="apptTime" class="on-input" required />
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="apptTZ">Time Zone</label>
+              <select id="apptTZ" name="apptTZ" class="on-select" required>
+                <option value="" disabled selected>Select time zone</option>
+                <option value="ET">Eastern Time</option>
+                <option value="CT">Central Time</option>
+                <option value="MT">Mountain Time</option>
+                <option value="PT">Pacific Time</option>
+                <option value="AKT">Alaska Time</option>
+                <option value="HT">Hawaii Time</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── B. Document Information ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">B</span>
+            <h2 class="on-card-title">Document Information</h2>
+          </div>
+
+          <div class="on-field-row">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="docType">Document Type</label>
+              <select id="docType" name="docType" class="on-select" required>
+                <option value="" disabled selected>Select document type</option>
+                <option>Affidavit</option>
+                <option>Power of Attorney</option>
+                <option>Business Document</option>
+                <option>Real Estate Document</option>
+                <option>Travel Consent Form</option>
+                <option>Medical Authorization</option>
+                <option>School Form</option>
+                <option>Financial Document</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
+              <select id="numDocs" name="numDocs" class="on-select" required>
+                <option value="" disabled selected>Select number</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="on-field-row" style="margin-top:22px">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="numSeals">Number of Notarial Seals Needed</label>
+              <select id="numSeals" name="numSeals" class="on-select" required>
+                <option value="" disabled selected>Select number</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4+">4+</option>
+              </select>
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="addlSigners">Additional Signers</label>
+              <select id="addlSigners" name="addlSigners" class="on-select" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── C. Witness Requirements ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">C</span>
+            <h2 class="on-card-title">Witness Requirements</h2>
+          </div>
+
+          <div class="on-field on-field--full">
+            <label class="on-label on-label--req" for="witnessReq">Does your document require witnesses?</label>
+            <select id="witnessReq" name="witnessReq" class="on-select" required>
+              <option value="" disabled selected>Select option</option>
+              <option value="no">No</option>
+              <option value="own">Yes — I will provide my own witness</option>
+              <option value="was">Yes — I need Witness as a Service (+$10)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── D. Document Upload ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">D</span>
+            <h2 class="on-card-title">Document Upload</h2>
+          </div>
+
+          <p class="on-upload-notice">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Please upload unsigned documents only. Documents must be signed during the live online notarization session.
+          </p>
+
+          <div class="on-field on-field--full" style="margin-top:20px">
+            <label class="on-label" for="docUpload">Upload Your Document</label>
+            <input type="file" id="docUpload" name="docUpload" class="on-file-input" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" />
+            <label for="docUpload" class="on-file-label">
+              <svg class="on-file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span class="on-file-text">Click to upload or drag &amp; drop — PDF, DOC, JPG, PNG accepted</span>
+            </label>
+            <p class="on-file-name" id="docFileName"></p>
+          </div>
+
+          <div class="on-field on-field--full" style="margin-top:22px">
+            <label class="on-label" for="addlNotes">Additional Notes</label>
+            <textarea id="addlNotes" name="addlNotes" class="on-textarea on-input" placeholder="Please share any special instructions, questions, or information about your document or session."></textarea>
+          </div>
+        </div>
+
+        <!-- ── E. Pricing ── -->
+        <div class="on-pricing-card">
+          <div class="on-card-head on-pricing-head">
+            <span class="on-card-num on-pricing-num" aria-hidden="true">E</span>
+            <h2 class="on-card-title on-pricing-title">Online Notarization Pricing</h2>
+          </div>
+
+          <div class="on-pricing-grid">
+            <div class="on-pricing-item">
+              <span class="on-pricing-name">Standard Online Notarization (1 Seal)</span>
+              <span class="on-pricing-price">$25</span>
+            </div>
+            <div class="on-pricing-item">
+              <span class="on-pricing-name">Additional Seal</span>
+              <span class="on-pricing-price">$8</span>
+            </div>
+            <div class="on-pricing-item">
+              <span class="on-pricing-name">Additional Signer</span>
+              <span class="on-pricing-price">$5</span>
+            </div>
+            <div class="on-pricing-item">
+              <span class="on-pricing-name">Witness as a Service</span>
+              <span class="on-pricing-price">$10</span>
+            </div>
+          </div>
+
+          <p class="on-pricing-note">Final pricing may vary depending on signer count, document requirements, and session complexity.</p>
+        </div>
+
+        <!-- ── F. Identity Verification & Electronic Consent ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">F</span>
+            <h2 class="on-card-title">Identity Verification &amp; Electronic Consent</h2>
+          </div>
+
+          <div class="on-check-list">
+
+            <label class="on-check-item">
+              <input type="checkbox" class="on-check-input" name="consent1" required />
+              <span class="on-check-box" aria-hidden="true"></span>
+              <span class="on-check-text">I understand all signers must complete identity verification prior to notarization.</span>
+            </label>
+
+            <label class="on-check-item">
+              <input type="checkbox" class="on-check-input" name="consent2" required />
+              <span class="on-check-box" aria-hidden="true"></span>
+              <span class="on-check-text">I understand a valid government-issued photo ID is required.</span>
+            </label>
+
+            <label class="on-check-item">
+              <input type="checkbox" class="on-check-input" name="consent3" required />
+              <span class="on-check-box" aria-hidden="true"></span>
+              <span class="on-check-text">I understand all signers must appear live during the online notarization session.</span>
+            </label>
+
+            <label class="on-check-item">
+              <input type="checkbox" class="on-check-input" name="consent4" required />
+              <span class="on-check-box" aria-hidden="true"></span>
+              <span class="on-check-text">I consent to conducting this notarization electronically.</span>
+            </label>
+
+            <label class="on-check-item">
+              <input type="checkbox" class="on-check-input" name="consent5" required />
+              <span class="on-check-box" aria-hidden="true"></span>
+              <span class="on-check-text">I understand unsigned documents must be presented during the live session.</span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- ── G. Electronic Signature ── -->
+        <div class="on-card">
+          <div class="on-card-head">
+            <span class="on-card-num" aria-hidden="true">G</span>
+            <h2 class="on-card-title">Electronic Signature</h2>
+          </div>
+
+          <div class="on-field-row">
+            <div class="on-field">
+              <label class="on-label on-label--req" for="eSignature">Signature</label>
+              <input type="text" id="eSignature" name="eSignature" class="on-input on-sig-input" placeholder="Type your full legal name" required autocomplete="off" />
+              <p class="on-sig-hint">By typing your name above, you are providing your electronic signature.</p>
+            </div>
+            <div class="on-field">
+              <label class="on-label on-label--req" for="sigDate">Date</label>
+              <input type="date" id="sigDate" name="sigDate" class="on-input" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- ── H. Submit ── -->
+        <div class="on-submit-wrap">
+          <div class="on-submit-rule">
+            <span class="on-submit-line"></span>
+            <span class="on-submit-gem">◆</span>
+            <span class="on-submit-line"></span>
+          </div>
+          <button type="submit" class="on-submit-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Request Online Notarization
+          </button>
+          <p class="on-required-note">Fields marked with <span style="color:var(--gold)">*</span> are required.</p>
+        </div>
+
+      </form>
+
+      <!-- SUCCESS MESSAGE (shown after submit) -->
+      <div class="on-success" id="onSuccess" role="alert" aria-live="polite">
+        <div class="on-success-icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="28"/>
+            <polyline points="20,34 28,42 44,24"/>
+          </svg>
+        </div>
+        <h2 class="on-success-h">Request Submitted Successfully</h2>
+        <p class="on-success-p">Thank you for submitting your Remote Online Notarization request.</p>
+        <p class="on-success-p" style="margin-top:14px">A member of Ink &amp; Seal Notary Pros will review your request and send your secure online session invitation shortly.</p>
+      </div>
+
+      <!-- Disclaimer -->
+      <p class="on-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-top">
+
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-wrap">
+          <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Services</h5>
+        <ul>
+          <li><a href="index.html#services" class="fc-link">Apostille Services</a></li>
+          <li><a href="online-notary.html"  class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="index.html#services" class="fc-link">FBI Apostille Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Certified Translation Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Embassy Legalization Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Fingerprinting Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Quick Links</h5>
+        <ul>
+          <li><a href="index.html"          class="fc-link">Home</a></li>
+          <li><a href="about.html"          class="fc-link">About Us</a></li>
+          <li><a href="index.html#services" class="fc-link">Services</a></li>
+          <li><a href="faq.html"            class="fc-link">FAQs</a></li>
+          <li><a href="index.html#contact"  class="fc-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.52 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:7736690915" class="fc-link">(773) 669-0915</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            <a href="mailto:hello@inkandsealnotarypros.com" class="fc-link">hello@inkandsealnotarypros.com</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="fc-text">Serving Clients Nationwide</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Follow Us</h5>
+        <div class="social-row">
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <p class="footer-copy">&copy; 2026 Ink &amp; Seal Notary Pros. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#" class="fc-legal">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="#" class="fc-legal">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      /* Set today's date as the default sig date */
+      var today = new Date().toISOString().split('T')[0];
+      var sigDateEl = document.getElementById('sigDate');
+      if (sigDateEl) sigDateEl.value = today;
+
+      /* Show uploaded filename */
+      var fileInput = document.getElementById('docUpload');
+      var fileName  = document.getElementById('docFileName');
+      if (fileInput && fileName) {
+        fileInput.addEventListener('change', function () {
+          fileName.textContent = this.files.length ? this.files[0].name : '';
+        });
+      }
+
+      /* Form submit → show success */
+      var form    = document.getElementById('onForm');
+      var success = document.getElementById('onSuccess');
+      if (form && success) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+          form.style.display = 'none';
+          success.classList.add('show');
+          success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+    }());
+  </script>
+
+</body>
+</html>

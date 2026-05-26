@@ -1422,3 +1422,346 @@ ul    { list-style: none; }
   .ab-portrait-img { height: 176px; }
   .ab-cta { padding: 60px 0 76px; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ONLINE NOTARIZATION FORM PAGE  (on-*)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hero override */
+.on-hero { padding-bottom: 56px; }
+.on-hero-rule {
+  display: flex; align-items: center; gap: 14px;
+  justify-content: center; margin-top: 24px;
+}
+.on-hero-line { width: 52px; height: 1px; background: var(--gold); opacity: .38; }
+.on-hero-gem  { font-size: .4rem; color: var(--gold); }
+
+/* Form section wrapper */
+.on-form-section {
+  background: var(--ivory);
+  padding: 72px 0 100px;
+}
+
+/* Intro paragraphs */
+.on-intro {
+  max-width: 860px;
+  margin: 0 auto 60px;
+  padding: 36px 44px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold-2);
+  border-radius: 6px;
+  box-shadow: 0 2px 16px rgba(11,24,41,.05);
+}
+.on-intro-p {
+  font-size: .9rem; font-weight: 300; line-height: 1.9;
+  color: var(--txt-b);
+  margin-bottom: 14px;
+}
+.on-intro-p:last-child { margin-bottom: 0; }
+
+/* Form stack */
+.on-form {
+  display: flex; flex-direction: column; gap: 28px;
+  max-width: 860px; margin: 0 auto;
+}
+
+/* Cards */
+.on-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 44px 52px;
+  box-shadow: 0 2px 20px rgba(11,24,41,.06), 0 1px 4px rgba(11,24,41,.03);
+}
+.on-card-head {
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 32px; padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.on-card-num {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--navy); color: var(--gold-2);
+  font-family: var(--serif); font-size: .9rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; letter-spacing: 0;
+}
+.on-card-title {
+  font-family: var(--serif);
+  font-size: 1.12rem; font-weight: 700;
+  color: var(--navy); letter-spacing: -.01em;
+}
+
+/* Field grids */
+.on-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 28px;
+}
+.on-field-row--3 { grid-template-columns: 1fr 1fr 1fr; }
+.on-field-row--1 { grid-template-columns: 1fr; }
+.on-field { display: flex; flex-direction: column; gap: 8px; }
+.on-field--full { grid-column: 1 / -1; }
+
+/* Labels */
+.on-label {
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--navy);
+}
+.on-label--req::after { content: ' *'; color: var(--gold); }
+
+/* Inputs, selects, textarea */
+.on-input,
+.on-select,
+.on-textarea {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-family: var(--sans);
+  font-size: .88rem; font-weight: 300;
+  color: var(--navy);
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+  outline: none;
+  appearance: none; -webkit-appearance: none;
+}
+.on-input:focus,
+.on-select:focus,
+.on-textarea:focus {
+  border-color: var(--gold-2);
+  box-shadow: 0 0 0 3px rgba(184,135,43,.1);
+}
+.on-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23B8872B' stroke-width='1.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+.on-textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+/* Upload notice */
+.on-upload-notice {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 14px 18px;
+  background: rgba(184,135,43,.06);
+  border: 1px solid rgba(184,135,43,.22);
+  border-radius: 4px;
+  font-size: .82rem; font-weight: 400; line-height: 1.65;
+  color: var(--txt-b);
+}
+.on-upload-notice svg { flex-shrink: 0; margin-top: 1px; color: var(--gold-3); }
+
+/* File upload */
+.on-file-input { display: none; }
+.on-file-label {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 20px;
+  border: 1.5px dashed rgba(184,135,43,.38);
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--ivory);
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+}
+.on-file-label:hover {
+  border-color: var(--gold-2);
+  background: rgba(184,135,43,.04);
+}
+.on-file-icon { color: var(--gold); flex-shrink: 0; }
+.on-file-text {
+  font-size: .84rem; font-weight: 300;
+  color: var(--txt-b); line-height: 1.5;
+}
+.on-file-name {
+  font-size: .78rem; color: var(--gold-3);
+  font-weight: 500; min-height: 1em;
+}
+
+/* Pricing card */
+.on-pricing-card {
+  background: var(--navy);
+  border: 1px solid rgba(184,135,43,.28);
+  border-radius: 8px;
+  padding: 44px 52px;
+  box-shadow: 0 4px 28px rgba(11,24,41,.18);
+}
+.on-pricing-head {
+  border-bottom-color: rgba(184,135,43,.2);
+}
+.on-pricing-num { background: rgba(184,135,43,.18); }
+.on-pricing-title {
+  font-family: var(--serif);
+  font-size: 1.12rem; font-weight: 700;
+  color: var(--ivory); letter-spacing: -.01em;
+}
+.on-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 48px;
+  margin-bottom: 24px;
+}
+.on-pricing-item {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.on-pricing-name {
+  font-size: .84rem; font-weight: 300;
+  color: rgba(255,255,255,.7); line-height: 1.4;
+}
+.on-pricing-price {
+  font-family: var(--serif);
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--gold-2); white-space: nowrap;
+}
+.on-pricing-note {
+  font-size: .76rem; font-weight: 300;
+  color: rgba(255,255,255,.46);
+  line-height: 1.7; font-style: italic;
+}
+
+/* Consent checkboxes */
+.on-check-list { display: flex; flex-direction: column; gap: 20px; }
+.on-check-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  cursor: pointer;
+}
+.on-check-input {
+  position: absolute; opacity: 0;
+  width: 0; height: 0; pointer-events: none;
+}
+.on-check-box {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  background: var(--ivory);
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .18s var(--ease), background .18s var(--ease);
+}
+.on-check-item:hover .on-check-box { border-color: var(--gold-2); }
+.on-check-input:checked ~ .on-check-box {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.on-check-input:checked ~ .on-check-box::after {
+  content: '';
+  display: block;
+  width: 5px; height: 9px;
+  border: 2px solid var(--gold-2);
+  border-top: none; border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.on-check-text {
+  font-size: .86rem; font-weight: 300;
+  color: var(--txt-b); line-height: 1.65;
+}
+
+/* Signature input */
+.on-sig-input {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.45rem; font-weight: 400;
+  border-top: none; border-left: none; border-right: none;
+  border-bottom: 1.5px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  padding: 8px 0;
+  letter-spacing: .02em;
+  color: var(--navy);
+}
+.on-sig-input:focus {
+  border-bottom-color: var(--gold-2);
+  box-shadow: none;
+}
+.on-sig-hint {
+  font-size: .74rem; font-weight: 300;
+  color: var(--txt-m); font-style: italic;
+  line-height: 1.5;
+}
+
+/* Submit */
+.on-submit-wrap { text-align: center; padding-top: 12px; }
+.on-submit-rule {
+  display: flex; align-items: center; gap: 16px;
+  justify-content: center; margin-bottom: 32px;
+}
+.on-submit-line { width: 64px; height: 1px; background: var(--gold); opacity: .3; }
+.on-submit-gem  { font-size: .4rem; color: var(--gold); opacity: .5; }
+.on-submit-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  background: var(--navy);
+  border: 1px solid var(--gold-2);
+  color: var(--ivory);
+  font-family: var(--sans);
+  font-size: .64rem; font-weight: 600; letter-spacing: .28em; text-transform: uppercase;
+  padding: 22px 64px;
+  cursor: pointer;
+  transition: background .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease), transform .22s var(--ease);
+}
+.on-submit-btn:hover {
+  background: var(--navy-2);
+  border-color: var(--gold-3);
+  box-shadow: 0 14px 48px rgba(11,24,41,.28), 0 0 24px rgba(184,135,43,.14);
+  transform: translateY(-3px);
+}
+.on-required-note {
+  font-size: .76rem; font-weight: 300;
+  color: var(--txt-m); margin-top: 18px;
+}
+
+/* Success state */
+.on-success {
+  display: none;
+  text-align: center;
+  padding: 80px 20px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.on-success.show { display: block; }
+.on-success-icon { color: var(--gold); margin: 0 auto 28px; }
+.on-success-h {
+  font-family: var(--serif);
+  font-size: 1.9rem; font-weight: 700;
+  color: var(--navy); line-height: 1.2;
+  margin-bottom: 20px;
+}
+.on-success-p {
+  font-size: .94rem; font-weight: 300;
+  color: var(--txt-b); line-height: 1.9;
+}
+
+/* Disclaimer */
+.on-disclaimer {
+  text-align: center;
+  font-size: .74rem; font-weight: 300;
+  color: var(--txt-m); font-style: italic;
+  padding: 32px 20px 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Responsive: online notary form ── */
+@media (max-width: 860px) {
+  .on-intro { padding: 28px 28px; }
+  .on-card  { padding: 36px 32px; }
+  .on-pricing-card { padding: 36px 32px; }
+  .on-pricing-grid { grid-template-columns: 1fr; gap: 0; }
+  .on-pricing-item { padding-bottom: 14px; margin-bottom: 0; }
+}
+@media (max-width: 640px) {
+  .on-form-section { padding: 52px 0 80px; }
+  .on-intro { padding: 22px 20px; margin-bottom: 36px; }
+  .on-card  { padding: 28px 20px; }
+  .on-pricing-card { padding: 28px 20px; }
+  .on-field-row { grid-template-columns: 1fr; gap: 18px; }
+  .on-field-row--3 { grid-template-columns: 1fr; }
+  .on-submit-btn { padding: 20px 36px; letter-spacing: .18em; font-size: .62rem; }
+}
