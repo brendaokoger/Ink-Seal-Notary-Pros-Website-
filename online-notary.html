@@ -203,6 +203,18 @@
               </select>
             </div>
           </div>
+
+          <!-- Conditional: shown only when Additional Signers = Yes -->
+          <div id="addlSignersWrap" class="on-addl-signers-wrap" style="display:none">
+            <label class="on-label on-label--req" for="addlSignersCount">How many additional signers?</label>
+            <select id="addlSignersCount" name="addlSignersCount" class="on-select" style="margin-top:8px">
+              <option value="" disabled selected>Select number</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4+">4+</option>
+            </select>
+          </div>
         </div>
 
         <!-- ── C. Witness Requirements ── -->
@@ -251,7 +263,9 @@
           </div>
         </div>
 
-        <!-- ── E. Pricing ── -->
+        <!-- ── E. Pricing & Live Estimate ── -->
+
+        <!-- Rate reference card -->
         <div class="on-pricing-card">
           <div class="on-card-head on-pricing-head">
             <span class="on-card-num on-pricing-num" aria-hidden="true">E</span>
@@ -264,11 +278,11 @@
               <span class="on-pricing-price">$25</span>
             </div>
             <div class="on-pricing-item">
-              <span class="on-pricing-name">Additional Seal</span>
+              <span class="on-pricing-name">Each Additional Seal</span>
               <span class="on-pricing-price">$8</span>
             </div>
             <div class="on-pricing-item">
-              <span class="on-pricing-name">Additional Signer</span>
+              <span class="on-pricing-name">Each Additional Signer</span>
               <span class="on-pricing-price">$5</span>
             </div>
             <div class="on-pricing-item">
@@ -276,8 +290,48 @@
               <span class="on-pricing-price">$10</span>
             </div>
           </div>
+        </div>
 
-          <p class="on-pricing-note">Final pricing may vary depending on signer count, document requirements, and session complexity.</p>
+        <!-- Live fee estimate card -->
+        <div class="on-estimate-card">
+          <div class="on-card-head on-estimate-head">
+            <span class="on-card-num on-estimate-num" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </span>
+            <h2 class="on-card-title">Your Fee Estimate</h2>
+            <span class="on-estimate-badge" aria-label="Updates automatically">
+              <span class="on-estimate-badge-dot" aria-hidden="true"></span>
+              LIVE
+            </span>
+          </div>
+
+          <p class="on-estimate-intro">Your estimate updates automatically as you complete the form above.</p>
+
+          <div class="on-estimate-rows">
+            <div class="on-estimate-row">
+              <span class="on-estimate-label">Base Online Notarization</span>
+              <span class="on-estimate-val on-estimate-base">$25</span>
+            </div>
+            <div class="on-estimate-row">
+              <span class="on-estimate-label">Additional Seals</span>
+              <span class="on-estimate-val" id="estSeals">—</span>
+            </div>
+            <div class="on-estimate-row">
+              <span class="on-estimate-label">Additional Signers</span>
+              <span class="on-estimate-val" id="estSigners">—</span>
+            </div>
+            <div class="on-estimate-row">
+              <span class="on-estimate-label">Witness Service</span>
+              <span class="on-estimate-val" id="estWitness">—</span>
+            </div>
+          </div>
+
+          <div class="on-estimate-total">
+            <span class="on-estimate-total-label">Estimated Total</span>
+            <span class="on-estimate-total-val" id="estTotal">$25</span>
+          </div>
+
+          <p class="on-estimate-note">Final pricing may vary depending on signer count, document requirements, and session complexity. No payment is requested at this time.</p>
         </div>
 
         <!-- ── F. Identity Verification & Electronic Consent ── -->
@@ -455,12 +509,13 @@
   <script src="js/main.js"></script>
   <script>
     (function () {
-      /* Set today's date as the default sig date */
+
+      /* ── Default today's date in signature field ── */
       var today = new Date().toISOString().split('T')[0];
       var sigDateEl = document.getElementById('sigDate');
       if (sigDateEl) sigDateEl.value = today;
 
-      /* Show uploaded filename */
+      /* ── Show uploaded filename ── */
       var fileInput = document.getElementById('docUpload');
       var fileName  = document.getElementById('docFileName');
       if (fileInput && fileName) {
@@ -469,7 +524,66 @@
         });
       }
 
-      /* Form submit → show success */
+      /* ── Pricing / live estimate ── */
+      var numSealsEl       = document.getElementById('numSeals');
+      var addlSignersEl    = document.getElementById('addlSigners');
+      var addlSigWrap      = document.getElementById('addlSignersWrap');
+      var addlSigCountEl   = document.getElementById('addlSignersCount');
+      var witnessEl        = document.getElementById('witnessReq');
+
+      var estSealsEl   = document.getElementById('estSeals');
+      var estSignersEl = document.getElementById('estSigners');
+      var estWitnessEl = document.getElementById('estWitness');
+      var estTotalEl   = document.getElementById('estTotal');
+
+      function toNum(select, fallback) {
+        if (!select || !select.value) return fallback;
+        return select.value === '4+' ? 4 : (parseInt(select.value, 10) || fallback);
+      }
+
+      function fmt(n) {
+        return n > 0 ? '+$' + n : '—';
+      }
+
+      function updateEstimate() {
+        /* Seals: base includes 1, each extra = $8 */
+        var seals     = toNum(numSealsEl, 1);
+        var addlSeals = Math.max(0, seals - 1);
+        var sealsAmt  = addlSeals * 8;
+
+        /* Additional signers */
+        var hasSigners = addlSignersEl && addlSignersEl.value === 'yes';
+        var sigCount   = hasSigners ? toNum(addlSigCountEl, 1) : 0;
+        var signersAmt = sigCount * 5;
+
+        /* Conditional additional-signers sub-field */
+        if (addlSigWrap) {
+          addlSigWrap.style.display = hasSigners ? 'block' : 'none';
+          if (addlSigCountEl) addlSigCountEl.required = hasSigners;
+        }
+
+        /* Witness as a Service */
+        var needsWAS   = witnessEl && witnessEl.value === 'was';
+        var witnessAmt = needsWAS ? 10 : 0;
+
+        /* Total */
+        var total = 25 + sealsAmt + signersAmt + witnessAmt;
+
+        /* Update display */
+        if (estSealsEl)   estSealsEl.textContent   = fmt(sealsAmt);
+        if (estSignersEl) estSignersEl.textContent = fmt(signersAmt);
+        if (estWitnessEl) estWitnessEl.textContent = fmt(witnessAmt);
+        if (estTotalEl)   estTotalEl.textContent   = '$' + total;
+      }
+
+      if (numSealsEl)    numSealsEl.addEventListener('change', updateEstimate);
+      if (addlSignersEl) addlSignersEl.addEventListener('change', updateEstimate);
+      if (addlSigCountEl) addlSigCountEl.addEventListener('change', updateEstimate);
+      if (witnessEl)     witnessEl.addEventListener('change', updateEstimate);
+
+      updateEstimate(); /* initialise on page load */
+
+      /* ── Form submit → show success ── */
       var form    = document.getElementById('onForm');
       var success = document.getElementById('onSuccess');
       if (form && success) {
@@ -484,6 +598,7 @@
           success.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
       }
+
     }());
   </script>
 

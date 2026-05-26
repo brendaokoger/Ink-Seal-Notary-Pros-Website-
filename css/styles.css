@@ -1748,6 +1748,101 @@ ul    { list-style: none; }
   margin: 0 auto;
 }
 
+/* Conditional additional-signers sub-field */
+.on-addl-signers-wrap {
+  margin-top: 18px;
+  padding: 20px 22px;
+  background: rgba(184,135,43,.05);
+  border: 1px solid rgba(184,135,43,.22);
+  border-radius: 4px;
+  max-width: 340px;
+}
+
+/* Live estimate card */
+.on-estimate-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 44px 52px;
+  box-shadow: 0 2px 20px rgba(11,24,41,.06), 0 1px 4px rgba(11,24,41,.03);
+  position: relative;
+  overflow: hidden;
+}
+.on-estimate-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-3) 0%, var(--gold-2) 50%, var(--gold-3) 100%);
+}
+.on-estimate-head { align-items: center; }
+.on-estimate-num {
+  background: rgba(184,135,43,.13);
+  color: var(--gold-3);
+}
+.on-estimate-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-left: auto;
+  font-size: .54rem; font-weight: 700; letter-spacing: .22em;
+  color: #fff; background: var(--gold-3);
+  padding: 4px 11px; border-radius: 100px;
+  flex-shrink: 0;
+}
+.on-estimate-badge-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%; background: #fff;
+  animation: onBlink 1.5s ease-in-out infinite;
+}
+@keyframes onBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .25; }
+}
+.on-estimate-intro {
+  font-size: .82rem; font-weight: 300; color: var(--txt-m);
+  font-style: italic; margin-bottom: 22px; line-height: 1.6;
+}
+.on-estimate-rows { margin-bottom: 0; }
+.on-estimate-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.on-estimate-row:first-child { border-top: 1px solid var(--border); }
+.on-estimate-label {
+  font-size: .84rem; font-weight: 400; color: var(--txt-b);
+}
+.on-estimate-val {
+  font-size: .92rem; font-weight: 600;
+  color: var(--navy); white-space: nowrap;
+  min-width: 36px; text-align: right;
+}
+.on-estimate-base { color: var(--gold-3); }
+.on-estimate-total {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 26px;
+  margin-top: 22px;
+  background: var(--navy);
+  border-radius: 6px;
+  border: 1px solid rgba(184,135,43,.28);
+  box-shadow: 0 4px 20px rgba(11,24,41,.14);
+}
+.on-estimate-total-label {
+  font-size: .66rem; font-weight: 600; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(255,255,255,.68);
+}
+.on-estimate-total-val {
+  font-family: var(--serif);
+  font-size: 2.2rem; font-weight: 700;
+  color: var(--gold-2);
+  transition: color .2s var(--ease);
+}
+.on-estimate-note {
+  font-size: .76rem; font-weight: 300; color: var(--txt-m);
+  font-style: italic; line-height: 1.65;
+  margin-top: 18px; text-align: center;
+}
+
 /* ── Responsive: online notary form ── */
 @media (max-width: 860px) {
   .on-intro { padding: 28px 28px; }
@@ -1755,12 +1850,17 @@ ul    { list-style: none; }
   .on-pricing-card { padding: 36px 32px; }
   .on-pricing-grid { grid-template-columns: 1fr; gap: 0; }
   .on-pricing-item { padding-bottom: 14px; margin-bottom: 0; }
+  .on-estimate-card { padding: 36px 32px; }
+  .on-estimate-total { padding: 18px 20px; }
 }
 @media (max-width: 640px) {
   .on-form-section { padding: 52px 0 80px; }
   .on-intro { padding: 22px 20px; margin-bottom: 36px; }
   .on-card  { padding: 28px 20px; }
   .on-pricing-card { padding: 28px 20px; }
+  .on-estimate-card { padding: 28px 20px; }
+  .on-estimate-total-val { font-size: 1.75rem; }
+  .on-addl-signers-wrap { max-width: 100%; }
   .on-field-row { grid-template-columns: 1fr; gap: 18px; }
   .on-field-row--3 { grid-template-columns: 1fr; }
   .on-submit-btn { padding: 20px 36px; letter-spacing: .18em; font-size: .62rem; }
