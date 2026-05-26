@@ -669,7 +669,14 @@
 
           fetch('https://formspree.io/f/mpqnojvj', {
             method: 'POST',
-            body: new FormData(form),
+            body: (function () {
+              var data = new FormData(form);
+              /* Formspree helpers — subject line and reply-to */
+              data.append('_subject', 'New Online Notarization Request — Ink & Seal Notary Pros');
+              var emailEl = document.getElementById('signerEmail');
+              if (emailEl && emailEl.value) data.append('_replyto', emailEl.value);
+              return data;
+            }()),
             headers: { 'Accept': 'application/json' }
           })
           .then(function (response) {
