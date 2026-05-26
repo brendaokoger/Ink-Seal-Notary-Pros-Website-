@@ -50,7 +50,6 @@
   <!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
   <section class="page-hero on-hero">
     <div class="container">
-      <p class="eyebrow">Secure &middot; Convenient &middot; Professional</p>
       <h1 class="h-page">Remote Online Notarization Request</h1>
       <div class="on-hero-rule">
         <span class="on-hero-line"></span>
@@ -138,7 +137,11 @@
       </div>
 
       <!-- FORM -->
-      <form class="on-form" id="onForm" novalidate>
+      <form class="on-form" id="onForm"
+            action="https://formspree.io/f/mpqnojvj"
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate>
 
         <!-- ── A. Signer Information ── -->
         <div class="on-card">
@@ -647,19 +650,48 @@
 
       updateEstimate(); /* initialise on page load */
 
-      /* ── Form submit → show success ── */
-      var form    = document.getElementById('onForm');
-      var success = document.getElementById('onSuccess');
+      /* ── Form submit → Formspree → branded success ── */
+      var form      = document.getElementById('onForm');
+      var success   = document.getElementById('onSuccess');
+      var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
       if (form && success) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
+
           if (!form.checkValidity()) {
             form.reportValidity();
             return;
           }
-          form.style.display = 'none';
-          success.classList.add('show');
-          success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          /* Disable button while submitting */
+          if (submitBtn) submitBtn.disabled = true;
+
+          fetch('https://formspree.io/f/mpqnojvj', {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          })
+          .then(function (response) {
+            if (response.ok) {
+              /* Success — show branded message */
+              form.style.display = 'none';
+              success.classList.add('show');
+              success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              return response.json().then(function (data) {
+                var msg = (data.errors || [])
+                  .map(function (err) { return err.message; })
+                  .join(' ') || 'There was a problem submitting your request. Please try again.';
+                alert(msg);
+                if (submitBtn) submitBtn.disabled = false;
+              });
+            }
+          })
+          .catch(function () {
+            alert('Unable to submit your request. Please check your connection and try again, or contact us directly.');
+            if (submitBtn) submitBtn.disabled = false;
+          });
         });
       }
 
