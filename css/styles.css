@@ -103,9 +103,9 @@ ul    { list-style: none; }
 
 .logo-wrap { flex-shrink: 0; }
 .logo {
-  height: 80px;
+  height: 90px;
   width: auto;
-  max-width: 220px;
+  max-width: 240px;
   object-fit: contain;
   object-position: left center;
   display: block;
@@ -724,9 +724,9 @@ ul    { list-style: none; }
 }
 .footer-logo-wrap { display: block; margin-bottom: 0; }
 .footer-logo {
-  height: 86px;
+  height: 96px;
   width: auto;
-  max-width: 220px;
+  max-width: 240px;
   object-fit: contain;
   object-position: left center;
   display: block;
@@ -943,7 +943,7 @@ ul    { list-style: none; }
   margin: 0 auto;
   text-align: center;
   padding-top: 80px;
-  padding-bottom: 72px;
+  padding-bottom: 52px;
 }
 .ab-eyebrow {
   display: block;
@@ -987,21 +987,26 @@ ul    { list-style: none; }
 .ab-founder-row {
   display: flex;
   align-items: flex-start;
-  gap: 52px;
+  gap: 44px;
   max-width: 880px;
   margin: 0 auto;
-  padding-top: 48px;
-  border-top: 1px solid rgba(184,135,43,.2);
+  padding-top: 36px;
 }
 .ab-portrait-card {
-  width: 220px;
+  width: 160px;
   flex-shrink: 0;
   border: 1px solid rgba(184,135,43,.32);
   border-radius: 4px;
-  box-shadow: 0 16px 56px rgba(11,24,41,.16), 0 2px 8px rgba(11,24,41,.06);
+  box-shadow: 0 12px 40px rgba(11,24,41,.14), 0 2px 6px rgba(11,24,41,.05);
   overflow: hidden;
 }
-.ab-portrait-img { width: 100%; height: auto; display: block; }
+.ab-portrait-img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  object-position: center 8%;
+  display: block;
+}
 .ab-portrait-foot {
   background: var(--navy);
   border-top: 2px solid rgba(184,135,43,.42);
@@ -1067,11 +1072,12 @@ ul    { list-style: none; }
 .ab-mission-label { display: none; }
 .ab-mission-h {
   font-family: var(--serif);
-  font-size: clamp(2.8rem, 5vw, 6rem);
-  font-weight: 700; color: #fff;
-  letter-spacing: .1em;
+  font-size: clamp(1.7rem, 2.8vw, 2.8rem);
+  font-weight: 700;
+  color: var(--gold-2);
+  letter-spacing: .24em;
   text-transform: uppercase;
-  line-height: 1; margin-bottom: 40px;
+  line-height: 1.15; margin-bottom: 32px;
 }
 .ab-mission-p {
   font-size: 1.02rem; font-weight: 300; line-height: 2;
@@ -1087,8 +1093,8 @@ ul    { list-style: none; }
 }
 .ab-services-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
   margin-top: 56px;
 }
 .ab-service-card {
@@ -1168,12 +1174,20 @@ ul    { list-style: none; }
 .ab-cta-rule-line { width: 60px; height: 1px; background: var(--gold); opacity: .38; }
 .ab-cta-rule-gem  { font-size: .4rem; color: var(--gold); }
 .ab-cta-h {
-  font-family: var(--serif);
-  font-size: clamp(3rem, 6.5vw, 8rem);
-  font-weight: 700; color: #fff;
-  letter-spacing: .06em; text-transform: uppercase;
-  line-height: .92;
-  margin-bottom: 36px;
+  font-family: var(--script);
+  font-style: italic;
+  font-size: clamp(3.5rem, 7vw, 9.5rem);
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: .88;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg,
+    #7A5016 0%, #B8872B 18%, #D4A84B 34%,
+    #EDD07A 50%, #D4A84B 66%, #B8872B 82%, #7A5016 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .ab-cta-sub {
   font-size: 1rem; font-weight: 300; line-height: 1.85;
@@ -1192,15 +1206,15 @@ ul    { list-style: none; }
 @media (max-width: 1200px) {
   .container    { padding: 0 36px; }
   .header-inner { padding: 0 36px; gap: 24px; }
-  .logo         { height: 74px; max-width: 200px; }
+  .logo         { height: 82px; max-width: 220px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
   .h-hero       { font-size: clamp(2.2rem, 3.4vw, 3.8rem); }
   .svc-grid     { gap: 20px; }
   .trust-inner  { gap: 56px; }
   .trust-right  { gap: 32px 40px; }
   .footer-top   { grid-template-columns: auto 1fr 1fr 1fr 1fr; gap: 28px; }
-  .footer-logo  { height: 80px; max-width: 200px; }
-  .ab-hero-header { padding-top: 68px; padding-bottom: 60px; }
+  .footer-logo  { height: 88px; max-width: 220px; }
+  .ab-hero-header { padding-top: 68px; padding-bottom: 44px; }
   .ab-main-heading { font-size: clamp(3.4rem, 6.5vw, 7.5rem); }
 }
 
@@ -1217,12 +1231,12 @@ ul    { list-style: none; }
   .trust-right  { gap: 24px 32px; }
   .footer-top   { grid-template-columns: auto 1fr 1fr; gap: 22px; }
   .footer-brand { grid-column: 1 / -1; }
-  .footer-logo  { height: 80px; max-width: 200px; }
-  .ab-founder-row { flex-direction: column; align-items: center; gap: 32px; padding-top: 36px; }
-  .ab-portrait-card { width: 200px; }
+  .footer-logo  { height: 88px; max-width: 220px; }
+  .ab-founder-row { flex-direction: column; align-items: center; gap: 28px; padding-top: 28px; }
+  .ab-portrait-card { width: 160px; }
   .ab-founder-text { padding-top: 0; width: 100%; }
   .ab-hero { padding-bottom: 72px; }
-  .ab-hero-header { padding-top: 52px; padding-bottom: 44px; }
+  .ab-hero-header { padding-top: 52px; padding-bottom: 36px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
 }
 
@@ -1243,7 +1257,7 @@ ul    { list-style: none; }
     height: var(--hh);
   }
   .logo-wrap { flex-shrink: 0; }
-  .logo { height: 62px; width: auto; max-width: 180px; }
+  .logo { height: 68px; width: auto; max-width: 190px; }
   .drawer-inner { padding: 0 20px; }
 
   /* hero: single column */
@@ -1317,11 +1331,12 @@ ul    { list-style: none; }
 
   /* about */
   .ab-hero { padding-bottom: 60px; }
-  .ab-hero-header { padding-top: 36px; padding-bottom: 32px; }
+  .ab-hero-header { padding-top: 36px; padding-bottom: 28px; }
   .ab-main-heading { font-size: clamp(2.8rem, 9vw, 4.8rem); }
   .ab-mission { padding: 80px 0; }
   .ab-services { padding: 72px 0 80px; }
   .ab-cta { padding: 88px 0; }
+  .ab-cta-h { font-size: clamp(2.8rem, 8vw, 6rem); }
 
   /* faq */
   .page-hero     { padding-bottom: 52px; }
@@ -1331,7 +1346,7 @@ ul    { list-style: none; }
   /* footer */
   .footer-top   { grid-template-columns: 1fr 1fr; gap: 28px; padding-top: 52px; }
   .footer-brand { grid-column: 1 / -1; }
-  .footer-logo  { height: 76px; max-width: 180px; }
+  .footer-logo  { height: 82px; max-width: 200px; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1341,7 +1356,7 @@ ul    { list-style: none; }
   :root { --hh: 72px; }
   .container  { padding: 0 18px; }
   .header-inner { padding: 0 16px; height: var(--hh); }
-  .logo       { height: 56px; max-width: 160px; }
+  .logo       { height: 62px; max-width: 170px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -1372,12 +1387,13 @@ ul    { list-style: none; }
 
   /* about */
   .ab-hero { padding-bottom: 52px; }
-  .ab-hero-header { padding-top: 28px; padding-bottom: 24px; }
-  .ab-portrait-card { width: 160px; }
+  .ab-hero-header { padding-top: 28px; padding-bottom: 20px; }
+  .ab-portrait-card { width: 130px; }
+  .ab-portrait-img { height: 172px; }
   .ab-services { padding: 56px 0 64px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .ab-cta { padding: 72px 0; }
-  .ab-cta-h { font-size: clamp(2.4rem, 8vw, 4rem); }
+  .ab-cta-h { font-size: clamp(2.4rem, 9vw, 4rem); }
 
   /* faq */
   .faq-section, .faq-preview { padding: 52px 0 60px; }
@@ -1387,7 +1403,7 @@ ul    { list-style: none; }
   .faq-cta     { padding: 60px 0; }
   .faq-cta-btns { flex-direction: column; align-items: stretch; }
 
-  .footer-logo  { height: 70px; max-width: 160px; }
+  .footer-logo  { height: 76px; max-width: 180px; }
   .footer-top   { grid-template-columns: 1fr; gap: 24px; padding-top: 44px; }
   .footer-bar-inner { flex-direction: column; gap: 8px; text-align: center; }
   .social-row   { justify-content: space-evenly; gap: 0; margin-top: 12px; margin-bottom: 12px; }
@@ -1399,13 +1415,14 @@ ul    { list-style: none; }
 @media (max-width: 400px) {
   :root { --hh: 66px; }
   .header-inner { padding: 0 12px; height: var(--hh); }
-  .logo         { height: 50px; max-width: 140px; }
+  .logo         { height: 54px; max-width: 150px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
   .svc-card     { padding: 34px 16px 28px; }
-  .footer-logo  { height: 64px; max-width: 150px; }
+  .footer-logo  { height: 70px; max-width: 160px; }
   .ab-services-grid { grid-template-columns: 1fr; }
-  .ab-portrait-card { width: 148px; }
+  .ab-portrait-card { width: 120px; }
+  .ab-portrait-img { height: 156px; }
   .ab-cta { padding: 60px 0; }
 }
