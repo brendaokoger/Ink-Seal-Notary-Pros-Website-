@@ -983,18 +983,26 @@ ul    { list-style: none; }
   margin: 0 auto;
 }
 
-/* Founder strip: portrait + text side by side */
+/* Founder block: name+image left column, bio right column */
 .ab-founder-row {
   display: flex;
   align-items: flex-start;
-  gap: 44px;
+  gap: 52px;
   max-width: 880px;
   margin: 0 auto;
   padding-top: 36px;
 }
-.ab-portrait-card {
-  width: 160px;
+.ab-founder-id {
   flex-shrink: 0;
+  width: 200px;
+}
+.ab-founder-bio-wrap {
+  flex: 1;
+  padding-top: 4px;
+}
+.ab-portrait-card {
+  width: 180px;
+  margin-top: 20px;
   border: 1px solid rgba(184,135,43,.32);
   border-radius: 4px;
   box-shadow: 0 12px 40px rgba(11,24,41,.14), 0 2px 6px rgba(11,24,41,.05);
@@ -1002,28 +1010,11 @@ ul    { list-style: none; }
 }
 .ab-portrait-img {
   width: 100%;
-  height: 210px;
+  height: 220px;
   object-fit: cover;
   object-position: center 8%;
   display: block;
 }
-.ab-portrait-foot {
-  background: var(--navy);
-  border-top: 2px solid rgba(184,135,43,.42);
-  padding: 14px 16px;
-  text-align: center;
-}
-.ab-portrait-foot-name {
-  font-family: var(--serif);
-  font-size: .6rem; font-weight: 700;
-  letter-spacing: .2em; text-transform: uppercase;
-  color: var(--gold-2); margin-bottom: 3px;
-}
-.ab-portrait-foot-role {
-  font-size: .64rem; font-weight: 300;
-  color: rgba(255,255,255,.62); line-height: 1.4;
-}
-.ab-founder-text { flex: 1; padding-top: 4px; }
 .ab-attr-rule {
   width: 44px; height: 1px;
   background: var(--gold-3); opacity: .65;
@@ -1043,7 +1034,7 @@ ul    { list-style: none; }
   font-size: .78rem; font-weight: 300;
   font-style: italic;
   color: var(--txt-m); line-height: 1.5;
-  margin-bottom: 22px;
+  margin-bottom: 0;
   letter-spacing: .02em;
 }
 .ab-founder-bio {
@@ -1061,8 +1052,8 @@ ul    { list-style: none; }
 .ab-mission-wm {
   position: absolute; left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 360px; height: auto;
-  opacity: .03; pointer-events: none; z-index: 0;
+  width: 580px; height: auto;
+  opacity: .05; pointer-events: none; z-index: 0;
 }
 .ab-mission-inner {
   max-width: 820px;
@@ -1170,8 +1161,8 @@ ul    { list-style: none; }
 .ab-cta-wm {
   position: absolute; left: 50%; top: 50%;
   transform: translate(-50%, -50%);
-  width: 400px; height: auto;
-  opacity: .04; pointer-events: none; z-index: 0;
+  width: 580px; height: auto;
+  opacity: .05; pointer-events: none; z-index: 0;
 }
 .ab-cta-inner {
   position: relative; z-index: 1;
@@ -1185,20 +1176,13 @@ ul    { list-style: none; }
 .ab-cta-rule-gem  { font-size: .4rem; color: var(--gold); }
 .ab-cta-h {
   font-family: var(--serif);
-  font-style: italic;
   font-size: clamp(3.2rem, 6.5vw, 8.5rem);
   font-weight: 700;
-  letter-spacing: .04em;
-  line-height: 1.12;
-  padding-bottom: 0.14em;
-  margin-bottom: 4px;
-  background: linear-gradient(135deg,
-    #6B4312 0%, #9A6A1F 22%, #B8872B 40%,
-    #C49A4A 50%, #B8872B 60%, #9A6A1F 78%, #6B4312 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: #B8872B;
+  margin-bottom: 8px;
 }
 .ab-cta-sub {
   font-size: 1rem; font-weight: 300; line-height: 1.85;
@@ -1244,8 +1228,9 @@ ul    { list-style: none; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-logo  { height: 88px; max-width: 220px; }
   .ab-founder-row { flex-direction: column; align-items: center; gap: 28px; padding-top: 28px; }
+  .ab-founder-id { width: 100%; max-width: 340px; }
+  .ab-founder-bio-wrap { width: 100%; }
   .ab-portrait-card { width: 160px; }
-  .ab-founder-text { padding-top: 0; width: 100%; }
   .ab-hero { padding-bottom: 72px; }
   .ab-hero-header { padding-top: 52px; padding-bottom: 36px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
@@ -1399,8 +1384,8 @@ ul    { list-style: none; }
   /* about */
   .ab-hero { padding-bottom: 52px; }
   .ab-hero-header { padding-top: 28px; padding-bottom: 20px; }
-  .ab-portrait-card { width: 130px; }
-  .ab-portrait-img { height: 172px; }
+  .ab-portrait-card { width: 150px; }
+  .ab-portrait-img { height: 190px; }
   .ab-services { padding: 56px 0 64px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .ab-cta { padding: 72px 0 88px; }
@@ -1433,7 +1418,7 @@ ul    { list-style: none; }
   .svc-card     { padding: 34px 16px 28px; }
   .footer-logo  { height: 70px; max-width: 160px; }
   .ab-services-grid { grid-template-columns: 1fr; }
-  .ab-portrait-card { width: 120px; }
-  .ab-portrait-img { height: 156px; }
+  .ab-portrait-card { width: 140px; }
+  .ab-portrait-img { height: 176px; }
   .ab-cta { padding: 60px 0 76px; }
 }
