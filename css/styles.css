@@ -76,6 +76,19 @@ ul    { list-style: none; }
 }
 .h-section em { font-style: italic; font-weight: 400; color: var(--gold); }
 
+/* Services section headline — two-line editorial treatment */
+.svc-main-h {
+  font-size: clamp(2rem, 3.4vw, 3.6rem);
+  line-height: 1.24;
+  letter-spacing: -.018em;
+}
+.svc-main-h em {
+  display: block;
+  margin-top: 8px;
+  font-size: .88em;
+  letter-spacing: -.01em;
+}
+
 /* ═══════════════════════════════════════════════════════════
    HEADER
    ═══════════════════════════════════════════════════════════ */
@@ -1424,6 +1437,8 @@ ul    { list-style: none; }
 
   .services   { padding-top: 48px; }
   .h-section  { font-size: clamp(1.65rem, 5.5vw, 2rem); margin-bottom: 36px; }
+  .svc-main-h { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .svc-main-h em { margin-top: 6px; }
   .svc-grid   { grid-template-columns: 1fr; gap: 14px; }
   .svc-card   { padding: 44px 28px 38px; }
 
