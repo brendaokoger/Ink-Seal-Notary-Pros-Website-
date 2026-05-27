@@ -2127,6 +2127,141 @@ ul    { list-style: none; }
   line-height: 1.7;
 }
 
+/* ═══════════════════════════════════════════════════════════
+   APOSTILLE REVIEW PAGE  (ar-*)
+   ═══════════════════════════════════════════════════════════ */
+
+/* Hero subheadline */
+.ar-hero-sub {
+  font-family: var(--script);
+  font-size: clamp(.9rem, 1.6vw, 1.15rem);
+  font-weight: 300;
+  color: var(--txt-b);
+  letter-spacing: .04em;
+  margin-top: 18px;
+  line-height: 1.5;
+}
+.ar-hero-sub em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-2);
+}
+
+/* Intro wrapper */
+.ar-intro-wrap {
+  max-width: 860px;
+  margin: 0 auto 52px;
+}
+.ar-intro-text {
+  font-size: .94rem;
+  font-weight: 300;
+  line-height: 1.92;
+  color: var(--txt-b);
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+/* Timeframe info box */
+.ar-timeframe {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold-2);
+  border-radius: 6px;
+  padding: 28px 36px;
+  box-shadow: 0 2px 16px rgba(11,24,41,.05);
+}
+.ar-timeframe-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  color: var(--gold-3);
+}
+.ar-timeframe-label {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+}
+.ar-timeframe-p {
+  font-size: .87rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--txt-b);
+  margin-bottom: 8px;
+}
+.ar-timeframe-p:last-child { margin-bottom: 0; }
+
+/* Upload area */
+.ar-file-label {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 44px 28px;
+  gap: 16px;
+  min-height: 180px;
+}
+.ar-file-label--selected {
+  border-color: var(--gold-2);
+  background: rgba(184,135,43,.04);
+}
+.ar-file-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.ar-file-primary {
+  font-size: .88rem;
+  font-weight: 500;
+  color: var(--navy);
+  display: block;
+}
+.ar-file-secondary {
+  font-size: .82rem;
+  font-weight: 300;
+  color: var(--txt-m);
+  display: block;
+}
+.ar-file-types {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--gold-3);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 6px;
+}
+
+/* Upload helper text */
+.ar-upload-helper {
+  font-size: .8rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--txt-m);
+  line-height: 1.65;
+  margin-top: 14px;
+}
+
+/* Notes textarea */
+.ar-notes-textarea { min-height: 160px; }
+
+/* Review step lead */
+.ar-review-lead {
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--txt-b);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+
+@media (max-width: 640px) {
+  .ar-timeframe  { padding: 20px 20px; }
+  .ar-file-label { padding: 32px 20px; min-height: 140px; }
+}
+
 /* ── Step nav row ── */
 .ms-nav {
   display: flex;

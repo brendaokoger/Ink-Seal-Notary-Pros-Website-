@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostille Document Review | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Submit your document for apostille review with Ink &amp; Seal Notary Pros. Our team will review your document and contact you with pricing, processing instructions, and next steps." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html"          class="nav-link">Home</a>
+        <a href="about.html"          class="nav-link">About Us</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="faq.html"            class="nav-link">FAQs</a>
+        <a href="index.html#contact"  class="nav-link">Contact</a>
+      </nav>
+      <div class="header-end">
+        <a href="apostille-review.html" class="btn-nav">Start My Apostille</a>
+        <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-text">MENU</span>
+        </button>
+      </div>
+    </div>
+    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
+      <div class="drawer-inner">
+        <a href="index.html"          class="drawer-link">Home</a>
+        <a href="about.html"          class="drawer-link">About Us</a>
+        <a href="index.html#services" class="drawer-link">Services</a>
+        <a href="faq.html"            class="drawer-link">FAQs</a>
+        <a href="index.html#contact"  class="drawer-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
+  <section class="page-hero on-hero">
+    <div class="container">
+      <h1 class="h-page">Apostille Document Review</h1>
+      <p class="ar-hero-sub">Professional Apostille Services — <em>Handled With Precision.</em></p>
+      <div class="on-hero-rule">
+        <span class="on-hero-line"></span>
+        <span class="on-hero-gem">◆</span>
+        <span class="on-hero-line"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
+  <section class="on-form-section">
+    <div class="container">
+
+      <!-- Intro + timeframe -->
+      <div class="ar-intro-wrap">
+        <p class="ar-intro-text">Upload your document securely for review. Our team will review your document and determine the appropriate apostille process based on your document type, issuing state, and destination country.</p>
+
+        <div class="ar-timeframe">
+          <div class="ar-timeframe-head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span class="ar-timeframe-label">Document Review Timeframe</span>
+          </div>
+          <p class="ar-timeframe-p">Most apostille review requests are reviewed within 1 business day. Additional review time may be required for complex or international document requests.</p>
+          <p class="ar-timeframe-p">After review, our team will contact you with pricing, processing instructions, and next steps.</p>
+        </div>
+      </div>
+
+      <!-- Success message -->
+      <div class="on-success" id="arSuccess">
+        <div class="on-success-icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" width="64" height="64">
+            <circle cx="32" cy="32" r="30"/>
+            <polyline points="20,33 28,41 44,24"/>
+          </svg>
+        </div>
+        <h2 class="on-success-h">Thank you for choosing<br>Ink &amp; Seal Notary Pros.</h2>
+        <p class="on-success-p">Your apostille review request has been received. Our team will review your information and contact you with next steps.</p>
+        <p class="on-success-p" style="margin-top:16px">Most apostille review requests are reviewed within 1 business day. Additional review time may be required for complex or international document requests.</p>
+      </div>
+
+      <!-- Multi-step form -->
+      <form class="on-form" id="arForm" novalidate>
+
+        <!-- ── STEP 1 — CLIENT INFORMATION ────────────────── -->
+        <div class="ms-step" id="step1" data-step="1">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">1</span>
+              <h2 class="on-card-title">Client Information</h2>
+            </div>
+
+            <div class="on-field-row on-field-row--1">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="fullName">Full Legal Name</label>
+                <input type="text" id="fullName" name="fullName" class="on-input"
+                       placeholder="Enter your full legal name" autocomplete="name" required />
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="on-input"
+                       placeholder="your@email.com" autocomplete="email" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="phone">Mobile Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="on-input"
+                       placeholder="(773) 555-0100" autocomplete="tel" required />
+              </div>
+            </div>
+
+            <div class="on-field-row on-field-row--1" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="stateResidence">State of Residence</label>
+                <select id="stateResidence" name="stateResidence" class="on-select" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <div></div>
+            <button type="button" class="ms-btn-continue" data-next="2">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2 — DOCUMENT DETAILS ──────────────────── -->
+        <div class="ms-step" id="step2" data-step="2" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">2</span>
+              <h2 class="on-card-title">Document Details</h2>
+            </div>
+
+            <div class="on-field-row" style="margin-bottom:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="destCountry">Destination Country</label>
+                <input type="text" id="destCountry" name="destCountry" class="on-input"
+                       placeholder="e.g. Mexico, Germany, Italy" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="issuingState">Issuing State</label>
+                <select id="issuingState" name="issuingState" class="on-select" required>
+                  <option value="" disabled selected>Select issuing state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                  <option>Federal / U.S. Government</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
+                <select id="numDocs" name="numDocs" class="on-select" required>
+                  <option value="" disabled selected>Select quantity</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6+">6 or more</option>
+                </select>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="docType">Document Type</label>
+                <select id="docType" name="docType" class="on-select" required>
+                  <option value="" disabled selected>Select document type</option>
+                  <option>Birth Certificate</option>
+                  <option>Marriage Certificate</option>
+                  <option>Death Certificate</option>
+                  <option>Divorce Decree</option>
+                  <option>Court Document</option>
+                  <option>FBI Background Check</option>
+                  <option>Diploma</option>
+                  <option>Transcript</option>
+                  <option>Passport Copy</option>
+                  <option>Driver's License Copy</option>
+                  <option>Power of Attorney</option>
+                  <option>Affidavit</option>
+                  <option>Business Document</option>
+                  <option>Articles of Incorporation</option>
+                  <option>Certificate of Good Standing</option>
+                  <option>Adoption Document</option>
+                  <option>Medical Document</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="1">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="3">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3 — DOCUMENT UPLOAD ───────────────────── -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">3</span>
+              <h2 class="on-card-title">Document Upload</h2>
+            </div>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="docUpload">Upload Document For Review</label>
+              <input type="file" id="docUpload" name="document" class="on-file-input"
+                     accept=".pdf,.jpg,.jpeg,.png" />
+              <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
+                <div class="on-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="ar-file-text-wrap">
+                  <span class="ar-file-primary">Click to upload your document</span>
+                  <span class="ar-file-secondary">or drag and drop</span>
+                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
+                  <span class="on-file-name" id="arFileName"></span>
+                </div>
+              </label>
+              <p class="ar-upload-helper">Upload a clear copy or photo of your document so our team can review the correct apostille process.</p>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="2">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="4">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 4 — ADDITIONAL NOTES ─────────────────── -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">4</span>
+              <h2 class="on-card-title">Additional Notes</h2>
+            </div>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
+                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 5 — ACKNOWLEDGMENT + SUBMIT ──────────── -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">5</span>
+              <h2 class="on-card-title">Review &amp; Submit</h2>
+            </div>
+
+            <p class="ar-review-lead">Please review and confirm before submitting your apostille review request.</p>
+
+            <div class="on-check-list">
+              <label class="on-check-item">
+                <input type="checkbox" name="ackReview" class="on-check-input" required />
+                <span class="on-check-box"></span>
+                <span class="on-check-text">I understand Ink &amp; Seal Notary Pros will review my submitted information and contact me with pricing, instructions, and next steps.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="ms-nav ms-nav--submit">
+            <button type="button" class="ms-btn-back" data-prev="4">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <div class="ms-submit-col">
+              <div class="on-submit-rule">
+                <span class="on-submit-line"></span>
+                <span class="on-submit-gem">◆</span>
+                <span class="on-submit-line"></span>
+              </div>
+              <button type="submit" class="on-submit-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
+                  <path d="M10 6h20l10 10v26a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" style="display:none"/>
+                  <circle cx="12" cy="12" r="9"/>
+                  <polyline points="9,12 11,14 15,10"/>
+                </svg>
+                Submit Apostille Review
+              </button>
+              <p class="on-required-note">* Required fields must be completed before submitting.</p>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <p class="on-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice. Submission of this form does not guarantee an appointment or service. Our team will contact you to confirm your request and provide next steps.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-top">
+
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-wrap">
+          <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Services</h5>
+        <ul>
+          <li><a href="apostille-review.html" class="fc-link">Apostille Services</a></li>
+          <li><a href="online-notary.html"    class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="index.html#services"   class="fc-link">FBI Apostille Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Certified Translation Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Embassy Legalization Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Fingerprinting Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Quick Links</h5>
+        <ul>
+          <li><a href="index.html"          class="fc-link">Home</a></li>
+          <li><a href="about.html"          class="fc-link">About Us</a></li>
+          <li><a href="index.html#services" class="fc-link">Services</a></li>
+          <li><a href="faq.html"            class="fc-link">FAQs</a></li>
+          <li><a href="index.html#contact"  class="fc-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.52 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:7736690915" class="fc-link">(773) 669-0915</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            <a href="mailto:hello@inkandsealnotarypros.com" class="fc-link">hello@inkandsealnotarypros.com</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="fc-text">Serving Clients Nationwide</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Follow Us</h5>
+        <div class="social-row">
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <p class="footer-copy">&copy; 2026 Ink &amp; Seal Notary Pros. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy.html" class="fc-legal">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="terms.html" class="fc-legal">Terms of Service</a>
+        </div>
+      </div>
+      <p class="footer-disclaimer container">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var TOTAL_STEPS = 5;
+      var currentStep = 1;
+
+      function showStep(n) {
+        currentStep = n;
+        for (var i = 1; i <= TOTAL_STEPS; i++) {
+          var el = document.getElementById('step' + i);
+          if (el) el.style.display = (i === n) ? '' : 'none';
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function validateStep(n) {
+        var stepEl = document.getElementById('step' + n);
+        if (!stepEl) return true;
+        var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].checkValidity()) {
+            fields[i].focus();
+            fields[i].reportValidity();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      // Continue buttons
+      document.querySelectorAll('.ms-btn-continue').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var next = parseInt(this.getAttribute('data-next'), 10);
+          if (validateStep(currentStep)) showStep(next);
+        });
+      });
+
+      // Back buttons
+      document.querySelectorAll('.ms-btn-back').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var prev = parseInt(this.getAttribute('data-prev'), 10);
+          showStep(prev);
+        });
+      });
+
+      // File upload display
+      var fileInput = document.getElementById('docUpload');
+      if (fileInput) {
+        fileInput.addEventListener('change', function () {
+          var nameEl = document.getElementById('arFileName');
+          var label  = document.getElementById('arFileLabel');
+          if (this.files && this.files[0]) {
+            if (nameEl) nameEl.textContent = this.files[0].name;
+            if (label)  label.classList.add('ar-file-label--selected');
+          }
+        });
+      }
+
+      // Form submit — front-end only, no backend
+      var arForm    = document.getElementById('arForm');
+      var arSuccess = document.getElementById('arSuccess');
+      if (arForm) {
+        arForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!validateStep(currentStep)) return;
+          arForm.style.display    = 'none';
+          if (arSuccess) arSuccess.classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
