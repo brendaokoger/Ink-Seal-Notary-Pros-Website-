@@ -1820,6 +1820,31 @@ ul    { list-style: none; }
   color: var(--txt-b); line-height: 1.82;
 }
 
+/* Document notice (replaces file upload) */
+.on-doc-notice {
+  background: var(--navy);
+  border: 1px solid rgba(184,135,43,.28);
+  border-radius: 6px;
+  padding: 26px 28px;
+}
+.on-doc-notice-head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 16px; padding-bottom: 14px;
+  border-bottom: 1px solid rgba(184,135,43,.2);
+}
+.on-doc-notice-icon { color: var(--gold-2); flex-shrink: 0; }
+.on-doc-notice-label {
+  font-size: .6rem; font-weight: 700;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--gold-2);
+}
+.on-doc-notice-text {
+  font-size: .84rem; font-weight: 300;
+  color: rgba(255,255,255,.76); line-height: 1.8;
+  margin-bottom: 10px;
+}
+.on-doc-notice-text:last-child { margin-bottom: 0; }
+
 /* Conditional additional-signers sub-field */
 .on-addl-signers-wrap {
   margin-top: 18px;
