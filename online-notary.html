@@ -145,25 +145,6 @@
         <!-- Formspree subject (hidden) -->
         <input type="hidden" name="_subject" value="New Online Notarization Request — Ink &amp; Seal Notary Pros" />
 
-        <!-- ── Progress Indicator ── -->
-        <div class="ms-progress" id="msProgress" aria-label="Form progress">
-          <div class="ms-progress-top">
-            <span class="ms-step-counter" id="msStepLabel">Step 1 of 6</span>
-            <span class="ms-step-name" id="msStepName">Signer Information</span>
-          </div>
-          <div class="ms-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="msProgressBar">
-            <div class="ms-progress-fill" id="msProgressFill" style="width:16.667%"></div>
-          </div>
-          <div class="ms-dots">
-            <button type="button" class="ms-dot ms-dot--active" data-step="1" aria-label="Step 1: Signer Information"></button>
-            <button type="button" class="ms-dot" data-step="2" aria-label="Step 2: Document Information"></button>
-            <button type="button" class="ms-dot" data-step="3" aria-label="Step 3: Witness Requirements"></button>
-            <button type="button" class="ms-dot" data-step="4" aria-label="Step 4: Pricing Estimate"></button>
-            <button type="button" class="ms-dot" data-step="5" aria-label="Step 5: Identity Verification &amp; Consent"></button>
-            <button type="button" class="ms-dot" data-step="6" aria-label="Step 6: Electronic Signature"></button>
-          </div>
-        </div>
-
         <!-- ══ STEP 1: Signer Information ══ -->
         <div class="ms-step" id="step1" data-step="1">
 
@@ -707,11 +688,6 @@
       /* ── Multi-step navigation ── */
       var TOTAL_STEPS = 6;
       var currentStep = 1;
-      var stepNames = [
-        '', 'Signer Information', 'Document Information',
-        'Witness Requirements', 'Pricing Estimate',
-        'Identity Verification & Consent', 'Electronic Signature'
-      ];
 
       function showStep(n) {
         currentStep = n;
@@ -719,23 +695,6 @@
           var el = document.getElementById('step' + i);
           if (el) el.style.display = (i === n) ? '' : 'none';
         }
-        var pct = (n / TOTAL_STEPS) * 100;
-        var fill = document.getElementById('msProgressFill');
-        if (fill) fill.style.width = pct + '%';
-        var label = document.getElementById('msStepLabel');
-        if (label) label.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
-        var nameEl = document.getElementById('msStepName');
-        if (nameEl) nameEl.textContent = stepNames[n];
-        var bar = document.getElementById('msProgressBar');
-        if (bar) bar.setAttribute('aria-valuenow', n);
-        var dots = document.querySelectorAll('.ms-dot');
-        for (var j = 0; j < dots.length; j++) {
-          var dotN = j + 1;
-          dots[j].classList.toggle('ms-dot--active', dotN === n);
-          dots[j].classList.toggle('ms-dot--done', dotN < n);
-        }
-        var prog = document.getElementById('msProgress');
-        if (prog) prog.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         /* Re-run estimate whenever pricing step becomes visible */
         if (n === 4) updateEstimate();
       }
@@ -752,14 +711,6 @@
           }
         }
         return true;
-      }
-
-      /* Dot navigation: allow jumping back to any completed step */
-      var dotBtns = document.querySelectorAll('.ms-dot');
-      for (var d = 0; d < dotBtns.length; d++) {
-        dotBtns[d].addEventListener('click', (function (stepN) {
-          return function () { if (stepN <= currentStep) showStep(stepN); };
-        })(d + 1));
       }
 
       /* Continue buttons */
