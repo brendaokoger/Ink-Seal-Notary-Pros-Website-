@@ -1964,3 +1964,178 @@ ul    { list-style: none; }
   .on-field-row--3 { grid-template-columns: 1fr; }
   .on-submit-btn { padding: 20px 36px; letter-spacing: .18em; font-size: .62rem; }
 }
+
+/* ══════════════════════════════════════════════════
+   MULTI-STEP FORM — ms-* components
+   ══════════════════════════════════════════════════ */
+
+/* ── Progress container ── */
+.ms-progress {
+  max-width: 860px;
+  margin: 0 auto 36px;
+  padding: 24px 32px 20px;
+  background: var(--ivory);
+  border: 1px solid rgba(184,135,43,.22);
+  border-radius: 12px;
+  box-shadow: 0 2px 14px rgba(11,24,41,.07);
+}
+
+.ms-progress-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.ms-step-counter {
+  font-family: var(--serif);
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--gold-3);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ms-step-name {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: right;
+}
+
+/* ── Progress bar track ── */
+.ms-progress-track {
+  height: 3px;
+  background: rgba(11,24,41,.1);
+  border-radius: 100px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+
+.ms-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-3), var(--gold-2));
+  border-radius: 100px;
+  transition: width .45s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Step dots ── */
+.ms-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.ms-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(184,135,43,.35);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+
+.ms-dot:hover { border-color: var(--gold-2); }
+
+.ms-dot--done {
+  background: var(--gold-2);
+  border-color: var(--gold-2);
+}
+
+.ms-dot--active {
+  background: var(--navy);
+  border-color: var(--navy);
+  transform: scale(1.5);
+  cursor: default;
+}
+
+/* ── Step nav row ── */
+.ms-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 860px;
+  margin: 24px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(184,135,43,.15);
+}
+
+/* Submit step: align submit button right */
+.ms-nav--submit { align-items: flex-start; }
+
+.ms-submit-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* ── Back button ── */
+.ms-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  border: 1px solid var(--gold-2);
+  color: var(--navy);
+  font-family: var(--serif);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .2s;
+  white-space: nowrap;
+}
+
+.ms-btn-back:hover { background: rgba(184,135,43,.08); }
+
+/* ── Continue button ── */
+.ms-btn-continue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 32px;
+  background: var(--navy);
+  border: 1px solid var(--gold-2);
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+  white-space: nowrap;
+}
+
+.ms-btn-continue:hover {
+  background: #0f2035;
+  border-color: var(--gold);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .ms-progress { padding: 20px 20px 18px; }
+  .ms-progress-top { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .ms-step-name { text-align: left; }
+  .ms-nav {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .ms-nav--submit { align-items: stretch; }
+  .ms-submit-col { align-items: stretch; }
+  .ms-btn-back,
+  .ms-btn-continue { width: 100%; justify-content: center; }
+}

@@ -145,104 +145,171 @@
         <!-- Formspree subject (hidden) -->
         <input type="hidden" name="_subject" value="New Online Notarization Request — Ink &amp; Seal Notary Pros" />
 
-        <!-- ── A. Signer Information ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">A</span>
-            <h2 class="on-card-title">Signer Information</h2>
+        <!-- ── Progress Indicator ── -->
+        <div class="ms-progress" id="msProgress" aria-label="Form progress">
+          <div class="ms-progress-top">
+            <span class="ms-step-counter" id="msStepLabel">Step 1 of 6</span>
+            <span class="ms-step-name" id="msStepName">Signer Information</span>
           </div>
-
-          <div class="on-field-row">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="signerName">Full Legal Name</label>
-              <input type="text" id="signerName" name="signerName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
-            </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="signerEmail">Email Address</label>
-              <input type="email" id="signerEmail" name="signerEmail" class="on-input" placeholder="your@email.com" required autocomplete="email" />
-            </div>
+          <div class="ms-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="msProgressBar">
+            <div class="ms-progress-fill" id="msProgressFill" style="width:16.667%"></div>
           </div>
-
-          <div class="on-field-row" style="margin-top:22px">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="signerPhone">Mobile Phone Number</label>
-              <input type="tel" id="signerPhone" name="signerPhone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
-            </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="signerState">State of Residence</label>
-              <select id="signerState" name="signerState" class="on-select" required>
-                <option value="" disabled selected>Select your state</option>
-                <option>Alabama</option><option>Alaska</option><option>Arizona</option>
-                <option>Arkansas</option><option>California</option><option>Colorado</option>
-                <option>Connecticut</option><option>Delaware</option><option>Florida</option>
-                <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
-                <option>Illinois</option><option>Indiana</option><option>Iowa</option>
-                <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
-                <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
-                <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
-                <option>Missouri</option><option>Montana</option><option>Nebraska</option>
-                <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
-                <option>New Mexico</option><option>New York</option><option>North Carolina</option>
-                <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
-                <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
-                <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
-                <option>Texas</option><option>Utah</option><option>Vermont</option>
-                <option>Virginia</option><option>Washington</option><option>West Virginia</option>
-                <option>Wisconsin</option><option>Wyoming</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="on-field-row on-field-row--3" style="margin-top:22px">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="apptDate">Preferred Appointment Date</label>
-              <input type="date" id="apptDate" name="apptDate" class="on-input" required />
-            </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="apptTime">Preferred Appointment Time</label>
-              <input type="time" id="apptTime" name="apptTime" class="on-input" required />
-            </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="apptTZ">Time Zone</label>
-              <select id="apptTZ" name="apptTZ" class="on-select" required>
-                <option value="" disabled selected>Select time zone</option>
-                <option value="ET">Eastern Time</option>
-                <option value="CT">Central Time</option>
-                <option value="MT">Mountain Time</option>
-                <option value="PT">Pacific Time</option>
-                <option value="AKT">Alaska Time</option>
-                <option value="HT">Hawaii Time</option>
-              </select>
-            </div>
+          <div class="ms-dots">
+            <button type="button" class="ms-dot ms-dot--active" data-step="1" aria-label="Step 1: Signer Information"></button>
+            <button type="button" class="ms-dot" data-step="2" aria-label="Step 2: Document Information"></button>
+            <button type="button" class="ms-dot" data-step="3" aria-label="Step 3: Witness Requirements"></button>
+            <button type="button" class="ms-dot" data-step="4" aria-label="Step 4: Pricing Estimate"></button>
+            <button type="button" class="ms-dot" data-step="5" aria-label="Step 5: Identity Verification &amp; Consent"></button>
+            <button type="button" class="ms-dot" data-step="6" aria-label="Step 6: Electronic Signature"></button>
           </div>
         </div>
 
-        <!-- ── B. Document Information ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">B</span>
-            <h2 class="on-card-title">Document Information</h2>
+        <!-- ══ STEP 1: Signer Information ══ -->
+        <div class="ms-step" id="step1" data-step="1">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">1</span>
+              <h2 class="on-card-title">Signer Information</h2>
+            </div>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="signerName">Full Legal Name</label>
+                <input type="text" id="signerName" name="signerName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="signerEmail">Email Address</label>
+                <input type="email" id="signerEmail" name="signerEmail" class="on-input" placeholder="your@email.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:22px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="signerPhone">Mobile Phone Number</label>
+                <input type="tel" id="signerPhone" name="signerPhone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="signerState">State of Residence</label>
+                <select id="signerState" name="signerState" class="on-select" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="on-field-row on-field-row--3" style="margin-top:22px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="apptDate">Preferred Appointment Date</label>
+                <input type="date" id="apptDate" name="apptDate" class="on-input" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="apptTime">Preferred Appointment Time</label>
+                <input type="time" id="apptTime" name="apptTime" class="on-input" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="apptTZ">Time Zone</label>
+                <select id="apptTZ" name="apptTZ" class="on-select" required>
+                  <option value="" disabled selected>Select time zone</option>
+                  <option value="ET">Eastern Time</option>
+                  <option value="CT">Central Time</option>
+                  <option value="MT">Mountain Time</option>
+                  <option value="PT">Pacific Time</option>
+                  <option value="AKT">Alaska Time</option>
+                  <option value="HT">Hawaii Time</option>
+                </select>
+              </div>
+            </div>
           </div>
 
-          <div class="on-field-row">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="docType">Document Type</label>
-              <select id="docType" name="docType" class="on-select" required>
-                <option value="" disabled selected>Select document type</option>
-                <option>Affidavit</option>
-                <option>Power of Attorney</option>
-                <option>Business Document</option>
-                <option>Real Estate Document</option>
-                <option>Travel Consent Form</option>
-                <option>Medical Authorization</option>
-                <option>School Form</option>
-                <option>Financial Document</option>
-                <option>Other</option>
-              </select>
+          <div class="ms-nav">
+            <div></div>
+            <button type="button" class="ms-btn-continue" data-next="2">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 2: Document Information ══ -->
+        <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">2</span>
+              <h2 class="on-card-title">Document Information</h2>
             </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
-              <select id="numDocs" name="numDocs" class="on-select" required>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="docType">Document Type</label>
+                <select id="docType" name="docType" class="on-select" required>
+                  <option value="" disabled selected>Select document type</option>
+                  <option>Affidavit</option>
+                  <option>Power of Attorney</option>
+                  <option>Business Document</option>
+                  <option>Real Estate Document</option>
+                  <option>Travel Consent Form</option>
+                  <option>Medical Authorization</option>
+                  <option>School Form</option>
+                  <option>Financial Document</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
+                <select id="numDocs" name="numDocs" class="on-select" required>
+                  <option value="" disabled selected>Select number</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4+">4+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:22px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="numSeals">Number of Notarial Seals Needed</label>
+                <select id="numSeals" name="numSeals" class="on-select" required>
+                  <option value="" disabled selected>Select number</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4+">4+</option>
+                </select>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="addlSigners">Additional Signers</label>
+                <select id="addlSigners" name="addlSigners" class="on-select" required>
+                  <option value="" disabled selected>Select option</option>
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Conditional: shown only when Additional Signers = Yes -->
+            <div id="addlSignersWrap" class="on-addl-signers-wrap" style="display:none">
+              <label class="on-label on-label--req" for="addlSignersCount">How many additional signers?</label>
+              <select id="addlSignersCount" name="addlSignersCount" class="on-select" style="margin-top:8px">
                 <option value="" disabled selected>Select number</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -250,227 +317,243 @@
                 <option value="4+">4+</option>
               </select>
             </div>
+
+            <div class="on-field on-field--full" style="margin-top:28px">
+              <label class="on-label" for="addlNotes">Additional Notes</label>
+              <textarea id="addlNotes" name="addlNotes" class="on-textarea on-input" placeholder="Please share any special instructions, questions, or information about your document or session."></textarea>
+            </div>
           </div>
 
-          <div class="on-field-row" style="margin-top:22px">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="numSeals">Number of Notarial Seals Needed</label>
-              <select id="numSeals" name="numSeals" class="on-select" required>
-                <option value="" disabled selected>Select number</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4+">4+</option>
-              </select>
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="3">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 3: Witness Requirements ══ -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">3</span>
+              <h2 class="on-card-title">Witness Requirements</h2>
             </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="addlSigners">Additional Signers</label>
-              <select id="addlSigners" name="addlSigners" class="on-select" required>
+
+            <div class="on-field on-field--full">
+              <label class="on-label on-label--req" for="witnessReq">Does your document require witnesses?</label>
+              <select id="witnessReq" name="witnessReq" class="on-select" required>
                 <option value="" disabled selected>Select option</option>
                 <option value="no">No</option>
-                <option value="yes">Yes</option>
+                <option value="own">Yes — I will provide my own witness</option>
+                <option value="was">Yes — I need Witness as a Service (+$10)</option>
               </select>
             </div>
           </div>
 
-          <!-- Conditional: shown only when Additional Signers = Yes -->
-          <div id="addlSignersWrap" class="on-addl-signers-wrap" style="display:none">
-            <label class="on-label on-label--req" for="addlSignersCount">How many additional signers?</label>
-            <select id="addlSignersCount" name="addlSignersCount" class="on-select" style="margin-top:8px">
-              <option value="" disabled selected>Select number</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4+">4+</option>
-            </select>
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="4">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+
         </div>
 
-        <!-- ── C. Witness Requirements ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">C</span>
-            <h2 class="on-card-title">Witness Requirements</h2>
+        <!-- ══ STEP 4: Pricing Estimate ══ -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
+
+          <!-- Rate reference card -->
+          <div class="on-pricing-card">
+            <div class="on-card-head on-pricing-head">
+              <span class="on-card-num on-pricing-num" aria-hidden="true">4</span>
+              <h2 class="on-card-title on-pricing-title">Online Notarization Pricing</h2>
+            </div>
+
+            <div class="on-pricing-grid">
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Standard Online Notarization (1 Seal)</span>
+                <span class="on-pricing-price">$25</span>
+              </div>
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Each Additional Seal</span>
+                <span class="on-pricing-price">$8</span>
+              </div>
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Each Additional Signer</span>
+                <span class="on-pricing-price">$5</span>
+              </div>
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Witness as a Service</span>
+                <span class="on-pricing-price">$10</span>
+              </div>
+            </div>
           </div>
 
-          <div class="on-field on-field--full">
-            <label class="on-label on-label--req" for="witnessReq">Does your document require witnesses?</label>
-            <select id="witnessReq" name="witnessReq" class="on-select" required>
-              <option value="" disabled selected>Select option</option>
-              <option value="no">No</option>
-              <option value="own">Yes — I will provide my own witness</option>
-              <option value="was">Yes — I need Witness as a Service (+$10)</option>
-            </select>
+          <!-- Live fee estimate card -->
+          <div class="on-estimate-card">
+            <div class="on-card-head on-estimate-head">
+              <span class="on-card-num on-estimate-num" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </span>
+              <h2 class="on-card-title">Your Fee Estimate</h2>
+              <span class="on-estimate-badge" aria-label="Updates automatically">
+                <span class="on-estimate-badge-dot" aria-hidden="true"></span>
+                LIVE
+              </span>
+            </div>
+
+            <p class="on-estimate-intro">Your estimate is based on the document information you provided.</p>
+
+            <div class="on-estimate-rows">
+              <div class="on-estimate-row">
+                <span class="on-estimate-label">Base Online Notarization</span>
+                <span class="on-estimate-val on-estimate-base">$25</span>
+              </div>
+              <div class="on-estimate-row">
+                <span class="on-estimate-label">Additional Seals</span>
+                <span class="on-estimate-val" id="estSeals">—</span>
+              </div>
+              <div class="on-estimate-row">
+                <span class="on-estimate-label">Additional Signers</span>
+                <span class="on-estimate-val" id="estSigners">—</span>
+              </div>
+              <div class="on-estimate-row">
+                <span class="on-estimate-label">Witness Service</span>
+                <span class="on-estimate-val" id="estWitness">—</span>
+              </div>
+            </div>
+
+            <div class="on-estimate-total">
+              <span class="on-estimate-total-label">Estimated Total</span>
+              <span class="on-estimate-total-val" id="estTotal">$25</span>
+            </div>
+
+            <p class="on-estimate-note">Final pricing may vary depending on signer count, document requirements, and session complexity. No payment is requested at this time.</p>
           </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
         </div>
 
-        <!-- ── D. Document Review ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">D</span>
-            <h2 class="on-card-title">Document Review</h2>
-          </div>
+        <!-- ══ STEP 5: Identity Verification & Consent ══ -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
 
-          <div class="on-doc-notice">
-            <div class="on-doc-notice-head">
-              <svg class="on-doc-notice-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-              <span class="on-doc-notice-label">Document Review</span>
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">5</span>
+              <h2 class="on-card-title">Identity Verification &amp; Electronic Consent</h2>
             </div>
-            <p class="on-doc-notice-text">After your request is submitted, Ink &amp; Seal Notary Pros will send secure document submission instructions before your online notarization session.</p>
-            <p class="on-doc-notice-text">Please have your unsigned document ready. Documents must be signed during the live online notarization session.</p>
+
+            <div class="on-check-list">
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent1" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand all signers must complete identity verification prior to notarization.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent2" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand a valid government-issued photo ID is required.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent3" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand all signers must appear live during the online notarization session.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent4" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I consent to conducting this notarization electronically.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent5" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand unsigned documents must be presented during the live session.</span>
+              </label>
+
+            </div>
           </div>
 
-          <div class="on-field on-field--full" style="margin-top:24px">
-            <label class="on-label" for="addlNotes">Additional Notes</label>
-            <textarea id="addlNotes" name="addlNotes" class="on-textarea on-input" placeholder="Please share any special instructions, questions, or information about your document or session."></textarea>
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="6">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
           </div>
+
         </div>
 
-        <!-- ── E. Pricing & Live Estimate ── -->
+        <!-- ══ STEP 6: Electronic Signature ══ -->
+        <div class="ms-step" id="step6" data-step="6" style="display:none">
 
-        <!-- Rate reference card -->
-        <div class="on-pricing-card">
-          <div class="on-card-head on-pricing-head">
-            <span class="on-card-num on-pricing-num" aria-hidden="true">E</span>
-            <h2 class="on-card-title on-pricing-title">Online Notarization Pricing</h2>
-          </div>
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">6</span>
+              <h2 class="on-card-title">Electronic Signature</h2>
+            </div>
 
-          <div class="on-pricing-grid">
-            <div class="on-pricing-item">
-              <span class="on-pricing-name">Standard Online Notarization (1 Seal)</span>
-              <span class="on-pricing-price">$25</span>
-            </div>
-            <div class="on-pricing-item">
-              <span class="on-pricing-name">Each Additional Seal</span>
-              <span class="on-pricing-price">$8</span>
-            </div>
-            <div class="on-pricing-item">
-              <span class="on-pricing-name">Each Additional Signer</span>
-              <span class="on-pricing-price">$5</span>
-            </div>
-            <div class="on-pricing-item">
-              <span class="on-pricing-name">Witness as a Service</span>
-              <span class="on-pricing-price">$10</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Live fee estimate card -->
-        <div class="on-estimate-card">
-          <div class="on-card-head on-estimate-head">
-            <span class="on-card-num on-estimate-num" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </span>
-            <h2 class="on-card-title">Your Fee Estimate</h2>
-            <span class="on-estimate-badge" aria-label="Updates automatically">
-              <span class="on-estimate-badge-dot" aria-hidden="true"></span>
-              LIVE
-            </span>
-          </div>
-
-          <p class="on-estimate-intro">Your estimate updates automatically as you complete the form above.</p>
-
-          <div class="on-estimate-rows">
-            <div class="on-estimate-row">
-              <span class="on-estimate-label">Base Online Notarization</span>
-              <span class="on-estimate-val on-estimate-base">$25</span>
-            </div>
-            <div class="on-estimate-row">
-              <span class="on-estimate-label">Additional Seals</span>
-              <span class="on-estimate-val" id="estSeals">—</span>
-            </div>
-            <div class="on-estimate-row">
-              <span class="on-estimate-label">Additional Signers</span>
-              <span class="on-estimate-val" id="estSigners">—</span>
-            </div>
-            <div class="on-estimate-row">
-              <span class="on-estimate-label">Witness Service</span>
-              <span class="on-estimate-val" id="estWitness">—</span>
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="eSignature">Signature</label>
+                <input type="text" id="eSignature" name="eSignature" class="on-input on-sig-input" placeholder="Type your full legal name" required autocomplete="off" />
+                <p class="on-sig-hint">By typing your name above, you are providing your electronic signature.</p>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="sigDate">Date</label>
+                <input type="date" id="sigDate" name="sigDate" class="on-input" required />
+              </div>
             </div>
           </div>
 
-          <div class="on-estimate-total">
-            <span class="on-estimate-total-label">Estimated Total</span>
-            <span class="on-estimate-total-val" id="estTotal">$25</span>
-          </div>
-
-          <p class="on-estimate-note">Final pricing may vary depending on signer count, document requirements, and session complexity. No payment is requested at this time.</p>
-        </div>
-
-        <!-- ── F. Identity Verification & Electronic Consent ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">F</span>
-            <h2 class="on-card-title">Identity Verification &amp; Electronic Consent</h2>
-          </div>
-
-          <div class="on-check-list">
-
-            <label class="on-check-item">
-              <input type="checkbox" class="on-check-input" name="consent1" required />
-              <span class="on-check-box" aria-hidden="true"></span>
-              <span class="on-check-text">I understand all signers must complete identity verification prior to notarization.</span>
-            </label>
-
-            <label class="on-check-item">
-              <input type="checkbox" class="on-check-input" name="consent2" required />
-              <span class="on-check-box" aria-hidden="true"></span>
-              <span class="on-check-text">I understand a valid government-issued photo ID is required.</span>
-            </label>
-
-            <label class="on-check-item">
-              <input type="checkbox" class="on-check-input" name="consent3" required />
-              <span class="on-check-box" aria-hidden="true"></span>
-              <span class="on-check-text">I understand all signers must appear live during the online notarization session.</span>
-            </label>
-
-            <label class="on-check-item">
-              <input type="checkbox" class="on-check-input" name="consent4" required />
-              <span class="on-check-box" aria-hidden="true"></span>
-              <span class="on-check-text">I consent to conducting this notarization electronically.</span>
-            </label>
-
-            <label class="on-check-item">
-              <input type="checkbox" class="on-check-input" name="consent5" required />
-              <span class="on-check-box" aria-hidden="true"></span>
-              <span class="on-check-text">I understand unsigned documents must be presented during the live session.</span>
-            </label>
-
-          </div>
-        </div>
-
-        <!-- ── G. Electronic Signature ── -->
-        <div class="on-card">
-          <div class="on-card-head">
-            <span class="on-card-num" aria-hidden="true">G</span>
-            <h2 class="on-card-title">Electronic Signature</h2>
-          </div>
-
-          <div class="on-field-row">
-            <div class="on-field">
-              <label class="on-label on-label--req" for="eSignature">Signature</label>
-              <input type="text" id="eSignature" name="eSignature" class="on-input on-sig-input" placeholder="Type your full legal name" required autocomplete="off" />
-              <p class="on-sig-hint">By typing your name above, you are providing your electronic signature.</p>
-            </div>
-            <div class="on-field">
-              <label class="on-label on-label--req" for="sigDate">Date</label>
-              <input type="date" id="sigDate" name="sigDate" class="on-input" required />
-            </div>
-          </div>
-        </div>
-
-        <!-- ── H. Submit ── -->
-        <div class="on-submit-wrap">
           <div class="on-submit-rule">
             <span class="on-submit-line"></span>
             <span class="on-submit-gem">◆</span>
             <span class="on-submit-line"></span>
           </div>
-          <button type="submit" class="on-submit-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Request Online Notarization
-          </button>
-          <p class="on-required-note">Fields marked with <span style="color:var(--gold)">*</span> are required.</p>
+
+          <div class="ms-nav ms-nav--submit">
+            <button type="button" class="ms-btn-back" data-prev="5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <div class="ms-submit-col">
+              <button type="submit" class="on-submit-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Request Online Notarization
+              </button>
+              <p class="on-required-note">Fields marked with <span style="color:var(--gold)">*</span> are required.</p>
+            </div>
+          </div>
+
         </div>
 
       </form>
@@ -579,63 +662,129 @@
       if (sigDateEl) sigDateEl.value = today;
 
       /* ── Pricing / live estimate ── */
-      var numSealsEl       = document.getElementById('numSeals');
-      var addlSignersEl    = document.getElementById('addlSigners');
-      var addlSigWrap      = document.getElementById('addlSignersWrap');
-      var addlSigCountEl   = document.getElementById('addlSignersCount');
-      var witnessEl        = document.getElementById('witnessReq');
-
-      var estSealsEl   = document.getElementById('estSeals');
-      var estSignersEl = document.getElementById('estSigners');
-      var estWitnessEl = document.getElementById('estWitness');
-      var estTotalEl   = document.getElementById('estTotal');
+      var numSealsEl     = document.getElementById('numSeals');
+      var addlSignersEl  = document.getElementById('addlSigners');
+      var addlSigWrap    = document.getElementById('addlSignersWrap');
+      var addlSigCountEl = document.getElementById('addlSignersCount');
+      var witnessEl      = document.getElementById('witnessReq');
+      var estSealsEl     = document.getElementById('estSeals');
+      var estSignersEl   = document.getElementById('estSigners');
+      var estWitnessEl   = document.getElementById('estWitness');
+      var estTotalEl     = document.getElementById('estTotal');
 
       function toNum(select, fallback) {
         if (!select || !select.value) return fallback;
         return select.value === '4+' ? 4 : (parseInt(select.value, 10) || fallback);
       }
-
-      function fmt(n) {
-        return n > 0 ? '+$' + n : '—';
-      }
+      function fmt(n) { return n > 0 ? '+$' + n : '—'; }
 
       function updateEstimate() {
-        /* Seals: base includes 1, each extra = $8 */
         var seals     = toNum(numSealsEl, 1);
         var addlSeals = Math.max(0, seals - 1);
         var sealsAmt  = addlSeals * 8;
-
-        /* Additional signers */
         var hasSigners = addlSignersEl && addlSignersEl.value === 'yes';
         var sigCount   = hasSigners ? toNum(addlSigCountEl, 1) : 0;
         var signersAmt = sigCount * 5;
-
-        /* Conditional additional-signers sub-field */
         if (addlSigWrap) {
           addlSigWrap.style.display = hasSigners ? 'block' : 'none';
           if (addlSigCountEl) addlSigCountEl.required = hasSigners;
         }
-
-        /* Witness as a Service */
         var needsWAS   = witnessEl && witnessEl.value === 'was';
         var witnessAmt = needsWAS ? 10 : 0;
-
-        /* Total */
         var total = 25 + sealsAmt + signersAmt + witnessAmt;
-
-        /* Update display */
         if (estSealsEl)   estSealsEl.textContent   = fmt(sealsAmt);
         if (estSignersEl) estSignersEl.textContent = fmt(signersAmt);
         if (estWitnessEl) estWitnessEl.textContent = fmt(witnessAmt);
         if (estTotalEl)   estTotalEl.textContent   = '$' + total;
       }
 
-      if (numSealsEl)    numSealsEl.addEventListener('change', updateEstimate);
-      if (addlSignersEl) addlSignersEl.addEventListener('change', updateEstimate);
+      if (numSealsEl)     numSealsEl.addEventListener('change', updateEstimate);
+      if (addlSignersEl)  addlSignersEl.addEventListener('change', updateEstimate);
       if (addlSigCountEl) addlSigCountEl.addEventListener('change', updateEstimate);
-      if (witnessEl)     witnessEl.addEventListener('change', updateEstimate);
+      if (witnessEl)      witnessEl.addEventListener('change', updateEstimate);
+      updateEstimate();
 
-      updateEstimate(); /* initialise on page load */
+      /* ── Multi-step navigation ── */
+      var TOTAL_STEPS = 6;
+      var currentStep = 1;
+      var stepNames = [
+        '', 'Signer Information', 'Document Information',
+        'Witness Requirements', 'Pricing Estimate',
+        'Identity Verification & Consent', 'Electronic Signature'
+      ];
+
+      function showStep(n) {
+        currentStep = n;
+        for (var i = 1; i <= TOTAL_STEPS; i++) {
+          var el = document.getElementById('step' + i);
+          if (el) el.style.display = (i === n) ? '' : 'none';
+        }
+        var pct = (n / TOTAL_STEPS) * 100;
+        var fill = document.getElementById('msProgressFill');
+        if (fill) fill.style.width = pct + '%';
+        var label = document.getElementById('msStepLabel');
+        if (label) label.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
+        var nameEl = document.getElementById('msStepName');
+        if (nameEl) nameEl.textContent = stepNames[n];
+        var bar = document.getElementById('msProgressBar');
+        if (bar) bar.setAttribute('aria-valuenow', n);
+        var dots = document.querySelectorAll('.ms-dot');
+        for (var j = 0; j < dots.length; j++) {
+          var dotN = j + 1;
+          dots[j].classList.toggle('ms-dot--active', dotN === n);
+          dots[j].classList.toggle('ms-dot--done', dotN < n);
+        }
+        var prog = document.getElementById('msProgress');
+        if (prog) prog.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        /* Re-run estimate whenever pricing step becomes visible */
+        if (n === 4) updateEstimate();
+      }
+
+      function validateStep(n) {
+        var stepEl = document.getElementById('step' + n);
+        if (!stepEl) return true;
+        var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].checkValidity()) {
+            fields[i].focus();
+            fields[i].reportValidity();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      /* Dot navigation: allow jumping back to any completed step */
+      var dotBtns = document.querySelectorAll('.ms-dot');
+      for (var d = 0; d < dotBtns.length; d++) {
+        dotBtns[d].addEventListener('click', (function (stepN) {
+          return function () { if (stepN <= currentStep) showStep(stepN); };
+        })(d + 1));
+      }
+
+      /* Continue buttons */
+      var continueBtns = document.querySelectorAll('.ms-btn-continue');
+      for (var c = 0; c < continueBtns.length; c++) {
+        continueBtns[c].addEventListener('click', (function (btn) {
+          return function () {
+            var next = parseInt(btn.getAttribute('data-next'), 10);
+            if (validateStep(currentStep)) showStep(next);
+          };
+        })(continueBtns[c]));
+      }
+
+      /* Back buttons */
+      var backBtns = document.querySelectorAll('.ms-btn-back');
+      for (var b = 0; b < backBtns.length; b++) {
+        backBtns[b].addEventListener('click', (function (btn) {
+          return function () {
+            var prev = parseInt(btn.getAttribute('data-prev'), 10);
+            showStep(prev);
+          };
+        })(backBtns[b]));
+      }
+
+      showStep(1);
 
       /* ── Form submit → Formspree (fetch) → branded success ── */
       var form      = document.getElementById('onForm');
@@ -646,10 +795,7 @@
         form.addEventListener('submit', function (e) {
           e.preventDefault();
 
-          if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-          }
+          if (!validateStep(6)) return;
 
           if (submitBtn) submitBtn.disabled = true;
 
