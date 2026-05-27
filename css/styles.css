@@ -2131,22 +2131,6 @@ ul    { list-style: none; }
    APOSTILLE REVIEW PAGE  (ar-*)
    ═══════════════════════════════════════════════════════════ */
 
-/* Hero subheadline */
-.ar-hero-sub {
-  font-family: var(--script);
-  font-size: clamp(.9rem, 1.6vw, 1.15rem);
-  font-weight: 300;
-  color: var(--txt-b);
-  letter-spacing: .04em;
-  margin-top: 18px;
-  line-height: 1.5;
-}
-.ar-hero-sub em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--gold-2);
-}
-
 /* Intro wrapper */
 .ar-intro-wrap {
   max-width: 860px;
@@ -2161,37 +2145,40 @@ ul    { list-style: none; }
   text-align: center;
 }
 
-/* Timeframe info box */
+/* Timeframe notice — compact inline card */
 .ar-timeframe {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--gold-2);
-  border-radius: 6px;
-  padding: 28px 36px;
-  box-shadow: 0 2px 16px rgba(11,24,41,.05);
-}
-.ar-timeframe-head {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-  color: var(--gold-3);
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(184,135,43,.04);
+  border: 1px solid rgba(184,135,43,.2);
+  border-left: 2px solid var(--gold-2);
+  border-radius: 3px;
+  padding: 14px 20px;
 }
+.ar-timeframe-icon {
+  flex-shrink: 0;
+  color: var(--gold-3);
+  margin-top: 1px;
+  opacity: .85;
+}
+.ar-timeframe-body { flex: 1; }
 .ar-timeframe-label {
-  font-size: .6rem;
+  display: block;
+  font-size: .54rem;
   font-weight: 700;
-  letter-spacing: .26em;
+  letter-spacing: .28em;
   text-transform: uppercase;
   color: var(--gold-3);
+  margin-bottom: 6px;
 }
 .ar-timeframe-p {
-  font-size: .87rem;
+  font-size: .82rem;
   font-weight: 300;
-  line-height: 1.85;
+  line-height: 1.72;
   color: var(--txt-b);
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
-.ar-timeframe-p:last-child { margin-bottom: 0; }
 
 /* Upload area */
 .ar-file-label {
@@ -2258,7 +2245,7 @@ ul    { list-style: none; }
 }
 
 @media (max-width: 640px) {
-  .ar-timeframe  { padding: 20px 20px; }
+  .ar-timeframe  { padding: 12px 16px; gap: 10px; }
   .ar-file-label { padding: 32px 20px; min-height: 140px; }
 }
 
