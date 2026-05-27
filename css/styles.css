@@ -285,9 +285,9 @@ ul    { list-style: none; }
 }
 
 .eyebrow {
-  font-size: .56rem;
+  font-size: .72rem;
   font-weight: 600;
-  letter-spacing: .42em;
+  letter-spacing: .38em;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 30px;
@@ -509,21 +509,27 @@ ul    { list-style: none; }
 .svc-card:first-child  { border-color: rgba(184,135,43,.30); }
 .svc-card:first-child:hover { border-color: rgba(184,135,43,.55); }
 
-.svc-card--soon { }
+.svc-card--soon { position: relative; overflow: hidden; }
 .svc-card--soon .svc-icon  { opacity: .72; }
 .svc-card--soon .svc-title { opacity: .78; }
 .svc-card--soon .svc-desc  { opacity: .65; }
 
-.svc-badge {
-  margin-top: auto;
-  display: inline-block;
-  background: rgba(154,106,31,.08);
-  border: 1px solid rgba(154,106,31,.30);
-  color: var(--gold);
-  font-size: .48rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
-  padding: 6px 14px; border-radius: 100px; line-height: 1.6;
-  white-space: nowrap;
-  position: static;
+.svc-ribbon {
+  position: absolute;
+  top: 20px;
+  right: -30px;
+  width: 136px;
+  background: var(--gold-3);
+  color: var(--ivory);
+  font-size: .48rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 7px 0;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(11,24,41,.18);
 }
 
 .svc-icon {
@@ -941,14 +947,49 @@ ul    { list-style: none; }
 .ab-hero {
   padding-top: var(--hh);
   background: var(--ivory);
-  padding-bottom: 80px;
+  padding-bottom: 56px;
 }
 .ab-hero-header {
   max-width: 880px;
   margin: 0 auto;
   text-align: center;
-  padding-top: 80px;
-  padding-bottom: 52px;
+  padding-top: 72px;
+  padding-bottom: 0;
+}
+
+/* ── Section: Meet Our Founder ── */
+.ab-founder-section {
+  background: var(--ivory);
+  border-top: 1px solid var(--border);
+  padding: 80px 0 96px;
+}
+.ab-founder-section-header {
+  margin-bottom: 48px;
+}
+.ab-founder-h {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: .04em;
+  margin-top: 16px;
+}
+.ab-founder-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  max-width: 900px;
+}
+.ab-founder-bio-block {
+  flex: 1;
+  padding-top: 4px;
+}
+.ab-founder-portrait-block {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
 }
 .ab-eyebrow {
   display: block;
@@ -1243,13 +1284,13 @@ ul    { list-style: none; }
   .footer-top   { grid-template-columns: auto 1fr 1fr; gap: 22px; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-logo  { height: 88px; max-width: 220px; }
-  .ab-founder-row { flex-direction: column; align-items: center; gap: 28px; padding-top: 20px; }
-  .ab-founder-id { width: 100%; max-width: 340px; }
-  .ab-founder-bio-wrap { width: 100%; }
+  .ab-founder-content { flex-direction: column; gap: 32px; }
+  .ab-founder-portrait-block { width: 100%; }
   .ab-portrait-card { width: 200px; }
   .ab-portrait-img  { height: 244px; }
-  .ab-hero { padding-bottom: 72px; }
-  .ab-hero-header { padding-top: 52px; padding-bottom: 36px; }
+  .ab-hero { padding-bottom: 40px; }
+  .ab-hero-header { padding-top: 52px; padding-bottom: 0; }
+  .ab-founder-section { padding: 60px 0 72px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
 }
 
@@ -1399,10 +1440,12 @@ ul    { list-style: none; }
   .trust-right { gap: 20px; }
 
   /* about */
-  .ab-hero { padding-bottom: 52px; }
-  .ab-hero-header { padding-top: 28px; padding-bottom: 20px; }
+  .eyebrow { font-size: .58rem; letter-spacing: .34em; }
+  .ab-hero { padding-bottom: 36px; }
+  .ab-hero-header { padding-top: 28px; padding-bottom: 0; }
   .ab-portrait-card { width: 180px; }
   .ab-portrait-img  { height: 220px; }
+  .ab-founder-section { padding: 48px 0 60px; }
   .ab-services { padding: 56px 0 64px; }
   .ab-services-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .ab-cta { padding: 72px 0 88px; }
