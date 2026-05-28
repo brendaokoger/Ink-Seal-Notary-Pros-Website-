@@ -322,11 +322,61 @@
           </div>
         </div>
 
-        <!-- ── STEP 4 — DOCUMENT UPLOAD ───────────────────── -->
+        <!-- ── STEP 4 — RETURN SHIPPING OPTIONS ─────────── -->
         <div class="ms-step" id="step4" data-step="4" style="display:none">
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">4</span>
+              <h2 class="on-card-title">Return Shipping Options</h2>
+            </div>
+
+            <div class="ar-option-group">
+              <p class="ar-option-group-label on-label">Return Shipping Method</p>
+              <div class="ar-option-col">
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="usps-priority"
+                         data-shipping-fee="0" class="ar-option-input" checked />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">USPS Priority Return Shipping</span>
+                  <span class="ar-option-price">Included</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="overnight"
+                         data-shipping-fee="45" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Overnight Return Shipping</span>
+                  <span class="ar-option-price">+ $45</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="international"
+                         data-shipping-fee="75" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">International Return Shipping</span>
+                  <span class="ar-option-price">Starting at $75</span>
+                </label>
+                <p class="ar-shipping-notice">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, weight, and delivery requirements.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 5 — DOCUMENT UPLOAD ───────────────────── -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">5</span>
               <h2 class="on-card-title">Document Upload</h2>
             </div>
 
@@ -354,33 +404,6 @@
           </div>
 
           <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="3">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="5">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 5 — ADDITIONAL NOTES ─────────────────── -->
-        <div class="ms-step" id="step5" data-step="5" style="display:none">
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">5</span>
-              <h2 class="on-card-title">Additional Notes</h2>
-            </div>
-
-            <div class="on-field on-field--full">
-              <label class="on-label" for="notes">Additional Notes</label>
-              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
-                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
-            </div>
-          </div>
-
-          <div class="ms-nav">
             <button type="button" class="ms-btn-back" data-prev="4">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
@@ -392,11 +415,38 @@
           </div>
         </div>
 
-        <!-- ── STEP 6 — ACKNOWLEDGMENT + SUBMIT ──────────── -->
+        <!-- ── STEP 6 — ADDITIONAL NOTES ─────────────────── -->
         <div class="ms-step" id="step6" data-step="6" style="display:none">
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">6</span>
+              <h2 class="on-card-title">Additional Notes</h2>
+            </div>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
+                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="5">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="7">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 7 — ACKNOWLEDGMENT + SUBMIT ──────────── -->
+        <div class="ms-step" id="step7" data-step="7" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">7</span>
               <h2 class="on-card-title">Review &amp; Submit</h2>
             </div>
 
@@ -412,7 +462,7 @@
           </div>
 
           <div class="ms-nav ms-nav--submit">
-            <button type="button" class="ms-btn-back" data-prev="5">
+            <button type="button" class="ms-btn-back" data-prev="6">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
@@ -521,7 +571,7 @@
   <script src="js/main.js"></script>
   <script>
     (function () {
-      var TOTAL_STEPS = 6;
+      var TOTAL_STEPS = 7;
       var currentStep = 1;
 
       function showStep(n) {

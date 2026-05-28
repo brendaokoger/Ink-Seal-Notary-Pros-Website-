@@ -2204,6 +2204,23 @@ ul    { list-style: none; }
 @media (max-width: 580px) {
   .ar-option-row { grid-template-columns: 1fr; gap: 10px; }
 }
+.ar-option-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ar-shipping-notice {
+  font-size: .78rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--txt-m);
+  line-height: 1.65;
+  padding: 10px 14px;
+  background: rgba(184,135,43,.04);
+  border-left: 2px solid rgba(184,135,43,.3);
+  border-radius: 0 3px 3px 0;
+  margin-top: 2px;
+}
 
 /* Intro wrapper */
 .ar-intro-wrap {
