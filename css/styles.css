@@ -2209,6 +2209,26 @@ ul    { list-style: none; }
   flex-direction: column;
   gap: 12px;
 }
+.ar-ron-group {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.ar-ron-eyebrow {
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 10px;
+}
+.ar-ron-body {
+  font-size: .84rem;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--txt-b);
+  margin-bottom: 20px;
+}
 .ar-shipping-notice {
   font-size: .78rem;
   font-weight: 400;
