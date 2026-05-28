@@ -161,12 +161,12 @@
           </div>
         </div>
 
-        <!-- ── STEP 2 — DOCUMENT DETAILS ──────────────────── -->
+        <!-- ── STEP 2 — DOCUMENT INFORMATION ────────────────── -->
         <div class="ms-step" id="step2" data-step="2" style="display:none">
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">2</span>
-              <h2 class="on-card-title">Document Details</h2>
+              <h2 class="on-card-title">Document Information</h2>
             </div>
 
             <div class="on-field-row" style="margin-bottom:20px">
@@ -176,9 +176,9 @@
                        placeholder="e.g. Mexico, Germany, Italy" required />
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="issuingState">Issuing State</label>
+                <label class="on-label on-label--req" for="issuingState">State or Jurisdiction Where Document Was Issued</label>
                 <select id="issuingState" name="issuingState" class="on-select" required>
-                  <option value="" disabled selected>Select issuing state</option>
+                  <option value="" disabled selected>Select issuing state or jurisdiction</option>
                   <option>Alabama</option><option>Alaska</option><option>Arizona</option>
                   <option>Arkansas</option><option>California</option><option>Colorado</option>
                   <option>Connecticut</option><option>Delaware</option><option>Florida</option>
@@ -201,7 +201,24 @@
               </div>
             </div>
 
-            <div class="on-field-row">
+            <div class="on-field-row" style="margin-bottom:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="docType">Document Type</label>
+                <select id="docType" name="docType" class="on-select" required>
+                  <option value="" disabled selected>Select document type</option>
+                  <option>Birth Certificate</option>
+                  <option>Marriage Certificate</option>
+                  <option>Death Certificate</option>
+                  <option>Divorce Decree</option>
+                  <option>Power of Attorney</option>
+                  <option>Affidavit</option>
+                  <option>Passport Copy</option>
+                  <option>Driver License Copy</option>
+                  <option>School Document</option>
+                  <option>Business Document</option>
+                  <option>Other</option>
+                </select>
+              </div>
               <div class="on-field">
                 <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
                 <select id="numDocs" name="numDocs" class="on-select" required>
@@ -214,28 +231,16 @@
                   <option value="6+">6 or more</option>
                 </select>
               </div>
+            </div>
+
+            <div class="on-field-row on-field-row--1">
               <div class="on-field">
-                <label class="on-label on-label--req" for="docType">Document Type</label>
-                <select id="docType" name="docType" class="on-select" required>
-                  <option value="" disabled selected>Select document type</option>
-                  <option>Birth Certificate</option>
-                  <option>Marriage Certificate</option>
-                  <option>Death Certificate</option>
-                  <option>Divorce Decree</option>
-                  <option>Court Document</option>
-                  <option>FBI Background Check</option>
-                  <option>Diploma</option>
-                  <option>Transcript</option>
-                  <option>Passport Copy</option>
-                  <option>Driver's License Copy</option>
-                  <option>Power of Attorney</option>
-                  <option>Affidavit</option>
-                  <option>Business Document</option>
-                  <option>Articles of Incorporation</option>
-                  <option>Certificate of Good Standing</option>
-                  <option>Adoption Document</option>
-                  <option>Medical Document</option>
-                  <option>Other</option>
+                <label class="on-label on-label--req" for="alreadyNotarized">Is Your Document Already Notarized?</label>
+                <select id="alreadyNotarized" name="alreadyNotarized" class="on-select" required>
+                  <option value="" disabled selected>Select an option</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                  <option value="Not Sure">Not Sure</option>
                 </select>
               </div>
             </div>
