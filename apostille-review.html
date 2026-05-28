@@ -258,11 +258,75 @@
           </div>
         </div>
 
-        <!-- ── STEP 3 — DOCUMENT UPLOAD ───────────────────── -->
+        <!-- ── STEP 3 — SERVICE OPTIONS ──────────────────────── -->
         <div class="ms-step" id="step3" data-step="3" style="display:none">
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">3</span>
+              <h2 class="on-card-title">Service Options</h2>
+            </div>
+
+            <!-- Processing Speed -->
+            <div class="ar-option-group">
+              <p class="ar-option-group-label on-label">Processing Speed</p>
+              <div class="ar-option-row">
+                <label class="ar-option-card">
+                  <input type="radio" name="processingSpeed" value="standard"
+                         data-rush-fee="0" class="ar-option-input" checked />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Standard Processing</span>
+                  <span class="ar-option-price">Included</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="processingSpeed" value="rush"
+                         data-rush-fee="75" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Rush Processing</span>
+                  <span class="ar-option-price">+ $75</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Review Speed -->
+            <div class="ar-option-group" style="margin-top:32px">
+              <p class="ar-option-group-label on-label">Review Speed</p>
+              <div class="ar-option-row">
+                <label class="ar-option-card">
+                  <input type="radio" name="reviewSpeed" value="standard"
+                         data-review-fee="0" class="ar-option-input" checked />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Standard Review</span>
+                  <span class="ar-option-price">Included</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="reviewSpeed" value="same-day"
+                         data-review-fee="25" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Same-Day Review</span>
+                  <span class="ar-option-price">+ $25</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="2">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="4">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 4 — DOCUMENT UPLOAD ───────────────────── -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">4</span>
               <h2 class="on-card-title">Document Upload</h2>
             </div>
 
@@ -290,33 +354,6 @@
           </div>
 
           <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="2">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="4">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 4 — ADDITIONAL NOTES ─────────────────── -->
-        <div class="ms-step" id="step4" data-step="4" style="display:none">
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">4</span>
-              <h2 class="on-card-title">Additional Notes</h2>
-            </div>
-
-            <div class="on-field on-field--full">
-              <label class="on-label" for="notes">Additional Notes</label>
-              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
-                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
-            </div>
-          </div>
-
-          <div class="ms-nav">
             <button type="button" class="ms-btn-back" data-prev="3">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
@@ -328,11 +365,38 @@
           </div>
         </div>
 
-        <!-- ── STEP 5 — ACKNOWLEDGMENT + SUBMIT ──────────── -->
+        <!-- ── STEP 5 — ADDITIONAL NOTES ─────────────────── -->
         <div class="ms-step" id="step5" data-step="5" style="display:none">
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">5</span>
+              <h2 class="on-card-title">Additional Notes</h2>
+            </div>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
+                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="4">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="6">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 6 — ACKNOWLEDGMENT + SUBMIT ──────────── -->
+        <div class="ms-step" id="step6" data-step="6" style="display:none">
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">6</span>
               <h2 class="on-card-title">Review &amp; Submit</h2>
             </div>
 
@@ -348,7 +412,7 @@
           </div>
 
           <div class="ms-nav ms-nav--submit">
-            <button type="button" class="ms-btn-back" data-prev="4">
+            <button type="button" class="ms-btn-back" data-prev="5">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
@@ -457,7 +521,7 @@
   <script src="js/main.js"></script>
   <script>
     (function () {
-      var TOTAL_STEPS = 5;
+      var TOTAL_STEPS = 6;
       var currentStep = 1;
 
       function showStep(n) {
