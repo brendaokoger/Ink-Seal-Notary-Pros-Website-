@@ -2424,10 +2424,9 @@ ul    { list-style: none; }
 }
 .ar-estimate-item {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 16px;
-  padding: 8px 0;
+  gap: 6px;
+  padding: 9px 0;
   border-bottom: 1px solid rgba(228,225,219,.7);
 }
 .ar-estimate-item:last-child {
@@ -2437,12 +2436,30 @@ ul    { list-style: none; }
   font-size: .84rem;
   font-weight: 400;
   color: var(--txt-b);
+  flex-shrink: 0;
+}
+.ar-estimate-item-leader {
+  flex: 1;
+  min-width: 16px;
+  border-bottom: 1px dotted rgba(11,24,41,.18);
+  align-self: flex-end;
+  margin-bottom: 4px;
 }
 .ar-estimate-item-amount {
   font-size: .84rem;
   font-weight: 500;
   color: var(--navy);
   white-space: nowrap;
+  flex-shrink: 0;
+}
+.ar-estimate-note {
+  font-size: .76rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.65;
+  color: var(--txt-m);
+  margin-top: 10px;
+  padding: 0 2px;
 }
 .ar-estimate-divider {
   height: 1px;

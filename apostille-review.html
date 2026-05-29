@@ -559,23 +559,28 @@
               <div class="ar-estimate-box">
                 <div class="ar-estimate-items">
                   <div class="ar-estimate-item">
-                    <span class="ar-estimate-item-label">Apostille Service</span>
+                    <span class="ar-estimate-item-label" id="arEstBaseLabel">Standard Apostille Service (1 Document)</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
                     <span class="ar-estimate-item-amount">$175</span>
                   </div>
                   <div class="ar-estimate-item" id="arEstItemAddl" style="display:none">
-                    <span class="ar-estimate-item-label">Additional Documents</span>
+                    <span class="ar-estimate-item-label" id="arEstAddlLabel">Additional Documents</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
                     <span class="ar-estimate-item-amount" id="arEstAddl">+ $0</span>
                   </div>
                   <div class="ar-estimate-item" id="arEstItemReview" style="display:none">
                     <span class="ar-estimate-item-label">Same-Day Review</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
                     <span class="ar-estimate-item-amount">+ $25</span>
                   </div>
                   <div class="ar-estimate-item" id="arEstItemRush" style="display:none">
                     <span class="ar-estimate-item-label">Rush Processing</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
                     <span class="ar-estimate-item-amount">+ $75</span>
                   </div>
                   <div class="ar-estimate-item">
-                    <span class="ar-estimate-item-label" id="arEstShipLabel">USPS Priority Shipping</span>
+                    <span class="ar-estimate-item-label" id="arEstShipLabel">USPS Priority Return Shipping</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
                     <span class="ar-estimate-item-amount" id="arEstShipping">Included</span>
                   </div>
                 </div>
@@ -586,7 +591,8 @@
                 </div>
                 <p class="ar-estimate-intl" id="arEstimateIntl" style="display:none">International return shipping is shown as a starting estimate. Final shipping will be quoted after document review and destination verification.</p>
               </div>
-              <p class="ar-estimate-disclaimer">This is an estimated total only. Final pricing will be confirmed after document review. If additional requirements, certified originals, RON notarization, international shipping adjustments, or state-specific processing needs apply, a final quote will be sent before processing.</p>
+              <p class="ar-estimate-note">If additional notarization, witness services, multiple documents, expedited processing, or special handling is required, a revised quote will be provided after document review and approved by the client before processing begins.</p>
+              <p class="ar-estimate-disclaimer">Certain document types, additional notarization requirements, witness services, federal documents, legalization requests, and expedited services may require additional fees. Final pricing is confirmed after document review.</p>
             </div>
 
             <!-- Important Disclaimer -->
@@ -815,6 +821,18 @@
           itemAddl.style.display = addlAmt > 0 ? '' : 'none';
           var addlEl = document.getElementById('arEstAddl');
           if (addlEl) addlEl.textContent = '+ $' + addlAmt.toLocaleString();
+          var addlLbl = document.getElementById('arEstAddlLabel');
+          if (addlLbl) {
+            var addlCount = numDocs - 1;
+            addlLbl.textContent = addlCount === 1
+              ? 'Additional Document (1)'
+              : 'Additional Documents (' + addlCount + ')';
+          }
+        }
+
+        var baseLbl = document.getElementById('arEstBaseLabel');
+        if (baseLbl) {
+          baseLbl.textContent = 'Standard Apostille Service (1 Document)';
         }
 
         var itemReview = document.getElementById('arEstItemReview');
