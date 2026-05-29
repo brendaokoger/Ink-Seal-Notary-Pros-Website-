@@ -13,128 +13,33 @@
 </head>
 <body>
 
-  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
-  <header class="header" id="header">
-    <div class="header-inner">
-      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
-        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
+  <!-- ═══ FORM HEADER ═════════════════════════════════════ -->
+  <header class="form-hdr" id="header">
+    <div class="form-hdr-inner container">
+      <a href="index.html" class="form-hdr-logo" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" />
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="index.html"          class="nav-link">Home</a>
-        <a href="about.html"          class="nav-link">About Us</a>
-        <a href="index.html#services" class="nav-link">Services</a>
-        <a href="faq.html"            class="nav-link">FAQs</a>
-        <a href="index.html#contact"  class="nav-link">Contact</a>
-      </nav>
-      <div class="header-end">
-        <a href="apostille-review.html" class="btn-nav">Start My Apostille</a>
-        <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
-          <span class="burger-bar"></span>
-          <span class="burger-bar"></span>
-          <span class="burger-bar"></span>
-          <span class="burger-text">MENU</span>
-        </button>
+      <div class="form-hdr-center">
+        <a href="index.html#services" class="form-hdr-back">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+          Back to Services
+        </a>
+        <span class="form-hdr-title">Remote Online Notarization Request</span>
+      </div>
+      <div class="form-hdr-step">
+        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 6</span>
       </div>
     </div>
-    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
-      <div class="drawer-inner">
-        <a href="index.html"          class="drawer-link">Home</a>
-        <a href="about.html"          class="drawer-link">About Us</a>
-        <a href="index.html#services" class="drawer-link">Services</a>
-        <a href="faq.html"            class="drawer-link">FAQs</a>
-        <a href="index.html#contact"  class="drawer-link">Contact</a>
-      </div>
+    <div class="form-hdr-progress">
+      <div class="form-hdr-bar" id="fhBar" style="width:16.7%"></div>
     </div>
   </header>
-
-  <!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
-  <section class="page-hero on-hero">
-    <div class="container">
-      <h1 class="h-page">Remote Online Notarization Request</h1>
-      <div class="on-hero-rule">
-        <span class="on-hero-line"></span>
-        <span class="on-hero-gem">◆</span>
-        <span class="on-hero-line"></span>
-      </div>
-    </div>
-  </section>
 
   <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
   <section class="on-form-section">
     <div class="container">
 
-      <!-- Before Your Online Notarization -->
-      <div class="on-info-wrap">
-
-        <div class="sec-label">
-          <span class="sec-line"></span>
-          <span class="sec-tag">Important Information</span>
-          <span class="sec-line"></span>
-        </div>
-        <h2 class="on-info-h">Before Your Online Notarization</h2>
-        <p class="on-info-lead">Complete the secure form below to request your Remote Online Notarization appointment with Ink &amp; Seal Notary Pros.</p>
-
-        <div class="on-info-grid">
-
-          <!-- 1 — Secure Session Invitation -->
-          <div class="on-info-card">
-            <div class="on-info-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <polyline points="2,4 12,13 22,4"/>
-              </svg>
-            </div>
-            <div class="on-info-card-rule"></div>
-            <h3 class="on-info-card-title">Secure Session Invitation</h3>
-            <p class="on-info-card-text">Once your request is submitted, you will receive a secure invitation link from our Online Notarization Platform for your selected appointment date and time. A reminder invitation may also be sent prior to your session.</p>
-          </div>
-
-          <!-- 2 — Identity Verification -->
-          <div class="on-info-card">
-            <div class="on-info-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
-                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                <circle cx="8.5" cy="12" r="2.5"/>
-                <line x1="13" y1="10" x2="20" y2="10"/>
-                <line x1="13" y1="14" x2="18" y2="14"/>
-              </svg>
-            </div>
-            <div class="on-info-card-rule"></div>
-            <h3 class="on-info-card-title">Identity Verification</h3>
-            <p class="on-info-card-text">All signers must complete identity verification using a valid government-issued photo ID before the notarization session begins.</p>
-          </div>
-
-          <!-- 3 — Device Requirements -->
-          <div class="on-info-card">
-            <div class="on-info-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
-                <polygon points="23 7 16 12 23 17 23 7"/>
-                <rect x="1" y="5" width="15" height="14" rx="2"/>
-              </svg>
-            </div>
-            <div class="on-info-card-rule"></div>
-            <h3 class="on-info-card-title">Device Requirements</h3>
-            <p class="on-info-card-text">Signers may join from a phone or computer. Please make sure your camera, microphone, and audio permissions are enabled and working before the appointment.</p>
-          </div>
-
-          <!-- 4 — Rescheduling -->
-          <div class="on-info-card">
-            <div class="on-info-icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="18" rx="2"/>
-                <line x1="16" y1="2" x2="16" y2="6"/>
-                <line x1="8" y1="2" x2="8" y2="6"/>
-                <line x1="3" y1="10" x2="21" y2="10"/>
-                <polyline points="8,14 10,16 16,12"/>
-              </svg>
-            </div>
-            <div class="on-info-card-rule"></div>
-            <h3 class="on-info-card-title">Rescheduling</h3>
-            <p class="on-info-card-text">Once the session is created, the invitation link will be sent before the scheduled appointment time. Sessions may be rescheduled if needed.</p>
-          </div>
-
-        </div>
-      </div>
+      <p class="form-intro-text">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
 
       <!-- FORM -->
       <form class="on-form" id="onForm"
@@ -696,8 +601,18 @@
           var el = document.getElementById('step' + i);
           if (el) el.style.display = (i === n) ? '' : 'none';
         }
-        /* Re-run estimate whenever pricing step becomes visible */
+        var bar = document.getElementById('fhBar');
+        if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(1) + '%';
+        var lbl = document.getElementById('fhStepLabel');
+        if (lbl) lbl.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
+        var stepEl = document.getElementById('step' + n);
+        if (stepEl) {
+          stepEl.classList.remove('ms-step-enter');
+          void stepEl.offsetWidth;
+          stepEl.classList.add('ms-step-enter');
+        }
         if (n === 4) updateEstimate();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
       function validateStep(n) {
