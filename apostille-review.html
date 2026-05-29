@@ -150,6 +150,10 @@
       </div>
 
       <!-- Multi-step form -->
+      <!-- TODO: Add Google Apps Script endpoint here when ready. Example:
+           action="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
+           method="POST"
+           Google Sheet ID: 1Kt9KsGlYnpzcjoCYNUBvkWnBxSW5MfJi41gfzP_wYlE -->
       <form class="on-form" id="arForm" novalidate>
 
         <!-- ── STEP 1 — CLIENT INFORMATION ────────────────── -->
@@ -183,8 +187,8 @@
 
             <div class="on-field-row on-field-row--1" style="margin-top:20px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="stateResidence">State of Residence</label>
-                <select id="stateResidence" name="stateResidence" class="on-select" required>
+                <label class="on-label on-label--req" for="state">State of Residence</label>
+                <select id="state" name="state" class="on-select" required>
                   <option value="" disabled selected>Select your state</option>
                   <option>Alabama</option><option>Alaska</option><option>Arizona</option>
                   <option>Arkansas</option><option>California</option><option>Colorado</option>
@@ -227,8 +231,8 @@
 
             <div class="on-field-row" style="margin-bottom:20px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="destCountry">Destination Country</label>
-                <input type="text" id="destCountry" name="destCountry" class="on-input"
+                <label class="on-label on-label--req" for="destinationCountry">Destination Country</label>
+                <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
                        placeholder="e.g. Mexico, Germany, Italy" required />
               </div>
               <div class="on-field">
@@ -259,8 +263,8 @@
 
             <div class="on-field-row" style="margin-bottom:20px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="docType">Document Type</label>
-                <select id="docType" name="docType" class="on-select" required>
+                <label class="on-label on-label--req" for="documentType">Document Type</label>
+                <select id="documentType" name="documentType" class="on-select" required>
                   <option value="" disabled selected>Select document type</option>
                   <option>Birth Certificate</option>
                   <option>Marriage Certificate</option>
@@ -276,8 +280,8 @@
                 </select>
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="numDocs">Number of Documents</label>
-                <select id="numDocs" name="numDocs" class="on-select" required>
+                <label class="on-label on-label--req" for="documentCount">Number of Documents</label>
+                <select id="documentCount" name="documentCount" class="on-select" required>
                   <option value="" disabled selected>Select quantity</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -444,7 +448,7 @@
 
             <div class="on-field on-field--full">
               <label class="on-label" for="docUpload">Upload Document For Review</label>
-              <input type="file" id="docUpload" name="document" class="on-file-input"
+              <input type="file" id="docUpload" name="uploadFile" class="on-file-input"
                      accept=".pdf,.jpg,.jpeg,.png" />
               <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
                 <div class="on-file-icon">
@@ -765,7 +769,7 @@
       }
 
       function calcEstimate() {
-        var numDocsEl = document.getElementById('numDocs');
+        var numDocsEl = document.getElementById('documentCount');
         var numDocs = numDocsEl
           ? (numDocsEl.value === '6+' ? 6 : (parseInt(numDocsEl.value, 10) || 1))
           : 1;
@@ -920,7 +924,7 @@
       });
 
       // Live estimate: recalc on any pricing field change
-      ['numDocs', 'reviewSpeed', 'processingSpeed', 'returnShipping'].forEach(function (name) {
+      ['documentCount', 'reviewSpeed', 'processingSpeed', 'returnShipping'].forEach(function (name) {
         document.querySelectorAll('[name="' + name + '"]').forEach(function (el) {
           el.addEventListener('change', calcEstimate);
         });

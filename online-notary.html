@@ -42,6 +42,9 @@
       <p class="form-intro-text">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
 
       <!-- FORM -->
+      <!-- TODO: Replace Formspree action with Google Apps Script endpoint when ready.
+           Example: action="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
+           Google Sheet ID: 1Kt9KsGlYnpzcjoCYNUBvkWnBxSW5MfJi41gfzP_wYlE -->
       <form class="on-form" id="onForm"
             action="https://formspree.io/f/mpqnojvj"
             method="POST"
@@ -61,19 +64,19 @@
 
             <div class="on-field-row">
               <div class="on-field">
-                <label class="on-label on-label--req" for="signerName">Full Legal Name</label>
-                <input type="text" id="signerName" name="signerName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
+                <label class="on-label on-label--req" for="fullName">Full Legal Name</label>
+                <input type="text" id="fullName" name="fullName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="signerEmail">Email Address</label>
-                <input type="email" id="signerEmail" name="signerEmail" class="on-input" placeholder="your@email.com" required autocomplete="email" />
+                <label class="on-label on-label--req" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="on-input" placeholder="your@email.com" required autocomplete="email" />
               </div>
             </div>
 
             <div class="on-field-row" style="margin-top:22px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="signerPhone">Mobile Phone Number</label>
-                <input type="tel" id="signerPhone" name="signerPhone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
+                <label class="on-label on-label--req" for="phone">Mobile Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
               </div>
               <div class="on-field">
                 <label class="on-label on-label--req" for="signerState">State of Residence</label>
@@ -102,16 +105,16 @@
 
             <div class="on-field-row on-field-row--3" style="margin-top:22px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="apptDate">Preferred Appointment Date</label>
-                <input type="date" id="apptDate" name="apptDate" class="on-input" required />
+                <label class="on-label on-label--req" for="appointmentDate">Preferred Appointment Date</label>
+                <input type="date" id="appointmentDate" name="appointmentDate" class="on-input" required />
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="apptTime">Preferred Appointment Time</label>
-                <input type="time" id="apptTime" name="apptTime" class="on-input" required />
+                <label class="on-label on-label--req" for="appointmentTime">Preferred Appointment Time</label>
+                <input type="time" id="appointmentTime" name="appointmentTime" class="on-input" required />
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="apptTZ">Time Zone</label>
-                <select id="apptTZ" name="apptTZ" class="on-select" required>
+                <label class="on-label on-label--req" for="timezone">Time Zone</label>
+                <select id="timezone" name="timezone" class="on-select" required>
                   <option value="" disabled selected>Select time zone</option>
                   <option value="ET">Eastern Time</option>
                   <option value="CT">Central Time</option>
@@ -145,8 +148,8 @@
 
             <div class="on-field-row">
               <div class="on-field">
-                <label class="on-label on-label--req" for="docType">Document Type</label>
-                <select id="docType" name="docType" class="on-select" required>
+                <label class="on-label on-label--req" for="documentType">Document Type</label>
+                <select id="documentType" name="documentType" class="on-select" required>
                   <option value="" disabled selected>Select document type</option>
                   <option>Affidavit</option>
                   <option>Power of Attorney</option>
@@ -173,8 +176,8 @@
 
             <div class="on-field-row" style="margin-top:22px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="numSeals">Number of Notarial Seals Needed</label>
-                <select id="numSeals" name="numSeals" class="on-select" required>
+                <label class="on-label on-label--req" for="sealCount">Number of Notarial Seals Needed</label>
+                <select id="sealCount" name="sealCount" class="on-select" required>
                   <option value="" disabled selected>Select number</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -183,8 +186,8 @@
                 </select>
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="addlSigners">Additional Signers</label>
-                <select id="addlSigners" name="addlSigners" class="on-select" required>
+                <label class="on-label on-label--req" for="signerCount">Additional Signers</label>
+                <select id="signerCount" name="signerCount" class="on-select" required>
                   <option value="" disabled selected>Select option</option>
                   <option value="no">No</option>
                   <option value="yes">Yes</option>
@@ -205,8 +208,8 @@
             </div>
 
             <div class="on-field on-field--full" style="margin-top:28px">
-              <label class="on-label" for="addlNotes">Additional Notes</label>
-              <textarea id="addlNotes" name="addlNotes" class="on-textarea on-input" placeholder="Please share any special instructions, questions, or information about your document or session."></textarea>
+              <label class="on-label" for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" class="on-textarea on-input" placeholder="Please share any special instructions, questions, or information about your document or session."></textarea>
             </div>
           </div>
 
@@ -233,8 +236,8 @@
             </div>
 
             <div class="on-field on-field--full">
-              <label class="on-label on-label--req" for="witnessReq">Does your document require witnesses?</label>
-              <select id="witnessReq" name="witnessReq" class="on-select" required>
+              <label class="on-label on-label--req" for="witnessRequired">Does your document require witnesses?</label>
+              <select id="witnessRequired" name="witnessRequired" class="on-select" required>
                 <option value="" disabled selected>Select option</option>
                 <option value="no">No</option>
                 <option value="own">Yes — I will provide my own witness</option>
@@ -549,11 +552,11 @@
       if (sigDateEl) sigDateEl.value = today;
 
       /* ── Pricing / live estimate ── */
-      var numSealsEl     = document.getElementById('numSeals');
-      var addlSignersEl  = document.getElementById('addlSigners');
+      var numSealsEl     = document.getElementById('sealCount');
+      var addlSignersEl  = document.getElementById('signerCount');
       var addlSigWrap    = document.getElementById('addlSignersWrap');
       var addlSigCountEl = document.getElementById('addlSignersCount');
-      var witnessEl      = document.getElementById('witnessReq');
+      var witnessEl      = document.getElementById('witnessRequired');
       var estSealsEl     = document.getElementById('estSeals');
       var estSignersEl   = document.getElementById('estSigners');
       var estWitnessEl   = document.getElementById('estWitness');
@@ -667,7 +670,7 @@
           if (submitBtn) submitBtn.disabled = true;
 
           var data = new FormData(form);
-          var emailEl = document.getElementById('signerEmail');
+          var emailEl = document.getElementById('email');
           if (emailEl && emailEl.value) data.append('_replyto', emailEl.value);
 
           fetch('https://formspree.io/f/mpqnojvj', {
