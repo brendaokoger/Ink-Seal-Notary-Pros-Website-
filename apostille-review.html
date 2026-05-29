@@ -80,6 +80,69 @@
         </div>
       </div>
 
+      <!-- Pricing Reference Card -->
+      <div class="ar-pricing-card">
+        <div class="ar-pricing-head">
+          <span class="ar-pricing-eyebrow">Estimated Service Pricing</span>
+          <h3 class="ar-pricing-title">Standard Apostille Service Pricing</h3>
+        </div>
+
+        <div class="ar-pricing-feature">
+          <span class="ar-pricing-feature-label">Standard Apostille Service</span>
+          <span class="ar-pricing-feature-price">Starting at $175 <span class="ar-pricing-per">per document</span></span>
+        </div>
+        <div class="ar-pricing-row ar-pricing-row--sub">
+          <span class="ar-pricing-item">Additional Documents (same order)</span>
+          <span class="ar-pricing-amount">$100 each</span>
+        </div>
+
+        <div class="ar-pricing-divider"></div>
+
+        <div class="ar-pricing-group">
+          <p class="ar-pricing-group-label">Review Options</p>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">Standard Review</span>
+            <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+          </div>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">Same-Day Review</span>
+            <span class="ar-pricing-amount">+ $25</span>
+          </div>
+        </div>
+
+        <div class="ar-pricing-group">
+          <p class="ar-pricing-group-label">Processing Options</p>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">Standard Processing</span>
+            <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+          </div>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">Rush Processing</span>
+            <span class="ar-pricing-amount">+ $75</span>
+          </div>
+        </div>
+
+        <div class="ar-pricing-group">
+          <p class="ar-pricing-group-label">Return Shipping</p>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">USPS Priority Return Shipping</span>
+            <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+          </div>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">Overnight Return Shipping</span>
+            <span class="ar-pricing-amount">+ $45</span>
+          </div>
+          <div class="ar-pricing-row">
+            <span class="ar-pricing-item">International Return Shipping</span>
+            <span class="ar-pricing-amount">Starting at $75</span>
+          </div>
+        </div>
+
+        <p class="ar-pricing-intl-note">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, package weight, delivery requirements, and shipping method selected. A final international shipping quote will be provided after document review and destination verification.</p>
+
+        <p class="ar-pricing-disclaimer">All pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</p>
+      </div>
+
       <!-- Success message -->
       <div class="on-success" id="arSuccess">
         <div class="on-success-icon">
@@ -473,6 +536,17 @@
 
             <p class="ar-review-lead">Please review and confirm before submitting your apostille review request.</p>
 
+            <div class="ar-estimate-wrap">
+              <div class="ar-estimate-box">
+                <div class="ar-estimate-row">
+                  <span class="ar-estimate-label">Estimated Total</span>
+                  <span class="ar-estimate-total" id="arEstimateTotal">$175</span>
+                </div>
+                <p class="ar-estimate-intl" id="arEstimateIntl" style="display:none">International return shipping is shown as a starting estimate. Final shipping will be quoted after document review and destination verification.</p>
+              </div>
+              <p class="ar-estimate-disclaimer">This is an estimated total only. Final pricing will be confirmed after document review. If additional requirements, certified originals, RON notarization, international shipping adjustments, or state-specific processing needs apply, a final quote will be sent before processing.</p>
+            </div>
+
             <div class="on-check-list">
               <label class="on-check-item">
                 <input type="checkbox" name="ackReview" class="on-check-input" required />
@@ -601,6 +675,7 @@
           var el = document.getElementById('step' + i);
           if (el) el.style.display = (i === n) ? '' : 'none';
         }
+        if (n === 7) calcEstimate();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
@@ -618,6 +693,35 @@
         return true;
       }
 
+      function calcEstimate() {
+        var numDocsEl = document.getElementById('numDocs');
+        var numDocs = numDocsEl
+          ? (numDocsEl.value === '6+' ? 6 : (parseInt(numDocsEl.value, 10) || 1))
+          : 1;
+
+        var reviewChecked = document.querySelector('input[name="reviewSpeed"]:checked');
+        var reviewFee = (reviewChecked && reviewChecked.value === 'same-day') ? 25 : 0;
+
+        var processingChecked = document.querySelector('input[name="processingSpeed"]:checked');
+        var rushFee = (processingChecked && processingChecked.value === 'rush') ? 75 : 0;
+
+        var shippingChecked = document.querySelector('input[name="returnShipping"]:checked');
+        var shippingFee = 0;
+        var isIntl = false;
+        if (shippingChecked) {
+          if (shippingChecked.value === 'overnight') { shippingFee = 45; }
+          else if (shippingChecked.value === 'international') { shippingFee = 75; isIntl = true; }
+        }
+
+        var total = 175 + (Math.max(0, numDocs - 1) * 100) + reviewFee + rushFee + shippingFee;
+
+        var totalEl = document.getElementById('arEstimateTotal');
+        if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+
+        var intlEl = document.getElementById('arEstimateIntl');
+        if (intlEl) intlEl.style.display = isIntl ? '' : 'none';
+      }
+
       // Continue buttons
       document.querySelectorAll('.ms-btn-continue').forEach(function (btn) {
         btn.addEventListener('click', function () {
@@ -631,6 +735,13 @@
         btn.addEventListener('click', function () {
           var prev = parseInt(this.getAttribute('data-prev'), 10);
           showStep(prev);
+        });
+      });
+
+      // Live estimate: recalc on any pricing field change
+      ['numDocs', 'reviewSpeed', 'processingSpeed', 'returnShipping'].forEach(function (name) {
+        document.querySelectorAll('[name="' + name + '"]').forEach(function (el) {
+          el.addEventListener('change', calcEstimate);
         });
       });
 
