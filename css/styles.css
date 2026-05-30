@@ -3482,3 +3482,206 @@ ul    { list-style: none; }
     height: 50px;
   }
 }
+
+/* ════════════════════════════════════════════════
+   UPLOAD DROP ZONE
+   ════════════════════════════════════════════════ */
+
+.ar-dropzone {
+  position: relative;
+  border-radius: 12px;
+  border: 2px dashed rgba(184,135,43,.38);
+  background: rgba(247,244,238,.5);
+  cursor: pointer;
+  transition: border-color .22s var(--ease), background .22s var(--ease), box-shadow .22s var(--ease);
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.ar-dropzone:hover,
+.ar-dropzone--drag {
+  border-color: var(--gold-2);
+  background: rgba(184,135,43,.07);
+  box-shadow: 0 6px 32px rgba(11,24,41,.09);
+}
+
+.ar-dropzone--error {
+  border-color: #c0392b;
+  background: rgba(192,57,43,.05);
+  animation: arDzShake .35s var(--ease);
+}
+
+@keyframes arDzShake {
+  0%,100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  60%      { transform: translateX(6px); }
+}
+
+.ar-dropzone--full {
+  cursor: default;
+  opacity: .52;
+  pointer-events: none;
+}
+
+.ar-dropzone-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none; /* JS handles the click */
+}
+
+.ar-dropzone-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 52px 24px 44px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.ar-dropzone-icon {
+  color: var(--gold);
+  margin-bottom: 16px;
+  opacity: .8;
+  transition: opacity .22s var(--ease), color .22s var(--ease);
+}
+
+.ar-dropzone:hover .ar-dropzone-icon,
+.ar-dropzone--drag .ar-dropzone-icon {
+  opacity: 1;
+  color: var(--gold-2);
+}
+
+.ar-dropzone-title {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--txt-b);
+  margin: 0 0 6px;
+}
+
+.ar-dropzone-sub {
+  font-size: .88rem;
+  color: var(--txt-m);
+  margin: 0 0 10px;
+}
+
+.ar-dropzone-browse {
+  color: var(--gold-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 500;
+}
+
+.ar-dropzone-hint {
+  font-size: .78rem;
+  color: var(--txt-m);
+  letter-spacing: .025em;
+  margin: 0;
+}
+
+/* ── File list ── */
+.ar-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.ar-file-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  animation: arFileIn .22s var(--ease) both;
+}
+
+@keyframes arFileIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ar-file-item-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(184,135,43,.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-2);
+}
+
+.ar-file-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ar-file-item-name {
+  font-size: .86rem;
+  font-weight: 600;
+  color: var(--txt-b);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ar-file-item-size {
+  font-size: .75rem;
+  color: var(--txt-m);
+}
+
+.ar-file-item-remove {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--txt-m);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .18s, color .18s;
+  padding: 0;
+}
+
+.ar-file-item-remove:hover {
+  background: rgba(192,57,43,.09);
+  color: #c0392b;
+}
+
+.ar-upload-count {
+  font-size: .8rem;
+  color: var(--txt-m);
+  text-align: right;
+  margin: 4px 0 0;
+}
+
+.ar-upload-count--full {
+  color: var(--gold-3);
+  font-weight: 600;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ar-dropzone-body  { padding: 38px 20px 32px; }
+  .ar-dropzone-title { font-size: 1rem; }
+}
+@media (max-width: 400px) {
+  .ar-dropzone-body  { padding: 30px 16px 26px; }
+  .ar-file-item      { padding: 10px 12px; gap: 10px; }
+}
