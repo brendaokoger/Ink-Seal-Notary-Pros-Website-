@@ -3102,3 +3102,217 @@ ul    { list-style: none; }
   padding-bottom: 12px;
   border-bottom: 1px solid rgba(184,135,43,.2);
 }
+
+/* ══════════════════════════════════════════════════
+   PREMIUM SERVICE SELECTION CARDS
+   ══════════════════════════════════════════════════ */
+
+.ar-service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 860px;
+  margin: 0 auto 28px;
+}
+
+.ar-service-card {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  overflow: hidden;
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease), background .22s var(--ease);
+}
+
+.ar-service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold-3), var(--gold-2));
+  opacity: 0;
+  transition: opacity .22s var(--ease);
+}
+
+.ar-service-card:hover:not(:has(.ar-service-input:checked)) {
+  border-color: rgba(184,135,43,.5);
+  box-shadow: 0 4px 24px rgba(11,24,41,.09);
+}
+
+.ar-service-input {
+  position: absolute;
+  opacity: 0; width: 0; height: 0;
+  pointer-events: none;
+}
+
+.ar-service-card-body {
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.ar-service-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.ar-service-eyebrow {
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  transition: color .22s var(--ease);
+}
+
+.ar-service-check-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+}
+
+.ar-service-check-icon svg {
+  opacity: 0;
+  transition: opacity .18s var(--ease);
+}
+
+.ar-service-title {
+  font-family: var(--serif);
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -.01em;
+  line-height: 1.18;
+  margin-bottom: 10px;
+  transition: color .22s var(--ease);
+}
+
+.ar-service-desc {
+  font-size: .88rem;
+  font-weight: 300;
+  line-height: 1.72;
+  color: var(--txt-b);
+  flex: 1;
+  transition: color .22s var(--ease);
+}
+
+.ar-service-pricing {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  transition: border-color .22s var(--ease);
+}
+
+.ar-service-price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.ar-service-starting {
+  font-size: .72rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  transition: color .22s var(--ease);
+}
+
+.ar-service-amount {
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  transition: color .22s var(--ease);
+}
+
+.ar-service-per {
+  font-size: .72rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  transition: color .22s var(--ease);
+}
+
+.ar-service-review-note {
+  display: block;
+  font-size: .74rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  transition: color .22s var(--ease);
+}
+
+/* ── Selected state ── */
+.ar-service-card:has(.ar-service-input:checked) {
+  border-color: var(--gold-2);
+  background: var(--navy);
+  box-shadow: 0 10px 48px rgba(11,24,41,.26), 0 2px 10px rgba(11,24,41,.14);
+}
+
+.ar-service-card:has(.ar-service-input:checked)::before {
+  opacity: 1;
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-eyebrow {
+  color: var(--gold-2);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-check-icon {
+  background: var(--gold-2);
+  border-color: var(--gold-2);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-check-icon svg {
+  opacity: 1;
+  stroke: var(--navy);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-title {
+  color: var(--gold-2);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-desc {
+  color: rgba(247,244,238,.72);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-pricing {
+  border-top-color: rgba(184,135,43,.3);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-starting,
+.ar-service-card:has(.ar-service-input:checked) .ar-service-per {
+  color: rgba(247,244,238,.5);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-amount {
+  color: var(--gold-2);
+}
+
+.ar-service-card:has(.ar-service-input:checked) .ar-service-review-note {
+  color: rgba(247,244,238,.55);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ar-service-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .ar-service-card-body { padding: 22px 20px 18px; }
+  .ar-service-title     { font-size: 1.1rem; }
+  .ar-service-amount    { font-size: 1.42rem; }
+  .ar-service-pricing   { margin-top: 18px; padding-top: 14px; }
+}
+@media (max-width: 400px) {
+  .ar-service-card-body { padding: 18px 16px 16px; }
+}

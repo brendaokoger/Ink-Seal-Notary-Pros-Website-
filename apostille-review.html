@@ -27,7 +27,7 @@
       </div>
       <div class="form-hdr-step">
         <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 6</span>
-        <span class="form-hdr-step-name" id="fhStepName">Pricing &amp; Services</span>
+        <span class="form-hdr-step-name" id="fhStepName">Select Your Service</span>
       </div>
     </div>
     <div class="form-hdr-progress">
@@ -65,8 +65,59 @@
 
           <div class="ar-step-hdr">
             <span class="ar-step-hdr-eyebrow">Step 1 of 6</span>
-            <h2 class="ar-step-hdr-title">Review Pricing &amp; Select Your Services</h2>
-            <p class="ar-step-hdr-desc">Choose your processing speed, review option, and return shipping method. Your estimated total is calculated automatically on the final step.</p>
+            <h2 class="ar-step-hdr-title">Select Your Service</h2>
+            <p class="ar-step-hdr-desc">Choose the review option that fits your timeline. Pricing shown is an estimate — final pricing is confirmed after your documents are reviewed.</p>
+          </div>
+
+          <!-- Premium Service Selection Cards -->
+          <div class="ar-service-grid">
+
+            <label class="ar-service-card">
+              <input type="radio" name="sameDayReview" value="standard"
+                     data-review-fee="0" class="ar-service-input" checked />
+              <div class="ar-service-card-body">
+                <div class="ar-service-top">
+                  <span class="ar-service-eyebrow">Standard</span>
+                  <span class="ar-service-check-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+                  </span>
+                </div>
+                <h3 class="ar-service-title">Standard Apostille Review</h3>
+                <p class="ar-service-desc">Most apostille review requests are reviewed within 1 business day.</p>
+                <div class="ar-service-pricing">
+                  <div class="ar-service-price-main">
+                    <span class="ar-service-starting">Starting at</span>
+                    <span class="ar-service-amount">$175</span>
+                    <span class="ar-service-per">per document</span>
+                  </div>
+                  <span class="ar-service-review-note">Standard review included</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="ar-service-card">
+              <input type="radio" name="sameDayReview" value="same-day"
+                     data-review-fee="25" class="ar-service-input" />
+              <div class="ar-service-card-body">
+                <div class="ar-service-top">
+                  <span class="ar-service-eyebrow">Priority</span>
+                  <span class="ar-service-check-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+                  </span>
+                </div>
+                <h3 class="ar-service-title">Same-Day Priority Review</h3>
+                <p class="ar-service-desc">Priority placement in our review queue. Most clients are contacted the same business day.</p>
+                <div class="ar-service-pricing">
+                  <div class="ar-service-price-main">
+                    <span class="ar-service-starting">Starting at</span>
+                    <span class="ar-service-amount">$200</span>
+                    <span class="ar-service-per">per document</span>
+                  </div>
+                  <span class="ar-service-review-note">Includes $25 same-day review</span>
+                </div>
+              </div>
+            </label>
+
           </div>
 
           <!-- Apostille Pricing Reference Card -->
@@ -175,11 +226,10 @@
             </div>
           </details>
 
-          <!-- Service Options card -->
+          <!-- Processing & Shipping Options card -->
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num">1</span>
-              <h2 class="on-card-title">Service Options</h2>
+              <h2 class="on-card-title">Processing &amp; Shipping Options</h2>
             </div>
 
             <!-- Processing Speed -->
@@ -201,29 +251,6 @@
                   <span class="ar-option-name">Rush Processing</span>
                   <span class="ar-option-price">+ $75</span>
                   <span class="ar-option-desc">Priority handling for faster turnaround</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Review Speed -->
-            <div class="ar-option-group" style="margin-top:32px">
-              <p class="ar-option-group-label on-label">Review Speed</p>
-              <div class="ar-option-row">
-                <label class="ar-option-card">
-                  <input type="radio" name="sameDayReview" value="standard"
-                         data-review-fee="0" class="ar-option-input" checked />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Standard Review</span>
-                  <span class="ar-option-price">Included</span>
-                  <span class="ar-option-desc">Initial review within 1–2 business days</span>
-                </label>
-                <label class="ar-option-card">
-                  <input type="radio" name="sameDayReview" value="same-day"
-                         data-review-fee="25" class="ar-option-input" />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Same-Day Review</span>
-                  <span class="ar-option-price">+ $25</span>
-                  <span class="ar-option-desc">Document review completed the same business day</span>
                 </label>
               </div>
             </div>
@@ -867,7 +894,7 @@
       var currentStep = 1;
       var sigPadReady = false;
       var sigResizeFn = null;
-      var STEP_NAMES = ['', 'Pricing & Services', 'Client Information', 'Document Details', 'Upload Documents', 'Additional Notes', 'Review & Confirm'];
+      var STEP_NAMES = ['', 'Select Your Service', 'Client Information', 'Document Details', 'Upload Documents', 'Additional Notes', 'Review & Confirm'];
 
       function showStep(n) {
         currentStep = n;
