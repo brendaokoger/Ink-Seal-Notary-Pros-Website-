@@ -647,19 +647,16 @@
           <div class="ar-step-hdr">
             <span class="ar-step-hdr-eyebrow">Step 6 of 6</span>
             <h2 class="ar-step-hdr-title">Review &amp; Confirm</h2>
-            <p class="ar-step-hdr-desc">Review your estimated investment, confirm your acknowledgments, and sign below to submit your apostille review request.</p>
+            <p class="ar-step-hdr-desc">Review your estimated investment, confirm each acknowledgment, and sign below to submit your apostille review request.</p>
           </div>
 
+          <!-- ── Estimated Investment ─────────────────────── -->
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">6</span>
-              <h2 class="on-card-title">Review &amp; Acknowledgment</h2>
+              <h2 class="on-card-title">Estimated Investment</h2>
             </div>
 
-            <p class="ar-review-lead">Please review your selections and confirm before submitting your apostille review request.</p>
-
-            <!-- Itemized Estimate -->
-            <span class="ar-invest-eyebrow">Your Estimated Investment</span>
             <div class="ar-estimate-wrap">
               <div class="ar-estimate-box">
                 <div class="ar-estimate-items">
@@ -699,42 +696,110 @@
               <p class="ar-estimate-note">If additional notarization, witness services, multiple documents, expedited processing, or special handling is required, a revised quote will be provided after document review and approved by the client before processing begins.</p>
               <p class="ar-estimate-disclaimer">Certain document types, additional notarization requirements, witness services, federal documents, legalization requests, and expedited services may require additional fees. Final pricing is confirmed after document review.</p>
             </div>
+          </div>
 
-            <!-- Important Disclaimer -->
-            <div class="ar-disclaimer-wrap">
-              <span class="ar-disclaimer-eyebrow">Important Disclaimer</span>
-              <div class="ar-disclaimer-body">
-                <p>Submission of documents does not guarantee apostille eligibility or acceptance.</p>
-                <p>All documents are reviewed prior to processing.</p>
-                <p>Final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</p>
+          <!-- ── Acknowledgments ─────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <path d="M10 2 L17 5 L17 10 C17 14 13.5 17.5 10 18 C6.5 17.5 3 14 3 10 L3 5 Z"/>
+                  <polyline points="7,10 9.5,12.5 14,8"/>
+                </svg>
+              </span>
+              <div class="on-card-head-text">
+                <h2 class="on-card-title">Acknowledgments</h2>
+                <p class="ar-card-sub">Please read each statement and check all boxes before submitting.</p>
               </div>
             </div>
 
-            <!-- Acknowledgment Checkboxes -->
-            <div class="on-check-list">
-              <label class="on-check-item">
-                <input type="checkbox" name="ackPricing" class="on-check-input" required />
-                <span class="on-check-box"></span>
-                <span class="on-check-text">I understand that pricing shown is an estimate only, all documents are reviewed before processing, and final acceptance is determined by the receiving authority.</span>
+            <div class="ar-ack-list">
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack1" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand all pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</span>
               </label>
-              <label class="on-check-item" style="margin-top:14px">
-                <input type="checkbox" name="ackReview" class="on-check-input" required />
-                <span class="on-check-box"></span>
-                <span class="on-check-text">I understand Ink &amp; Seal Notary Pros will review my submitted information and contact me with pricing, instructions, and next steps.</span>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack2" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand this submission is for document review only and does not begin apostille processing.</span>
               </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack3" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand submission of documents does not guarantee apostille eligibility or acceptance.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack4" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand all documents are reviewed prior to processing.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack5" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack6" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand Remote Online Notarization services are quoted separately and only when notarization is required.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack7" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand RON pricing is available separately for documents requiring notarization.</span>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- ── Signature ────────────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <path d="M3 15 C5 13 7 11 9 13 C11 15 13 10 17 7"/>
+                  <line x1="3" y1="17" x2="8" y2="17"/>
+                </svg>
+              </span>
+              <div class="on-card-head-text">
+                <h2 class="on-card-title">Signature</h2>
+                <p class="ar-card-sub">Type your full legal name and sign below to confirm your submission.</p>
+              </div>
             </div>
 
-            <!-- Acknowledgment Name -->
-            <div class="on-field on-field--full" style="margin-top:28px">
-              <label class="on-label on-label--req" for="ackName">Acknowledgment Name</label>
+            <!-- Full legal name -->
+            <div class="on-field on-field--full" style="margin-bottom:28px">
+              <label class="on-label on-label--req" for="ackName">Full Legal Name</label>
               <input type="text" id="ackName" name="ackName" class="on-input"
                      placeholder="Type your full legal name" required />
               <p class="ar-field-helper">Type your full legal name to acknowledge this request.</p>
             </div>
 
-            <!-- Signature Pad -->
+            <!-- Signature pad -->
             <div class="ar-sig-wrap">
-              <label class="on-label on-label--req">Client Signature</label>
+              <label class="on-label on-label--req">Signature</label>
               <div class="ar-sig-box" id="arSigBox">
                 <canvas id="arSigCanvas" class="ar-sig-canvas"></canvas>
                 <span class="ar-sig-placeholder" id="arSigPlaceholder">Sign here using your mouse or finger</span>
@@ -763,7 +828,7 @@
                 </svg>
                 Submit Apostille Review
               </button>
-              <p class="on-required-note">* Required fields must be completed before submitting.</p>
+              <p class="on-required-note">* All acknowledgments must be checked and a signature provided before submitting.</p>
             </div>
           </div>
         </div>

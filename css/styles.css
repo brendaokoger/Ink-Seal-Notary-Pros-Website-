@@ -3685,3 +3685,133 @@ ul    { list-style: none; }
   .ar-dropzone-body  { padding: 30px 16px 26px; }
   .ar-file-item      { padding: 10px 12px; gap: 10px; }
 }
+
+/* ════════════════════════════════════════════════
+   REVIEW & ACKNOWLEDGMENT — STEP 6
+   ════════════════════════════════════════════════ */
+
+/* ── Card icon (used instead of a number badge) ── */
+.on-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(184,135,43,.13);
+  color: var(--gold-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Allow the card head to wrap text when a subtitle is present */
+.on-card-head-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.on-card-head-text .on-card-title {
+  margin-bottom: 2px;
+}
+
+.ar-card-sub {
+  font-size: .83rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Acknowledgment list ── */
+.ar-ack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ar-ack-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+}
+
+.ar-ack-item:hover {
+  border-color: rgba(184,135,43,.38);
+  box-shadow: 0 2px 12px rgba(11,24,41,.06);
+}
+
+.ar-ack-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.ar-ack-mark {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  transition: background .2s var(--ease), border-color .2s var(--ease);
+  color: transparent;
+}
+
+.ar-ack-text {
+  font-size: .88rem;
+  font-weight: 400;
+  color: var(--txt-b);
+  line-height: 1.65;
+}
+
+/* ── Checked state ── */
+.ar-ack-item:has(.ar-ack-input:checked) {
+  border-color: var(--gold-2);
+  background: rgba(184,135,43,.04);
+  box-shadow: 0 2px 14px rgba(11,24,41,.06);
+}
+
+.ar-ack-item:has(.ar-ack-input:checked) .ar-ack-mark {
+  background: var(--gold-2);
+  border-color: var(--gold-2);
+  color: #fff;
+}
+
+/* ── Spacing between cards on step 6 ── */
+#step6 .on-card + .on-card {
+  margin-top: 20px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ar-ack-item {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .ar-ack-text {
+    font-size: .84rem;
+  }
+  .ar-ack-mark {
+    width: 20px;
+    height: 20px;
+  }
+  .on-card-head .on-card-icon {
+    display: none; /* collapse icon on very small screens */
+  }
+}
+@media (max-width: 400px) {
+  .ar-ack-item {
+    padding: 12px 14px;
+  }
+}
