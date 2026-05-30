@@ -437,9 +437,9 @@
             </div>
 
             <div class="on-field on-field--full">
-              <label class="on-label" for="docUpload">Document 1</label>
+              <label class="on-label on-label--req" for="docUpload">Upload Document 1</label>
               <input type="file" id="docUpload" name="uploadFile1" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" />
+                     accept=".pdf,.jpg,.jpeg,.png" required />
               <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
                 <div class="on-file-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
@@ -458,7 +458,7 @@
             </div>
 
             <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload2">Document 2 <span class="ar-field-optional">(optional)</span></label>
+              <label class="on-label" for="docUpload2">Upload Document 2 <span class="ar-field-optional">(optional)</span></label>
               <input type="file" id="docUpload2" name="uploadFile2" class="on-file-input"
                      accept=".pdf,.jpg,.jpeg,.png" />
               <label for="docUpload2" class="on-file-label ar-file-label" id="arFileLabel2">
@@ -470,7 +470,7 @@
                   </svg>
                 </div>
                 <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload a second document</span>
+                  <span class="ar-file-primary">Click to upload your document</span>
                   <span class="ar-file-secondary">or drag and drop</span>
                   <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
                   <span class="on-file-name" id="arFileName2"></span>
@@ -479,7 +479,7 @@
             </div>
 
             <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload3">Document 3 <span class="ar-field-optional">(optional)</span></label>
+              <label class="on-label" for="docUpload3">Upload Document 3 <span class="ar-field-optional">(optional)</span></label>
               <input type="file" id="docUpload3" name="uploadFile3" class="on-file-input"
                      accept=".pdf,.jpg,.jpeg,.png" />
               <label for="docUpload3" class="on-file-label ar-file-label" id="arFileLabel3">
@@ -491,7 +491,7 @@
                   </svg>
                 </div>
                 <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload a third document</span>
+                  <span class="ar-file-primary">Click to upload your document</span>
                   <span class="ar-file-secondary">or drag and drop</span>
                   <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
                   <span class="on-file-name" id="arFileName3"></span>
@@ -499,7 +499,49 @@
               </label>
             </div>
 
-            <p class="ar-upload-helper" style="margin-top:12px">Upload clear copies or photos of your documents so our team can review the correct apostille process.</p>
+            <div class="on-field on-field--full" style="margin-top:16px">
+              <label class="on-label" for="docUpload4">Upload Document 4 <span class="ar-field-optional">(optional)</span></label>
+              <input type="file" id="docUpload4" name="uploadFile4" class="on-file-input"
+                     accept=".pdf,.jpg,.jpeg,.png" />
+              <label for="docUpload4" class="on-file-label ar-file-label" id="arFileLabel4">
+                <div class="on-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="ar-file-text-wrap">
+                  <span class="ar-file-primary">Click to upload your document</span>
+                  <span class="ar-file-secondary">or drag and drop</span>
+                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
+                  <span class="on-file-name" id="arFileName4"></span>
+                </div>
+              </label>
+            </div>
+
+            <div class="on-field on-field--full" style="margin-top:16px">
+              <label class="on-label" for="docUpload5">Upload Document 5 <span class="ar-field-optional">(optional)</span></label>
+              <input type="file" id="docUpload5" name="uploadFile5" class="on-file-input"
+                     accept=".pdf,.jpg,.jpeg,.png" />
+              <label for="docUpload5" class="on-file-label ar-file-label" id="arFileLabel5">
+                <div class="on-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="ar-file-text-wrap">
+                  <span class="ar-file-primary">Click to upload your document</span>
+                  <span class="ar-file-secondary">or drag and drop</span>
+                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
+                  <span class="on-file-name" id="arFileName5"></span>
+                </div>
+              </label>
+            </div>
+
+            <p class="ar-upload-helper" style="margin-top:12px">Upload clear copies or photos of each document you would like reviewed.</p>
           </div>
 
           <div class="ms-nav">
@@ -966,7 +1008,9 @@
       [
         { input: 'docUpload',  name: 'arFileName',  label: 'arFileLabel'  },
         { input: 'docUpload2', name: 'arFileName2', label: 'arFileLabel2' },
-        { input: 'docUpload3', name: 'arFileName3', label: 'arFileLabel3' }
+        { input: 'docUpload3', name: 'arFileName3', label: 'arFileLabel3' },
+        { input: 'docUpload4', name: 'arFileName4', label: 'arFileLabel4' },
+        { input: 'docUpload5', name: 'arFileName5', label: 'arFileLabel5' }
       ].forEach(function (slot) {
         var fileInput = document.getElementById(slot.input);
         if (fileInput) {
