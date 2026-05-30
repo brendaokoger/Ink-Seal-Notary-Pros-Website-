@@ -191,14 +191,14 @@
               <p class="ar-option-group-label on-label">Review Speed</p>
               <div class="ar-option-row">
                 <label class="ar-option-card">
-                  <input type="radio" name="reviewSpeed" value="standard"
+                  <input type="radio" name="sameDayReview" value="standard"
                          data-review-fee="0" class="ar-option-input" checked />
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Standard Review</span>
                   <span class="ar-option-price">Included</span>
                 </label>
                 <label class="ar-option-card">
-                  <input type="radio" name="reviewSpeed" value="same-day"
+                  <input type="radio" name="sameDayReview" value="same-day"
                          data-review-fee="25" class="ar-option-input" />
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Same-Day Review</span>
@@ -404,8 +404,8 @@
                 </select>
               </div>
               <div class="on-field">
-                <label class="on-label on-label--req" for="hasOriginalDocument">Do you have the original certified document?</label>
-                <select id="hasOriginalDocument" name="hasOriginalDocument" class="on-select" required>
+                <label class="on-label on-label--req" for="hasCertifiedOriginal">Do you have the original certified document?</label>
+                <select id="hasCertifiedOriginal" name="hasCertifiedOriginal" class="on-select" required>
                   <option value="" disabled selected>Select an option</option>
                   <option value="Yes">Yes</option>
                   <option value="No">No</option>
@@ -437,8 +437,8 @@
             </div>
 
             <div class="on-field on-field--full">
-              <label class="on-label" for="docUpload">Upload Document For Review</label>
-              <input type="file" id="docUpload" name="uploadFile" class="on-file-input"
+              <label class="on-label" for="docUpload">Document 1</label>
+              <input type="file" id="docUpload" name="uploadFile1" class="on-file-input"
                      accept=".pdf,.jpg,.jpeg,.png" />
               <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
                 <div class="on-file-icon">
@@ -455,8 +455,51 @@
                   <span class="on-file-name" id="arFileName"></span>
                 </div>
               </label>
-              <p class="ar-upload-helper">Upload a clear copy or photo of your document so our team can review the correct apostille process.</p>
             </div>
+
+            <div class="on-field on-field--full" style="margin-top:16px">
+              <label class="on-label" for="docUpload2">Document 2 <span class="ar-field-optional">(optional)</span></label>
+              <input type="file" id="docUpload2" name="uploadFile2" class="on-file-input"
+                     accept=".pdf,.jpg,.jpeg,.png" />
+              <label for="docUpload2" class="on-file-label ar-file-label" id="arFileLabel2">
+                <div class="on-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="ar-file-text-wrap">
+                  <span class="ar-file-primary">Click to upload a second document</span>
+                  <span class="ar-file-secondary">or drag and drop</span>
+                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
+                  <span class="on-file-name" id="arFileName2"></span>
+                </div>
+              </label>
+            </div>
+
+            <div class="on-field on-field--full" style="margin-top:16px">
+              <label class="on-label" for="docUpload3">Document 3 <span class="ar-field-optional">(optional)</span></label>
+              <input type="file" id="docUpload3" name="uploadFile3" class="on-file-input"
+                     accept=".pdf,.jpg,.jpeg,.png" />
+              <label for="docUpload3" class="on-file-label ar-file-label" id="arFileLabel3">
+                <div class="on-file-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/>
+                    <line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                </div>
+                <div class="ar-file-text-wrap">
+                  <span class="ar-file-primary">Click to upload a third document</span>
+                  <span class="ar-file-secondary">or drag and drop</span>
+                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
+                  <span class="on-file-name" id="arFileName3"></span>
+                </div>
+              </label>
+            </div>
+
+            <p class="ar-upload-helper" style="margin-top:12px">Upload clear copies or photos of your documents so our team can review the correct apostille process.</p>
           </div>
 
           <div class="ms-nav">
@@ -589,7 +632,7 @@
                 <span class="ar-sig-placeholder" id="arSigPlaceholder">Sign here using your mouse or finger</span>
               </div>
               <button type="button" class="ar-sig-clear" id="arSigClear">Clear Signature</button>
-              <input type="hidden" id="arSigData" name="signatureData" />
+              <input type="hidden" id="arSigData" name="signature" />
             </div>
 
           </div>
@@ -763,7 +806,7 @@
           ? (numDocsEl.value === '6+' ? 6 : (parseInt(numDocsEl.value, 10) || 1))
           : 1;
 
-        var reviewChecked    = document.querySelector('input[name="reviewSpeed"]:checked');
+        var reviewChecked    = document.querySelector('input[name="sameDayReview"]:checked');
         var isSameDay        = reviewChecked && reviewChecked.value === 'same-day';
 
         var processingChecked = document.querySelector('input[name="processingSpeed"]:checked');
@@ -913,24 +956,30 @@
       });
 
       // Live estimate: recalc on any pricing field change
-      ['documentCount', 'reviewSpeed', 'processingSpeed', 'returnShipping'].forEach(function (name) {
+      ['documentCount', 'sameDayReview', 'processingSpeed', 'returnShipping'].forEach(function (name) {
         document.querySelectorAll('[name="' + name + '"]').forEach(function (el) {
           el.addEventListener('change', calcEstimate);
         });
       });
 
       // File upload display
-      var fileInput = document.getElementById('docUpload');
-      if (fileInput) {
-        fileInput.addEventListener('change', function () {
-          var nameEl = document.getElementById('arFileName');
-          var label  = document.getElementById('arFileLabel');
-          if (this.files && this.files[0]) {
-            if (nameEl) nameEl.textContent = this.files[0].name;
-            if (label)  label.classList.add('ar-file-label--selected');
-          }
-        });
-      }
+      [
+        { input: 'docUpload',  name: 'arFileName',  label: 'arFileLabel'  },
+        { input: 'docUpload2', name: 'arFileName2', label: 'arFileLabel2' },
+        { input: 'docUpload3', name: 'arFileName3', label: 'arFileLabel3' }
+      ].forEach(function (slot) {
+        var fileInput = document.getElementById(slot.input);
+        if (fileInput) {
+          fileInput.addEventListener('change', function () {
+            var nameEl = document.getElementById(slot.name);
+            var lbl    = document.getElementById(slot.label);
+            if (this.files && this.files[0]) {
+              if (nameEl) nameEl.textContent = this.files[0].name;
+              if (lbl)    lbl.classList.add('ar-file-label--selected');
+            }
+          });
+        }
+      });
 
       // Form submit → Google Apps Script
       var arForm    = document.getElementById('arForm');
