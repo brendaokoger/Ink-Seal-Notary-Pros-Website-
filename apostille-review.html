@@ -27,6 +27,7 @@
       </div>
       <div class="form-hdr-step">
         <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 6</span>
+        <span class="form-hdr-step-name" id="fhStepName">Pricing &amp; Services</span>
       </div>
     </div>
     <div class="form-hdr-progress">
@@ -62,12 +63,22 @@
         <!-- ── STEP 1 — PRICING & SERVICE OPTIONS ─────────── -->
         <div class="ms-step" id="step1" data-step="1">
 
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 1 of 6</span>
+            <h2 class="ar-step-hdr-title">Review Pricing &amp; Select Your Services</h2>
+            <p class="ar-step-hdr-desc">Choose your processing speed, review option, and return shipping method. Your estimated total is calculated automatically on the final step.</p>
+          </div>
+
           <!-- Apostille Pricing Reference Card -->
-          <div class="ar-pricing-card">
-            <div class="ar-pricing-head">
-              <span class="ar-pricing-eyebrow">Estimated Service Pricing</span>
-              <h3 class="ar-pricing-title">Standard Apostille Service Pricing</h3>
-            </div>
+          <details class="ar-pricing-details">
+            <summary class="ar-pricing-summary">
+              <div class="ar-pricing-summary-text">
+                <span class="ar-pricing-summary-eyebrow">Estimated Service Pricing</span>
+                <span class="ar-pricing-summary-title">Standard Apostille Service Pricing</span>
+              </div>
+              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
+            </summary>
+            <div class="ar-pricing-details-body">
 
             <div class="ar-pricing-feature">
               <span class="ar-pricing-feature-label">Standard Apostille Service</span>
@@ -123,14 +134,19 @@
             <p class="ar-pricing-intl-note">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, package weight, delivery requirements, and shipping method selected. A final international shipping quote will be provided after document review and destination verification.</p>
 
             <p class="ar-pricing-disclaimer">All pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</p>
-          </div>
+            </div>
+          </details>
 
           <!-- RON Pricing Reference Card -->
-          <div class="ar-pricing-card">
-            <div class="ar-pricing-head">
-              <span class="ar-pricing-eyebrow">Informational Pricing Only</span>
-              <h3 class="ar-pricing-title">Remote Online Notarization (RON)</h3>
-            </div>
+          <details class="ar-pricing-details">
+            <summary class="ar-pricing-summary">
+              <div class="ar-pricing-summary-text">
+                <span class="ar-pricing-summary-eyebrow">Informational Pricing Only</span>
+                <span class="ar-pricing-summary-title">Remote Online Notarization (RON)</span>
+              </div>
+              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
+            </summary>
+            <div class="ar-pricing-details-body">
 
             <div class="ar-pricing-group">
               <div class="ar-pricing-row">
@@ -156,7 +172,8 @@
             </div>
 
             <p class="ar-pricing-disclaimer">RON services are quoted separately and only when notarization is required.</p>
-          </div>
+            </div>
+          </details>
 
           <!-- Service Options card -->
           <div class="on-card">
@@ -175,6 +192,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Standard Processing</span>
                   <span class="ar-option-price">Included</span>
+                  <span class="ar-option-desc">Typical 5–10 business day turnaround</span>
                 </label>
                 <label class="ar-option-card">
                   <input type="radio" name="processingSpeed" value="rush"
@@ -182,6 +200,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Rush Processing</span>
                   <span class="ar-option-price">+ $75</span>
+                  <span class="ar-option-desc">Priority handling for faster turnaround</span>
                 </label>
               </div>
             </div>
@@ -196,6 +215,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Standard Review</span>
                   <span class="ar-option-price">Included</span>
+                  <span class="ar-option-desc">Initial review within 1–2 business days</span>
                 </label>
                 <label class="ar-option-card">
                   <input type="radio" name="sameDayReview" value="same-day"
@@ -203,6 +223,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Same-Day Review</span>
                   <span class="ar-option-price">+ $25</span>
+                  <span class="ar-option-desc">Document review completed the same business day</span>
                 </label>
               </div>
             </div>
@@ -217,6 +238,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">USPS Priority Return Shipping</span>
                   <span class="ar-option-price">Included</span>
+                  <span class="ar-option-desc">Delivery in 1–3 business days</span>
                 </label>
                 <label class="ar-option-card">
                   <input type="radio" name="returnShipping" value="overnight"
@@ -224,6 +246,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">Overnight Return Shipping</span>
                   <span class="ar-option-price">+ $45</span>
+                  <span class="ar-option-desc">Next-day delivery for time-sensitive documents</span>
                 </label>
                 <label class="ar-option-card">
                   <input type="radio" name="returnShipping" value="international"
@@ -231,6 +254,7 @@
                   <span class="ar-option-check"></span>
                   <span class="ar-option-name">International Return Shipping</span>
                   <span class="ar-option-price">Starting at $75</span>
+                  <span class="ar-option-desc">Door-to-door international courier delivery</span>
                 </label>
                 <p class="ar-shipping-notice">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, weight, and delivery requirements.</p>
               </div>
@@ -255,6 +279,13 @@
 
         <!-- ── STEP 2 — CLIENT INFORMATION ────────────────── -->
         <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 2 of 6</span>
+            <h2 class="ar-step-hdr-title">Tell Us About You</h2>
+            <p class="ar-step-hdr-desc">Your contact information is kept strictly confidential and used only to process your apostille review request.</p>
+          </div>
+
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">2</span>
@@ -323,6 +354,13 @@
 
         <!-- ── STEP 3 — DOCUMENT INFORMATION ────────────────── -->
         <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 3 of 6</span>
+            <h2 class="ar-step-hdr-title">About Your Document</h2>
+            <p class="ar-step-hdr-desc">Help us understand your document so we can confirm apostille eligibility and provide accurate pricing.</p>
+          </div>
+
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">3</span>
@@ -430,118 +468,140 @@
 
         <!-- ── STEP 4 — DOCUMENT UPLOAD ───────────────────── -->
         <div class="ms-step" id="step4" data-step="4" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 4 of 6</span>
+            <h2 class="ar-step-hdr-title">Upload Your Documents</h2>
+            <p class="ar-step-hdr-desc">Upload clear copies or photos of the documents you would like reviewed. Upload 1 is required; remaining slots are optional.</p>
+          </div>
+
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">4</span>
               <h2 class="on-card-title">Document Upload</h2>
             </div>
 
-            <div class="on-field on-field--full">
-              <label class="on-label on-label--req" for="docUpload">Upload Document 1</label>
-              <input type="file" id="docUpload" name="uploadFile1" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" required />
-              <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
-                <div class="on-file-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                  </svg>
-                </div>
-                <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload your document</span>
-                  <span class="ar-file-secondary">or drag and drop</span>
-                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
-                  <span class="on-file-name" id="arFileName"></span>
-                </div>
-              </label>
+            <div class="ar-upload-slot">
+              <span class="ar-upload-num">1</span>
+              <div class="on-field on-field--full">
+                <label class="on-label on-label--req" for="docUpload">Upload Document 1</label>
+                <input type="file" id="docUpload" name="uploadFile1" class="on-file-input"
+                       accept=".pdf,.jpg,.jpeg,.png" required />
+                <label for="docUpload" class="on-file-label ar-file-label" id="arFileLabel">
+                  <div class="on-file-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="ar-file-text-wrap">
+                    <span class="ar-file-primary">Click to upload</span>
+                    <span class="ar-file-secondary">or drag and drop</span>
+                    <span class="ar-file-types">PDF, JPG, JPEG, PNG</span>
+                    <span class="on-file-name" id="arFileName"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload2">Upload Document 2 <span class="ar-field-optional">(optional)</span></label>
-              <input type="file" id="docUpload2" name="uploadFile2" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" />
-              <label for="docUpload2" class="on-file-label ar-file-label" id="arFileLabel2">
-                <div class="on-file-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                  </svg>
-                </div>
-                <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload your document</span>
-                  <span class="ar-file-secondary">or drag and drop</span>
-                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
-                  <span class="on-file-name" id="arFileName2"></span>
-                </div>
-              </label>
+            <div class="ar-upload-slot">
+              <span class="ar-upload-num">2</span>
+              <div class="on-field on-field--full">
+                <label class="on-label" for="docUpload2">Upload Document 2 <span class="ar-field-optional">(optional)</span></label>
+                <input type="file" id="docUpload2" name="uploadFile2" class="on-file-input"
+                       accept=".pdf,.jpg,.jpeg,.png" />
+                <label for="docUpload2" class="on-file-label ar-file-label" id="arFileLabel2">
+                  <div class="on-file-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="ar-file-text-wrap">
+                    <span class="ar-file-primary">Click to upload</span>
+                    <span class="ar-file-secondary">or drag and drop</span>
+                    <span class="ar-file-types">PDF, JPG, JPEG, PNG</span>
+                    <span class="on-file-name" id="arFileName2"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload3">Upload Document 3 <span class="ar-field-optional">(optional)</span></label>
-              <input type="file" id="docUpload3" name="uploadFile3" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" />
-              <label for="docUpload3" class="on-file-label ar-file-label" id="arFileLabel3">
-                <div class="on-file-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                  </svg>
-                </div>
-                <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload your document</span>
-                  <span class="ar-file-secondary">or drag and drop</span>
-                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
-                  <span class="on-file-name" id="arFileName3"></span>
-                </div>
-              </label>
+            <div class="ar-upload-slot">
+              <span class="ar-upload-num">3</span>
+              <div class="on-field on-field--full">
+                <label class="on-label" for="docUpload3">Upload Document 3 <span class="ar-field-optional">(optional)</span></label>
+                <input type="file" id="docUpload3" name="uploadFile3" class="on-file-input"
+                       accept=".pdf,.jpg,.jpeg,.png" />
+                <label for="docUpload3" class="on-file-label ar-file-label" id="arFileLabel3">
+                  <div class="on-file-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="ar-file-text-wrap">
+                    <span class="ar-file-primary">Click to upload</span>
+                    <span class="ar-file-secondary">or drag and drop</span>
+                    <span class="ar-file-types">PDF, JPG, JPEG, PNG</span>
+                    <span class="on-file-name" id="arFileName3"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload4">Upload Document 4 <span class="ar-field-optional">(optional)</span></label>
-              <input type="file" id="docUpload4" name="uploadFile4" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" />
-              <label for="docUpload4" class="on-file-label ar-file-label" id="arFileLabel4">
-                <div class="on-file-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                  </svg>
-                </div>
-                <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload your document</span>
-                  <span class="ar-file-secondary">or drag and drop</span>
-                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
-                  <span class="on-file-name" id="arFileName4"></span>
-                </div>
-              </label>
+            <div class="ar-upload-slot">
+              <span class="ar-upload-num">4</span>
+              <div class="on-field on-field--full">
+                <label class="on-label" for="docUpload4">Upload Document 4 <span class="ar-field-optional">(optional)</span></label>
+                <input type="file" id="docUpload4" name="uploadFile4" class="on-file-input"
+                       accept=".pdf,.jpg,.jpeg,.png" />
+                <label for="docUpload4" class="on-file-label ar-file-label" id="arFileLabel4">
+                  <div class="on-file-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="ar-file-text-wrap">
+                    <span class="ar-file-primary">Click to upload</span>
+                    <span class="ar-file-secondary">or drag and drop</span>
+                    <span class="ar-file-types">PDF, JPG, JPEG, PNG</span>
+                    <span class="on-file-name" id="arFileName4"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div class="on-field on-field--full" style="margin-top:16px">
-              <label class="on-label" for="docUpload5">Upload Document 5 <span class="ar-field-optional">(optional)</span></label>
-              <input type="file" id="docUpload5" name="uploadFile5" class="on-file-input"
-                     accept=".pdf,.jpg,.jpeg,.png" />
-              <label for="docUpload5" class="on-file-label ar-file-label" id="arFileLabel5">
-                <div class="on-file-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="32" height="32" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                  </svg>
-                </div>
-                <div class="ar-file-text-wrap">
-                  <span class="ar-file-primary">Click to upload your document</span>
-                  <span class="ar-file-secondary">or drag and drop</span>
-                  <span class="ar-file-types">PDF, JPG, JPEG, PNG accepted</span>
-                  <span class="on-file-name" id="arFileName5"></span>
-                </div>
-              </label>
+            <div class="ar-upload-slot">
+              <span class="ar-upload-num">5</span>
+              <div class="on-field on-field--full">
+                <label class="on-label" for="docUpload5">Upload Document 5 <span class="ar-field-optional">(optional)</span></label>
+                <input type="file" id="docUpload5" name="uploadFile5" class="on-file-input"
+                       accept=".pdf,.jpg,.jpeg,.png" />
+                <label for="docUpload5" class="on-file-label ar-file-label" id="arFileLabel5">
+                  <div class="on-file-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="28" height="28" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <div class="ar-file-text-wrap">
+                    <span class="ar-file-primary">Click to upload</span>
+                    <span class="ar-file-secondary">or drag and drop</span>
+                    <span class="ar-file-types">PDF, JPG, JPEG, PNG</span>
+                    <span class="on-file-name" id="arFileName5"></span>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <p class="ar-upload-helper" style="margin-top:12px">Upload clear copies or photos of each document you would like reviewed.</p>
+            <p class="ar-upload-helper" style="margin-top:16px">Upload clear copies or photos of each document you would like reviewed. Accepted formats: PDF, JPG, JPEG, PNG.</p>
           </div>
 
           <div class="ms-nav">
@@ -558,6 +618,13 @@
 
         <!-- ── STEP 5 — ADDITIONAL NOTES ─────────────────── -->
         <div class="ms-step" id="step5" data-step="5" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 5 of 6</span>
+            <h2 class="ar-step-hdr-title">Any Additional Notes?</h2>
+            <p class="ar-step-hdr-desc">Share any special instructions, deadlines, destination requirements, or context that will help us review your documents accurately.</p>
+          </div>
+
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">5</span>
@@ -585,6 +652,13 @@
 
         <!-- ── STEP 6 — REVIEW & ACKNOWLEDGMENT ──────────── -->
         <div class="ms-step" id="step6" data-step="6" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 6 of 6</span>
+            <h2 class="ar-step-hdr-title">Review &amp; Confirm</h2>
+            <p class="ar-step-hdr-desc">Review your estimated investment, confirm your acknowledgments, and sign below to submit your apostille review request.</p>
+          </div>
+
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num">6</span>
@@ -594,6 +668,7 @@
             <p class="ar-review-lead">Please review your selections and confirm before submitting your apostille review request.</p>
 
             <!-- Itemized Estimate -->
+            <span class="ar-invest-eyebrow">Your Estimated Investment</span>
             <div class="ar-estimate-wrap">
               <div class="ar-estimate-box">
                 <div class="ar-estimate-items">
@@ -792,6 +867,7 @@
       var currentStep = 1;
       var sigPadReady = false;
       var sigResizeFn = null;
+      var STEP_NAMES = ['', 'Pricing & Services', 'Client Information', 'Document Details', 'Upload Documents', 'Additional Notes', 'Review & Confirm'];
 
       function showStep(n) {
         currentStep = n;
@@ -803,6 +879,8 @@
         if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(1) + '%';
         var lbl = document.getElementById('fhStepLabel');
         if (lbl) lbl.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
+        var nameEl = document.getElementById('fhStepName');
+        if (nameEl) nameEl.textContent = STEP_NAMES[n] || '';
         var stepEl = document.getElementById('step' + n);
         if (stepEl) {
           stepEl.classList.remove('ms-step-enter');
@@ -923,9 +1001,9 @@
           var dpr = window.devicePixelRatio || 1;
           var w   = canvas.parentElement.offsetWidth;
           canvas.width        = w * dpr;
-          canvas.height       = 140 * dpr;
+          canvas.height       = 180 * dpr;
           canvas.style.width  = w + 'px';
-          canvas.style.height = '140px';
+          canvas.style.height = '180px';
           ctx.scale(dpr, dpr);
           ctx.strokeStyle = '#0B1829';
           ctx.lineWidth   = 2.2;
