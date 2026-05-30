@@ -394,7 +394,8 @@
               <h2 class="on-card-title">Document Information</h2>
             </div>
 
-            <div class="on-field-row" style="margin-bottom:20px">
+            <!-- Destination + Issuing State -->
+            <div class="on-field-row" style="margin-bottom:28px">
               <div class="on-field">
                 <label class="on-label on-label--req" for="destinationCountry">Destination Country</label>
                 <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
@@ -426,7 +427,8 @@
               </div>
             </div>
 
-            <div class="on-field-row" style="margin-bottom:20px">
+            <!-- Document Type -->
+            <div class="on-field-row on-field-row--1" style="margin-bottom:0">
               <div class="on-field">
                 <label class="on-label on-label--req" for="documentType">Document Type</label>
                 <select id="documentType" name="documentType" class="on-select" required>
@@ -444,39 +446,95 @@
                   <option>Other</option>
                 </select>
               </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="documentCount">Number of Documents</label>
-                <select id="documentCount" name="documentCount" class="on-select" required>
-                  <option value="" disabled selected>Select quantity</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6+">6 or more</option>
-                </select>
-              </div>
             </div>
 
-            <div class="on-field-row" style="margin-bottom:20px">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="isVitalRecord">Is this document a vital record?</label>
-                <select id="isVitalRecord" name="isVitalRecord" class="on-select" required>
-                  <option value="" disabled selected>Select an option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="Not Sure">Not Sure</option>
-                </select>
+            <!-- Card-style questions -->
+            <div class="ar-doc-questions">
+
+              <!-- Document Count -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">How many documents are being submitted?</p>
+                <div class="ar-count-grid">
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="1" class="ar-count-input" checked required />
+                    <span class="ar-count-num">1</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="2" class="ar-count-input" />
+                    <span class="ar-count-num">2</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="3" class="ar-count-input" />
+                    <span class="ar-count-num">3</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="4" class="ar-count-input" />
+                    <span class="ar-count-num">4</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="5" class="ar-count-input" />
+                    <span class="ar-count-num">5</span>
+                  </label>
+                </div>
               </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="hasCertifiedOriginal">Do you have the original certified document?</label>
-                <select id="hasCertifiedOriginal" name="hasCertifiedOriginal" class="on-select" required>
-                  <option value="" disabled selected>Select an option</option>
-                  <option value="Yes">Yes</option>
-                  <option value="No">No</option>
-                  <option value="Not Sure">Not Sure</option>
-                </select>
+
+              <!-- Vital Record -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Is this document a vital record?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
               </div>
+
+              <!-- Certified Original -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Do you have the original certified document?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Already Notarized -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Is the document already notarized?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
+              </div>
+
             </div>
 
           </div>
@@ -948,10 +1006,8 @@
       }
 
       function calcEstimate() {
-        var numDocsEl = document.getElementById('documentCount');
-        var numDocs = numDocsEl
-          ? (numDocsEl.value === '6+' ? 6 : (parseInt(numDocsEl.value, 10) || 1))
-          : 1;
+        var countChecked = document.querySelector('input[name="documentCount"]:checked');
+        var numDocs = countChecked ? (parseInt(countChecked.value, 10) || 1) : 1;
 
         var reviewChecked    = document.querySelector('input[name="sameDayReview"]:checked');
         var isSameDay        = reviewChecked && reviewChecked.value === 'same-day';

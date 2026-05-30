@@ -3316,3 +3316,169 @@ ul    { list-style: none; }
 @media (max-width: 400px) {
   .ar-service-card-body { padding: 18px 16px 16px; }
 }
+
+/* ════════════════════════════════════════════════
+   DOCUMENT INFORMATION — card-style selectors
+   ════════════════════════════════════════════════ */
+
+.ar-doc-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 28px;
+}
+
+.ar-choice-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ar-choice-q {
+  margin: 0;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--txt-b);
+  letter-spacing: .01em;
+}
+
+/* ── Yes / No / Not Sure tri-cards ── */
+.ar-tri-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.ar-tri-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.ar-tri-card:hover {
+  border-color: var(--gold-2);
+  box-shadow: 0 4px 16px rgba(11,24,41,.08);
+}
+
+.ar-tri-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.ar-tri-text {
+  font-family: var(--sans);
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--txt-b);
+  transition: color .2s var(--ease);
+  line-height: 1.2;
+}
+
+/* Selected state */
+.ar-tri-card:has(.ar-tri-input:checked) {
+  border-color: var(--gold-2);
+  background: var(--navy);
+  box-shadow: 0 6px 24px rgba(11,24,41,.18), 0 2px 8px rgba(11,24,41,.1);
+}
+
+.ar-tri-card:has(.ar-tri-input:checked) .ar-tri-text {
+  color: var(--gold-2);
+}
+
+/* ── Document count tiles ── */
+.ar-count-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ar-count-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  flex-shrink: 0;
+}
+
+.ar-count-card:hover {
+  border-color: var(--gold-2);
+  box-shadow: 0 4px 16px rgba(11,24,41,.08);
+}
+
+.ar-count-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.ar-count-num {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--txt-b);
+  transition: color .2s var(--ease);
+  line-height: 1;
+}
+
+/* Selected state */
+.ar-count-card:has(.ar-count-input:checked) {
+  border-color: var(--gold-2);
+  background: var(--navy);
+  box-shadow: 0 6px 24px rgba(11,24,41,.18), 0 2px 8px rgba(11,24,41,.1);
+}
+
+.ar-count-card:has(.ar-count-input:checked) .ar-count-num {
+  color: var(--gold-2);
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ar-tri-grid {
+    gap: 8px;
+  }
+  .ar-tri-card {
+    padding: 12px 8px;
+  }
+  .ar-tri-text {
+    font-size: .82rem;
+  }
+  .ar-count-card {
+    width: 56px;
+    height: 56px;
+  }
+  .ar-count-num {
+    font-size: 1.18rem;
+  }
+}
+@media (max-width: 400px) {
+  .ar-tri-grid {
+    gap: 6px;
+  }
+  .ar-tri-text {
+    font-size: .78rem;
+  }
+  .ar-count-card {
+    width: 50px;
+    height: 50px;
+  }
+}
