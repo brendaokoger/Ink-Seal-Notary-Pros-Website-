@@ -150,11 +150,10 @@
       </div>
 
       <!-- Multi-step form -->
-      <!-- TODO: Add Google Apps Script endpoint here when ready. Example:
-           action="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
-           method="POST"
-           Google Sheet ID: 1Kt9KsGlYnpzcjoCYNUBvkWnBxSW5MfJi41gfzP_wYlE -->
-      <form class="on-form" id="arForm" novalidate>
+      <form class="on-form" id="arForm"
+            action="https://script.google.com/macros/s/AKfycbxhDJlWUrATk95m8J2Evgpn6ZDmBUkwwQUhQyXv7D8bOtSbkBYG3HbYJri_gsmvyO5t/exec"
+            method="POST"
+            novalidate>
 
         <!-- ── STEP 1 — CLIENT INFORMATION ────────────────── -->
         <div class="ms-step" id="step1" data-step="1">
@@ -943,16 +942,34 @@
         });
       }
 
-      // Form submit — front-end only, no backend
+      // Form submit → Google Apps Script
       var arForm    = document.getElementById('arForm');
       var arSuccess = document.getElementById('arSuccess');
+      var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
+
       if (arForm) {
         arForm.addEventListener('submit', function (e) {
           e.preventDefault();
           if (!validateStep(currentStep)) return;
-          arForm.style.display = 'none';
-          if (arSuccess) arSuccess.classList.add('show');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          if (submitBtn) submitBtn.disabled = true;
+
+          var data = new FormData(arForm);
+
+          fetch(arForm.action, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: data
+          })
+          .then(function () {
+            arForm.style.display = 'none';
+            if (arSuccess) arSuccess.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          })
+          .catch(function () {
+            alert('Unable to submit. Please check your connection or contact us directly.');
+            if (submitBtn) submitBtn.disabled = false;
+          });
         });
       }
     })();
