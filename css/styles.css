@@ -3981,3 +3981,62 @@ ul    { list-style: none; }
   .ar-success-heading { font-size: 1.35rem; }
   .ar-success-notice  { padding: 14px 16px; }
 }
+
+/* ── ESTIMATE INFO CARDS ─────────────────────────────────────────────────── */
+.ar-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.ar-info-card {
+  background: rgba(247,244,238,.55);
+  border: 1px solid rgba(184,135,43,.2);
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+.ar-info-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(184,135,43,.16);
+}
+
+.ar-info-card-icon {
+  flex-shrink: 0;
+  color: var(--gold-2);
+  display: flex;
+  align-items: center;
+}
+
+.ar-info-card-title {
+  font-family: var(--serif);
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+}
+
+.ar-info-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ar-info-card-body p {
+  font-size: .82rem;
+  font-weight: 400;
+  color: var(--txt-b);
+  line-height: 1.65;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .ar-info-card        { padding: 14px 16px; }
+  .ar-info-card-title  { font-size: .88rem; }
+  .ar-info-card-body p { font-size: .81rem; }
+}
