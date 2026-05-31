@@ -101,8 +101,10 @@
             method="POST"
             novalidate>
 
-        <!-- Order number: leave blank so GAS auto-generates ISN-YYYYMM-NNNN -->
+        <!-- Order number: populated by /api/upload-to-dropbox before GAS submission -->
         <input type="hidden" name="orderNumber" value="" />
+        <!-- Dropbox folder link: populated by /api/upload-to-dropbox and saved to Google Sheets -->
+        <input type="hidden" id="arDropboxLink" name="dropboxFolderLink" value="" />
 
         <!-- ── STEP 1 — PRICING & SERVICE OPTIONS ─────────── -->
         <div class="ms-step" id="step1" data-step="1">
@@ -1405,7 +1407,7 @@
         });
       }
 
-      // Form submit → Google Apps Script
+      // Form submit — Step 1: Dropbox upload, Step 2: Google Apps Script
       var arForm    = document.getElementById('arForm');
       var arSuccess = document.getElementById('arSuccess');
       var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
@@ -1417,25 +1419,44 @@
 
           if (submitBtn) submitBtn.disabled = true;
 
-          var countEl = document.getElementById('uploadedFileCount');
+          var countEl    = document.getElementById('uploadedFileCount');
+          var orderInput = arForm.querySelector('[name="orderNumber"]');
+          var linkInput  = document.getElementById('arDropboxLink');
+          var nameInput  = arForm.querySelector('[name="fullName"]');
+
           if (countEl) countEl.value = selectedFiles.length;
 
-          var data = new FormData(arForm);
+          function submitToGAS() {
+            var data = new FormData(arForm);
+            fetch(arForm.action, { method: 'POST', mode: 'no-cors', body: data })
+              .then(function () {
+                arForm.style.display = 'none';
+                if (arSuccess) arSuccess.classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              })
+              .catch(function () {
+                alert('Unable to submit. Please check your connection or contact us directly.');
+                if (submitBtn) submitBtn.disabled = false;
+              });
+          }
 
-          fetch(arForm.action, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: data
-          })
-          .then(function () {
-            arForm.style.display = 'none';
-            if (arSuccess) arSuccess.classList.add('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          })
-          .catch(function () {
-            alert('Unable to submit. Please check your connection or contact us directly.');
-            if (submitBtn) submitBtn.disabled = false;
-          });
+          // Step 1: Upload files to Dropbox via secure serverless function
+          var dbxData = new FormData();
+          dbxData.append('clientName',   nameInput  ? nameInput.value.trim()  : 'Client');
+          dbxData.append('orderNumber',  orderInput ? orderInput.value.trim() : '');
+          selectedFiles.forEach(function (f) { dbxData.append('files', f); });
+
+          fetch('/api/upload-to-dropbox', { method: 'POST', body: dbxData })
+            .then(function (r) { return r.json(); })
+            .then(function (json) {
+              if (json.orderNumber && orderInput) orderInput.value = json.orderNumber;
+              if (json.folderLink  && linkInput)  linkInput.value  = json.folderLink;
+              submitToGAS();
+            })
+            .catch(function (err) {
+              console.warn('Dropbox upload skipped:', err && err.message ? err.message : err);
+              submitToGAS(); // Always submit to GAS even if Dropbox fails
+            });
         });
       }
     })();

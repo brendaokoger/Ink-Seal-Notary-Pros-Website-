@@ -54,8 +54,8 @@ var FIELD_MAP = {
   'Already Notarized':           function (p)    { return p.isAlreadyNotarized   || ''; },
   'Review Type':                 function (p, m) { return m.reviewLabel;             },
   'Notes':                       function (p)    { return p.notes                || ''; },
-  'Signature':                   function (p, m) { return m.sigValue;               }
-  // Dropbox Folder Link — reserved for future Dropbox integration
+  'Signature':                   function (p, m) { return m.sigValue;               },
+  'Dropbox Folder Link':         function (p)    { return p.dropboxFolderLink    || ''; }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
