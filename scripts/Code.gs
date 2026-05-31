@@ -422,6 +422,312 @@ function setupApostilleTracker() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// buildDashboard — run from the GAS editor to refresh the Dashboard tab
+// ─────────────────────────────────────────────────────────────────────────────
+function buildDashboard() {
+  var ss    = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
+
+  var liveHeaders = getHeaders(sheet);
+  function colOf(name) {
+    var i = liveHeaders.indexOf(name);
+    return i === -1 ? 0 : i + 1;
+  }
+  function cl(name) { return colLetter(colOf(name)); }
+
+  var SN = SHEET_NAME;
+  var SC  = cl('Status');
+  var PC  = cl('Payment Status');
+  var QC  = cl('Quote Amount');
+  var RC  = cl('Review Type');
+  var OC  = cl('RON Needed');
+  var PSC = cl('Processing Start Date');
+  var CC  = cl('Completion Date');
+  var HC  = cl('Destination Country');
+  var GC  = cl('State');
+  var DC  = cl('Document Type');
+  var FNC = cl('Client First Name');
+  var LNC = cl('Client Last Name');
+  var AC  = cl('Order Number');
+
+  var dash = ss.getSheetByName('Dashboard');
+  if (!dash) {
+    dash = ss.insertSheet('Dashboard');
+    ss.setActiveSheet(dash);
+    ss.moveActiveSheet(ss.getNumSheets());
+  } else {
+    dash.clearContents();
+    dash.clearFormats();
+    dash.clearNotes();
+  }
+
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  function navy(range) {
+    range.setBackground('#0B1829').setFontColor('#FFFFFF').setFontWeight('bold');
+  }
+  function gold(range) {
+    range.setBackground('#0B1829').setFontColor('#C49A4A').setFontWeight('bold');
+  }
+  function sectionHdr(row, col, span, label) {
+    var r = dash.getRange(row, col, 1, span).merge();
+    r.setValue(label)
+     .setBackground('#0B1829')
+     .setFontColor('#FFFFFF')
+     .setFontWeight('bold')
+     .setFontSize(11)
+     .setVerticalAlignment('middle')
+     .setHorizontalAlignment('left');
+    dash.setRowHeight(row, 36);
+    return row + 1;
+  }
+  function colHdr(row, col, labels) {
+    labels.forEach(function(lbl, i) {
+      dash.getRange(row, col + i).setValue(lbl);
+    });
+    gold(dash.getRange(row, col, 1, labels.length));
+    dash.setRowHeight(row, 28);
+    return row + 1;
+  }
+  function dataRow(row, col, values, isFormula, shade) {
+    values.forEach(function(v, i) {
+      var cell = dash.getRange(row, col + i);
+      if (isFormula && typeof v === 'string' && v.charAt(0) === '=') {
+        cell.setFormula(v);
+      } else {
+        cell.setValue(v);
+      }
+    });
+    if (shade) dash.getRange(row, col, 1, values.length).setBackground('#F7F4EE');
+    dash.setRowHeight(row, 26);
+    return row + 1;
+  }
+  function spacer(row) {
+    dash.setRowHeight(row, 10);
+    return row + 1;
+  }
+
+  // ── Column widths ────────────────────────────────────────────────────────
+  dash.setColumnWidth(1, 220);
+  dash.setColumnWidth(2, 110);
+  dash.setColumnWidth(3, 30);
+  dash.setColumnWidth(4, 220);
+  dash.setColumnWidth(5, 110);
+
+  // ── Title bar ────────────────────────────────────────────────────────────
+  dash.getRange(1, 1, 1, 5).merge()
+    .setValue('Ink & Seal Notary Pros — Apostille Operations Dashboard')
+    .setBackground('#0B1829')
+    .setFontColor('#FFFFFF')
+    .setFontWeight('bold')
+    .setFontSize(14)
+    .setVerticalAlignment('middle')
+    .setHorizontalAlignment('left');
+  dash.setRowHeight(1, 48);
+
+  var r = 2;
+  r = spacer(r);
+
+  // ════════════════════════════════════════════════════════════════════════
+  // SECTION A — Executive Summary (cols 1-2)  |  SECTION B — Order Workload (cols 4-5)
+  // ════════════════════════════════════════════════════════════════════════
+  var rA = r;
+  var rB = r;
+
+  // Section A header
+  dash.getRange(rA, 1, 1, 2).merge()
+    .setValue('Executive Summary')
+    .setBackground('#0B1829').setFontColor('#FFFFFF').setFontWeight('bold')
+    .setFontSize(11).setVerticalAlignment('middle').setHorizontalAlignment('left');
+  dash.setRowHeight(rA, 36);
+  rA++;
+
+  gold(dash.getRange(rA, 1, 1, 2));
+  dash.getRange(rA, 1).setValue('Metric');
+  dash.getRange(rA, 2).setValue('Value');
+  dash.setRowHeight(rA, 28);
+  rA++;
+
+  var sumExec = [
+    ['Total Orders',      '=IFERROR(COUNTA(' + SN + '!' + AC + ':' + AC + ')-1,0)'],
+    ['Total Revenue',     '=IFERROR(SUM(' + SN + '!' + QC + ':' + QC + '),0)'],
+    ['Paid Revenue',      '=IFERROR(SUMIF(' + SN + '!' + PC + ':' + PC + ',"Paid",' + SN + '!' + QC + ':' + QC + '),0)'],
+    ['Unpaid Revenue',    '=IFERROR(SUMIF(' + SN + '!' + PC + ':' + PC + ',"Unpaid",' + SN + '!' + QC + ':' + QC + '),0)']
+  ];
+  sumExec.forEach(function(row, i) {
+    dash.getRange(rA, 1).setValue(row[0]);
+    dash.getRange(rA, 2).setFormula(row[1]);
+    if (i > 0) dash.getRange(rA, 2).setNumberFormat('$#,##0.00');
+    if (i % 2 === 1) dash.getRange(rA, 1, 1, 2).setBackground('#F7F4EE');
+    dash.setRowHeight(rA, 26);
+    rA++;
+  });
+
+  // Section B header
+  dash.getRange(rB, 4, 1, 2).merge()
+    .setValue('Order Workload')
+    .setBackground('#0B1829').setFontColor('#FFFFFF').setFontWeight('bold')
+    .setFontSize(11).setVerticalAlignment('middle').setHorizontalAlignment('left');
+  dash.setRowHeight(rB, 36);
+  rB++;
+
+  gold(dash.getRange(rB, 4, 1, 2));
+  dash.getRange(rB, 4).setValue('Status');
+  dash.getRange(rB, 5).setValue('Count');
+  dash.setRowHeight(rB, 28);
+  rB++;
+
+  var workload = [
+    'Review Pending','Quote Sent','Awaiting Documents',
+    'Awaiting Payment','Processing','Completed','Shipped',
+    'Delivered','Closed','Cancelled'
+  ];
+  workload.forEach(function(status, i) {
+    dash.getRange(rB, 4).setValue(status);
+    dash.getRange(rB, 5).setFormula(
+      '=IFERROR(COUNTIF(' + SN + '!' + SC + ':' + SC + ',"' + status + '"),0)'
+    );
+    if (i % 2 === 1) dash.getRange(rB, 4, 1, 2).setBackground('#F7F4EE');
+    dash.setRowHeight(rB, 26);
+    rB++;
+  });
+
+  r = Math.max(rA, rB);
+  r = spacer(r);
+
+  // ════════════════════════════════════════════════════════════════════════
+  // SECTION C — Operations
+  // ════════════════════════════════════════════════════════════════════════
+  r = sectionHdr(r, 1, 5, 'Operations');
+  gold(dash.getRange(r, 1, 1, 2));
+  dash.getRange(r, 1).setValue('Metric');
+  dash.getRange(r, 2).setValue('Value');
+  dash.setRowHeight(r, 28);
+  r++;
+
+  var ops = [
+    ['Requiring RON',
+      '=IFERROR(COUNTIF(' + SN + '!' + OC + ':' + OC + ',"Yes"),0)'],
+    ['Avg Processing Time (days)',
+      '=IFERROR(AVERAGEIF(' + SN + '!' + CC + ':' + CC + ','
+      + '">"&DATE(2000,1,1),' + SN + '!' + CC + ':' + CC + '-' + SN + '!' + PSC + ':' + PSC + '),"—")'],
+    ['Avg Quote Amount',
+      '=IFERROR(AVERAGEIF(' + SN + '!' + QC + ':' + QC + ','
+      + '">"&0,' + SN + '!' + QC + ':' + QC + '),"—")'],
+    ['Outstanding Balance',
+      '=IFERROR(SUMIF(' + SN + '!' + PC + ':' + PC + ',"Unpaid",' + SN + '!' + QC + ':' + QC + ')'
+      + '+SUMIF(' + SN + '!' + PC + ':' + PC + ',"Invoice Sent",' + SN + '!' + QC + ':' + QC + ')'
+      + '+SUMIF(' + SN + '!' + PC + ':' + PC + ',"Partially Paid",' + SN + '!' + QC + ':' + QC + '),0)']
+  ];
+  ops.forEach(function(row, i) {
+    dash.getRange(r, 1).setValue(row[0]);
+    var cell = dash.getRange(r, 2);
+    cell.setFormula(row[1]);
+    if (i === 2 || i === 3) cell.setNumberFormat('$#,##0.00');
+    if (i % 2 === 1) dash.getRange(r, 1, 1, 2).setBackground('#F7F4EE');
+    dash.setRowHeight(r, 26);
+    r++;
+  });
+
+  r = spacer(r);
+
+  // ════════════════════════════════════════════════════════════════════════
+  // SECTION D — Business Intelligence (3 QUERY tables side-by-side)
+  // ════════════════════════════════════════════════════════════════════════
+  r = sectionHdr(r, 1, 5, 'Business Intelligence');
+
+  // BI table helper — places a 2-col QUERY table at (startRow, col)
+  function biTable(startRow, col, title, qFormula, colALabel, colBLabel) {
+    dash.getRange(startRow, col, 1, 2).merge()
+      .setValue(title)
+      .setBackground('#1A2E4A').setFontColor('#C49A4A')
+      .setFontWeight('bold').setFontSize(10)
+      .setVerticalAlignment('middle');
+    dash.setRowHeight(startRow, 30);
+
+    gold(dash.getRange(startRow + 1, col, 1, 2));
+    dash.getRange(startRow + 1, col).setValue(colALabel);
+    dash.getRange(startRow + 1, col + 1).setValue(colBLabel);
+    dash.setRowHeight(startRow + 1, 26);
+
+    dash.getRange(startRow + 2, col).setFormula(qFormula);
+    return startRow;
+  }
+
+  var biRow = r;
+  biTable(biRow, 1, 'Orders by Country',
+    '=IFERROR(QUERY(' + SN + '!' + HC + ':' + HC + ',"SELECT ' + HC + ', COUNT(' + HC + ') WHERE ' + HC + ' <> \'\' GROUP BY ' + HC + ' ORDER BY COUNT(' + HC + ') DESC LABEL ' + HC + ' \'Country\', COUNT(' + HC + ') \'Orders\'",0),"No data")',
+    'Country', 'Orders'
+  );
+  biTable(biRow, 4, 'Orders by State',
+    '=IFERROR(QUERY(' + SN + '!' + GC + ':' + GC + ',"SELECT ' + GC + ', COUNT(' + GC + ') WHERE ' + GC + ' <> \'\' GROUP BY ' + GC + ' ORDER BY COUNT(' + GC + ') DESC LABEL ' + GC + ' \'State\', COUNT(' + GC + ') \'Orders\'",0),"No data")',
+    'State', 'Orders'
+  );
+
+  // Top document types on its own row below
+  r = biRow + 12;
+  r = spacer(r);
+  sectionHdr(r, 1, 5, '');
+  dash.getRange(r, 1, 1, 4).merge()
+    .setValue('Top Document Types')
+    .setBackground('#1A2E4A').setFontColor('#C49A4A')
+    .setFontWeight('bold').setFontSize(10)
+    .setVerticalAlignment('middle');
+  dash.setRowHeight(r, 30);
+  r++;
+
+  gold(dash.getRange(r, 1, 1, 2));
+  dash.getRange(r, 1).setValue('Document Type');
+  dash.getRange(r, 2).setValue('Orders');
+  dash.setRowHeight(r, 26);
+  r++;
+
+  dash.getRange(r, 1).setFormula(
+    '=IFERROR(QUERY(' + SN + '!' + DC + ':' + DC + ',"SELECT ' + DC + ', COUNT(' + DC + ') WHERE ' + DC + ' <> \'\' GROUP BY ' + DC + ' ORDER BY COUNT(' + DC + ') DESC LABEL ' + DC + ' \'Document Type\', COUNT(' + DC + ') \'Orders\'",0),"No data")'
+  );
+
+  r = r + 12;
+  r = spacer(r);
+
+  // ════════════════════════════════════════════════════════════════════════
+  // SECTION E — Recent Activity (last 10 orders)
+  // ════════════════════════════════════════════════════════════════════════
+  r = sectionHdr(r, 1, 6, 'Recent Activity (Last 10 Orders)');
+
+  dash.setColumnWidth(6, 100);
+
+  gold(dash.getRange(r, 1, 1, 6));
+  ['Order #', 'Client Name', 'Country', 'Status', 'Payment', 'Quote'].forEach(function(h, i) {
+    dash.getRange(r, i + 1).setValue(h);
+  });
+  dash.setRowHeight(r, 28);
+  r++;
+
+  for (var i = 0; i < 10; i++) {
+    // Row offset from bottom: 1 = most recent
+    var offset = i + 1;
+    var shade  = i % 2 === 1;
+    var dataR  = String(offset); // used in formula string
+
+    var fA  = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + AC + ':' + AC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+    var fNm = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + FNC + ':' + FNC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1)&" "&INDEX(' + SN + '!' + LNC + ':' + LNC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+    var fH  = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + HC + ':' + HC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+    var fS  = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + SC + ':' + SC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+    var fP  = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + PC + ':' + PC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+    var fQ  = '=IFERROR(IF(COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '>=2,INDEX(' + SN + '!' + QC + ':' + QC + ',COUNTA(' + SN + '!' + AC + ':' + AC + ')-' + dataR + '+1),""),"")';
+
+    [fA, fNm, fH, fS, fP, fQ].forEach(function(f, ci) {
+      dash.getRange(r, ci + 1).setFormula(f);
+    });
+    dash.getRange(r, 6).setNumberFormat('$#,##0.00');
+    if (shade) dash.getRange(r, 1, 1, 6).setBackground('#F7F4EE');
+    dash.setRowHeight(r, 26);
+    r++;
+  }
+
+  Logger.log('buildDashboard complete — ' + dash.getName());
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Shared helpers
 // ─────────────────────────────────────────────────────────────────────────────
 
