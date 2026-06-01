@@ -1465,23 +1465,32 @@
             }
 
             console.log('[ar-form] Starting Dropbox upload |', selectedFiles.length, 'file(s)');
+            selectedFiles.forEach(function (f, i) {
+              console.log('[ar-form] file[' + i + ']:', f.name, '| size:', f.size, 'bytes | type:', f.type);
+            });
             var nameVal  = nameInput  ? nameInput.value.trim()  : 'Client';
             var orderVal = (orderInput ? orderInput.value.trim() : '') || (json.order || '');
+            console.log('[ar-form] Dropbox clientName:', nameVal, '| orderNumber:', orderVal);
 
             // Convert files to base64 — no multipart parser needed on the server
             Promise.all(selectedFiles.map(function (f) {
               return new Promise(function (resolve, reject) {
                 var reader    = new FileReader();
-                reader.onload = function () { resolve({ name: f.name, data: reader.result }); };
+                reader.onload = function () {
+                  console.log('[ar-form] base64 ready for:', f.name, '| data length:', reader.result.length);
+                  resolve({ name: f.name, data: reader.result });
+                };
                 reader.onerror = reject;
                 reader.readAsDataURL(f);
               });
             }))
             .then(function (b64files) {
+              var payload = JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files });
+              console.log('[ar-form] Sending to /api/upload-to-dropbox | payload size:', payload.length, 'bytes');
               return fetch('/api/upload-to-dropbox', {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files })
+                body:    payload
               });
             })
             .then(function (r) {
