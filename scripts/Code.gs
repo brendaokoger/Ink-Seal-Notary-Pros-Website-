@@ -19,7 +19,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 var SHEET_ID   = '1qf9R3QLeL8gGCcFuWa0BrVIGmPm_uBqft4cDkuaZ7gI';
-var SHEET_NAME = 'Sheet1';
+var SHEET_NAME = 'ink_seal_apostille_tracker (1)';
 
 // 32 base columns — order must match the Google Sheet header row
 var HEADERS = [
@@ -67,6 +67,13 @@ function doPost(e) {
     var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
     var p     = e.parameter;
 
+    Logger.log('=== doPost called ===');
+    Logger.log('Spreadsheet ID   : ' + SHEET_ID);
+    Logger.log('Spreadsheet name : ' + ss.getName());
+    Logger.log('SHEET_NAME const : ' + SHEET_NAME);
+    Logger.log('Worksheet opened : ' + sheet.getName());
+    Logger.log('Rows before append: ' + sheet.getLastRow());
+
     var tz         = Session.getScriptTimeZone();
     var intakeDate = Utilities.formatDate(new Date(), tz, 'MM/dd/yyyy hh:mm a');
 
@@ -96,6 +103,9 @@ function doPost(e) {
     sheet.appendRow(headers.map(function (h) {
       return FIELD_MAP.hasOwnProperty(h) ? FIELD_MAP[h](p, meta) : '';
     }));
+
+    Logger.log('appendRow complete — row number: ' + sheet.getLastRow());
+    Logger.log('Order: ' + orderNum + ' | Name: ' + fullName);
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'ok', order: orderNum }))
