@@ -1407,7 +1407,8 @@
         });
       }
 
-      // Form submit — Step 1: Google Sheets (guaranteed), Step 2: Dropbox (background, non-blocking)
+      // Form submit
+      // Order: GAS proxy (guaranteed first) → thank-you page → Dropbox (background, non-blocking)
       var arForm    = document.getElementById('arForm');
       var arSuccess = document.getElementById('arSuccess');
       var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
@@ -1417,54 +1418,94 @@
           e.preventDefault();
           if (!validateStep(currentStep)) return;
 
+          console.log('[ar-form] Submit clicked');
           if (submitBtn) submitBtn.disabled = true;
 
-          // Capture file count and form references before any async work
           var countEl    = document.getElementById('uploadedFileCount');
           var orderInput = arForm.querySelector('[name="orderNumber"]');
           var nameInput  = arForm.querySelector('[name="fullName"]');
 
           if (countEl) countEl.value = selectedFiles.length;
 
-          // ── Step 1: Google Sheets submission (always runs first) ──────────
-          console.log('[ar-form] Starting Google Sheets submission');
-          var gasData = new FormData(arForm);
+          // Collect all form fields into a plain object for JSON transport
+          var formObj = {};
+          var fd = new FormData(arForm);
+          fd.forEach(function (value, key) { formObj[key] = value; });
 
-          fetch(arForm.action, { method: 'POST', mode: 'no-cors', body: gasData })
-            .then(function () {
-              console.log('[ar-form] Google Sheets submission complete');
+          console.log('[ar-form] Starting GAS submission | action:', arForm.action, '| fields:', Object.keys(formObj).join(', '));
 
-              // Show success page immediately — client is done
-              arForm.style.display = 'none';
-              if (arSuccess) arSuccess.classList.add('show');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-
-              // ── Step 2: Dropbox upload (background, never blocks the client) ──
-              console.log('[ar-form] Starting Dropbox upload');
-              var dbxData = new FormData();
-              dbxData.append('clientName',  nameInput  ? nameInput.value.trim()  : 'Client');
-              dbxData.append('orderNumber', orderInput ? orderInput.value.trim() : '');
-              selectedFiles.forEach(function (f) { dbxData.append('files', f); });
-
-              fetch('/api/upload-to-dropbox', { method: 'POST', body: dbxData })
-                .then(function (r) { return r.json(); })
-                .then(function (json) {
-                  if (json.success) {
-                    console.log('[ar-form] Dropbox upload complete — folder:', json.folderLink, '— files uploaded:', json.uploadCount);
-                  } else {
-                    console.warn('[ar-form] Dropbox upload failed but Google Sheets row was saved —', json.error);
-                  }
-                })
-                .catch(function (err) {
-                  console.warn('[ar-form] Dropbox upload failed but Google Sheets row was saved —', err && err.message ? err.message : err);
-                });
-            })
-            .catch(function () {
-              // Only shown if Google Sheets itself cannot be reached (network error)
-              console.error('[ar-form] Google Sheets submission failed');
-              alert('Unable to submit. Please check your connection or contact us directly.');
-              if (submitBtn) submitBtn.disabled = false;
+          // ── Step 1: Submit to Google Apps Script via Vercel proxy ────────────
+          // Using a proxy lets us read the actual GAS response and log any errors.
+          fetch('/api/submit-intake', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(formObj)
+          })
+          .then(function (r) {
+            return r.text().then(function (text) {
+              try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
             });
+          })
+          .then(function (json) {
+            if (json.success) {
+              console.log('[ar-form] GAS submission confirmed | order:', json.order);
+            } else {
+              console.warn('[ar-form] GAS returned error:', json.error || JSON.stringify(json.gasResponse || json));
+            }
+
+            // Show thank-you page after GAS submission was attempted
+            arForm.style.display = 'none';
+            if (arSuccess) arSuccess.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // ── Step 2: Dropbox upload (background — never blocks the client) ──
+            if (selectedFiles.length === 0) {
+              console.log('[ar-form] No files selected — skipping Dropbox upload');
+              return;
+            }
+
+            console.log('[ar-form] Starting Dropbox upload |', selectedFiles.length, 'file(s)');
+            var nameVal  = nameInput  ? nameInput.value.trim()  : 'Client';
+            var orderVal = (orderInput ? orderInput.value.trim() : '') || (json.order || '');
+
+            // Convert files to base64 — no multipart parser needed on the server
+            Promise.all(selectedFiles.map(function (f) {
+              return new Promise(function (resolve, reject) {
+                var reader    = new FileReader();
+                reader.onload = function () { resolve({ name: f.name, data: reader.result }); };
+                reader.onerror = reject;
+                reader.readAsDataURL(f);
+              });
+            }))
+            .then(function (b64files) {
+              return fetch('/api/upload-to-dropbox', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files })
+              });
+            })
+            .then(function (r) {
+              return r.text().then(function (text) {
+                try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+              });
+            })
+            .then(function (dbx) {
+              if (dbx.success) {
+                console.log('[ar-form] Dropbox upload complete | folder:', dbx.folderLink, '| files:', dbx.uploadCount);
+              } else {
+                console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', dbx.error);
+              }
+            })
+            .catch(function (err) {
+              console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', err && err.message ? err.message : String(err));
+            });
+          })
+          .catch(function (err) {
+            // Network error — can't reach /api/submit-intake
+            console.error('[ar-form] GAS submission network error:', err && err.message ? err.message : String(err));
+            alert('Unable to submit. Please check your connection or contact us directly.');
+            if (submitBtn) submitBtn.disabled = false;
+          });
         });
       }
     })();
