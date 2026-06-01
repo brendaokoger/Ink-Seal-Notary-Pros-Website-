@@ -1407,7 +1407,7 @@
         });
       }
 
-      // Form submit — Step 1: Dropbox upload, Step 2: Google Apps Script
+      // Form submit — Step 1: Google Sheets (guaranteed), Step 2: Dropbox (background, non-blocking)
       var arForm    = document.getElementById('arForm');
       var arSuccess = document.getElementById('arSuccess');
       var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
@@ -1419,43 +1419,51 @@
 
           if (submitBtn) submitBtn.disabled = true;
 
+          // Capture file count and form references before any async work
           var countEl    = document.getElementById('uploadedFileCount');
           var orderInput = arForm.querySelector('[name="orderNumber"]');
-          var linkInput  = document.getElementById('arDropboxLink');
           var nameInput  = arForm.querySelector('[name="fullName"]');
 
           if (countEl) countEl.value = selectedFiles.length;
 
-          function submitToGAS() {
-            var data = new FormData(arForm);
-            fetch(arForm.action, { method: 'POST', mode: 'no-cors', body: data })
-              .then(function () {
-                arForm.style.display = 'none';
-                if (arSuccess) arSuccess.classList.add('show');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              })
-              .catch(function () {
-                alert('Unable to submit. Please check your connection or contact us directly.');
-                if (submitBtn) submitBtn.disabled = false;
-              });
-          }
+          // ── Step 1: Google Sheets submission (always runs first) ──────────
+          console.log('[ar-form] Starting Google Sheets submission');
+          var gasData = new FormData(arForm);
 
-          // Step 1: Upload files to Dropbox via secure serverless function
-          var dbxData = new FormData();
-          dbxData.append('clientName',   nameInput  ? nameInput.value.trim()  : 'Client');
-          dbxData.append('orderNumber',  orderInput ? orderInput.value.trim() : '');
-          selectedFiles.forEach(function (f) { dbxData.append('files', f); });
+          fetch(arForm.action, { method: 'POST', mode: 'no-cors', body: gasData })
+            .then(function () {
+              console.log('[ar-form] Google Sheets submission complete');
 
-          fetch('/api/upload-to-dropbox', { method: 'POST', body: dbxData })
-            .then(function (r) { return r.json(); })
-            .then(function (json) {
-              if (json.orderNumber && orderInput) orderInput.value = json.orderNumber;
-              if (json.folderLink  && linkInput)  linkInput.value  = json.folderLink;
-              submitToGAS();
+              // Show success page immediately — client is done
+              arForm.style.display = 'none';
+              if (arSuccess) arSuccess.classList.add('show');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+
+              // ── Step 2: Dropbox upload (background, never blocks the client) ──
+              console.log('[ar-form] Starting Dropbox upload');
+              var dbxData = new FormData();
+              dbxData.append('clientName',  nameInput  ? nameInput.value.trim()  : 'Client');
+              dbxData.append('orderNumber', orderInput ? orderInput.value.trim() : '');
+              selectedFiles.forEach(function (f) { dbxData.append('files', f); });
+
+              fetch('/api/upload-to-dropbox', { method: 'POST', body: dbxData })
+                .then(function (r) { return r.json(); })
+                .then(function (json) {
+                  if (json.success) {
+                    console.log('[ar-form] Dropbox upload complete — folder:', json.folderLink, '— files uploaded:', json.uploadCount);
+                  } else {
+                    console.warn('[ar-form] Dropbox upload failed but Google Sheets row was saved —', json.error);
+                  }
+                })
+                .catch(function (err) {
+                  console.warn('[ar-form] Dropbox upload failed but Google Sheets row was saved —', err && err.message ? err.message : err);
+                });
             })
-            .catch(function (err) {
-              console.warn('Dropbox upload skipped:', err && err.message ? err.message : err);
-              submitToGAS(); // Always submit to GAS even if Dropbox fails
+            .catch(function () {
+              // Only shown if Google Sheets itself cannot be reached (network error)
+              console.error('[ar-form] Google Sheets submission failed');
+              alert('Unable to submit. Please check your connection or contact us directly.');
+              if (submitBtn) submitBtn.disabled = false;
             });
         });
       }
