@@ -2,7 +2,7 @@
 // Running GAS through Vercel lets us read the actual response and log errors.
 // Browser → /api/submit-intake → Google Apps Script → row saved in Google Sheets
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxhDJlWUrATk95m8J2Evgpn6ZDmBUkwwQUhQyXv7D8bOtSbkBYG3HbYJri_gsmvyO5t/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwVEacv0z5nAtA1Fs9LOoNJPVENyrM_py0Qnc9ZtoIgoJ5iwwJYI9mKB2FQOQFrw7Eq/exec';
 
 const handler = async function (req, res) {
   res.setHeader('Access-Control-Allow-Origin',  '*');
