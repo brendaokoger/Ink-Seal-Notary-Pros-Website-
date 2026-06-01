@@ -21,6 +21,14 @@ const handler = async function (req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST')   return res.status(405).json({ error: 'Method not allowed' });
 
+  // Sanity-check env vars before making any network calls
+  const missingVars = ['DROPBOX_APP_KEY', 'DROPBOX_APP_SECRET', 'DROPBOX_REFRESH_TOKEN']
+    .filter(k => !process.env[k]);
+  if (missingVars.length) {
+    console.error('[upload-to-dropbox] Missing env vars:', missingVars.join(', '));
+    return res.status(500).json({ success: false, error: 'Server misconfiguration: missing env vars: ' + missingVars.join(', ') });
+  }
+
   try {
     const { fields, files } = await parseForm(req);
 
@@ -47,7 +55,7 @@ const handler = async function (req, res) {
     return res.status(200).json({ success: true, orderNumber: orderNum, folderLink, uploadCount });
 
   } catch (err) {
-    console.error('[upload-to-dropbox]', err);
+    console.error('[upload-to-dropbox] Fatal:', err.message);
     return res.status(500).json({ success: false, error: err.message || 'Upload failed' });
   }
 };
@@ -60,11 +68,11 @@ module.exports  = handler;
 function parseForm(req) {
   return new Promise((resolve, reject) => {
     const form = formidable({
-      uploadDir:       '/tmp',
-      keepExtensions:  true,
-      multiples:       true,
-      maxFiles:        5,
-      maxFileSize:     25 * 1024 * 1024   // 25 MB per file
+      uploadDir:      '/tmp',
+      keepExtensions: true,
+      multiples:      true,
+      maxFiles:       5,
+      maxFileSize:    25 * 1024 * 1024  // 25 MB per file
     });
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
@@ -94,22 +102,48 @@ function generateOrderNumber() {
   return `INS-${yyyymm}-${suffix}`;
 }
 
+// ── Safe Dropbox response reader ───────────────────────────────────────────────
+// Always reads raw text first, then parses JSON — never blindly calls .json().
+// Logs the HTTP status and raw body for every Dropbox call so failures are
+// immediately visible in Vercel Function Logs.
+
+async function dropboxRead(label, response) {
+  const status = response.status;
+  const raw    = await response.text();
+
+  console.log(`[dropbox:${label}] HTTP ${status} — ${raw.slice(0, 400)}`);
+
+  if (!raw || raw.trim() === '') {
+    return { _status: status, _raw: '' };
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    parsed._status = status;
+    return parsed;
+  } catch (_) {
+    // Dropbox returned HTML or plain text (e.g. 5xx maintenance page, bad credentials)
+    throw new Error(`[dropbox:${label}] HTTP ${status} — non-JSON response: ${raw.slice(0, 300)}`);
+  }
+}
+
 // ── Dropbox API calls ──────────────────────────────────────────────────────────
 
 async function getAccessToken() {
-  const res = await fetch('https://api.dropboxapi.com/oauth2/token', {
+  const res  = await fetch('https://api.dropboxapi.com/oauth2/token', {
     method:  'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body:    new URLSearchParams({
       grant_type:    'refresh_token',
-      refresh_token: process.env.DROPBOX_REFRESH_TOKEN,
-      client_id:     process.env.DROPBOX_APP_KEY,
-      client_secret: process.env.DROPBOX_APP_SECRET
+      refresh_token: process.env.DROPBOX_REFRESH_TOKEN.trim(),
+      client_id:     process.env.DROPBOX_APP_KEY.trim(),
+      client_secret: process.env.DROPBOX_APP_SECRET.trim()
     }).toString()
   });
-  const data = await res.json();
+  const data = await dropboxRead('oauth2/token', res);
+
   if (!data.access_token) {
-    throw new Error('Dropbox token refresh failed: ' + JSON.stringify(data));
+    throw new Error(`[dropbox:oauth2/token] Token refresh failed — error: ${data.error || ''} ${data.error_description || ''}`);
   }
   return data.access_token;
 }
@@ -120,16 +154,18 @@ async function createFolder(token, path) {
     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
     body:    JSON.stringify({ path, autorename: false })
   });
-  const data = await res.json();
-  // Ignore "folder already exists" error — safe to continue
-  if (data.error_summary && !data.error_summary.startsWith('path/conflict')) {
-    throw new Error('Create folder failed: ' + data.error_summary);
+  const data = await dropboxRead('files/create_folder_v2', res);
+
+  // "path/conflict/folder" means the folder already exists — safe to continue
+  const summary = data.error_summary || '';
+  if (data._status !== 200 && !summary.startsWith('path/conflict')) {
+    throw new Error(`[dropbox:files/create_folder_v2] ${summary || JSON.stringify(data)}`);
   }
   return path;
 }
 
 async function uploadFile(token, path, buffer) {
-  const res = await fetch('https://content.dropboxapi.com/2/files/upload', {
+  const res  = await fetch('https://content.dropboxapi.com/2/files/upload', {
     method:  'POST',
     headers: {
       'Authorization':   `Bearer ${token}`,
@@ -138,35 +174,41 @@ async function uploadFile(token, path, buffer) {
     },
     body: buffer
   });
-  return res.json();
+  const data = await dropboxRead('files/upload', res);
+
+  if (data._status !== 200 && data.error_summary) {
+    throw new Error(`[dropbox:files/upload] ${data.error_summary}`);
+  }
+  return data;
 }
 
 async function getSharedLink(token, path) {
-  // Attempt to create a new shared link
   const res  = await fetch('https://api.dropboxapi.com/2/sharing/create_shared_link_with_settings', {
     method:  'POST',
     headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
     body:    JSON.stringify({ path })
   });
-  const data = await res.json();
+  const data = await dropboxRead('sharing/create_shared_link_with_settings', res);
 
   if (data.url) return data.url;
 
-  // Link already exists — Dropbox returns it in the error payload
+  // Link already exists — Dropbox returns the existing URL inside the error payload
   if (data.error && data.error['.tag'] === 'shared_link_already_exists') {
     const existing = data.error.shared_link_already_exists;
     if (existing && existing.metadata && existing.metadata.url) {
       return existing.metadata.url;
     }
-    // Fall back to listing existing links
+    // Fall back: list existing shared links for this path
     const listRes  = await fetch('https://api.dropboxapi.com/2/sharing/list_shared_links', {
       method:  'POST',
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
       body:    JSON.stringify({ path, direct_only: true })
     });
-    const listData = await listRes.json();
+    const listData = await dropboxRead('sharing/list_shared_links', listRes);
     return (listData.links && listData.links[0]) ? listData.links[0].url : '';
   }
 
+  // Non-fatal — return empty string so the rest of the submission still works
+  console.warn('[dropbox:sharing] Could not obtain shared link:', JSON.stringify(data).slice(0, 200));
   return '';
 }
