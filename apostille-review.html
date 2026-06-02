@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostille Document Review | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Submit your document for apostille review with Ink &amp; Seal Notary Pros. Our team will review your document and contact you with pricing, processing instructions, and next steps." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══ FORM HEADER ═════════════════════════════════════ -->
+  <header class="form-hdr" id="header">
+    <div class="form-hdr-inner container">
+      <a href="index.html" class="form-hdr-logo" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" />
+      </a>
+      <div class="form-hdr-center">
+        <a href="index.html#services" class="form-hdr-back">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+          Back to Services
+        </a>
+        <span class="form-hdr-title">Apostille Document Review</span>
+      </div>
+      <div class="form-hdr-step">
+        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 8</span>
+        <span class="form-hdr-step-name" id="fhStepName">Select Your Service</span>
+      </div>
+    </div>
+    <div class="form-hdr-progress">
+      <div class="form-hdr-bar" id="fhBar" style="width:16.7%"></div>
+    </div>
+  </header>
+
+  <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
+  <section class="on-form-section">
+    <div class="container">
+
+      <p class="form-intro-text">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
+
+      <!-- Success message -->
+      <div class="on-success" id="arSuccess" role="alert" aria-live="polite">
+        <div class="ar-success-card">
+
+          <!-- Animated green checkmark -->
+          <div class="ar-success-icon-wrap" aria-hidden="true">
+            <svg class="ar-success-svg" viewBox="0 0 64 64" fill="none" width="80" height="80">
+              <circle class="ar-success-circle" cx="32" cy="32" r="29"
+                      fill="rgba(22,163,74,.08)"
+                      stroke="#16a34a" stroke-width="2.2"
+                      stroke-linecap="round"/>
+              <polyline class="ar-success-check"
+                        points="19,33 28,42 45,23"
+                        stroke="#16a34a" stroke-width="3.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Heading -->
+          <h2 class="ar-success-heading">
+            Thank you for choosing<br>Ink &amp; Seal Notary Pros.
+          </h2>
+
+          <!-- Confirmation lead -->
+          <p class="ar-success-received">Your apostille review request has been received.</p>
+          <p class="ar-success-subtext">Our team will review your information and contact you with next steps.</p>
+
+          <!-- Ornamental divider -->
+          <div class="ar-success-rule" aria-hidden="true">
+            <span class="ar-success-rule-line"></span>
+            <span class="ar-success-rule-gem">◆</span>
+            <span class="ar-success-rule-line"></span>
+          </div>
+
+          <!-- Timeline & process details -->
+          <div class="ar-success-details">
+            <p>Most apostille review requests are reviewed within 1 business day. Additional review time may be required for complex or international document requests.</p>
+            <p>Clients who select Same-Day Review receive priority placement in our review queue and are typically contacted the same business day.</p>
+          </div>
+
+          <!-- Final notice -->
+          <div class="ar-success-notice">
+            <span class="ar-success-notice-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M3 5h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/>
+                <polyline points="2,5 10,12 18,5"/>
+              </svg>
+            </span>
+            <p>Please monitor your email and phone for follow-up instructions from our team.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Multi-step form -->
+      <form class="on-form" id="arForm"
+            action="https://script.google.com/macros/s/AKfycbwVEacv0z5nAtA1Fs9LOoNJPVENyrM_py0Qnc9ZtoIgoJ5iwwJYI9mKB2FQOQFrw7Eq/exec"
+            method="POST"
+            novalidate>
+
+        <!-- Order number: populated by /api/upload-to-dropbox before GAS submission -->
+        <input type="hidden" name="orderNumber" value="" />
+        <!-- Dropbox folder link: populated by /api/upload-to-dropbox and saved to Google Sheets -->
+        <input type="hidden" id="arDropboxLink" name="dropboxFolderLink" value="" />
+
+        <!-- ── STEP 1 — PRICING & SERVICE OPTIONS ─────────── -->
+        <div class="ms-step" id="step1" data-step="1">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 1 of 8</span>
+            <h2 class="ar-step-hdr-title">Select Your Service</h2>
+            <p class="ar-step-hdr-desc">Choose the review option that fits your timeline. Pricing shown is an estimate — final pricing is confirmed after your documents are reviewed.</p>
+          </div>
+
+          <!-- Premium Service Selection Cards -->
+          <div class="ar-service-grid">
+
+            <label class="ar-service-card">
+              <input type="radio" name="sameDayReview" value="standard"
+                     data-review-fee="0" class="ar-service-input" checked />
+              <div class="ar-service-card-body">
+                <div class="ar-service-top">
+                  <span class="ar-service-eyebrow">Standard</span>
+                  <span class="ar-service-check-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+                  </span>
+                </div>
+                <h3 class="ar-service-title">Standard Apostille Review</h3>
+                <p class="ar-service-desc">Most apostille review requests are reviewed within 1 business day.</p>
+                <div class="ar-service-pricing">
+                  <div class="ar-service-price-main">
+                    <span class="ar-service-starting">Starting at</span>
+                    <span class="ar-service-amount">$175</span>
+                    <span class="ar-service-per">per document</span>
+                  </div>
+                  <span class="ar-service-review-note">Standard review included</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="ar-service-card">
+              <input type="radio" name="sameDayReview" value="same-day"
+                     data-review-fee="25" class="ar-service-input" />
+              <div class="ar-service-card-body">
+                <div class="ar-service-top">
+                  <span class="ar-service-eyebrow">Priority</span>
+                  <span class="ar-service-check-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="3,8 6.5,11.5 13,5"/></svg>
+                  </span>
+                </div>
+                <h3 class="ar-service-title">Same-Day Priority Review</h3>
+                <p class="ar-service-desc">Priority placement in our review queue. Most clients are contacted the same business day.</p>
+                <div class="ar-service-pricing">
+                  <div class="ar-service-price-main">
+                    <span class="ar-service-starting">Starting at</span>
+                    <span class="ar-service-amount">$200</span>
+                    <span class="ar-service-per">per document</span>
+                  </div>
+                  <span class="ar-service-review-note">Includes $25 same-day review</span>
+                </div>
+              </div>
+            </label>
+
+          </div>
+
+          <!-- Apostille Pricing Reference Card -->
+          <details class="ar-pricing-details">
+            <summary class="ar-pricing-summary">
+              <div class="ar-pricing-summary-text">
+                <span class="ar-pricing-summary-eyebrow">Estimated Service Pricing</span>
+                <span class="ar-pricing-summary-title">Standard Apostille Service Pricing</span>
+              </div>
+              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
+            </summary>
+            <div class="ar-pricing-details-body">
+
+            <div class="ar-pricing-feature">
+              <span class="ar-pricing-feature-label">Standard Apostille Service</span>
+              <span class="ar-pricing-feature-price">Starting at $175 <span class="ar-pricing-per">per document</span></span>
+            </div>
+            <div class="ar-pricing-row ar-pricing-row--sub">
+              <span class="ar-pricing-item">Additional Documents (same order)</span>
+              <span class="ar-pricing-amount">$100 each</span>
+            </div>
+
+            <div class="ar-pricing-divider"></div>
+
+            <div class="ar-pricing-group">
+              <p class="ar-pricing-group-label">Review Options</p>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Standard Review</span>
+                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Same-Day Review</span>
+                <span class="ar-pricing-amount">+ $25</span>
+              </div>
+            </div>
+
+            <div class="ar-pricing-group">
+              <p class="ar-pricing-group-label">Processing Options</p>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Standard Processing</span>
+                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Rush Processing</span>
+                <span class="ar-pricing-amount">+ $75</span>
+              </div>
+            </div>
+
+            <div class="ar-pricing-group">
+              <p class="ar-pricing-group-label">Return Shipping</p>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">USPS Priority Return Shipping</span>
+                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Overnight Return Shipping</span>
+                <span class="ar-pricing-amount">+ $45</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">International Return Shipping</span>
+                <span class="ar-pricing-amount">Starting at $75</span>
+              </div>
+            </div>
+
+            <p class="ar-pricing-intl-note">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, package weight, delivery requirements, and shipping method selected. A final international shipping quote will be provided after document review and destination verification.</p>
+
+            <p class="ar-pricing-disclaimer">All pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</p>
+            </div>
+          </details>
+
+          <!-- RON Pricing Reference Card -->
+          <details class="ar-pricing-details">
+            <summary class="ar-pricing-summary">
+              <div class="ar-pricing-summary-text">
+                <span class="ar-pricing-summary-eyebrow">Informational Pricing Only</span>
+                <span class="ar-pricing-summary-title">Remote Online Notarization (RON)</span>
+              </div>
+              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
+            </summary>
+            <div class="ar-pricing-details-body">
+
+            <div class="ar-pricing-group">
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Standard RON <span class="ar-pricing-item-note">(1 signer / 1 seal)</span></span>
+                <span class="ar-pricing-amount">$25</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Additional Seal</span>
+                <span class="ar-pricing-amount">+ $10</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Additional Signer</span>
+                <span class="ar-pricing-amount">+ $15</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Witness Service</span>
+                <span class="ar-pricing-amount">$40</span>
+              </div>
+              <div class="ar-pricing-row">
+                <span class="ar-pricing-item">Authenticated Witness</span>
+                <span class="ar-pricing-amount">+ $20</span>
+              </div>
+            </div>
+
+            <p class="ar-pricing-disclaimer">RON services are quoted separately and only when notarization is required.</p>
+            </div>
+          </details>
+
+          <!-- Processing & Shipping Options card -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <h2 class="on-card-title">Processing &amp; Shipping Options</h2>
+            </div>
+
+            <!-- Processing Speed -->
+            <div class="ar-option-group">
+              <p class="ar-option-group-label on-label">Processing Speed</p>
+              <div class="ar-option-row">
+                <label class="ar-option-card">
+                  <input type="radio" name="processingSpeed" value="standard"
+                         data-rush-fee="0" class="ar-option-input" checked />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Standard Processing</span>
+                  <span class="ar-option-price">Included</span>
+                  <span class="ar-option-desc">Typical 5–10 business day turnaround</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="processingSpeed" value="rush"
+                         data-rush-fee="75" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Rush Processing</span>
+                  <span class="ar-option-price">+ $75</span>
+                  <span class="ar-option-desc">Priority handling for faster turnaround</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Return Shipping -->
+            <div class="ar-option-group" style="margin-top:32px">
+              <p class="ar-option-group-label on-label">Return Shipping Method</p>
+              <div class="ar-option-col">
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="usps-priority"
+                         data-shipping-fee="0" class="ar-option-input" checked />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">USPS Priority Return Shipping</span>
+                  <span class="ar-option-price">Included</span>
+                  <span class="ar-option-desc">Delivery in 1–3 business days</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="overnight"
+                         data-shipping-fee="45" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">Overnight Return Shipping</span>
+                  <span class="ar-option-price">+ $45</span>
+                  <span class="ar-option-desc">Next-day delivery for time-sensitive documents</span>
+                </label>
+                <label class="ar-option-card">
+                  <input type="radio" name="returnShipping" value="international"
+                         data-shipping-fee="75" class="ar-option-input" />
+                  <span class="ar-option-check"></span>
+                  <span class="ar-option-name">International Return Shipping</span>
+                  <span class="ar-option-price">Starting at $75</span>
+                  <span class="ar-option-desc">Door-to-door international courier delivery</span>
+                </label>
+                <p class="ar-shipping-notice">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, weight, and delivery requirements.</p>
+              </div>
+            </div>
+
+            <!-- RON note -->
+            <div class="ar-ron-group">
+              <p class="ar-ron-eyebrow">Remote Online Notarization (RON)</p>
+              <p class="ar-ron-body">Some documents may require notarization prior to apostille processing. Remote Online Notarization (RON) is available for eligible documents. RON pricing is displayed above and quoted separately only when notarization is required.</p>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <div></div>
+            <button type="button" class="ms-btn-continue" data-next="2">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2 — CLIENT INFORMATION ────────────────── -->
+        <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 2 of 8</span>
+            <h2 class="ar-step-hdr-title">Tell Us About You</h2>
+            <p class="ar-step-hdr-desc">Your contact information is kept strictly confidential and used only to process your apostille review request.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">2</span>
+              <h2 class="on-card-title">Client Information</h2>
+            </div>
+
+            <div class="on-field-row on-field-row--1">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="fullName">Full Legal Name</label>
+                <input type="text" id="fullName" name="fullName" class="on-input"
+                       placeholder="Enter your full legal name" autocomplete="name" required />
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="on-input"
+                       placeholder="your@email.com" autocomplete="email" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="phone">Mobile Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="on-input"
+                       placeholder="(773) 555-0100" autocomplete="tel" required />
+              </div>
+            </div>
+
+            <div class="on-field-row on-field-row--1" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="state">State of Residence</label>
+                <select id="state" name="state" class="on-select" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="1">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="3">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3 — DOCUMENT INFORMATION ────────────────── -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 3 of 8</span>
+            <h2 class="ar-step-hdr-title">About Your Document</h2>
+            <p class="ar-step-hdr-desc">Help us understand your document so we can confirm apostille eligibility and provide accurate pricing.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">3</span>
+              <h2 class="on-card-title">Document Information</h2>
+            </div>
+
+            <!-- Destination + Issuing State -->
+            <div class="on-field-row" style="margin-bottom:28px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="destinationCountry">Destination Country</label>
+                <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
+                       placeholder="e.g. Mexico, Germany, Italy" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="issuingState">State or Jurisdiction Where Document Was Issued</label>
+                <select id="issuingState" name="issuingState" class="on-select" required>
+                  <option value="" disabled selected>Select issuing state or jurisdiction</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                  <option>Federal / U.S. Government</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Document Type -->
+            <div class="on-field-row on-field-row--1" style="margin-bottom:0">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="documentType">Document Type</label>
+                <select id="documentType" name="documentType" class="on-select" required>
+                  <option value="" disabled selected>Select document type</option>
+                  <option>Birth Certificate</option>
+                  <option>Marriage Certificate</option>
+                  <option>Death Certificate</option>
+                  <option>Divorce Decree</option>
+                  <option>Power of Attorney</option>
+                  <option>Affidavit</option>
+                  <option>Passport Copy</option>
+                  <option>Driver License Copy</option>
+                  <option>School Document</option>
+                  <option>Business Document</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Card-style questions -->
+            <div class="ar-doc-questions">
+
+              <!-- Document Count -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">How many documents are being submitted?</p>
+                <div class="ar-count-grid">
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="1" class="ar-count-input" checked required />
+                    <span class="ar-count-num">1</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="2" class="ar-count-input" />
+                    <span class="ar-count-num">2</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="3" class="ar-count-input" />
+                    <span class="ar-count-num">3</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="4" class="ar-count-input" />
+                    <span class="ar-count-num">4</span>
+                  </label>
+                  <label class="ar-count-card">
+                    <input type="radio" name="documentCount" value="5" class="ar-count-input" />
+                    <span class="ar-count-num">5</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Vital Record -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Is this document a vital record?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isVitalRecord" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Certified Original -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Do you have the original certified document?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="hasCertifiedOriginal" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Already Notarized -->
+              <div class="ar-choice-group">
+                <p class="on-label on-label--req ar-choice-q">Is the document already notarized?</p>
+                <div class="ar-tri-grid">
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="Yes" class="ar-tri-input" required />
+                    <span class="ar-tri-text">Yes</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="No" class="ar-tri-input" />
+                    <span class="ar-tri-text">No</span>
+                  </label>
+                  <label class="ar-tri-card">
+                    <input type="radio" name="isAlreadyNotarized" value="Not Sure" class="ar-tri-input" />
+                    <span class="ar-tri-text">Not Sure</span>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="2">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="4">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 4 — DOCUMENT UPLOAD ───────────────────── -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 4 of 8</span>
+            <h2 class="ar-step-hdr-title">Upload Your Documents</h2>
+            <p class="ar-step-hdr-desc">Upload up to 5 documents for review.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">4</span>
+              <h2 class="on-card-title">Document Upload</h2>
+            </div>
+
+            <!-- Drop zone — file input has no name so it is not sent to GAS -->
+            <div class="ar-dropzone" id="arDropzone" role="region" aria-label="Document upload area">
+              <input type="file" id="docUploads" accept=".pdf,.jpg,.jpeg,.png" multiple class="ar-dropzone-input" tabindex="-1" />
+              <div class="ar-dropzone-body">
+                <div class="ar-dropzone-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
+                    <rect x="6" y="8" width="36" height="32" rx="5"/>
+                    <line x1="24" y1="30" x2="24" y2="18"/>
+                    <polyline points="17,24 24,17 31,24"/>
+                    <line x1="16" y1="34" x2="32" y2="34"/>
+                  </svg>
+                </div>
+                <p class="ar-dropzone-title">Drop your documents here</p>
+                <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
+                <p class="ar-dropzone-hint">PDF, JPG, JPEG, PNG &middot; Up to 5 documents</p>
+              </div>
+            </div>
+
+            <!-- File list populated by JS -->
+            <div class="ar-file-list" id="arFileList" aria-live="polite"></div>
+
+            <!-- Uploaded file count sent to Google Sheets; file data stored via Dropbox (future) -->
+            <input type="hidden" id="uploadedFileCount" name="uploadedFileCount" value="0" />
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 5 — ADDITIONAL NOTES ─────────────────── -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 5 of 8</span>
+            <h2 class="ar-step-hdr-title">Any Additional Notes?</h2>
+            <p class="ar-step-hdr-desc">Share any special instructions, deadlines, destination requirements, or context that will help us review your documents accurately.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">5</span>
+              <h2 class="on-card-title">Additional Notes</h2>
+            </div>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="notes">Additional Notes</label>
+              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
+                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="4">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="6">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 6 — REVIEW & ACKNOWLEDGMENT ──────────── -->
+        <div class="ms-step" id="step6" data-step="6" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 6 of 8</span>
+            <h2 class="ar-step-hdr-title">Estimated Investment</h2>
+            <p class="ar-step-hdr-desc">Review your estimated pricing below. Final pricing is confirmed after your documents are reviewed.</p>
+          </div>
+
+          <!-- ── Estimated Investment ─────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">6</span>
+              <h2 class="on-card-title">Estimated Investment</h2>
+            </div>
+
+            <div class="ar-estimate-wrap">
+              <div class="ar-estimate-box">
+                <div class="ar-estimate-items">
+                  <div class="ar-estimate-item">
+                    <span class="ar-estimate-item-label" id="arEstBaseLabel">Standard Apostille Service (1 Document)</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
+                    <span class="ar-estimate-item-amount">$175</span>
+                  </div>
+                  <div class="ar-estimate-item" id="arEstItemAddl" style="display:none">
+                    <span class="ar-estimate-item-label" id="arEstAddlLabel">Additional Documents</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
+                    <span class="ar-estimate-item-amount" id="arEstAddl">+ $0</span>
+                  </div>
+                  <div class="ar-estimate-item" id="arEstItemReview" style="display:none">
+                    <span class="ar-estimate-item-label">Same-Day Review</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
+                    <span class="ar-estimate-item-amount">+ $25</span>
+                  </div>
+                  <div class="ar-estimate-item" id="arEstItemRush" style="display:none">
+                    <span class="ar-estimate-item-label">Rush Processing</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
+                    <span class="ar-estimate-item-amount">+ $75</span>
+                  </div>
+                  <div class="ar-estimate-item">
+                    <span class="ar-estimate-item-label" id="arEstShipLabel">USPS Priority Return Shipping</span>
+                    <span class="ar-estimate-item-leader" aria-hidden="true"></span>
+                    <span class="ar-estimate-item-amount" id="arEstShipping">Included</span>
+                  </div>
+                </div>
+                <div class="ar-estimate-divider"></div>
+                <div class="ar-estimate-row">
+                  <span class="ar-estimate-label">Estimated Total</span>
+                  <span class="ar-estimate-total" id="arEstimateTotal">$175</span>
+                </div>
+                <p class="ar-estimate-intl" id="arEstimateIntl" style="display:none">International return shipping is shown as a starting estimate. Final shipping will be quoted after document review and destination verification.</p>
+              </div>
+            </div>
+
+            <!-- ── Pricing notice ──────────────────────────────── -->
+            <div class="ar-pricing-notice">
+              <div class="ar-info-card-head">
+                <span class="ar-info-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                    <circle cx="9" cy="9" r="7"/>
+                    <line x1="9" y1="5.5" x2="9" y2="6.5"/>
+                    <line x1="9" y1="8"   x2="9" y2="12.5"/>
+                  </svg>
+                </span>
+                <h3 class="ar-info-card-title">Important Pricing Information</h3>
+              </div>
+              <div class="ar-pricing-notice-body">
+                <p>The estimate shown above is not a final invoice.</p>
+                <p>Final pricing may vary based on additional documents, notarization requirements, witness services, federal document processing, expedited requests, and international shipping requirements.</p>
+                <p>No additional charges will be processed without your approval.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="5">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="7">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 7 — WHAT HAPPENS NEXT ─────────────────────────────────── -->
+        <div class="ms-step" id="step7" data-step="7" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 7 of 8</span>
+            <h2 class="ar-step-hdr-title">What Happens Next</h2>
+            <p class="ar-step-hdr-desc">Here is what to expect after your apostille review request is submitted.</p>
+          </div>
+
+          <div class="ar-info-grid ar-info-grid--single">
+
+            <div class="ar-info-card">
+              <div class="ar-info-card-head">
+                <span class="ar-info-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                    <polyline points="3,9 7,13 15,5"/>
+                  </svg>
+                </span>
+                <h3 class="ar-info-card-title">Your Document Review</h3>
+              </div>
+              <ul class="ar-info-list">
+                <li>Your documents will be reviewed by our team before processing begins.</li>
+                <li>We will confirm apostille eligibility, document requirements, and destination-country requirements.</li>
+                <li>If additional services are required, we will provide a personalized quote before any work begins.</li>
+              </ul>
+            </div>
+
+            <div class="ar-info-card">
+              <div class="ar-info-card-head">
+                <span class="ar-info-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                    <path d="M9 2 L16 5 L16 10 C16 13.8 12.9 16.8 9 17.5 C5.1 16.8 2 13.8 2 10 L2 5 Z"/>
+                  </svg>
+                </span>
+                <h3 class="ar-info-card-title">Important Notice</h3>
+              </div>
+              <ul class="ar-info-list">
+                <li>Submission of this form does not begin apostille processing.</li>
+                <li>Submission does not guarantee apostille eligibility or acceptance.</li>
+                <li>All documents are reviewed prior to processing.</li>
+                <li>Final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</li>
+                <li>If Remote Online Notarization is required, a separate quote will be provided.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="6">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="8">
+              Continue to Review
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 8 — REVIEW & CONFIRM ──────────────────────────────────── -->
+        <div class="ms-step" id="step8" data-step="8" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 8 of 8</span>
+            <h2 class="ar-step-hdr-title">Review &amp; Confirm</h2>
+            <p class="ar-step-hdr-desc">Confirm each acknowledgment and sign below to submit your apostille review request.</p>
+          </div>
+
+          <!-- ── Acknowledgments ─────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <path d="M10 2 L17 5 L17 10 C17 14 13.5 17.5 10 18 C6.5 17.5 3 14 3 10 L3 5 Z"/>
+                  <polyline points="7,10 9.5,12.5 14,8"/>
+                </svg>
+              </span>
+              <div class="on-card-head-text">
+                <h2 class="on-card-title">Acknowledgments</h2>
+                <p class="ar-card-sub">Please read each statement and check all boxes before submitting.</p>
+              </div>
+            </div>
+
+            <div class="ar-ack-list">
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack1" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand all pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack2" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand this submission is for document review only and does not begin apostille processing.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack3" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand submission of documents does not guarantee apostille eligibility or acceptance.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack4" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand all documents are reviewed prior to processing.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack5" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack6" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand Remote Online Notarization services are quoted separately and only when notarization is required.</span>
+              </label>
+
+              <label class="ar-ack-item">
+                <input type="checkbox" name="ack7" class="ar-ack-input" required />
+                <span class="ar-ack-mark" aria-hidden="true">
+                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+                </span>
+                <span class="ar-ack-text">I understand RON pricing is available separately for documents requiring notarization.</span>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- ── Signature ────────────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <path d="M3 15 C5 13 7 11 9 13 C11 15 13 10 17 7"/>
+                  <line x1="3" y1="17" x2="8" y2="17"/>
+                </svg>
+              </span>
+              <div class="on-card-head-text">
+                <h2 class="on-card-title">Signature</h2>
+                <p class="ar-card-sub">Type your full legal name and sign below to confirm your submission.</p>
+              </div>
+            </div>
+
+            <!-- Full legal name -->
+            <div class="on-field on-field--full" style="margin-bottom:28px">
+              <label class="on-label on-label--req" for="ackName">Full Legal Name</label>
+              <input type="text" id="ackName" name="ackName" class="on-input"
+                     placeholder="Type your full legal name" required />
+              <p class="ar-field-helper">Type your full legal name to acknowledge this request.</p>
+            </div>
+
+            <!-- Signature pad -->
+            <div class="ar-sig-wrap">
+              <label class="on-label on-label--req">Signature</label>
+              <div class="ar-sig-box" id="arSigBox">
+                <canvas id="arSigCanvas" class="ar-sig-canvas"></canvas>
+                <span class="ar-sig-placeholder" id="arSigPlaceholder">Sign here using your mouse or finger</span>
+              </div>
+              <button type="button" class="ar-sig-clear" id="arSigClear">Clear Signature</button>
+              <input type="hidden" id="arSigData" name="signature" />
+            </div>
+
+          </div>
+
+          <div class="ms-nav ms-nav--submit">
+            <button type="button" class="ms-btn-back" data-prev="7">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <div class="ms-submit-col">
+              <div class="on-submit-rule">
+                <span class="on-submit-line"></span>
+                <span class="on-submit-gem">◆</span>
+                <span class="on-submit-line"></span>
+              </div>
+              <button type="submit" class="on-submit-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/>
+                  <polyline points="9,12 11,14 15,10"/>
+                </svg>
+                Submit Apostille Review
+              </button>
+              <p class="on-required-note">* All acknowledgments must be checked and a signature provided before submitting.</p>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <p class="on-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice. Submission of this form does not guarantee an appointment or service. Our team will contact you to confirm your request and provide next steps.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-top">
+
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo-wrap">
+          <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Services</h5>
+        <ul>
+          <li><a href="apostille-review.html" class="fc-link">Apostille Services</a></li>
+          <li><a href="online-notary.html"    class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="index.html#services"   class="fc-link">FBI Apostille Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Certified Translation Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Embassy Legalization Services</a></li>
+          <li><a href="index.html#services"   class="fc-link">Fingerprinting Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Quick Links</h5>
+        <ul>
+          <li><a href="index.html"          class="fc-link">Home</a></li>
+          <li><a href="about.html"          class="fc-link">About Us</a></li>
+          <li><a href="index.html#services" class="fc-link">Services</a></li>
+          <li><a href="faq.html"            class="fc-link">FAQs</a></li>
+          <li><a href="index.html#contact"  class="fc-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.52 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:7736690915" class="fc-link">(773) 669-0915</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            <a href="mailto:hello@inkandsealnotarypros.com" class="fc-link">hello@inkandsealnotarypros.com</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="fc-text">Serving Clients Nationwide</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Follow Us</h5>
+        <div class="social-row">
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <p class="footer-copy">&copy; 2026 Ink &amp; Seal Notary Pros. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy.html" class="fc-legal">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="terms.html" class="fc-legal">Terms of Service</a>
+        </div>
+      </div>
+      <p class="footer-disclaimer container">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var TOTAL_STEPS = 8;
+      var currentStep = 1;
+      var sigPadReady = false;
+      var sigResizeFn = null;
+      var selectedFiles = [];
+      var STEP_NAMES = ['', 'Select Your Service', 'Client Information', 'Document Details', 'Upload Documents', 'Additional Notes', 'Estimated Investment', 'What Happens Next', 'Review & Confirm'];
+
+      function showStep(n) {
+        currentStep = n;
+        for (var i = 1; i <= TOTAL_STEPS; i++) {
+          var el = document.getElementById('step' + i);
+          if (el) el.style.display = (i === n) ? '' : 'none';
+        }
+        var bar = document.getElementById('fhBar');
+        if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(1) + '%';
+        var lbl = document.getElementById('fhStepLabel');
+        if (lbl) lbl.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
+        var nameEl = document.getElementById('fhStepName');
+        if (nameEl) nameEl.textContent = STEP_NAMES[n] || '';
+        var stepEl = document.getElementById('step' + n);
+        if (stepEl) {
+          stepEl.classList.remove('ms-step-enter');
+          void stepEl.offsetWidth;
+          stepEl.classList.add('ms-step-enter');
+        }
+        if (n === 6) {
+          calcEstimate();
+        }
+        if (n === 8) {
+          if (!sigPadReady) { initSigPad(); sigPadReady = true; }
+          else if (sigResizeFn) { sigResizeFn(); }
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function validateStep(n) {
+        var stepEl = document.getElementById('step' + n);
+        if (!stepEl) return true;
+        var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].checkValidity()) {
+            fields[i].focus();
+            fields[i].reportValidity();
+            return false;
+          }
+        }
+        if (n === 4) {
+          if (selectedFiles.length === 0) {
+            var dz = document.getElementById('arDropzone');
+            if (dz) {
+              dz.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              dz.classList.add('ar-dropzone--error');
+              setTimeout(function () { dz.classList.remove('ar-dropzone--error'); }, 2200);
+            }
+            return false;
+          }
+        }
+        if (n === 8) {
+          var sigData = document.getElementById('arSigData');
+          if (sigData && !sigData.value) {
+            var sigBox = document.getElementById('arSigBox');
+            if (sigBox) {
+              sigBox.classList.add('ar-sig-box--error');
+              sigBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function calcEstimate() {
+        var countChecked = document.querySelector('input[name="documentCount"]:checked');
+        var numDocs = countChecked ? (parseInt(countChecked.value, 10) || 1) : 1;
+
+        var reviewChecked    = document.querySelector('input[name="sameDayReview"]:checked');
+        var isSameDay        = reviewChecked && reviewChecked.value === 'same-day';
+
+        var processingChecked = document.querySelector('input[name="processingSpeed"]:checked');
+        var isRush            = processingChecked && processingChecked.value === 'rush';
+
+        var shippingChecked  = document.querySelector('input[name="returnShipping"]:checked');
+        var isOvernight      = shippingChecked && shippingChecked.value === 'overnight';
+        var isIntl           = shippingChecked && shippingChecked.value === 'international';
+
+        var addlAmt  = Math.max(0, numDocs - 1) * 100;
+        var reviewFee = isSameDay ? 25 : 0;
+        var rushFee   = isRush    ? 75 : 0;
+        var shipFee   = isOvernight ? 45 : (isIntl ? 75 : 0);
+        var total     = 175 + addlAmt + reviewFee + rushFee + shipFee;
+
+        var itemAddl = document.getElementById('arEstItemAddl');
+        if (itemAddl) {
+          itemAddl.style.display = addlAmt > 0 ? '' : 'none';
+          var addlEl = document.getElementById('arEstAddl');
+          if (addlEl) addlEl.textContent = '+ $' + addlAmt.toLocaleString();
+          var addlLbl = document.getElementById('arEstAddlLabel');
+          if (addlLbl) {
+            var addlCount = numDocs - 1;
+            addlLbl.textContent = addlCount === 1
+              ? 'Additional Document (1)'
+              : 'Additional Documents (' + addlCount + ')';
+          }
+        }
+
+        var baseLbl = document.getElementById('arEstBaseLabel');
+        if (baseLbl) {
+          baseLbl.textContent = 'Standard Apostille Service (1 Document)';
+        }
+
+        var itemReview = document.getElementById('arEstItemReview');
+        if (itemReview) itemReview.style.display = isSameDay ? '' : 'none';
+
+        var itemRush = document.getElementById('arEstItemRush');
+        if (itemRush) itemRush.style.display = isRush ? '' : 'none';
+
+        var shipLbl = document.getElementById('arEstShipLabel');
+        if (shipLbl) {
+          shipLbl.textContent = isOvernight ? 'Overnight Shipping'
+                              : isIntl      ? 'International Shipping'
+                              :               'USPS Priority Shipping';
+        }
+        var shipAmt = document.getElementById('arEstShipping');
+        if (shipAmt) {
+          shipAmt.textContent = isOvernight ? '+ $45'
+                              : isIntl      ? 'Starting at $75'
+                              :               'Included';
+        }
+
+        var totalEl = document.getElementById('arEstimateTotal');
+        if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+
+        var intlEl = document.getElementById('arEstimateIntl');
+        if (intlEl) intlEl.style.display = isIntl ? '' : 'none';
+      }
+
+      function initSigPad() {
+        var canvas      = document.getElementById('arSigCanvas');
+        if (!canvas) return;
+        var ctx         = canvas.getContext('2d');
+        var sigData     = document.getElementById('arSigData');
+        var placeholder = document.getElementById('arSigPlaceholder');
+        var clearBtn    = document.getElementById('arSigClear');
+        var sigBox      = document.getElementById('arSigBox');
+        var isDrawing   = false;
+
+        function resize() {
+          var dpr = window.devicePixelRatio || 1;
+          var w   = canvas.parentElement.offsetWidth;
+          canvas.width        = w * dpr;
+          canvas.height       = 180 * dpr;
+          canvas.style.width  = w + 'px';
+          canvas.style.height = '180px';
+          ctx.scale(dpr, dpr);
+          ctx.strokeStyle = '#0B1829';
+          ctx.lineWidth   = 2.2;
+          ctx.lineCap     = 'round';
+          ctx.lineJoin    = 'round';
+        }
+        sigResizeFn = resize;
+
+        function getPos(e) {
+          var rect = canvas.getBoundingClientRect();
+          var src  = e.touches ? e.touches[0] : e;
+          return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+        }
+
+        function startDraw(e) {
+          e.preventDefault();
+          isDrawing = true;
+          var pos = getPos(e);
+          ctx.beginPath();
+          ctx.moveTo(pos.x, pos.y);
+          if (placeholder) placeholder.style.display = 'none';
+          if (sigBox) sigBox.classList.remove('ar-sig-box--error');
+        }
+
+        function draw(e) {
+          if (!isDrawing) return;
+          e.preventDefault();
+          var pos = getPos(e);
+          ctx.lineTo(pos.x, pos.y);
+          ctx.stroke();
+          if (sigData) sigData.value = 'signed';
+        }
+
+        function endDraw() { isDrawing = false; }
+
+        canvas.addEventListener('mousedown',  startDraw);
+        canvas.addEventListener('mousemove',  draw);
+        canvas.addEventListener('mouseup',    endDraw);
+        canvas.addEventListener('mouseleave', endDraw);
+        canvas.addEventListener('touchstart', startDraw, { passive: false });
+        canvas.addEventListener('touchmove',  draw,      { passive: false });
+        canvas.addEventListener('touchend',   endDraw);
+
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            resize();
+            if (sigData) sigData.value = '';
+            if (placeholder) placeholder.style.display = '';
+          });
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+      }
+
+      // Continue buttons
+      document.querySelectorAll('.ms-btn-continue').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var next = parseInt(this.getAttribute('data-next'), 10);
+          if (validateStep(currentStep)) showStep(next);
+        });
+      });
+
+      // Back buttons
+      document.querySelectorAll('.ms-btn-back').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var prev = parseInt(this.getAttribute('data-prev'), 10);
+          showStep(prev);
+        });
+      });
+
+      // Live estimate: recalc on any pricing field change
+      ['documentCount', 'sameDayReview', 'processingSpeed', 'returnShipping'].forEach(function (name) {
+        document.querySelectorAll('[name="' + name + '"]').forEach(function (el) {
+          el.addEventListener('change', calcEstimate);
+        });
+      });
+
+      // Drop zone — file management
+      function formatFileSize(bytes) {
+        if (bytes < 1024)    return bytes + ' B';
+        if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / 1048576).toFixed(1) + ' MB';
+      }
+
+      function renderFileList() {
+        var list     = document.getElementById('arFileList');
+        var dz       = document.getElementById('arDropzone');
+        var countEl  = document.getElementById('uploadedFileCount');
+        if (!list) return;
+
+        list.innerHTML = '';
+
+        selectedFiles.forEach(function (file, idx) {
+          var item = document.createElement('div');
+          item.className = 'ar-file-item';
+
+          var icon = document.createElement('div');
+          icon.className = 'ar-file-item-icon';
+          icon.setAttribute('aria-hidden', 'true');
+          icon.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8z"/><polyline points="12 2 12 8 18 8"/></svg>';
+
+          var info     = document.createElement('div');
+          info.className = 'ar-file-item-info';
+
+          var nameSpan = document.createElement('span');
+          nameSpan.className = 'ar-file-item-name';
+          nameSpan.textContent = file.name;
+
+          var sizeSpan = document.createElement('span');
+          sizeSpan.className = 'ar-file-item-size';
+          sizeSpan.textContent = formatFileSize(file.size);
+
+          info.appendChild(nameSpan);
+          info.appendChild(sizeSpan);
+
+          var removeBtn = document.createElement('button');
+          removeBtn.type = 'button';
+          removeBtn.className = 'ar-file-item-remove';
+          removeBtn.setAttribute('aria-label', 'Remove ' + file.name);
+          removeBtn.setAttribute('data-idx', String(idx));
+          removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="13" height="13"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>';
+          removeBtn.addEventListener('click', function () {
+            selectedFiles.splice(parseInt(this.getAttribute('data-idx'), 10), 1);
+            renderFileList();
+          });
+
+          item.appendChild(icon);
+          item.appendChild(info);
+          item.appendChild(removeBtn);
+          list.appendChild(item);
+        });
+
+        if (selectedFiles.length > 0) {
+          var countLine = document.createElement('p');
+          var isFull = selectedFiles.length >= 5;
+          countLine.className = 'ar-upload-count' + (isFull ? ' ar-upload-count--full' : '');
+          countLine.textContent = selectedFiles.length + ' of 5 document' +
+            (selectedFiles.length !== 1 ? 's' : '') + ' added' +
+            (isFull ? ' — maximum reached' : '');
+          list.appendChild(countLine);
+        }
+
+        if (dz)      dz.classList.toggle('ar-dropzone--full', selectedFiles.length >= 5);
+        if (countEl) countEl.value = selectedFiles.length;
+      }
+
+      function addFiles(fileList) {
+        for (var i = 0; i < fileList.length; i++) {
+          if (selectedFiles.length >= 5) break;
+          var f = fileList[i];
+          var exists = false;
+          for (var j = 0; j < selectedFiles.length; j++) {
+            if (selectedFiles[j].name === f.name && selectedFiles[j].size === f.size) {
+              exists = true; break;
+            }
+          }
+          if (!exists) selectedFiles.push(f);
+        }
+        renderFileList();
+      }
+
+      var dzEl    = document.getElementById('arDropzone');
+      var dzInput = document.getElementById('docUploads');
+
+      if (dzInput) {
+        dzInput.addEventListener('change', function () {
+          if (this.files) addFiles(this.files);
+          this.value = '';
+        });
+      }
+
+      if (dzEl) {
+        dzEl.addEventListener('click', function (e) {
+          if (dzEl.classList.contains('ar-dropzone--full')) return;
+          if (e.target.closest('.ar-file-item-remove')) return;
+          if (dzInput) dzInput.click();
+        });
+
+        dzEl.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          if (!dzEl.classList.contains('ar-dropzone--full')) dzEl.classList.add('ar-dropzone--drag');
+        });
+
+        dzEl.addEventListener('dragleave', function (e) {
+          if (!dzEl.contains(e.relatedTarget)) dzEl.classList.remove('ar-dropzone--drag');
+        });
+
+        dzEl.addEventListener('drop', function (e) {
+          e.preventDefault();
+          dzEl.classList.remove('ar-dropzone--drag');
+          if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+        });
+      }
+
+      // Form submit
+      // Order: GAS proxy (guaranteed first) → thank-you page → Dropbox (background, non-blocking)
+      var arForm    = document.getElementById('arForm');
+      var arSuccess = document.getElementById('arSuccess');
+      var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
+
+      if (arForm) {
+        arForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+          if (!validateStep(currentStep)) return;
+
+          console.log('[ar-form] Submit clicked');
+          if (submitBtn) submitBtn.disabled = true;
+
+          var countEl    = document.getElementById('uploadedFileCount');
+          var orderInput = arForm.querySelector('[name="orderNumber"]');
+          var nameInput  = arForm.querySelector('[name="fullName"]');
+
+          if (countEl) countEl.value = selectedFiles.length;
+
+          // Collect all form fields into a plain object for JSON transport
+          var formObj = {};
+          var fd = new FormData(arForm);
+          fd.forEach(function (value, key) { formObj[key] = value; });
+
+          console.log('[ar-form] Starting GAS submission | action:', arForm.action, '| fields:', Object.keys(formObj).join(', '));
+
+          // ── Step 1: Submit to Google Apps Script via Vercel proxy ────────────
+          // Using a proxy lets us read the actual GAS response and log any errors.
+          fetch('/api/submit-intake', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(formObj)
+          })
+          .then(function (r) {
+            return r.text().then(function (text) {
+              try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+            });
+          })
+          .then(function (json) {
+            if (json.success) {
+              console.log('[ar-form] GAS submission confirmed | order:', json.order);
+            } else {
+              console.warn('[ar-form] GAS returned error:', json.error || JSON.stringify(json.gasResponse || json));
+            }
+
+            // Show thank-you page after GAS submission was attempted
+            arForm.style.display = 'none';
+            if (arSuccess) arSuccess.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // ── Step 2: Dropbox upload (background — never blocks the client) ──
+            if (selectedFiles.length === 0) {
+              console.log('[ar-form] No files selected — skipping Dropbox upload');
+              return;
+            }
+
+            console.log('[ar-form] Starting Dropbox upload |', selectedFiles.length, 'file(s)');
+            selectedFiles.forEach(function (f, i) {
+              console.log('[ar-form] file[' + i + ']:', f.name, '| size:', f.size, 'bytes | type:', f.type);
+            });
+            var nameVal  = nameInput  ? nameInput.value.trim()  : 'Client';
+            var orderVal = (orderInput ? orderInput.value.trim() : '') || (json.order || '');
+            console.log('[ar-form] Dropbox clientName:', nameVal, '| orderNumber:', orderVal);
+
+            // Convert files to base64 — no multipart parser needed on the server
+            Promise.all(selectedFiles.map(function (f) {
+              return new Promise(function (resolve, reject) {
+                var reader    = new FileReader();
+                reader.onload = function () {
+                  console.log('[ar-form] base64 ready for:', f.name, '| data length:', reader.result.length);
+                  resolve({ name: f.name, data: reader.result });
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(f);
+              });
+            }))
+            .then(function (b64files) {
+              var payload = JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files });
+              console.log('[ar-form] Sending to /api/upload-to-dropbox | payload size:', payload.length, 'bytes');
+              return fetch('/api/upload-to-dropbox', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    payload
+              });
+            })
+            .then(function (r) {
+              return r.text().then(function (text) {
+                try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+              });
+            })
+            .then(function (dbx) {
+              if (dbx.success) {
+                console.log('[ar-form] Dropbox upload complete | folder:', dbx.folderLink, '| files:', dbx.uploadCount);
+              } else {
+                console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', dbx.error);
+              }
+            })
+            .catch(function (err) {
+              console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', err && err.message ? err.message : String(err));
+            });
+          })
+          .catch(function (err) {
+            // Network error — can't reach /api/submit-intake
+            console.error('[ar-form] GAS submission network error:', err && err.message ? err.message : String(err));
+            alert('Unable to submit. Please check your connection or contact us directly.');
+            if (submitBtn) submitBtn.disabled = false;
+          });
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

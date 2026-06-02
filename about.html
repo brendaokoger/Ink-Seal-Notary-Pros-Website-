@@ -3,222 +3,350 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us — Ink & Seal Notary Pros</title>
-  <meta name="description" content="Meet Brenda Koger — founder of Ink & Seal Notary Pros. Professional apostille and remote online notary services delivered with personal care." />
+  <title>About Us — Brenda Koger, Founder &amp; CEO | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Meet Brenda Koger, Founder &amp; CEO of Ink &amp; Seal Notary Pros. Professional apostille services and remote online notarization delivered with precision, discretion, and efficiency. Serving clients nationwide from Chicago, Illinois." />
+  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/about.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
-  <!-- ===================== HEADER ===================== -->
-  <header class="site-header" id="site-header">
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header class="header" id="header">
     <div class="header-inner">
-      <a href="index.html" class="header-logo" aria-label="Ink & Seal Notary Pros — Home">
-        <img src="images/ink-seal-logo.png" alt="Ink & Seal Notary Pros" />
+      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
       </a>
-      <nav class="header-nav" aria-label="Primary navigation">
-        <ul>
-          <li><a href="index.html" class="nav-link">Home</a></li>
-          <li><a href="index.html#services" class="nav-link">Services</a></li>
-          <li><a href="index.html#how-it-works" class="nav-link">How It Works</a></li>
-          <li><a href="about.html" class="nav-link active">About Us</a></li>
-          <li><a href="faq.html" class="nav-link">FAQ</a></li>
-          <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-        </ul>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html"          class="nav-link">Home</a>
+        <a href="about.html"          class="nav-link active">About Us</a>
+        <a href="index.html#services" class="nav-link">Services</a>
+        <a href="faq.html"            class="nav-link">FAQs</a>
+        <a href="index.html#contact"  class="nav-link">Contact</a>
       </nav>
-      <div class="header-actions">
-        <a href="apostille-review.html" class="btn btn-nav-cta">Start Your Request</a>
-        <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
-          <span></span><span></span><span></span>
+      <div class="header-end">
+        <a href="apostille-review.html" class="btn-nav">Start My Apostille</a>
+        <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-text">MENU</span>
         </button>
       </div>
     </div>
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
-      <ul>
-        <li><a href="index.html" class="mobile-nav-link">Home</a></li>
-        <li><a href="index.html#services" class="mobile-nav-link">Services</a></li>
-        <li><a href="index.html#how-it-works" class="mobile-nav-link">How It Works</a></li>
-        <li><a href="about.html" class="mobile-nav-link">About Us</a></li>
-        <li><a href="faq.html" class="mobile-nav-link">FAQ</a></li>
-        <li><a href="index.html#contact" class="mobile-nav-link">Contact</a></li>
-        <li class="mobile-nav-cta-item">
-          <a href="apostille-review.html" class="btn btn-primary mobile-nav-cta">Start Your Request</a>
-        </li>
-      </ul>
-    </nav>
+    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
+      <div class="drawer-inner">
+        <a href="index.html"          class="drawer-link">Home</a>
+        <a href="about.html"          class="drawer-link">About Us</a>
+        <a href="index.html#services" class="drawer-link">Services</a>
+        <a href="faq.html"            class="drawer-link">FAQs</a>
+        <a href="index.html#contact"  class="drawer-link">Contact</a>
+      </div>
+    </div>
   </header>
 
-  <!-- ===================== PAGE HERO ===================== -->
-  <section class="page-hero" aria-labelledby="about-page-heading">
-    <div class="page-hero-inner">
-      <p class="page-hero-eyebrow">Our Story</p>
-      <h1 class="page-hero-heading" id="about-page-heading">Meet the Person Behind<br />Every Authenticated Document</h1>
-      <p class="page-hero-sub">Personal service from a credentialed specialist — not a call center. Every order receives direct attention from Brenda Koger.</p>
+  <!-- ═══ SECTION 1 — ABOUT US ═══════════════════════════ -->
+  <section class="ab-hero" id="about" aria-label="About Ink and Seal Notary Pros">
+    <div class="container">
+      <div class="ab-hero-header">
+        <span class="ab-eyebrow">Ink &amp; Seal Notary Pros</span>
+        <h1 class="ab-main-heading">About Us</h1>
+        <div class="ab-gold-rule">
+          <span class="ab-rule-line"></span>
+          <span class="ab-rule-gem">◆</span>
+          <span class="ab-rule-line"></span>
+        </div>
+        <p class="ab-tagline-lg">Trusted. Secure. Professional.</p>
+        <p class="ab-intro-body">Ink &amp; Seal Notary Pros is a premier notarization and apostille service firm serving individuals, families, businesses, and legal professionals nationwide. We specialize in Remote Online Notarization, apostille processing, and international document authentication — delivering every engagement with the precision, discretion, and care your most important documents deserve.</p>
+        <p class="ab-intro-body" style="margin-top:18px">We understand that notarization and document legalization can be time-sensitive, confusing, and stressful. Our concierge approach removes that burden entirely. From your first inquiry to the moment your documents are complete, we guide you through every requirement, every step, and every deadline — clearly and professionally.</p>
+      </div>
     </div>
   </section>
 
-  <!-- ===================== ABOUT FOUNDER ===================== -->
-  <section class="about-section" aria-labelledby="founder-heading">
-    <div class="section-inner">
-      <div class="about-inner">
+  <!-- ═══ SECTION 2 — MEET OUR FOUNDER ════════════════════ -->
+  <section class="ab-founder-section" aria-label="Meet our founder">
+    <div class="container">
 
-        <div class="about-visual">
-          <div class="about-portrait-frame">
-            <div class="about-portrait-placeholder">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              <p>Brenda Koger<br />Founder &amp; Lead Specialist</p>
-            </div>
-            <div class="about-portrait-accent"></div>
+      <div class="ab-founder-section-header">
+        <div class="sec-label">
+          <span class="sec-line"></span>
+          <span class="sec-tag">Our Story</span>
+          <span class="sec-line"></span>
+        </div>
+        <h2 class="ab-founder-h">Meet Our Founder</h2>
+      </div>
+
+      <div class="ab-founder-content">
+
+        <!-- Bio text column -->
+        <div class="ab-founder-bio-block">
+          <p class="ab-founder-bio">With years of expertise in notarial law and document authentication, Brenda Koger founded Ink &amp; Seal Notary Pros with a singular vision: to bring concierge-level professionalism to every document engagement, no matter how simple or complex.</p>
+          <p class="ab-founder-bio" style="margin-top:20px">She built Ink &amp; Seal Notary Pros on the belief that clients deserve clear guidance, accurate documents, and a seamless experience from start to finish — and that standard of care shows in every appointment, every submission, and every interaction.</p>
+        </div>
+
+        <!-- Portrait column: image then attribution directly below -->
+        <div class="ab-founder-portrait-block">
+          <div class="ab-portrait-card">
+            <img
+              src="images/ink-seal-website-photo.png"
+              alt="Brenda Koger, Founder and CEO of Ink and Seal Notary Pros"
+              class="ab-portrait-img"
+            />
+          </div>
+          <div class="ab-founder-attr">
+            <div class="ab-attr-rule"></div>
+            <p class="ab-attr-name">Brenda Koger</p>
+            <p class="ab-attr-role">Founder &amp; CEO</p>
+            <p class="ab-attr-company">Ink &amp; Seal Notary Pros</p>
           </div>
         </div>
 
-        <div class="about-content">
-          <p class="section-eyebrow">About Ink &amp; Seal Notary Pros</p>
-          <h2 class="section-heading" id="founder-heading">Brenda Koger —<br />Founder &amp; Lead Specialist</h2>
+      </div>
+    </div>
+  </section>
 
-          <p>Ink &amp; Seal Notary Pros was founded on a simple belief: people dealing with important international documents deserve expert guidance and personal service — not an impersonal document mill that treats every order like a number.</p>
+  <!-- ═══ SECTION 3 — MISSION ══════════════════════════════ -->
+  <section class="ab-mission" aria-label="Our mission">
 
-          <p>I'm Brenda Koger, a commissioned notary public and apostille specialist with years of experience helping individuals, families, and businesses navigate the complexities of international document authentication. I've personally guided clients through everything from birth certificate apostilles for immigration applications to complex corporate document packages for overseas business transactions.</p>
+    <!-- logo watermark -->
+    <img src="images/ink-seal-feather-logo-web.png" class="ab-mission-wm" alt="" aria-hidden="true" />
 
-          <p>What sets Ink &amp; Seal apart is the level of personal attention every client receives. When you submit your request, you're working directly with me — someone who understands exactly what your destination country requires and who takes responsibility for getting your documents accepted the first time.</p>
-
-          <p>Whether you're adopting internationally, immigrating, closing a business deal abroad, or enrolling in a foreign university, your documents represent some of the most important moments of your life. I treat them that way.</p>
-
-          <div class="about-credentials">
-            <span class="credential-badge">Commissioned Notary Public</span>
-            <span class="credential-badge">Apostille Specialist</span>
-            <span class="credential-badge">Remote Online Notary Certified</span>
-            <span class="credential-badge">Nationwide Service</span>
-            <span class="credential-badge">Hague Convention Expert</span>
-          </div>
-
-          <a href="apostille-review.html" class="btn btn-primary">
-            Start Your Request
-            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
+    <div class="container">
+      <div class="ab-mission-inner">
+        <div class="ab-mission-rule">
+          <span class="ab-mission-rule-line"></span>
+          <span class="ab-mission-rule-gem">◆</span>
+          <span class="ab-mission-rule-line"></span>
+        </div>
+        <h2 class="ab-mission-h">Our Mission</h2>
+        <p class="ab-mission-p">At Ink &amp; Seal Notary Pros, our mission is to deliver trusted, secure, and professional notarization and apostille support that puts our clients first — at every step. We are committed to document accuracy, secure handling, and clear guidance, so that every client — whether navigating a single notarization or a complex international apostille submission — feels confident, informed, and well-served.</p>
+        <p class="ab-mission-p" style="margin-top:24px">We believe that precision is not a luxury. It is the standard. And we hold ourselves to it — for every document, every deadline, and every client who trusts us with their most important paperwork.</p>
+        <div class="ab-mission-rule">
+          <span class="ab-mission-rule-line"></span>
+          <span class="ab-mission-rule-gem">◆</span>
+          <span class="ab-mission-rule-line"></span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== VALUES ===================== -->
-  <section class="trust-section" aria-labelledby="values-heading">
-    <div class="section-inner">
-      <div class="section-header">
-        <p class="section-eyebrow">How We Work</p>
-        <h2 class="section-heading" id="values-heading">Our Commitment to Every Client</h2>
+  <!-- ═══ SECTION 3 — SERVICES ═════════════════════════════ -->
+  <section class="ab-services" aria-label="Our services">
+    <div class="container">
+
+      <h2 class="h-section">Our Services</h2>
+
+      <div class="ab-services-grid">
+
+        <!-- 1 -->
+        <div class="ab-service-card">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="6" y="8" width="36" height="26" rx="2"/>
+              <path d="M2 36h44l-2 4H4z"/>
+              <rect x="12" y="14" width="12" height="10" rx="1"/>
+              <path d="M24 18l6-3v10l-6-3"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">Remote Online Notarization</h3>
+          <p class="ab-service-desc">Legally binding notarization from anywhere, conducted securely via video conference with a commissioned notary.</p>
+        </div>
+
+        <!-- 2 -->
+        <div class="ab-service-card">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 6h20l10 10v26a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z"/>
+              <path d="M30 6v10h10"/>
+              <line x1="15" y1="22" x2="33" y2="22"/>
+              <line x1="15" y1="28" x2="33" y2="28"/>
+              <circle cx="23" cy="37" r="5"/>
+              <polyline points="20,37 22,39 27,34"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">Apostille Services</h3>
+          <p class="ab-service-desc">Fast and accurate apostille processing for personal and business documents accepted in Hague Convention countries.</p>
+        </div>
+
+        <!-- 3 — Coming Soon -->
+        <div class="ab-service-card ab-service-card--soon">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 4L6 11v13c0 12 8 19 18 22 10-3 18-10 18-22V11L24 4z"/>
+              <polyline points="17,24 21,28 31,18"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">FBI Apostille Services</h3>
+          <p class="ab-service-desc">Specialized authentication of FBI background checks and federal documents for international use.</p>
+          <div class="ab-service-ribbon" aria-label="Coming Soon">Coming Soon</div>
+        </div>
+
+        <!-- 4 — Coming Soon -->
+        <div class="ab-service-card ab-service-card--soon">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="40" x2="40" y2="40"/>
+              <line x1="6" y1="18" x2="42" y2="18"/>
+              <rect x="11" y="18" width="4" height="22"/>
+              <rect x="22" y="18" width="4" height="22"/>
+              <rect x="33" y="18" width="4" height="22"/>
+              <polygon points="24,6 6,18 42,18"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">Embassy Legalization Services</h3>
+          <p class="ab-service-desc">Full authentication and legalization for countries outside the Hague Convention, including consulate certification.</p>
+          <div class="ab-service-ribbon" aria-label="Coming Soon">Coming Soon</div>
+        </div>
+
+        <!-- 5 — Coming Soon -->
+        <div class="ab-service-card ab-service-card--soon">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="6" width="18" height="24" rx="2"/>
+              <rect x="25" y="18" width="18" height="24" rx="2"/>
+              <line x1="10" y1="13" x2="18" y2="13"/>
+              <line x1="10" y1="18" x2="16" y2="18"/>
+              <line x1="30" y1="25" x2="38" y2="25"/>
+              <line x1="30" y1="30" x2="35" y2="30"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">Certified Translation Services</h3>
+          <p class="ab-service-desc">Certified document translation with notarial authentication for legal, immigration, and international business use.</p>
+          <div class="ab-service-ribbon" aria-label="Coming Soon">Coming Soon</div>
+        </div>
+
+        <!-- 6 — Coming Soon -->
+        <div class="ab-service-card ab-service-card--soon">
+          <div class="ab-service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10a10 10 0 0 1 8 10c0 6-2 12-4 18"/>
+              <path d="M14 12a16 16 0 0 1 20 8c0 8-3 16-5 20"/>
+              <path d="M24 20c0 6-2 12-4 16"/>
+              <path d="M30 23a6 6 0 0 1-2 5"/>
+              <path d="M8 16a20 20 0 0 1 32 4c0 10-4 18-7 22"/>
+            </svg>
+          </div>
+          <div class="ab-service-divider"></div>
+          <h3 class="ab-service-name">Fingerprinting Services</h3>
+          <p class="ab-service-desc">Professional fingerprinting for background checks, employment, licensing, and federal requirements.</p>
+          <div class="ab-service-ribbon" aria-label="Coming Soon">Coming Soon</div>
+        </div>
+
       </div>
-      <div class="trust-cards">
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Personal Attention</h3>
-          <p>Every client works directly with Brenda — no handoffs, no call centers. You receive direct communication throughout your order.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 4 — CTA ═════════════════════════════════ -->
+  <section class="ab-cta" aria-label="Get started">
+
+    <!-- logo watermark -->
+    <img src="images/ink-seal-feather-logo-web.png" class="ab-cta-wm" alt="" aria-hidden="true" />
+
+    <div class="container">
+      <div class="ab-cta-inner">
+        <div class="ab-cta-rule">
+          <span class="ab-cta-rule-line"></span>
+          <span class="ab-cta-rule-gem">◆</span>
+          <span class="ab-cta-rule-line"></span>
         </div>
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          </div>
-          <h3>Accuracy First</h3>
-          <p>We verify every requirement for your specific destination country before processing begins. No surprises, no rejections.</p>
+        <h2 class="ab-cta-h">Ready to Begin?</h2>
+        <div class="ab-cta-rule">
+          <span class="ab-cta-rule-line"></span>
+          <span class="ab-cta-rule-gem">◆</span>
+          <span class="ab-cta-rule-line"></span>
         </div>
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          </div>
-          <h3>Document Security</h3>
-          <p>Your personal documents are handled with strict confidentiality protocols and encrypted storage throughout the entire process.</p>
-        </div>
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <h3>On-Time Delivery</h3>
-          <p>We communicate timelines clearly and meet them. Rush processing is available for time-sensitive requests.</p>
-        </div>
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <h3>Nationwide Reach</h3>
-          <p>We serve clients in all 50 states and can authenticate documents for use in over 100 countries worldwide.</p>
-        </div>
-        <div class="trust-card">
-          <div class="trust-card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3>Transparent Pricing</h3>
-          <p>No hidden fees, no surprises. Pricing is discussed upfront so you know exactly what you're paying before we begin.</p>
+        <p class="ab-cta-sub">Secure, professional notarization and apostille support — wherever you are.</p>
+        <div class="ab-cta-btns">
+          <a href="online-notary.html" class="btn-hero">Book Online Notary</a>
+          <a href="apostille-review.html" class="btn-hero-2">Start Apostille Request</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== CTA ===================== -->
-  <section class="cta-section" aria-labelledby="about-cta-heading">
-    <div class="section-inner">
-      <div class="cta-inner">
-        <p class="section-eyebrow section-eyebrow--light">Ready to Work Together?</p>
-        <h2 class="cta-heading" id="about-cta-heading">Let's Get Your Documents Authenticated</h2>
-        <p class="cta-subheading">Submit your request online and I'll review your order personally within one business day.</p>
-        <div class="cta-actions">
-          <a href="apostille-review.html" class="btn btn-gold">
-            Start Your Request
-            <svg class="btn-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="faq.html" class="btn btn-outline-light">View FAQ</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-top">
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="site-footer" aria-label="Site footer">
-    <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="footer-logo" aria-label="Ink & Seal Notary Pros — Home">
-          <img src="images/ink-seal-logo.png" alt="Ink & Seal Notary Pros" />
+        <a href="index.html" class="footer-logo-wrap">
+          <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
         </a>
-        <p class="footer-tagline">Nationwide Apostille &amp; Remote Online Notary Services. Fast. Secure. Professionally Managed.</p>
       </div>
-      <div class="footer-nav-group">
-        <h4 class="footer-nav-title">Services</h4>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Services</h5>
         <ul>
-          <li><a href="apostille-review.html">Apostille Services</a></li>
-          <li><a href="online-notary.html">Remote Online Notary</a></li>
-          <li><a href="apostille-review.html">Document Authentication</a></li>
-          <li><a href="apostille-review.html">Business Documents</a></li>
+          <li><a href="index.html#services" class="fc-link">Apostille Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="index.html#services" class="fc-link">FBI Apostille Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Certified Translation Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Embassy Legalization Services</a></li>
+          <li><a href="index.html#services" class="fc-link">Fingerprinting Services</a></li>
         </ul>
       </div>
-      <div class="footer-nav-group">
-        <h4 class="footer-nav-title">Company</h4>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Quick Links</h5>
         <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
-          <li><a href="apostille-review.html">Start a Request</a></li>
+          <li><a href="index.html"          class="fc-link">Home</a></li>
+          <li><a href="about.html"          class="fc-link">About Us</a></li>
+          <li><a href="index.html#services" class="fc-link">Services</a></li>
+          <li><a href="faq.html"            class="fc-link">FAQs</a></li>
+          <li><a href="index.html#contact"  class="fc-link">Contact</a></li>
         </ul>
       </div>
-      <div class="footer-nav-group">
-        <h4 class="footer-nav-title">Legal</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.52 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:7736690915" class="fc-link">(773) 669-0915</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            <a href="mailto:hello@inkandsealnotarypros.com" class="fc-link">hello@inkandsealnotarypros.com</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="fc-text">Serving Clients Nationwide</span>
+          </li>
         </ul>
       </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Follow Us</h5>
+        <div class="social-row">
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+        </div>
+      </div>
+
     </div>
-    <div class="footer-bottom">
-      <p>&copy; <span id="footer-year">2025</span> Ink &amp; Seal Notary Pros. All rights reserved.</p>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <p class="footer-copy">&copy; 2026 Ink &amp; Seal Notary Pros. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="privacy.html" class="fc-legal">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="terms.html" class="fc-legal">Terms of Service</a>
+        </div>
+      </div>
+      <p class="footer-disclaimer container">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
     </div>
   </footer>
 
   <script src="js/main.js"></script>
-  <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
