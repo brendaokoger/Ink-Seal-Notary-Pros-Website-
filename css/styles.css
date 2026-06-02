@@ -4118,3 +4118,362 @@ ul    { list-style: none; }
   .ar-pricing-notice     { padding: 15px 16px 14px; }
   .ar-pricing-notice-body p { font-size: .82rem; }
 }
+
+/* ============================================================
+   PREMIUM UI ADDITIONS — merged from feature branch
+   New sections: trust cards, why-choose-us, stats, testimonials
+   ============================================================ */
+
+/* ---------- Shared section utilities ---------- */
+.section-inner {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.section-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-eyebrow--light { color: #d4b06a; }
+
+.section-heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.section-heading--light { color: #ffffff; }
+
+.section-subheading {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--body-text);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-subheading--light { color: rgba(255,255,255,0.72); }
+
+/* ---------- Trust Cards Section ---------- */
+.trust-section {
+  background: #ffffff;
+  padding: 100px 0;
+}
+
+.trust-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.trust-card {
+  background: var(--ivory, #f7f5f0);
+  border: 1px solid rgba(180, 130, 50, 0.15);
+  border-radius: 8px;
+  padding: 36px 28px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.trust-card:hover {
+  box-shadow: 0 8px 32px rgba(11, 24, 41, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(180, 130, 50, 0.3);
+}
+
+.trust-card-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(180, 130, 50, 0.1);
+  border: 1px solid rgba(180, 130, 50, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.trust-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+
+.trust-card p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--body-text, #3a3a4a);
+}
+
+/* ---------- Why Choose Us (navy section) ---------- */
+.why-section {
+  background: var(--navy);
+  padding: 100px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.why-section::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 50%;
+  height: 120%;
+  background: radial-gradient(ellipse at center, rgba(180,130,50,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.why-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 28px 0 36px;
+  list-style: none;
+  padding: 0;
+}
+
+.why-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.5;
+}
+
+.why-check {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.btn.btn-gold,
+a.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 16px 36px;
+  border-radius: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 16px rgba(180, 130, 50, 0.3);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.btn.btn-gold:hover,
+a.btn-gold:hover {
+  background: #c4964a;
+  box-shadow: 0 6px 28px rgba(180, 130, 50, 0.45);
+  transform: translateY(-1px);
+  color: var(--navy);
+}
+
+.why-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.why-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(180,130,50,0.2);
+  border-radius: 12px;
+  padding: 40px 36px;
+  max-width: 380px;
+  text-align: center;
+}
+
+.why-card-seal {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 28px;
+}
+
+.why-card-seal svg { width: 100%; height: 100%; }
+
+.why-card-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 16px;
+}
+
+.why-card-attr {
+  font-size: 0.8125rem;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+/* ---------- Statistics Section ---------- */
+.stats-section {
+  background: #060f1a;
+  padding: 80px 0;
+  border-top: 1px solid rgba(180,130,50,0.15);
+  border-bottom: 1px solid rgba(180,130,50,0.15);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 40px 24px;
+  border-right: 1px solid rgba(180,130,50,0.12);
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-number {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 600;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat-percent::after { content: '%'; }
+
+.stat-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ---------- Testimonials Section ---------- */
+.testimonials-section {
+  background: var(--ivory, #f7f5f0);
+  padding: 100px 0;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.testimonial-card {
+  background: #ffffff;
+  border: 1px solid rgba(180,130,50,0.15);
+  border-radius: 8px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.testimonial-stars {
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+.testimonial-text {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--body-text, #3a3a4a);
+  font-style: italic;
+  flex: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(180,130,50,0.12);
+}
+
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--navy);
+  color: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.testimonial-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.testimonial-detail {
+  font-size: 0.75rem;
+  color: #6b6b7b;
+}
+
+/* ---------- Responsive for new sections ---------- */
+@media (max-width: 1024px) {
+  .section-inner { padding: 0 32px; }
+  .trust-cards { grid-template-columns: repeat(2, 1fr); }
+  .why-inner { grid-template-columns: 1fr; gap: 48px; }
+  .why-visual { order: -1; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+  .testimonials-grid .testimonial-card:last-child {
+    grid-column: 1 / -1; max-width: 420px; margin: 0 auto; width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .trust-section, .why-section, .stats-section, .testimonials-section { padding: 64px 0; }
+  .section-inner { padding: 0 20px; }
+  .section-header { margin-bottom: 40px; }
+  .trust-cards { grid-template-columns: 1fr; gap: 16px; }
+  .why-inner { grid-template-columns: 1fr; gap: 36px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-item { padding: 28px 16px; }
+  .stat-item:nth-child(3) { border-right: 1px solid rgba(180,130,50,0.12); }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonials-grid .testimonial-card:last-child { grid-column: auto; max-width: 100%; }
+}
