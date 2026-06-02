@@ -5539,3 +5539,29 @@ a.btn-gold:hover {
   }
   .review-cta-section { padding: 56px 0; }
 }
+
+/* ---------- 8-column feat-grid variant ---------- */
+.feat-grid--8 {
+  grid-template-columns: repeat(8, 1fr);
+}
+.feat-grid--8 .feat-item {
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+.feat-grid--8 .feat-item:last-child {
+  border-right: none;
+}
+@media (max-width: 1280px) {
+  .feat-grid--8 { grid-template-columns: repeat(4, 1fr); }
+  .feat-grid--8 .feat-item:nth-child(4n) { border-right: none; }
+}
+@media (max-width: 900px) {
+  .feat-grid--8 { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 640px) {
+  .feat-grid--8 { grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .feat-grid--8 .feat-item {
+    border-right: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .feat-grid--8 .feat-item:nth-child(even) { border-right: none; }
+}
