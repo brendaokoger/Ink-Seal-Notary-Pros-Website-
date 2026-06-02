@@ -94,4 +94,10 @@
   window.addEventListener('scroll', updateActiveNav, { passive: true });
   updateActiveNav();
 
+  /* --- Footer year --- */
+  var footerYear = document.getElementById('footer-year');
+  if (footerYear && !footerYear.textContent.trim()) {
+    footerYear.textContent = new Date().getFullYear();
+  }
+
 })();
