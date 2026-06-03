@@ -1408,7 +1408,7 @@
       }
 
       // Form submit
-      // Order: GAS proxy (guaranteed first) → thank-you page → Dropbox (background, non-blocking)
+      // Order: GAS proxy (guaranteed first) → thank-you page → Google Drive upload (background, non-blocking)
       var arForm    = document.getElementById('arForm');
       var arSuccess = document.getElementById('arSuccess');
       var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
@@ -1458,19 +1458,19 @@
             if (arSuccess) arSuccess.classList.add('show');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // ── Step 2: Dropbox upload (background — never blocks the client) ──
+            // ── Step 2: Google Drive upload (background — never blocks the client) ──
             if (selectedFiles.length === 0) {
-              console.log('[ar-form] No files selected — skipping Dropbox upload');
+              console.log('[ar-form] No files selected — skipping Drive upload');
               return;
             }
 
-            console.log('[ar-form] Starting Dropbox upload |', selectedFiles.length, 'file(s)');
+            console.log('[ar-form] Starting Drive upload |', selectedFiles.length, 'file(s)');
             selectedFiles.forEach(function (f, i) {
               console.log('[ar-form] file[' + i + ']:', f.name, '| size:', f.size, 'bytes | type:', f.type);
             });
             var nameVal  = nameInput  ? nameInput.value.trim()  : 'Client';
             var orderVal = (orderInput ? orderInput.value.trim() : '') || (json.order || '');
-            console.log('[ar-form] Dropbox clientName:', nameVal, '| orderNumber:', orderVal);
+            console.log('[ar-form] Drive clientName:', nameVal, '| orderNumber:', orderVal);
 
             // Convert files to base64 — no multipart parser needed on the server
             Promise.all(selectedFiles.map(function (f) {
@@ -1486,8 +1486,8 @@
             }))
             .then(function (b64files) {
               var payload = JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files });
-              console.log('[ar-form] Sending to /api/upload-to-dropbox | payload size:', payload.length, 'bytes');
-              return fetch('/api/upload-to-dropbox', {
+              console.log('[ar-form] Sending to /api/upload-to-drive | payload size:', payload.length, 'bytes');
+              return fetch('/api/upload-to-drive', {
                 method:  'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body:    payload
@@ -1498,15 +1498,15 @@
                 try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
               });
             })
-            .then(function (dbx) {
-              if (dbx.success) {
-                console.log('[ar-form] Dropbox upload complete | folder:', dbx.folderLink, '| files:', dbx.uploadCount);
+            .then(function (drv) {
+              if (drv.success) {
+                console.log('[ar-form] Drive upload complete | folder:', drv.folderLink, '| files:', drv.uploadCount);
               } else {
-                console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', dbx.error);
+                console.warn('[ar-form] Drive upload failed but GAS row was saved |', drv.error);
               }
             })
             .catch(function (err) {
-              console.warn('[ar-form] Dropbox upload failed but GAS row was saved |', err && err.message ? err.message : String(err));
+              console.warn('[ar-form] Drive upload failed but GAS row was saved |', err && err.message ? err.message : String(err));
             });
           })
           .catch(function (err) {

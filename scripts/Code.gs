@@ -62,6 +62,15 @@ var FIELD_MAP = {
 // doPost — receives apostille review form submissions
 // ─────────────────────────────────────────────────────────────────────────────
 function doPost(e) {
+  // Route JSON payloads (Google Drive file uploads) to handleFileUpload.
+  // URL-encoded payloads (normal form submissions) fall through to the existing handler below.
+  if (e.postData && e.postData.type === 'application/json') {
+    try {
+      var jsonBody = JSON.parse(e.postData.contents);
+      if (jsonBody.action === 'upload_files') return handleFileUpload(jsonBody);
+    } catch (_) { /* invalid JSON — fall through to form handler */ }
+  }
+
   try {
     var ss    = SpreadsheetApp.openById(SHEET_ID);
     var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
@@ -122,6 +131,85 @@ function doGet() {
   return ContentService
     .createTextOutput('Ink & Seal Notary Pros — script is running.')
     .setMimeType(ContentService.MimeType.TEXT);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// handleFileUpload — called by doPost when the JSON body contains action:'upload_files'
+//
+// 1. Finds (or creates) the shared parent folder "Ink & Seal Apostille Uploads" in Drive.
+// 2. Creates a per-order subfolder: "INS-YYYYMM-#### - Client Full Name"
+// 3. Decodes each base64 file and saves it inside the order folder.
+// 4. Writes the folder URL back to the matching row in the Google Sheet
+//    (searches the "Order Number" column; writes to "Dropbox Folder Link" or
+//    "Document Upload Folder Link" — whichever header is present in the live sheet).
+// ─────────────────────────────────────────────────────────────────────────────
+function handleFileUpload(p) {
+  try {
+    var orderNumber = (p.orderNumber || '').trim();
+    var clientName  = (p.clientName  || 'Unknown Client').trim();
+    var files       = p.files || [];
+
+    // 1. Find or create the shared parent folder
+    var parentName   = 'Ink & Seal Apostille Uploads';
+    var parentIter   = DriveApp.getFoldersByName(parentName);
+    var parentFolder = parentIter.hasNext()
+                       ? parentIter.next()
+                       : DriveApp.createFolder(parentName);
+
+    // 2. Create the per-order subfolder: "INS-YYYYMM-#### - Client Full Name"
+    var folderName  = orderNumber ? (orderNumber + ' - ' + clientName) : clientName;
+    var orderFolder = parentFolder.createFolder(folderName);
+
+    // 3. Decode and save each file
+    var uploadCount = 0;
+    files.forEach(function (f) {
+      var dataUrl = f.data || '';
+      var m = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+      if (!m) return;
+      var blob = Utilities.newBlob(Utilities.base64Decode(m[2]), m[1], f.name);
+      orderFolder.createFile(blob);
+      uploadCount++;
+    });
+
+    // 4. Get the Drive folder URL
+    var folderUrl = orderFolder.getUrl();
+
+    // 5. Write the folder URL back to the matching sheet row
+    if (orderNumber) {
+      var ss    = SpreadsheetApp.openById(SHEET_ID);
+      var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
+      var hdrs  = getHeaders(sheet);
+
+      var oCol = hdrs.indexOf('Order Number') + 1;
+      // Accept both the old Dropbox column name and a renamed column
+      var lColIdx = hdrs.indexOf('Document Upload Folder Link');
+      if (lColIdx === -1) lColIdx = hdrs.indexOf('Dropbox Folder Link');
+      var lCol = lColIdx + 1;
+
+      if (oCol > 0 && lCol > 0 && sheet.getLastRow() > 1) {
+        var orderVals = sheet.getRange(2, oCol, sheet.getLastRow() - 1, 1).getValues();
+        for (var i = 0; i < orderVals.length; i++) {
+          if (String(orderVals[i][0]).trim() === orderNumber) {
+            sheet.getRange(i + 2, lCol).setValue(folderUrl);
+            break;
+          }
+        }
+      }
+    }
+
+    Logger.log('handleFileUpload: order=' + orderNumber + ' client=' + clientName +
+               ' uploads=' + uploadCount + ' url=' + folderUrl);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: true, folderLink: folderUrl, uploadCount: uploadCount }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    Logger.log('handleFileUpload error: ' + err.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({ success: false, error: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
