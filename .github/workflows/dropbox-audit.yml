@@ -52,13 +52,8 @@ jobs:
           CLIENT="GitHub-Audit-Test"
 
           # Build a small base64-encoded text file as the test document
-          FILE_CONTENT="Ink & Seal Notary Pros — Dropbox Integration Audit
-Timestamp : $TIMESTAMP
-Order     : $ORDER
-Source    : GitHub Actions live audit workflow
-Purpose   : Proves end-to-end Dropbox integration is functional
-"
-          B64=$(echo "$FILE_CONTENT" | base64 -w 0)
+          FILE_CONTENT=$(printf 'Ink and Seal Notary Pros - Dropbox Integration Audit\nTimestamp: %s\nOrder: %s\nSource: GitHub Actions live audit workflow\nPurpose: Proves end-to-end Dropbox integration is functional\n' "$TIMESTAMP" "$ORDER")
+          B64=$(printf '%s' "$FILE_CONTENT" | base64 -w 0)
 
           PAYLOAD=$(jq -n \
             --arg cn "$CLIENT" \
