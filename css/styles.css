@@ -1771,7 +1771,7 @@ ul    { list-style: none; }
 @media (max-width: 580px) {
   .services { padding-top: 36px; padding-bottom: 40px; }
   .svc-card { padding: 22px 18px 18px; }
-  .svc-divider { margin: 8px auto 10px; }
+  .svc-divider { display: none; }
   .svc-icon { width: 44px; height: 44px; margin-bottom: 10px; }
   .svc-title { font-size: .96rem; }
   .svc-desc  { font-size: .82rem; line-height: 1.68; margin-bottom: 12px; }
