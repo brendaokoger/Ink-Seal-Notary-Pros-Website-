@@ -1769,19 +1769,20 @@ ul    { list-style: none; }
   .svc-btn { width: 100%; }
 }
 @media (max-width: 580px) {
-  .services { padding-top: 48px; padding-bottom: 56px; }
-  .svc-card { padding: 36px 22px 30px; }
-  .svc-icon { width: 52px; height: 52px; margin-bottom: 16px; }
-  .svc-title { font-size: .98rem; }
-  .svc-desc  { font-size: .82rem; line-height: 1.72; margin-bottom: 18px; }
+  .services { padding-top: 36px; padding-bottom: 40px; }
+  .svc-card { padding: 22px 18px 18px; }
+  .svc-divider { margin: 8px auto 10px; }
+  .svc-icon { width: 44px; height: 44px; margin-bottom: 10px; }
+  .svc-title { font-size: .96rem; }
+  .svc-desc  { font-size: .82rem; line-height: 1.68; margin-bottom: 12px; }
 }
 
 /* ── How It Works — tighter timeline on mobile ── */
 @media (max-width: 580px) {
-  .how { padding: 48px 0 56px; }
+  .how { padding: 36px 0 40px; }
   .ts-title { font-size: .9rem; line-height: 1.3; }
-  .ts-desc  { font-size: .8rem; line-height: 1.72; }
-  .how-cta  { margin-top: 36px; }
+  .ts-desc  { font-size: .8rem; line-height: 1.65; }
+  .how-cta  { margin-top: 28px; }
   .how-cta .btn-hero { width: 100%; }
 }
 
@@ -1790,22 +1791,21 @@ ul    { list-style: none; }
   .docs-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 580px) {
-  .docs-section { padding: 48px 0 56px; }
-  .docs-grid    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .doc-card     { padding: 18px 14px; }
-  .doc-name     { font-size: .88rem; }
-  .doc-desc     { font-size: .76rem; line-height: 1.65; }
-  .doc-icon     { width: 28px; height: 28px; margin-bottom: 10px; }
-  .docs-cta     { margin-top: 32px; }
-  .docs-cta .btn-hero { width: 100%; }
-  .docs-cta-note { font-size: .82rem; margin-bottom: 16px; }
+  .docs-section { padding: 36px 0 40px; }
+  .docs-grid    { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 28px; }
+  .doc-card     { display: flex; align-items: center; gap: 10px; padding: 12px 10px; text-align: left; }
+  .doc-icon     { width: 28px; height: 28px; flex-shrink: 0; margin-bottom: 0; }
+  .doc-icon svg { width: 14px; height: 14px; }
+  .doc-name     { font-size: .78rem; margin-bottom: 0; line-height: 1.3; }
+  .doc-desc     { display: none; }
+  .docs-cta     { margin-top: 28px; }
 }
 
 /* ── Avoid Costly Mistakes — single col on mobile ── */
 @media (max-width: 580px) {
-  .mistakes-section { padding: 48px 0 56px; }
-  .mistakes-grid    { grid-template-columns: 1fr; gap: 14px; }
-  .mistake-item     { gap: 14px; }
+  .mistakes-section { padding: 36px 0 40px; }
+  .mistakes-grid    { grid-template-columns: 1fr; gap: 12px; }
+  .mistake-item     { gap: 12px; }
   .mistake-icon     { width: 34px; height: 34px; flex-shrink: 0; }
   .mistake-title    { font-size: .88rem; line-height: 1.3; margin-bottom: 4px; text-wrap: balance; }
   .mistake-desc     { font-size: .8rem; line-height: 1.7; }
@@ -1817,17 +1817,17 @@ ul    { list-style: none; }
 
 /* ── FAQ — tighter spacing ── */
 @media (max-width: 580px) {
-  .faq-preview   { padding: 48px 0 56px; }
-  .faq-intro     { font-size: .84rem; margin-bottom: 32px; }
-  .faq-q         { padding: 20px 0; }
+  .faq-preview   { padding: 36px 0 44px; }
+  .faq-intro     { font-size: .84rem; margin-bottom: 28px; }
+  .faq-q         { padding: 18px 0; }
   .faq-q-text    { font-size: .92rem; }
-  .faq-a-inner p { font-size: .86rem; padding-bottom: 20px; }
+  .faq-a-inner p { font-size: .86rem; padding-bottom: 18px; }
   .faq-more svg  { flex-shrink: 0; }
 }
 
 /* ── Contact section ── */
 @media (max-width: 580px) {
-  .contact-section { padding: 56px 0 64px; }
+  .contact-section { padding: 44px 0 52px; }
   .contact-heading { font-size: clamp(1.55rem, 6vw, 2rem); }
   .contact-sub     { font-size: .86rem; margin-bottom: 28px; }
   .contact-cta     { width: 100%; text-align: center; margin-top: 28px; display: flex; justify-content: center; }
@@ -5748,10 +5748,17 @@ a.btn-gold:hover {
 }
 @media (max-width: 900px) {
   .docs-grid { grid-template-columns: repeat(2, 1fr); }
-  .docs-section { padding: 64px 0; }
+  .docs-section { padding: 56px 0; }
 }
-@media (max-width: 500px) {
-  .docs-grid { grid-template-columns: 1fr; gap: 14px; }
+@media (max-width: 580px) {
+  .docs-section { padding: 36px 0 40px; }
+  .docs-grid    { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 28px; }
+  .doc-card     { display: flex; align-items: center; gap: 10px; padding: 12px 10px; text-align: left; }
+  .doc-icon     { width: 28px; height: 28px; flex-shrink: 0; margin-bottom: 0; }
+  .doc-icon svg { width: 14px; height: 14px; }
+  .doc-name     { font-size: .78rem; margin-bottom: 0; line-height: 1.3; }
+  .doc-desc     { display: none; }
+  .docs-cta     { margin-top: 28px; }
 }
 
 /* ---------- Avoid Costly Mistakes section ---------- */
