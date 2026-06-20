@@ -1543,9 +1543,9 @@ ul    { list-style: none; }
     padding: 48px 28px 44px;
     order: 1;
   }
-  .h-hero        { font-size: clamp(1.8rem, 6.2vw, 2.6rem); }
-  .headline-main { white-space: normal; line-height: 1.1; }
-  .headline-gold { white-space: normal; line-height: 1.2; margin-top: .02em; }
+  .h-hero        { font-size: clamp(1.7rem, 5.6vw, 2.4rem); overflow-wrap: break-word; }
+  .headline-main { white-space: normal; line-height: 1.12; overflow-wrap: break-word; }
+  .headline-gold { white-space: normal; font-size: 1.22em; line-height: 1.22; margin-top: .04em; overflow-wrap: break-word; }
   .hero-rule     { margin: 20px 0 24px; max-width: 260px; }
   .hero-sub {
     max-width: 100%;
@@ -1642,7 +1642,7 @@ ul    { list-style: none; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
-  .h-hero     { font-size: clamp(1.55rem, 6.8vw, 2rem); }
+  .h-hero     { font-size: clamp(1.45rem, 6.2vw, 1.85rem); }
   .hero-rule  { margin: 16px 0 20px; max-width: 220px; }
   .hero-sub   { font-size: .88rem; }
   .hero-trust { margin-bottom: 26px; }
@@ -1713,6 +1713,8 @@ ul    { list-style: none; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
+  .h-hero       { font-size: clamp(1.35rem, 6.8vw, 1.6rem); }
+  .headline-gold { font-size: 1.12em; }
   .svc-card     { padding: 34px 16px 28px; }
   .footer-logo  { height: 80px; max-width: 200px; }
   .ab-services-grid { grid-template-columns: 1fr; }
@@ -1740,10 +1742,13 @@ ul    { list-style: none; }
     line-height: 1.22;
     margin-bottom: 32px;
     letter-spacing: -.014em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
   }
   .h-section em { display: inline; }
-  .svc-main-h { font-size: clamp(1.35rem, 5.8vw, 1.65rem); }
-  .svc-main-h em { font-size: 1em; margin-top: 4px; }
+  .svc-main-h { font-size: clamp(1.35rem, 5.8vw, 1.65rem); text-wrap: balance; }
+  .svc-main-h em { display: inline; font-size: .92em; margin-top: 0; }
+  .headline-gold { font-size: 1.16em; line-height: 1.26; }
   .eyebrow { font-size: .54rem; letter-spacing: .3em; margin-bottom: 18px; }
   .sec-tag  { font-size: .54rem; letter-spacing: .28em; }
 }
