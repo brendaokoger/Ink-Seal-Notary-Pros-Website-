@@ -1842,14 +1842,56 @@ ul    { list-style: none; }
 
 /* ── Footer — cleaner on mobile ── */
 @media (max-width: 580px) {
-  .footer-tagline-txt { font-size: .78rem; line-height: 1.7; margin-top: 10px; }
-  .footer-cred-item   { font-size: .58rem; letter-spacing: .12em; }
-  .footer-bar-inner   { gap: 6px; }
-  .footer-copy        { font-size: .7rem; }
-  .footer-disclaimer  { font-size: .64rem; padding: 0 16px; margin-top: 8px; }
-  .fc-link            { font-size: .8rem; }
-  .fc-title           { margin-bottom: 14px; }
-  .footer-contact li  { margin-bottom: 10px; }
+  /* Two-column grid: brand spans full width, then Quick Links + Contact side by side */
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 20px;
+    padding-top: 36px;
+    padding-bottom: 40px;
+  }
+
+  /* Brand: logo + tagline horizontal row */
+  .footer-brand {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-logo-wrap   { flex-shrink: 0; }
+  .footer-logo        { height: 56px; max-width: 158px; margin-bottom: 0; }
+  .footer-tagline-txt { font-size: .74rem; line-height: 1.62; margin-top: 0; }
+  .footer-cred        { display: none; }
+
+  /* Hide Services column — Quick Links covers all navigation */
+  .footer-top > div:nth-child(2) { display: none; }
+
+  /* Columns: compact typography */
+  .fc-title  { font-size: .54rem; margin-bottom: 12px; }
+  .fc-link   { font-size: .79rem; padding: 4px 0; }
+  .footer-contact li { gap: 8px; margin-bottom: 8px; }
+  .fc-icon   { width: 14px; height: 14px; }
+  .fc-text   { font-size: .79rem; }
+
+  /* Social icons: compact, flush left */
+  .social-row  { gap: 8px; margin-top: 14px; margin-bottom: 0; justify-content: flex-start; }
+  .social-link { width: 34px; height: 34px; }
+
+  /* Footer bar */
+  .footer-bar  { padding: 18px 0 22px; }
+  .footer-bar-inner  { gap: 6px; }
+  .footer-copy       { font-size: .7rem; }
+  .footer-legal      { gap: 10px; }
+  .footer-disclaimer { font-size: .64rem; padding: 0 18px; margin-top: 10px; line-height: 1.65; }
+
+  /* Follow Us column (5th child, present on secondary pages) — span full width */
+  .footer-top > div:nth-child(5) {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .footer-top > div:nth-child(5) .social-row { justify-content: center; }
 }
 
 /* ── Global: section spacing ── */
