@@ -6154,6 +6154,88 @@ a.btn-gold:hover {
   .mistakes-section { padding: 64px 0; }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   WHAT'S INCLUDED
+   ═══════════════════════════════════════════════════════════ */
+.included-section {
+  background: var(--ivory);
+  padding: 96px 0 104px;
+  border-top: 1px solid var(--border);
+}
+.included-heading {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.included-sub {
+  text-align: center;
+  font-size: .92rem;
+  font-weight: 300;
+  line-height: 1.84;
+  color: var(--txt-b);
+  max-width: 500px;
+  margin: 0 auto 56px;
+}
+.included-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.inc-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 22px;
+  transition: border-color .22s, box-shadow .22s, transform .2s;
+}
+.inc-card:hover {
+  border-color: rgba(184,135,43,.36);
+  box-shadow: 0 4px 22px rgba(11,24,41,.07);
+  transform: translateY(-2px);
+}
+.inc-icon {
+  width: 40px; height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184,135,43,.32);
+  border-radius: 50%;
+  color: var(--gold);
+}
+.inc-icon svg { width: 18px; height: 18px; stroke-width: 1.8; }
+.inc-title {
+  font-family: var(--serif);
+  font-size: .94rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  letter-spacing: -.012em;
+  line-height: 1.3;
+}
+.included-cta {
+  text-align: center;
+  margin-top: 52px;
+}
+
+@media (max-width: 840px) {
+  .included-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
+  .included-section { padding: 44px 0 48px; }
+  .included-sub     { font-size: .86rem; margin-bottom: 36px; }
+  .included-grid    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .inc-card         { padding: 14px 14px; gap: 12px; }
+  .inc-icon         { width: 34px; height: 34px; }
+  .inc-icon svg     { width: 15px; height: 15px; }
+  .inc-title        { font-size: .84rem; }
+  .included-cta     { margin-top: 32px; }
+}
+
 /* ---------- Google Review CTA section ---------- */
 .review-cta-section {
   background: var(--ivory-2);
