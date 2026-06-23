@@ -6307,3 +6307,122 @@ a.btn-gold:hover {
   }
   .feat-grid--8 .feat-item:nth-child(even) { border-right: none; }
 }
+
+/* ─────────────────────────────────────────
+   COMMITMENT SECTION
+───────────────────────────────────────── */
+.commitment-section {
+  background: var(--navy);
+  border-top: 1px solid rgba(184,135,43,.2);
+  border-bottom: 1px solid rgba(184,135,43,.2);
+  padding: 96px 0 104px;
+  text-align: center;
+}
+
+.commitment-heading {
+  color: #fff;
+  margin-bottom: 18px;
+  text-wrap: balance;
+}
+
+.commitment-sub {
+  font-size: .93rem;
+  font-weight: 300;
+  line-height: 1.82;
+  color: rgba(255,255,255,.62);
+  max-width: 480px;
+  margin: 0 auto 52px;
+}
+
+.commitment-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 52px;
+  max-width: 800px;
+}
+
+.commitment-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,.038);
+  border: 1px solid rgba(184,135,43,.2);
+  border-radius: 100px;
+  padding: 11px 22px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.82);
+  transition: border-color .22s, background .22s;
+}
+
+.commitment-item:hover {
+  border-color: rgba(184,135,43,.44);
+  background: rgba(255,255,255,.06);
+}
+
+.commitment-ck {
+  color: var(--gold);
+  font-size: .86rem;
+  flex-shrink: 0;
+}
+
+.commitment-rule {
+  margin: 0 auto 48px;
+  line-height: 1;
+}
+
+.commitment-gem {
+  font-size: .38rem;
+  color: var(--gold);
+  opacity: .7;
+}
+
+/* Review invite card */
+.review-invite {
+  max-width: 560px;
+  margin: 0 auto;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(184,135,43,.26);
+  border-radius: 10px;
+  padding: 44px 52px;
+}
+
+.review-invite-stars {
+  font-size: 1.14rem;
+  color: var(--gold-2);
+  letter-spacing: .14em;
+  margin: 0 0 18px;
+}
+
+.review-invite-heading {
+  font-family: var(--serif);
+  font-size: 1.38rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 14px;
+}
+
+.review-invite-sub {
+  font-size: .88rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,.58);
+  margin: 0 0 30px;
+}
+
+.review-invite-btn { display: inline-block; }
+
+@media (max-width: 640px) {
+  .commitment-section  { padding: 52px 0 60px; }
+  .commitment-sub      { font-size: .88rem; margin-bottom: 36px; }
+  .commitment-list     { gap: 9px; margin-bottom: 36px; }
+  .commitment-item     { padding: 9px 16px; font-size: .67rem; }
+  .review-invite       { padding: 32px 24px; }
+  .review-invite-heading { font-size: 1.18rem; }
+  .review-invite-sub   { font-size: .84rem; }
+}
