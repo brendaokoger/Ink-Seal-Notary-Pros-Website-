@@ -539,6 +539,77 @@ ul    { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
+   TRUST BAR  (beneath hero)
+   ═══════════════════════════════════════════════════════════ */
+.trust-bar {
+  background: var(--navy);
+  border-top: 1px solid rgba(184,135,43,.2);
+  border-bottom: 1px solid rgba(184,135,43,.2);
+  padding: 17px 0;
+}
+.trust-bar-inner {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+.tb-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.tb-stars {
+  font-size: .84rem;
+  color: var(--gold-2);
+  letter-spacing: .05em;
+  line-height: 1;
+}
+.tb-label {
+  font-size: .6rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.76);
+  white-space: nowrap;
+}
+.tb-rule {
+  display: block;
+  width: 1px;
+  height: 24px;
+  background: rgba(184,135,43,.3);
+  flex-shrink: 0;
+}
+.tb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 30px;
+  flex: 1;
+}
+.tb-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .59rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  white-space: nowrap;
+}
+.tb-ck {
+  color: var(--gold);
+  font-weight: 700;
+  font-size: .78em;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
    SERVICES
    ═══════════════════════════════════════════════════════════ */
 .services {
@@ -1786,6 +1857,25 @@ ul    { list-style: none; }
   .btn-hero,
   .btn-hero-2 { width: 100%; justify-content: center; padding: 16px 24px; }
   .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 24px; }
+}
+
+/* ── Trust bar — compact on tablet ── */
+@media (max-width: 840px) {
+  .trust-bar-inner { gap: 18px; }
+  .tb-rule  { display: none; }
+  .tb-list  { gap: 4px 18px; }
+  .tb-item  { font-size: .56rem; }
+}
+
+/* ── Trust bar — stacked on phones ── */
+@media (max-width: 580px) {
+  .trust-bar { padding: 20px 0; }
+  .trust-bar-inner { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .tb-rating { gap: 8px; }
+  .tb-stars  { font-size: .8rem; }
+  .tb-label  { font-size: .57rem; letter-spacing: .16em; }
+  .tb-list   { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; width: 100%; }
+  .tb-item   { white-space: normal; font-size: .57rem; }
 }
 
 /* ── Section headings — tighter on small screens ── */
