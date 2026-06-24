@@ -6426,3 +6426,49 @@ a.btn-gold:hover {
   .review-invite-heading { font-size: 1.18rem; }
   .review-invite-sub   { font-size: .84rem; }
 }
+
+/* ─────────────────────────────────────────
+   TRANSLATION INTAKE
+───────────────────────────────────────── */
+.tr-intro-sub {
+  margin-top: -10px;
+  opacity: .82;
+}
+
+.tr-intro-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  background: rgba(184,135,43,.06);
+  border: 1px solid rgba(184,135,43,.3);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 32px;
+  font-size: .84rem;
+  line-height: 1.64;
+  color: var(--navy);
+}
+
+.tr-intro-notice p { margin: 0; }
+
+.tr-intro-notice-icon {
+  flex-shrink: 0;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+.tr-quote-label {
+  font-size: .8rem;
+  font-style: italic;
+  color: var(--txt-b);
+  line-height: 1.5;
+}
+
+.tr-page-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 580px) {
+  .tr-intro-notice { font-size: .8rem; padding: 12px 14px; }
+  .tr-page-grid    { grid-template-columns: repeat(2, 1fr); }
+}
