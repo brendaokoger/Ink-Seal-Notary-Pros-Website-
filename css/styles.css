@@ -6624,6 +6624,98 @@ a.btn-gold:hover {
   .tr-addon-grid { grid-template-columns: 1fr; }
 }
 
+/* Estimate Summary (Step 6) */
+.tr-summary-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tr-summary-label {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.tr-summary-amount {
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.tr-summary-per {
+  font-size: .74rem;
+  font-weight: 400;
+  color: var(--txt-b);
+  margin-left: 2px;
+}
+
+.tr-summary-addons {
+  padding: 18px 0 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tr-summary-addons-title {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 12px;
+}
+
+.tr-summary-addons-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tr-summary-addon-item {
+  font-size: .85rem;
+  color: var(--navy);
+  padding-left: 16px;
+  position: relative;
+}
+
+.tr-summary-addon-item::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  font-size: .36rem;
+  color: var(--gold);
+  top: 5px;
+}
+
+.tr-summary-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 20px 0 18px;
+  display: none; /* shown only when addons present */
+}
+
+.tr-summary-addons ~ .tr-summary-divider { display: block; }
+
+.tr-summary-notice {
+  background: rgba(184,135,43,.05);
+  border: 1px solid rgba(184,135,43,.22);
+  border-radius: 6px;
+  padding: 14px 18px;
+  font-size: .83rem;
+  line-height: 1.65;
+  color: var(--navy);
+}
+
+.tr-summary-notice p { margin: 0; }
+
 /* Security notice inside upload card */
 .tr-security-notice {
   display: flex;
