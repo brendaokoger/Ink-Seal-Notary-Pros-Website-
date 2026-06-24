@@ -6468,7 +6468,66 @@ a.btn-gold:hover {
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* Translation pricing display card */
+.tr-pricing-display {
+  background: rgba(184,135,43,.05);
+  border: 1px solid rgba(184,135,43,.26);
+  border-radius: 8px;
+  padding: 22px 26px;
+  margin-top: 24px;
+}
+
+.tr-pricing-display-eyebrow {
+  display: block;
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.tr-pricing-display-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tr-pricing-display-label {
+  font-family: var(--serif);
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.tr-pricing-display-amount {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+}
+
+.tr-pricing-display-per {
+  font-size: .76rem;
+  font-weight: 400;
+  color: var(--txt-b);
+  margin-left: 2px;
+}
+
+.tr-pricing-display-note {
+  font-size: .78rem;
+  line-height: 1.6;
+  color: var(--txt-b);
+  margin: 0;
+}
+
 @media (max-width: 580px) {
-  .tr-intro-notice { font-size: .8rem; padding: 12px 14px; }
-  .tr-page-grid    { grid-template-columns: repeat(2, 1fr); }
+  .tr-intro-notice     { font-size: .8rem; padding: 12px 14px; }
+  .tr-page-grid        { grid-template-columns: repeat(2, 1fr); }
+  .tr-pricing-display  { padding: 18px 18px; }
 }
