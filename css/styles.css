@@ -6526,6 +6526,29 @@ a.btn-gold:hover {
   margin: 0;
 }
 
+/* Security notice inside upload card */
+.tr-security-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(22,163,74,.05);
+  border: 1px solid rgba(22,163,74,.22);
+  border-radius: 6px;
+  padding: 13px 16px;
+  margin-top: 20px;
+  font-size: .82rem;
+  line-height: 1.62;
+  color: var(--navy);
+}
+
+.tr-security-notice p { margin: 0; }
+
+.tr-security-notice-icon {
+  flex-shrink: 0;
+  color: #16a34a;
+  margin-top: 1px;
+}
+
 @media (max-width: 580px) {
   .tr-intro-notice     { font-size: .8rem; padding: 12px 14px; }
   .tr-page-grid        { grid-template-columns: repeat(2, 1fr); }

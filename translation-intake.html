@@ -234,18 +234,77 @@
           </div>
         </div>
 
-        <!-- ── STEP 2 — CLIENT INFORMATION ──────────────── -->
+        <!-- ── STEP 2 — UPLOAD DOCUMENTS ──────────────── -->
         <div class="ms-step" id="step2" data-step="2" style="display:none">
 
           <div class="ar-step-hdr">
             <span class="ar-step-hdr-eyebrow">Step 2 of 6</span>
+            <h2 class="ar-step-hdr-title">Upload Documents</h2>
+            <p class="ar-step-hdr-desc">Upload your document(s) so our team can review them and provide an accurate estimate and expected completion time.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">2</span>
+              <h2 class="on-card-title">Upload Documents</h2>
+            </div>
+
+            <div class="ar-dropzone" id="trDropzone" role="region" aria-label="Document upload area">
+              <input type="file" id="trDocUploads" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" multiple class="ar-dropzone-input" tabindex="-1" />
+              <div class="ar-dropzone-body">
+                <div class="ar-dropzone-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
+                    <rect x="6" y="8" width="36" height="32" rx="5"/>
+                    <line x1="24" y1="30" x2="24" y2="18"/>
+                    <polyline points="17,24 24,17 31,24"/>
+                    <line x1="16" y1="34" x2="32" y2="34"/>
+                  </svg>
+                </div>
+                <p class="ar-dropzone-title">Click to Upload Documents</p>
+                <p class="ar-dropzone-sub">or drag and drop files</p>
+                <p class="ar-dropzone-hint">PDF, DOC, DOCX, JPG, JPEG, PNG &middot; Max 100 MB per file</p>
+              </div>
+            </div>
+
+            <div class="ar-file-list" id="trFileList" aria-live="polite"></div>
+            <input type="hidden" id="trUploadedFileCount" name="uploadedFileCount" value="0" />
+
+            <div class="tr-security-notice" role="note">
+              <span class="tr-security-notice-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                  <path d="M9 1 L16 4 L16 9 C16 13 12.5 16.5 9 17 C5.5 16.5 2 13 2 9 L2 4 Z"/>
+                  <polyline points="6,9 8.5,11.5 13,7"/>
+                </svg>
+              </span>
+              <p>Your documents are securely uploaded and reviewed only for processing your translation request.</p>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="1">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="3">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3 — CLIENT INFORMATION ──────────────── -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 3 of 6</span>
             <h2 class="ar-step-hdr-title">Tell Us About You</h2>
             <p class="ar-step-hdr-desc">Your contact information is kept strictly confidential and used only to process your translation quote request.</p>
           </div>
 
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num">2</span>
+              <span class="on-card-num">3</span>
               <h2 class="on-card-title">Client Information</h2>
             </div>
 
@@ -298,29 +357,29 @@
           </div>
 
           <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="1">
+            <button type="button" class="ms-btn-back" data-prev="2">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
-            <button type="button" class="ms-btn-continue" data-next="3">
+            <button type="button" class="ms-btn-continue" data-next="4">
               Continue
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
             </button>
           </div>
         </div>
 
-        <!-- ── STEP 3 — ADDITIONAL DETAILS ──────────────── -->
-        <div class="ms-step" id="step3" data-step="3" style="display:none">
+        <!-- ── STEP 4 — ADDITIONAL DETAILS ──────────────────── -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
 
           <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 3 of 6</span>
+            <span class="ar-step-hdr-eyebrow">Step 4 of 6</span>
             <h2 class="ar-step-hdr-title">Additional Details</h2>
             <p class="ar-step-hdr-desc">Tell us a bit more about how the translation will be used and how many documents you are submitting.</p>
           </div>
 
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num">3</span>
+              <span class="on-card-num">4</span>
               <h2 class="on-card-title">Additional Details</h2>
             </div>
 
@@ -390,55 +449,6 @@
               </div>
 
             </div>
-          </div>
-
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="2">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="4">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 4 — DOCUMENT UPLOAD ──────────────────── -->
-        <div class="ms-step" id="step4" data-step="4" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 4 of 6</span>
-            <h2 class="ar-step-hdr-title">Upload Your Documents</h2>
-            <p class="ar-step-hdr-desc">Upload clear copies of all documents requiring translation. Accepted formats: PDF, JPG, PNG.</p>
-          </div>
-
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">4</span>
-              <h2 class="on-card-title">Document Upload</h2>
-            </div>
-
-            <div class="ar-dropzone" id="trDropzone" role="region" aria-label="Document upload area">
-              <input type="file" id="trDocUploads" accept=".pdf,.jpg,.jpeg,.png" multiple class="ar-dropzone-input" tabindex="-1" />
-              <div class="ar-dropzone-body">
-                <div class="ar-dropzone-icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
-                    <rect x="6" y="8" width="36" height="32" rx="5"/>
-                    <line x1="24" y1="30" x2="24" y2="18"/>
-                    <polyline points="17,24 24,17 31,24"/>
-                    <line x1="16" y1="34" x2="32" y2="34"/>
-                  </svg>
-                </div>
-                <p class="ar-dropzone-title">Drop your documents here</p>
-                <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
-                <p class="ar-dropzone-hint">PDF, JPG, JPEG, PNG &middot; Up to 5 documents</p>
-              </div>
-            </div>
-
-            <div class="ar-file-list" id="trFileList" aria-live="polite"></div>
-            <input type="hidden" id="trUploadedFileCount" name="uploadedFileCount" value="0" />
-
           </div>
 
           <div class="ms-nav">
@@ -704,7 +714,7 @@
       var sigPadReady = false;
       var sigResizeFn = null;
       var selectedFiles = [];
-      var STEP_NAMES = ['', 'Translation Details', 'Client Information', 'Additional Details', 'Upload Documents', 'Additional Notes', 'Review & Confirm'];
+      var STEP_NAMES = ['', 'Translation Details', 'Upload Documents', 'Client Information', 'Additional Details', 'Additional Notes', 'Review & Confirm'];
 
       function showStep(n) {
         currentStep = n;
@@ -742,7 +752,7 @@
             return false;
           }
         }
-        if (n === 4) {
+        if (n === 2) {
           if (selectedFiles.length === 0) {
             var dz = document.getElementById('trDropzone');
             if (dz) {
@@ -925,6 +935,10 @@
         for (var i = 0; i < fileList.length; i++) {
           if (selectedFiles.length >= 5) break;
           var f = fileList[i];
+          if (f.size > 104857600) {
+            alert(f.name + ' exceeds the 100 MB file size limit and was not added.');
+            continue;
+          }
           var exists = false;
           for (var j = 0; j < selectedFiles.length; j++) {
             if (selectedFiles[j].name === f.name && selectedFiles[j].size === f.size) { exists = true; break; }
