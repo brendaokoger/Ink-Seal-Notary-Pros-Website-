@@ -4,8 +4,10 @@
   var header = document.getElementById('header');
   var burger = document.getElementById('burger');
   var drawer = document.getElementById('drawer');
+  var desktopNav = document.querySelector('.nav');
+  var navCta = document.querySelector('.btn-nav');
 
-  /* scroll shadow */
+  /* scroll shadow — skip on form pages */
   if (header && !header.classList.contains('form-hdr')) {
     function onScroll() {
       header.classList.toggle('scrolled', window.scrollY > 10);
@@ -30,6 +32,14 @@
     document.body.style.overflow = '';
   }
 
+  /* populate drawer from desktop nav if empty */
+  if (drawer && desktopNav && navCta && !drawer.children.length) {
+    var navLinksHtml = Array.from(desktopNav.querySelectorAll('a')).map(function (link) {
+      return '<a href="' + link.getAttribute('href') + '" class="drawer-link">' + link.textContent + '</a>';
+    }).join('');
+    drawer.innerHTML = navLinksHtml + '<a href="' + navCta.getAttribute('href') + '" class="btn-drawer">' + navCta.childNodes[0].textContent.trim() + '</a>';
+  }
+
   if (burger && drawer) {
     burger.addEventListener('click', function () {
       burger.classList.contains('open') ? closeMenu() : openMenu();
@@ -44,6 +54,9 @@
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') { closeMenu(); burger.focus(); }
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 840) closeMenu();
     });
   }
 
