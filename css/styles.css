@@ -6744,3 +6744,62 @@ a.btn-gold:hover {
   .tr-page-grid        { grid-template-columns: repeat(2, 1fr); }
   .tr-pricing-display  { padding: 18px 18px; }
 }
+
+/* Estimate Summary — subtotal row */
+.tr-summary-row--total {
+  border-top: 2px solid var(--navy);
+  border-bottom: none;
+  padding-top: 18px;
+  margin-top: 6px;
+}
+.tr-summary-amount--total {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.tr-summary-label-note {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 400;
+  color: var(--txt-b);
+  margin-left: 4px;
+}
+
+/* Success page action buttons */
+.tr-success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+.tr-success-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 26px;
+  border-radius: 6px;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  transition: background .2s, border-color .2s, color .2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.tr-success-btn--primary {
+  background: var(--navy);
+  color: #fff;
+  border: 1px solid var(--gold-2);
+}
+.tr-success-btn--primary:hover { background: var(--navy-2); }
+.tr-success-btn--secondary {
+  background: transparent;
+  color: var(--navy);
+  border: 1px solid var(--border);
+}
+.tr-success-btn--secondary:hover { border-color: var(--gold); color: var(--gold); }
+@media (max-width: 400px) {
+  .tr-success-actions { flex-direction: column; align-items: stretch; }
+  .tr-success-btn     { text-align: center; }
+}

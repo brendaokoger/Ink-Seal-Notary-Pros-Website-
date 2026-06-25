@@ -21,6 +21,18 @@
 var SHEET_ID   = '1qf9R3QLeL8gGCcFuWa0BrVIGmPm_uBqft4cDkuaZ7gI';
 var SHEET_NAME = 'ink_seal_apostille_tracker (1)';
 
+// Translation Requests — separate tab in the same spreadsheet
+var TRANSLATION_SHEET_NAME = 'Translation Requests';
+var TRANSLATION_HEADERS = [
+  'Order Number',           'Intake Date',            'Full Name',
+  'Email Address',          'Phone Number',           'Source Language',
+  'Target Language',        'Document Type',          'Number of Pages',
+  'Add-on: Notarization',   'Add-on: Apostille',      'Add-on: Rush',
+  'Add-on: Hard Copy',      'Special Instructions',   'Files Uploaded',
+  'Estimated Total',        'Status',                 'Quote Amount',
+  'Payment Status',         'Drive Folder Link'
+];
+
 // 32 base columns — order must match the Google Sheet header row
 var HEADERS = [
   'Order Number',                'Intake Date',                 'Client First Name',
@@ -69,6 +81,12 @@ function doPost(e) {
       var jsonBody = JSON.parse(e.postData.contents);
       if (jsonBody.action === 'upload_files') return handleFileUpload(jsonBody);
     } catch (_) { /* invalid JSON — fall through to form handler */ }
+  }
+
+  // Route translation form submissions to the Translation Requests tab
+  var ep = e.parameter || {};
+  if (ep.formType && ep.formType.toLowerCase().indexOf('translation') !== -1) {
+    return handleTranslationSubmission(e);
   }
 
   try {
@@ -174,27 +192,11 @@ function handleFileUpload(p) {
     // 4. Get the Drive folder URL
     var folderUrl = orderFolder.getUrl();
 
-    // 5. Write the folder URL back to the matching sheet row
+    // 5. Write the folder URL back to the matching sheet row (apostille or translation)
     if (orderNumber) {
-      var ss    = SpreadsheetApp.openById(SHEET_ID);
-      var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
-      var hdrs  = getHeaders(sheet);
-
-      var oCol = hdrs.indexOf('Order Number') + 1;
-      // Accept both the old Dropbox column name and a renamed column
-      var lColIdx = hdrs.indexOf('Document Upload Folder Link');
-      if (lColIdx === -1) lColIdx = hdrs.indexOf('Dropbox Folder Link');
-      var lCol = lColIdx + 1;
-
-      if (oCol > 0 && lCol > 0 && sheet.getLastRow() > 1) {
-        var orderVals = sheet.getRange(2, oCol, sheet.getLastRow() - 1, 1).getValues();
-        for (var i = 0; i < orderVals.length; i++) {
-          if (String(orderVals[i][0]).trim() === orderNumber) {
-            sheet.getRange(i + 2, lCol).setValue(folderUrl);
-            break;
-          }
-        }
-      }
+      var ss = SpreadsheetApp.openById(SHEET_ID);
+      var wrote = writeFolderLinkToSheet_(ss, SHEET_NAME, 'Dropbox Folder Link', orderNumber, folderUrl);
+      if (!wrote) writeFolderLinkToSheet_(ss, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
     }
 
     Logger.log('handleFileUpload: order=' + orderNumber + ' client=' + clientName +
@@ -823,6 +825,137 @@ function buildDashboard() {
   }
 
   Logger.log('buildDashboard complete — ' + dash.getName());
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TRANSLATION REQUESTS — separate sheet/tab
+// ─────────────────────────────────────────────────────────────────────────────
+function handleTranslationSubmission(e) {
+  try {
+    var ss    = SpreadsheetApp.openById(SHEET_ID);
+    var sheet = ss.getSheetByName(TRANSLATION_SHEET_NAME);
+    if (!sheet) {
+      sheet = ss.insertSheet(TRANSLATION_SHEET_NAME);
+      setupTranslationSheet_(sheet);
+    }
+
+    var p          = e.parameter;
+    var tz         = Session.getScriptTimeZone();
+    var intakeDate = Utilities.formatDate(new Date(), tz, 'MM/dd/yyyy hh:mm a');
+    var orderNum   = (p.orderNumber || '').trim();
+    if (!orderNum) orderNum = generateTranslationOrderNumber_(sheet);
+
+    var row = [
+      orderNum,
+      intakeDate,
+      p.fullName            || '',
+      p.email               || '',
+      p.phone               || '',
+      p.sourceLanguage      || '',
+      p.targetLanguage      || '',
+      p.documentType        || '',
+      p.numberOfPages       || '',
+      p.addonNotarization   ? 'Yes' : '',
+      p.addonApostille      ? 'Yes' : '',
+      p.addonRush           ? 'Yes' : '',
+      p.addonHardCopy       ? 'Yes' : '',
+      p.specialInstructions || '',
+      p.uploadedFileCount   || '0',
+      p.estimatedTotal      ? '$' + p.estimatedTotal : '',
+      'Review Pending',
+      '',  // Quote Amount — filled in by admin after review
+      '',  // Payment Status
+      p.driveFolderLink     || ''
+    ];
+
+    sheet.appendRow(row);
+
+    Logger.log('Translation submission: order=' + orderNum + ' | name=' + (p.fullName || '') +
+               ' | total=' + (p.estimatedTotal || ''));
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok', order: orderNum }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    Logger.log('handleTranslationSubmission error: ' + err.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function setupTranslationSheet_(sheet) {
+  var numCols = TRANSLATION_HEADERS.length;
+  sheet.getRange(1, 1, 1, numCols).setValues([TRANSLATION_HEADERS]);
+  sheet.getRange(1, 1, 1, numCols)
+    .setBackground('#0B1829')
+    .setFontColor('#C49A4A')
+    .setFontWeight('bold')
+    .setFontSize(10)
+    .setVerticalAlignment('middle')
+    .setWrap(false);
+  sheet.setRowHeight(1, 36);
+  sheet.setFrozenRows(1);
+
+  var widths = [140,150,150,200,130,150,150,160,90,
+                130,130,90,130,240,90,120,140,120,130,220];
+  widths.forEach(function (w, i) { sheet.setColumnWidth(i + 1, w); });
+
+  // Status dropdown
+  sheet.getRange(2, 17, 1000, 1).setDataValidation(
+    SpreadsheetApp.newDataValidation()
+      .requireValueInList([
+        'Review Pending','Quote Sent','Awaiting Documents',
+        'Awaiting Payment','Processing','Completed','Cancelled'
+      ], true)
+      .setAllowInvalid(false)
+      .build()
+  );
+
+  // Alternating ivory rows
+  sheet.setConditionalFormatRules([
+    SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=MOD(ROW(),2)=0')
+      .setBackground('#F7F4EE')
+      .setRanges([sheet.getRange(2, 1, 1000, numCols)])
+      .build()
+  ]);
+
+  Logger.log('Translation Requests sheet created with ' + numCols + ' columns.');
+}
+
+function generateTranslationOrderNumber_(sheet) {
+  var tz   = Session.getScriptTimeZone();
+  var yymm = Utilities.formatDate(new Date(), tz, 'yyyyMM');
+  var seq  = String(Math.max(sheet.getLastRow(), 1)).padStart(4, '0');
+  return 'TR-' + yymm + '-' + seq;
+}
+
+// Writes a Drive folder URL back to the Order Number's row in any sheet.
+// Returns true if the row was found and updated, false otherwise.
+function writeFolderLinkToSheet_(ss, sheetName, linkColName, orderNumber, url) {
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet || sheet.getLastRow() < 2) return false;
+
+  var hdrs = getHeaders(sheet);
+  var oCol = hdrs.indexOf('Order Number') + 1;
+  // Accept legacy apostille column names too
+  var lColIdx = hdrs.indexOf(linkColName);
+  if (lColIdx === -1) lColIdx = hdrs.indexOf('Document Upload Folder Link');
+  if (lColIdx === -1) lColIdx = hdrs.indexOf('Dropbox Folder Link');
+  var lCol = lColIdx + 1;
+
+  if (oCol < 1 || lCol < 1) return false;
+
+  var orderVals = sheet.getRange(2, oCol, sheet.getLastRow() - 1, 1).getValues();
+  for (var i = 0; i < orderVals.length; i++) {
+    if (String(orderVals[i][0]).trim() === orderNumber) {
+      sheet.getRange(i + 2, lCol).setValue(url);
+      return true;
+    }
+  }
+  return false;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

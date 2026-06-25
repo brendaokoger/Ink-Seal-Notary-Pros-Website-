@@ -39,20 +39,6 @@
   <section class="on-form-section">
     <div class="container">
 
-      <p class="form-intro-text">Certified word-for-word translations accepted for immigration, legal, academic, business, and international use.</p>
-      <p class="form-intro-text tr-intro-sub">Submit your documents for review and receive an estimated translation quote. Final pricing and turnaround times are confirmed after document review.</p>
-
-      <div class="tr-intro-notice" role="note">
-        <span class="tr-intro-notice-icon" aria-hidden="true">
-          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
-            <circle cx="9" cy="9" r="7"/>
-            <line x1="9" y1="5.5" x2="9" y2="6.5"/>
-            <line x1="9" y1="8" x2="9" y2="12.5"/>
-          </svg>
-        </span>
-        <p><strong>Important Notice:</strong> All pricing displayed throughout this intake process is estimated pricing only.</p>
-      </div>
-
       <!-- ─── Success message ─────────────────────────── -->
       <div class="on-success" id="trSuccess" role="alert" aria-live="polite">
         <div class="ar-success-card">
@@ -74,7 +60,7 @@
             Thank You
           </h2>
 
-          <p class="ar-success-received">Your translation request has been received.</p>
+          <p class="ar-success-received">Your certified translation request has been received.</p>
 
           <div class="ar-success-rule" aria-hidden="true">
             <span class="ar-success-rule-line"></span>
@@ -83,7 +69,7 @@
           </div>
 
           <div class="ar-success-details">
-            <p>A member of the Ink &amp; Seal Notary Pros team will review your documents and contact you with estimated pricing, expected completion time, and next steps.</p>
+            <p>A member of the Ink &amp; Seal Notary Pros team will review your document and contact you with pricing, timeframe, and next steps.</p>
           </div>
 
           <div class="ar-success-notice">
@@ -94,6 +80,11 @@
               </svg>
             </span>
             <p>Please monitor your email and phone for your translation quote from our team.</p>
+          </div>
+
+          <div class="tr-success-actions">
+            <a href="index.html" class="tr-success-btn tr-success-btn--secondary">Back to Home</a>
+            <a href="index.html#services" class="tr-success-btn tr-success-btn--primary">Back to Services</a>
           </div>
 
         </div>
@@ -108,6 +99,7 @@
         <input type="hidden" name="formType" value="Certified Translation Quote" />
         <input type="hidden" name="orderNumber" value="" />
         <input type="hidden" id="trDriveLink" name="driveFolderLink" value="" />
+        <input type="hidden" id="trEstimatedTotal" name="estimatedTotal" value="75.00" />
 
         <!-- ── STEP 1 — TRANSLATION DETAILS ─────────────── -->
         <div class="ms-step" id="step1" data-step="1">
@@ -116,6 +108,18 @@
             <span class="ar-step-hdr-eyebrow">Step 1 of 6</span>
             <h2 class="ar-step-hdr-title">Translation Details</h2>
             <p class="ar-step-hdr-desc">Tell us what language your document is currently written in and what language it needs to be translated into.</p>
+          </div>
+
+          <p class="form-intro-text">Certified word-for-word translations accepted for immigration, legal, academic, business, and international use.</p>
+          <div class="tr-intro-notice" role="note">
+            <span class="tr-intro-notice-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="15" height="15">
+                <circle cx="9" cy="9" r="7"/>
+                <line x1="9" y1="5.5" x2="9" y2="6.5"/>
+                <line x1="9" y1="8" x2="9" y2="12.5"/>
+              </svg>
+            </span>
+            <p><strong>Important Notice:</strong> All pricing is estimated only. Final pricing and turnaround time will be confirmed after document review.</p>
           </div>
 
           <div class="on-card">
@@ -473,8 +477,13 @@
             </div>
 
             <div class="tr-summary-row">
-              <span class="tr-summary-label">Certified Translation</span>
-              <span class="tr-summary-amount">Starting at $75 <span class="tr-summary-per">per document</span></span>
+              <span class="tr-summary-label">Certified Translation <span class="tr-summary-per">(1 document)</span></span>
+              <span class="tr-summary-amount">$75.00</span>
+            </div>
+
+            <div class="tr-summary-row" id="trSummaryAddlPagesRow" style="display:none">
+              <span class="tr-summary-label">Additional Pages <span class="tr-summary-label-note" id="trSummaryAddlPagesNote"></span></span>
+              <span class="tr-summary-amount" id="trSummaryAddlPagesAmt"></span>
             </div>
 
             <div id="trSummaryAddons" class="tr-summary-addons" style="display:none">
@@ -482,10 +491,13 @@
               <ul class="tr-summary-addons-list" id="trSummaryAddonsList"></ul>
             </div>
 
-            <div class="tr-summary-divider" aria-hidden="true"></div>
+            <div class="tr-summary-row tr-summary-row--total">
+              <span class="tr-summary-label">Estimated Subtotal</span>
+              <span class="tr-summary-amount tr-summary-amount--total" id="trSummarySubtotal">$75.00</span>
+            </div>
 
             <div class="tr-summary-notice" role="note">
-              <p><strong>Important Notice:</strong> This is an estimated quote only. Final pricing and turnaround times will be confirmed after document review.</p>
+              <p><strong>Important Notice:</strong> This is an estimated quote only. Final pricing and turnaround time will be confirmed after document review.</p>
             </div>
           </div>
 
@@ -602,30 +614,52 @@
       var selectedFiles = [];
       var STEP_NAMES = ['', 'Translation Details', 'Upload Documents', 'Optional Services', 'Special Instructions', 'Contact Information', 'Estimate Summary'];
 
-      var ADDON_LABELS = {
-        addonNotarization: 'Translation Certification Notarization (+$25)',
-        addonApostille:    'Translation + Apostille Service (+$175)',
-        addonRush:         'Rush Translation Service (+$50)',
-        addonHardCopy:     'Printed Hard Copy Delivery (+$25)'
+      var ADDON_PRICES = {
+        addonNotarization: { label: 'Translation Certification Notarization', price: 25  },
+        addonApostille:    { label: 'Translation + Apostille Service',         price: 175 },
+        addonRush:         { label: 'Rush Translation Service',                price: 50  },
+        addonHardCopy:     { label: 'Printed Hard Copy Delivery',              price: 25  }
       };
 
       function buildSummary() {
-        var addonsWrap = document.getElementById('trSummaryAddons');
-        var addonsList = document.getElementById('trSummaryAddonsList');
-        if (!addonsWrap || !addonsList) return;
-        var checked = [];
-        Object.keys(ADDON_LABELS).forEach(function (name) {
-          var el = document.querySelector('[name="' + name + '"]:checked');
-          if (el) checked.push(ADDON_LABELS[name]);
-        });
-        addonsList.innerHTML = '';
-        checked.forEach(function (text) {
-          var li = document.createElement('li');
-          li.className = 'tr-summary-addon-item';
-          li.textContent = text;
-          addonsList.appendChild(li);
-        });
-        addonsWrap.style.display = checked.length > 0 ? '' : 'none';
+        var pages   = parseInt((document.getElementById('numberOfPages') || {}).value, 10) || 1;
+        if (pages < 1) pages = 1;
+        var base    = 75;
+        var addlQty = Math.max(0, pages - 1);
+        var addlAmt = addlQty * 25;
+
+        var addlRow   = document.getElementById('trSummaryAddlPagesRow');
+        var addlNote  = document.getElementById('trSummaryAddlPagesNote');
+        var addlAmtEl = document.getElementById('trSummaryAddlPagesAmt');
+        if (addlRow)   addlRow.style.display = addlQty > 0 ? '' : 'none';
+        if (addlNote)  addlNote.textContent   = '(' + addlQty + ' page' + (addlQty !== 1 ? 's' : '') + ' × $25.00)';
+        if (addlAmtEl) addlAmtEl.textContent  = '+$' + addlAmt.toFixed(2);
+
+        var addonsWrap  = document.getElementById('trSummaryAddons');
+        var addonsList  = document.getElementById('trSummaryAddonsList');
+        var addonsTotal = 0;
+        if (addonsList) {
+          addonsList.innerHTML = '';
+          Object.keys(ADDON_PRICES).forEach(function (name) {
+            var el = document.querySelector('[name="' + name + '"]:checked');
+            if (el) {
+              var a  = ADDON_PRICES[name];
+              addonsTotal += a.price;
+              var li = document.createElement('li');
+              li.className = 'tr-summary-addon-item';
+              li.textContent = a.label + ' — +$' + a.price.toFixed(2);
+              addonsList.appendChild(li);
+            }
+          });
+        }
+        if (addonsWrap) addonsWrap.style.display = addonsTotal > 0 ? '' : 'none';
+
+        var total      = base + addlAmt + addonsTotal;
+        var subtotalEl = document.getElementById('trSummarySubtotal');
+        if (subtotalEl) subtotalEl.textContent = '$' + total.toFixed(2);
+
+        var totalInput = document.getElementById('trEstimatedTotal');
+        if (totalInput) totalInput.value = total.toFixed(2);
       }
 
       function showStep(n) {
