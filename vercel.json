@@ -1,5 +1,10 @@
 {
   "version": 2,
   "cleanUrls": false,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/apostille-review.html", "destination": "/services/apostille", "permanent": true },
+    { "source": "/online-notary.html",    "destination": "/services/notary",    "permanent": true },
+    { "source": "/translation-intake.html", "destination": "/services/translation", "permanent": true }
+  ]
 }
