@@ -713,7 +713,8 @@ ul    { list-style: none; }
   display: inline-flex; align-items: center; justify-content: center;
   font-size: .58rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
   padding: 13px 20px;
-  white-space: nowrap;
+  width: 100%;
+  white-space: normal; text-align: center;
   transition: background .22s var(--ease), border-color .22s var(--ease), color .22s var(--ease), box-shadow .22s var(--ease), transform .18s var(--ease);
 }
 .svc-btn--primary {
@@ -1927,10 +1928,7 @@ ul    { list-style: none; }
   .tbs-sub   { font-size: .62rem; }
 }
 
-/* ── Services — full-width buttons, tighter padding ── */
-@media (max-width: 840px) {
-  .svc-btn { width: 100%; }
-}
+/* ── Services — tighter padding at small breakpoint ── */
 @media (max-width: 580px) {
   .services { padding-top: 36px; padding-bottom: 40px; }
   .svc-card { padding: 22px 18px 18px; }
