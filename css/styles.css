@@ -620,7 +620,7 @@ ul    { list-style: none; }
 
 .svc-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   margin-bottom: 0;
 }
@@ -738,6 +738,21 @@ ul    { list-style: none; }
   color: #fff;
   box-shadow: 0 4px 20px rgba(11,24,41,.20);
   transform: translateY(-1px);
+}
+
+.svc-appt-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: .52rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(184,135,43,.38);
+  border-radius: 99px;
+  padding: 4px 14px;
+  margin-bottom: 20px;
+  white-space: nowrap;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1600,7 +1615,8 @@ ul    { list-style: none; }
   .logo         { height: 104px; max-width: 290px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
   .h-hero       { font-size: clamp(2.2rem, 3.4vw, 3.8rem); }
-  .svc-grid     { gap: 20px; }
+  .svc-grid     { gap: 18px; }
+  .svc-card     { padding-left: 22px; padding-right: 22px; }
   .trust-inner  { gap: 56px; }
   .trust-right  { gap: 32px 40px; }
   .footer-top   { grid-template-columns: auto 1fr 1fr 1fr 1fr; gap: 28px; }
