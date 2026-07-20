@@ -32,7 +32,7 @@ ul    { list-style: none; }
   --serif:      'Playfair Display', Georgia, serif;
   --script:     'Cormorant Garamond', Georgia, serif;
   --sans:       'Inter', system-ui, sans-serif;
-  --hh:         128px;
+  --hh:         152px;
   --ease:       cubic-bezier(.4,0,.2,1);
   --max:        1360px;
 }
@@ -116,9 +116,9 @@ ul    { list-style: none; }
 
 .logo-wrap { flex-shrink: 0; }
 .logo {
-  height: 116px;
+  height: 140px;
   width: auto;
-  max-width: 340px;
+  max-width: 408px;
   object-fit: contain;
   object-position: left center;
   display: block;
@@ -353,6 +353,10 @@ ul    { list-style: none; }
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* responsive line-break control for hero h1 */
+.hero-br-d { display: inline; }
+.hero-br-m { display: none; }
 
 /* hero subheadline — benefit statement beneath h1 */
 .hero-subline {
@@ -1613,7 +1617,7 @@ ul    { list-style: none; }
 @media (max-width: 1200px) {
   .container    { padding: 0 36px; }
   .header-inner { padding: 0 36px; gap: 24px; }
-  .logo         { height: 104px; max-width: 290px; }
+  .logo         { height: 124px; max-width: 346px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
   .h-hero       { font-size: clamp(2.2rem, 3.4vw, 3.8rem); }
   .svc-grid     { gap: 18px; }
@@ -1656,7 +1660,7 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (compact header, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 92px; }
+  :root { --hh: 108px; }
 
   /* ── mobile: logo left, burger right; hide desktop nav ── */
   .nav { display: none; }
@@ -1669,7 +1673,9 @@ ul    { list-style: none; }
     height: var(--hh);
   }
   .logo-wrap { flex-shrink: 0; }
-  .logo { height: 82px; width: auto; max-width: 240px; }
+  .logo { height: 96px; width: auto; max-width: 281px; }
+  .hero-br-d { display: none; }
+  .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
 
   /* hero: single column */
@@ -1776,10 +1782,10 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 82px; }
+  :root { --hh: 94px; }
   .container  { padding: 0 18px; }
   .header-inner { padding: 0 16px; height: var(--hh); }
-  .logo       { height: 72px; max-width: 210px; }
+  .logo       { height: 83px; max-width: 242px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -1848,9 +1854,9 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  :root { --hh: 76px; }
+  :root { --hh: 86px; }
   .header-inner { padding: 0 12px; height: var(--hh); }
-  .logo         { height: 66px; max-width: 185px; }
+  .logo         { height: 76px; max-width: 213px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
