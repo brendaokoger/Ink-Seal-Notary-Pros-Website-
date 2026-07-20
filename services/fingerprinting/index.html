@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ink &amp; Roll Fingerprinting Appointment | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Book your professional FD-258 ink fingerprinting appointment with Ink &amp; Seal Notary Pros. Serving employment, immigration, licensing, and background check needs." />
+  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/services/fingerprinting" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    /* ── Purpose selection cards (Step 2) ── */
+    .fp-purpose-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .fp-purpose-item { position: relative; }
+    .fp-purpose-input {
+      position: absolute; opacity: 0;
+      width: 0; height: 0; pointer-events: none;
+    }
+    .fp-purpose-label {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; padding: 22px 14px 18px;
+      border: 1.5px solid var(--border); border-radius: 10px;
+      cursor: pointer; background: #fff; text-align: center;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+      height: 100%; box-sizing: border-box;
+    }
+    .fp-purpose-label:hover {
+      border-color: var(--gold-2);
+      background: rgba(184,135,43,.03);
+    }
+    .fp-purpose-input:checked ~ .fp-purpose-label {
+      border-color: var(--gold-2);
+      background: rgba(11,28,57,.04);
+      box-shadow: 0 0 0 3px rgba(184,135,43,.14);
+    }
+    .fp-purpose-icon { color: var(--gold-3); }
+    .fp-purpose-name {
+      font-family: var(--serif);
+      font-size: .98rem; font-weight: 700; color: var(--navy);
+      line-height: 1.25;
+    }
+    .fp-purpose-sub {
+      font-size: .72rem; font-weight: 300;
+      color: var(--txt-m); line-height: 1.35;
+    }
+    .fp-other-wrap { margin-top: 16px; display: none; }
+    .fp-other-wrap.show { display: block; }
+
+    /* ── Calendar (Step 3) ── */
+    .fp-cal-wrap { max-width: 460px; margin: 0 auto; }
+    .fp-cal-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .fp-cal-nav {
+      background: none; border: 1.5px solid var(--border);
+      border-radius: 7px; cursor: pointer;
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--navy);
+      transition: border-color .2s, background .2s;
+    }
+    .fp-cal-nav:hover { border-color: var(--gold-2); background: rgba(184,135,43,.06); }
+    .fp-cal-nav:disabled { opacity: .28; cursor: default; pointer-events: none; }
+    .fp-cal-month-lbl {
+      font-family: var(--serif);
+      font-size: 1.1rem; font-weight: 700; color: var(--navy);
+    }
+    .fp-cal-dow-row {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 3px; margin-bottom: 4px;
+    }
+    .fp-cal-dow {
+      text-align: center;
+      font-size: .58rem; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+      color: var(--txt-m); padding: 5px 0;
+    }
+    .fp-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .fp-cal-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      border-radius: 7px; font-size: .84rem; font-weight: 400; color: var(--navy);
+      cursor: pointer; border: 1.5px solid transparent;
+      background: none; font-family: var(--sans);
+      transition: border-color .15s, background .15s, color .15s;
+    }
+    .fp-cal-day:hover:not([disabled]):not(.fp-day-empty):not(.fp-day-unavail) {
+      border-color: var(--gold-2); background: rgba(184,135,43,.08);
+    }
+    .fp-cal-day.fp-day-sel {
+      background: var(--navy); color: var(--gold-2); border-color: var(--navy);
+    }
+    .fp-cal-day.fp-day-unavail { color: rgba(11,28,57,.22); cursor: default; }
+    .fp-cal-day.fp-day-empty { cursor: default; visibility: hidden; }
+    .fp-cal-day.fp-day-today:not(.fp-day-sel) { border-color: rgba(184,135,43,.44); }
+
+    /* Time slots */
+    .fp-time-wrap {
+      margin-top: 26px; padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+    .fp-time-wrap.show { display: block; }
+    .fp-time-selected-date {
+      font-family: var(--serif); font-size: 1rem; font-weight: 600;
+      color: var(--navy); margin-bottom: 14px;
+    }
+    .fp-time-lbl {
+      font-size: .6rem; font-weight: 600;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 12px;
+    }
+    .fp-time-grid { display: flex; flex-wrap: wrap; gap: 9px; }
+    .fp-time-btn {
+      padding: 10px 17px; border: 1.5px solid var(--border); border-radius: 7px;
+      font-family: var(--sans); font-size: .82rem; font-weight: 500; color: var(--navy);
+      cursor: pointer; background: #fff;
+      transition: border-color .15s, background .15s, color .15s;
+    }
+    .fp-time-btn:hover { border-color: var(--gold-2); background: rgba(184,135,43,.05); }
+    .fp-time-btn.fp-time-sel {
+      background: var(--navy); color: var(--gold-2); border-color: var(--navy);
+    }
+    .fp-appt-note {
+      margin-top: 14px; font-size: .76rem; font-weight: 300;
+      color: var(--txt-m); line-height: 1.55; font-style: italic;
+    }
+    .fp-step3-err {
+      display: none; margin-top: 14px;
+      font-size: .8rem; color: #c0392b; font-weight: 400;
+    }
+    .fp-step3-err.show { display: block; }
+
+    /* ── Card provider toggle (Step 4) ── */
+    .fp-toggle-row { display: flex; flex-direction: column; gap: 10px; }
+    .fp-toggle-item { position: relative; }
+    .fp-toggle-input {
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+    }
+    .fp-toggle-label {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border: 1.5px solid var(--border); border-radius: 8px;
+      cursor: pointer; background: #fff; font-size: .86rem;
+      color: var(--navy); font-weight: 400;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .fp-toggle-label:hover { border-color: var(--gold-2); background: rgba(184,135,43,.03); }
+    .fp-toggle-input:checked ~ .fp-toggle-label {
+      border-color: var(--gold-2);
+      background: rgba(11,28,57,.04);
+      box-shadow: 0 0 0 3px rgba(184,135,43,.12);
+    }
+    .fp-toggle-radio {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 1.5px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, background .2s;
+    }
+    .fp-toggle-input:checked ~ .fp-toggle-label .fp-toggle-radio {
+      border-color: var(--gold-2); background: var(--navy);
+      box-shadow: inset 0 0 0 4px var(--navy);
+    }
+    .fp-toggle-input:checked ~ .fp-toggle-label .fp-toggle-radio::after {
+      content: ''; display: block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold-2);
+    }
+    .fp-toggle-text { display: flex; flex-direction: column; gap: 2px; }
+    .fp-toggle-main { font-weight: 500; font-size: .86rem; color: var(--navy); }
+    .fp-toggle-sub { font-size: .74rem; font-weight: 300; color: var(--txt-m); }
+
+    /* ── ID selection cards (Step 5) ── */
+    .fp-id-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .fp-id-item { position: relative; }
+    .fp-id-input {
+      position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+    }
+    .fp-id-label {
+      display: flex; align-items: center; gap: 12px;
+      padding: 15px 16px; border: 1.5px solid var(--border); border-radius: 9px;
+      cursor: pointer; background: #fff; height: 100%; box-sizing: border-box;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .fp-id-label:hover { border-color: var(--gold-2); background: rgba(184,135,43,.03); }
+    .fp-id-input:checked ~ .fp-id-label {
+      border-color: var(--gold-2); background: rgba(11,28,57,.04);
+      box-shadow: 0 0 0 3px rgba(184,135,43,.13);
+    }
+    .fp-id-icon { color: var(--gold-3); flex-shrink: 0; }
+    .fp-id-name {
+      font-family: var(--serif); font-size: .92rem; font-weight: 700;
+      color: var(--navy); line-height: 1.25;
+    }
+
+    /* ── Pricing estimate (Step 6) ── */
+    .fp-est-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 14px 26px; border-bottom: 1px solid var(--border);
+    }
+    .fp-est-row:first-child { border-top: 1px solid var(--border); }
+    .fp-est-label { font-size: .84rem; font-weight: 400; color: var(--txt-b); }
+    .fp-est-val {
+      font-size: .92rem; font-weight: 600; color: var(--navy);
+      white-space: nowrap; min-width: 48px; text-align: right;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .fp-purpose-grid { grid-template-columns: 1fr; }
+      .fp-id-grid { grid-template-columns: 1fr; }
+      .fp-purpose-label { flex-direction: row; text-align: left; padding: 14px 16px; gap: 14px; }
+      .fp-purpose-icon { flex-shrink: 0; }
+    }
+    @media (max-width: 420px) {
+      .fp-cal-day { font-size: .78rem; }
+      .fp-time-btn { padding: 9px 13px; font-size: .78rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ FORM HEADER ════════════════════════════════════════ -->
+  <header class="form-hdr" id="header">
+    <div class="form-hdr-inner container">
+      <a href="/" class="form-hdr-logo" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="/images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" />
+      </a>
+      <div class="form-hdr-center">
+        <a href="/#services" class="form-hdr-back">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+          Back to Services
+        </a>
+        <span class="form-hdr-title">Ink &amp; Roll Fingerprinting Appointment</span>
+      </div>
+      <div class="form-hdr-step">
+        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 8</span>
+      </div>
+    </div>
+    <div class="form-hdr-progress">
+      <div class="form-hdr-bar" id="fhBar" style="width:12.5%"></div>
+    </div>
+  </header>
+
+  <!-- ═══ FORM SECTION ════════════════════════════════════════ -->
+  <section class="on-form-section">
+    <div class="container">
+
+      <p class="form-intro-text">Complete the secure form below to request your FD-258 ink fingerprinting appointment. Our team will confirm your booking and provide preparation instructions.</p>
+
+      <!-- TODO: Replace 'YOUR_FORM_ID' with your Formspree endpoint after creating a new form at formspree.io -->
+      <form class="on-form" id="fpForm" novalidate>
+
+        <input type="hidden" name="_subject" value="New Fingerprinting Appointment Request — Ink &amp; Seal Notary Pros" />
+
+        <!-- ══ STEP 1: Contact Information ══ -->
+        <div class="ms-step" id="step1" data-step="1">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">1</span>
+              <h2 class="on-card-title">Contact Information</h2>
+            </div>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="fullName">Full Legal Name</label>
+                <input type="text" id="fullName" name="fullName" class="on-input" placeholder="As it appears on your government-issued ID" required autocomplete="name" />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="on-input" placeholder="your@email.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:22px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="phone">Mobile Phone Number</label>
+                <input type="tel" id="phone" name="phone" class="on-input" placeholder="(000) 000-0000" required autocomplete="tel" />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="signerState">State of Residence</label>
+                <select id="signerState" name="signerState" class="on-select" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <div></div>
+            <button type="button" class="ms-btn-continue" data-next="2">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 2: Purpose of Fingerprinting ══ -->
+        <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">2</span>
+              <h2 class="on-card-title">Purpose of Fingerprinting</h2>
+            </div>
+
+            <p style="font-size:.86rem;font-weight:300;color:var(--txt-b);margin-bottom:22px;line-height:1.7">Select the primary reason you need FD-258 ink fingerprinting.</p>
+
+            <div class="fp-purpose-grid">
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeEmployment" value="Employment Background Check" required />
+                <label class="fp-purpose-label" for="purposeEmployment">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                  <span class="fp-purpose-name">Employment</span>
+                  <span class="fp-purpose-sub">Background check for employer or job application</span>
+                </label>
+              </div>
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeImmigration" value="Immigration / Visa Application" />
+                <label class="fp-purpose-label" for="purposeImmigration">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  <span class="fp-purpose-name">Immigration</span>
+                  <span class="fp-purpose-sub">Visa application, green card, or citizenship</span>
+                </label>
+              </div>
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeLicense" value="Professional License or Certification" />
+                <label class="fp-purpose-label" for="purposeLicense">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>
+                  <span class="fp-purpose-name">Professional License</span>
+                  <span class="fp-purpose-sub">State license, certification, or registration</span>
+                </label>
+              </div>
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeAdoption" value="Adoption" />
+                <label class="fp-purpose-label" for="purposeAdoption">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <span class="fp-purpose-name">Adoption</span>
+                  <span class="fp-purpose-sub">Domestic or international adoption process</span>
+                </label>
+              </div>
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeVolunteer" value="Volunteer / Non-Profit" />
+                <label class="fp-purpose-label" for="purposeVolunteer">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                  <span class="fp-purpose-name">Volunteer</span>
+                  <span class="fp-purpose-sub">Non-profit, school, or community organization</span>
+                </label>
+              </div>
+
+              <div class="fp-purpose-item">
+                <input type="radio" class="fp-purpose-input" name="fingerprintPurpose" id="purposeOther" value="Other" />
+                <label class="fp-purpose-label" for="purposeOther">
+                  <svg class="fp-purpose-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="34" height="34"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="fp-purpose-name">Other</span>
+                  <span class="fp-purpose-sub">Please describe your purpose below</span>
+                </label>
+              </div>
+
+            </div>
+
+            <div class="fp-other-wrap" id="fpOtherWrap">
+              <div class="on-field" style="margin-top:4px">
+                <label class="on-label on-label--req" for="purposeOtherText">Please describe your purpose</label>
+                <input type="text" id="purposeOtherText" name="purposeOtherText" class="on-input" placeholder="Briefly describe why you need fingerprinting" />
+              </div>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="3">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 3: Appointment Scheduling ══ -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">3</span>
+              <h2 class="on-card-title">Select Your Appointment</h2>
+            </div>
+
+            <p style="font-size:.86rem;font-weight:300;color:var(--txt-b);margin-bottom:24px;line-height:1.7">Choose a preferred date and time. We will confirm availability and send you a booking confirmation.</p>
+
+            <!-- Calendar -->
+            <div class="fp-cal-wrap">
+              <div class="fp-cal-hdr">
+                <button type="button" class="fp-cal-nav" id="fpCalPrev" aria-label="Previous month">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="10,4 6,8 10,12"/></svg>
+                </button>
+                <span class="fp-cal-month-lbl" id="fpCalMonthLbl"></span>
+                <button type="button" class="fp-cal-nav" id="fpCalNext" aria-label="Next month">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><polyline points="6,4 10,8 6,12"/></svg>
+                </button>
+              </div>
+              <div class="fp-cal-dow-row">
+                <span class="fp-cal-dow">Sun</span>
+                <span class="fp-cal-dow">Mon</span>
+                <span class="fp-cal-dow">Tue</span>
+                <span class="fp-cal-dow">Wed</span>
+                <span class="fp-cal-dow">Thu</span>
+                <span class="fp-cal-dow">Fri</span>
+                <span class="fp-cal-dow">Sat</span>
+              </div>
+              <div class="fp-cal-grid" id="fpCalGrid" role="grid" aria-label="Appointment date calendar"></div>
+            </div>
+
+            <!-- Time slots (shown after date selected) -->
+            <div class="fp-time-wrap" id="fpTimeWrap">
+              <p class="fp-time-selected-date" id="fpSelDateLbl"></p>
+              <p class="fp-time-lbl">Select a time</p>
+              <div class="fp-time-grid" id="fpTimeGrid"></div>
+              <p class="fp-appt-note">All appointments are 30–45 minutes. Central Time (Chicago). Availability is subject to confirmation.</p>
+            </div>
+
+            <p class="fp-step3-err" id="fpStep3Err">Please select an appointment date and time to continue.</p>
+
+            <!-- Hidden inputs submitted with the form -->
+            <input type="hidden" name="appointmentDate" id="fpDateVal" />
+            <input type="hidden" name="appointmentTime" id="fpTimeVal" />
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="4" id="fpStep3Continue">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 4: FD-258 Card Details ══ -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">4</span>
+              <h2 class="on-card-title">FD-258 Card Details</h2>
+            </div>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="numCards">Number of FD-258 Cards Needed</label>
+                <select id="numCards" name="numCards" class="on-select" required>
+                  <option value="" disabled selected>Select number</option>
+                  <option value="1">1 card</option>
+                  <option value="2">2 cards</option>
+                  <option value="3">3 cards</option>
+                  <option value="4">4 cards</option>
+                  <option value="5+">5 or more</option>
+                </select>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="agencyName">Submitting Agency or Employer</label>
+                <input type="text" id="agencyName" name="agencyName" class="on-input" placeholder="e.g. Illinois DCFS, FBI, Employer Name" required />
+              </div>
+            </div>
+
+            <div class="on-field on-field--full" style="margin-top:28px">
+              <label class="on-label on-label--req">Who will provide the FD-258 cards?</label>
+              <div class="fp-toggle-row" style="margin-top:10px">
+                <div class="fp-toggle-item">
+                  <input type="radio" class="fp-toggle-input" name="cardProvider" id="cardUs" value="Please provide cards for me" required />
+                  <label class="fp-toggle-label" for="cardUs">
+                    <span class="fp-toggle-radio"></span>
+                    <span class="fp-toggle-text">
+                      <span class="fp-toggle-main">Please provide the cards for me</span>
+                      <span class="fp-toggle-sub">We will supply official FD-258 cards at your appointment</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="fp-toggle-item">
+                  <input type="radio" class="fp-toggle-input" name="cardProvider" id="cardOwn" value="I will bring my own pre-printed FD-258 cards" />
+                  <label class="fp-toggle-label" for="cardOwn">
+                    <span class="fp-toggle-radio"></span>
+                    <span class="fp-toggle-text">
+                      <span class="fp-toggle-main">I will bring my own pre-printed FD-258 cards</span>
+                      <span class="fp-toggle-sub">Cards provided by your agency or employer</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="on-field on-field--full" style="margin-top:28px">
+              <label class="on-label" for="agencyNotes">Special Instructions from the Requesting Agency</label>
+              <textarea id="agencyNotes" name="agencyNotes" class="on-textarea on-input" placeholder="Paste any special instructions or requirements from your agency or employer (optional)."></textarea>
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 5: Government Identification ══ -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">5</span>
+              <h2 class="on-card-title">Government Identification</h2>
+            </div>
+
+            <p style="font-size:.86rem;font-weight:300;color:var(--txt-b);margin-bottom:22px;line-height:1.7">A valid, unexpired government-issued photo ID is required at your appointment. Which ID will you present?</p>
+
+            <div class="fp-id-grid">
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idDrivers" value="Driver's License or State ID" required />
+                <label class="fp-id-label" for="idDrivers">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                  <span class="fp-id-name">Driver's License / State ID</span>
+                </label>
+              </div>
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idPassport" value="U.S. Passport" />
+                <label class="fp-id-label" for="idPassport">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><rect x="3" y="2" width="18" height="20" rx="2"/><circle cx="12" cy="11" r="3"/><line x1="7" y1="7" x2="17" y2="7"/><line x1="7" y1="17" x2="17" y2="17"/></svg>
+                  <span class="fp-id-name">U.S. Passport</span>
+                </label>
+              </div>
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idPassportCard" value="U.S. Passport Card" />
+                <label class="fp-id-label" for="idPassportCard">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><rect x="1" y="4" width="22" height="16" rx="2"/><circle cx="8" cy="12" r="2.5"/><line x1="13" y1="10" x2="20" y2="10"/><line x1="13" y1="14" x2="20" y2="14"/></svg>
+                  <span class="fp-id-name">U.S. Passport Card</span>
+                </label>
+              </div>
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idMilitary" value="Military ID" />
+                <label class="fp-id-label" for="idMilitary">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  <span class="fp-id-name">Military ID</span>
+                </label>
+              </div>
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idGreenCard" value="Permanent Resident Card (Green Card)" />
+                <label class="fp-id-label" for="idGreenCard">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><rect x="1" y="4" width="22" height="16" rx="2"/><circle cx="8" cy="12" r="2.5"/><line x1="13" y1="10" x2="20" y2="10"/><line x1="13" y1="14" x2="17" y2="14"/></svg>
+                  <span class="fp-id-name">Permanent Resident Card</span>
+                </label>
+              </div>
+
+              <div class="fp-id-item">
+                <input type="radio" class="fp-id-input" name="idType" id="idOther" value="Other Government-Issued Photo ID" />
+                <label class="fp-id-label" for="idOther">
+                  <svg class="fp-id-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span class="fp-id-name">Other Government-Issued Photo ID</span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="6">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 6: Pricing Summary ══ -->
+        <div class="ms-step" id="step6" data-step="6" style="display:none">
+
+          <!-- TODO: Update the per-card rate below to match your actual pricing -->
+          <div class="on-pricing-card">
+            <div class="on-card-head on-pricing-head">
+              <span class="on-card-num on-pricing-num" aria-hidden="true">6</span>
+              <h2 class="on-card-title on-pricing-title">Fingerprinting Rates</h2>
+            </div>
+
+            <div class="on-pricing-grid">
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Standard FD-258 Fingerprinting (per card)</span>
+                <span class="on-pricing-price">$35</span>
+              </div>
+              <div class="on-pricing-item">
+                <span class="on-pricing-name">Additional FD-258 Cards (each)</span>
+                <span class="on-pricing-price">$25</span>
+              </div>
+            </div>
+
+            <p class="on-pricing-note">No payment is collected at this time. Final pricing is confirmed by Ink &amp; Seal Notary Pros before your appointment.</p>
+          </div>
+
+          <!-- Live estimate -->
+          <div class="on-estimate-card">
+            <div class="on-card-head on-estimate-head">
+              <span class="on-card-num on-estimate-num" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </span>
+              <h2 class="on-card-title">Your Fee Estimate</h2>
+              <span class="on-estimate-badge" aria-label="Updates automatically">
+                <span class="on-estimate-badge-dot" aria-hidden="true"></span>
+                LIVE
+              </span>
+            </div>
+
+            <p class="on-estimate-intro">Based on the number of cards you selected.</p>
+
+            <div class="on-estimate-rows">
+              <div class="fp-est-row">
+                <span class="fp-est-label">First FD-258 Card</span>
+                <span class="fp-est-val">$35</span>
+              </div>
+              <div class="fp-est-row">
+                <span class="fp-est-label">Additional Cards</span>
+                <span class="fp-est-val" id="fpEstAddl">—</span>
+              </div>
+            </div>
+
+            <div class="on-estimate-total">
+              <span class="on-estimate-total-label">Estimated Total</span>
+              <span class="on-estimate-total-val" id="fpEstTotal">$35</span>
+            </div>
+
+            <p class="on-estimate-note">Final pricing may vary. No payment is requested at this time.</p>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="7">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 7: Requirements & Consents ══ -->
+        <div class="ms-step" id="step7" data-step="7" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">7</span>
+              <h2 class="on-card-title">Requirements &amp; Consents</h2>
+            </div>
+
+            <div class="on-check-list">
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent1" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I will bring a valid, unexpired government-issued photo ID to my appointment.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent2" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand that FD-258 cards must NOT be pre-signed or pre-filled. Cards must be blank at the time of my appointment.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent3" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand that this is an appointment-only service and I must appear in person at the scheduled time.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent4" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I understand my appointment is subject to confirmation and that I will receive a confirmation message from Ink &amp; Seal Notary Pros.</span>
+              </label>
+
+              <label class="on-check-item">
+                <input type="checkbox" class="on-check-input" name="consent5" required />
+                <span class="on-check-box" aria-hidden="true"></span>
+                <span class="on-check-text">I consent to providing my fingerprints for the stated purpose and agree to the <a href="/terms.html" target="_blank" style="color:var(--gold-3);text-decoration:underline">Terms of Service</a> and <a href="/privacy.html" target="_blank" style="color:var(--gold-3);text-decoration:underline">Privacy Policy</a>.</span>
+              </label>
+
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="6">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="8">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 8: Electronic Signature ══ -->
+        <div class="ms-step" id="step8" data-step="8" style="display:none">
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">8</span>
+              <h2 class="on-card-title">Electronic Signature</h2>
+            </div>
+
+            <p style="font-size:.86rem;font-weight:300;color:var(--txt-b);margin-bottom:28px;line-height:1.7">By signing below you confirm that all information provided is accurate and that you agree to the requirements and consents outlined in the previous step.</p>
+
+            <div class="on-field-row">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="eSignature">Signature</label>
+                <input type="text" id="eSignature" name="eSignature" class="on-input on-sig-input" placeholder="Type your full legal name" required autocomplete="off" />
+                <p class="on-sig-hint">By typing your name above, you are providing your electronic signature.</p>
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="sigDate">Date</label>
+                <input type="date" id="sigDate" name="sigDate" class="on-input" required />
+              </div>
+            </div>
+          </div>
+
+          <div class="on-submit-rule">
+            <span class="on-submit-line"></span>
+            <span class="on-submit-gem">◆</span>
+            <span class="on-submit-line"></span>
+          </div>
+
+          <div class="ms-nav ms-nav--submit">
+            <button type="button" class="ms-btn-back" data-prev="7">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <div class="ms-submit-col">
+              <button type="submit" class="on-submit-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Request My Fingerprinting Appointment
+              </button>
+              <p class="on-required-note">Fields marked with <span style="color:var(--gold)">*</span> are required.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </form>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="on-success" id="fpSuccess" role="alert" aria-live="polite">
+        <div class="on-success-icon">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="64" height="64" aria-hidden="true">
+            <circle cx="32" cy="32" r="28"/>
+            <polyline points="20,34 28,42 44,24"/>
+          </svg>
+        </div>
+        <h2 class="on-success-h">Appointment Request Submitted</h2>
+        <p class="on-success-p">Thank you for submitting your Ink &amp; Roll Fingerprinting appointment request.</p>
+        <p class="on-success-p" style="margin-top:14px">A member of the Ink &amp; Seal Notary Pros team will review your request and reach out to confirm your appointment date, time, and location.</p>
+        <p class="on-success-p" style="margin-top:14px">Please do not pre-sign or fill out any FD-258 cards before your appointment.</p>
+      </div>
+
+      <p class="on-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container footer-top">
+
+      <div class="footer-brand">
+        <a href="/" class="footer-logo-wrap">
+          <img src="/images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="footer-logo" />
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Services</h5>
+        <ul>
+          <li><a href="/#services" class="fc-link">Apostille Services</a></li>
+          <li><a href="/services/notary" class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="/services/translation" class="fc-link">Certified Translation Services</a></li>
+          <li><a href="/#services" class="fc-link">Embassy Legalization Services</a></li>
+          <li><a href="/services/fingerprinting" class="fc-link">Fingerprinting Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Quick Links</h5>
+        <ul>
+          <li><a href="/" class="fc-link">Home</a></li>
+          <li><a href="/about.html" class="fc-link">About Us</a></li>
+          <li><a href="/#services" class="fc-link">Services</a></li>
+          <li><a href="/faq.html" class="fc-link">FAQs</a></li>
+          <li><a href="/#contact" class="fc-link">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.52 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:7736690915" class="fc-link">(773) 669-0915</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            <a href="mailto:hello@inkandsealnotarypros.com" class="fc-link">hello@inkandsealnotarypros.com</a>
+          </li>
+          <li>
+            <svg class="fc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="fc-text">Serving Clients Nationwide</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5 class="fc-title">Follow Us</h5>
+        <div class="social-row">
+          <a href="#" class="social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="#" class="social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" class="social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="#" class="social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bar">
+      <div class="container footer-bar-inner">
+        <p class="footer-copy">&copy; 2026 Ink &amp; Seal Notary Pros. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy.html" class="fc-legal">Privacy Policy</a>
+          <span aria-hidden="true">|</span>
+          <a href="/terms.html" class="fc-legal">Terms of Service</a>
+        </div>
+      </div>
+      <p class="footer-disclaimer container">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    (function () {
+
+      /* ── Today's date in signature field ── */
+      var today = new Date();
+      var sigDateEl = document.getElementById('sigDate');
+      if (sigDateEl) sigDateEl.value = today.toISOString().split('T')[0];
+
+      /* ─────────────────────────────────────────
+         CALENDAR (Step 3)
+         ───────────────────────────────────────── */
+      var MONTHS = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+      var TIMES  = ['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM','4:00 PM'];
+
+      var calYear  = today.getFullYear();
+      var calMonth = today.getMonth();
+      var selDate  = null;
+      var selTime  = null;
+
+      var calGrid     = document.getElementById('fpCalGrid');
+      var calMonthLbl = document.getElementById('fpCalMonthLbl');
+      var calPrev     = document.getElementById('fpCalPrev');
+      var calNext     = document.getElementById('fpCalNext');
+      var timeWrap    = document.getElementById('fpTimeWrap');
+      var timeGrid    = document.getElementById('fpTimeGrid');
+      var selDateLbl  = document.getElementById('fpSelDateLbl');
+      var dateVal     = document.getElementById('fpDateVal');
+      var timeVal     = document.getElementById('fpTimeVal');
+      var step3Err    = document.getElementById('fpStep3Err');
+
+      function todayMidnight() {
+        var d = new Date(); d.setHours(0,0,0,0); return d;
+      }
+
+      function renderCal() {
+        calMonthLbl.textContent = MONTHS[calMonth] + ' ' + calYear;
+
+        /* disable prev if we're already at current month */
+        var now = todayMidnight();
+        calPrev.disabled = (calYear === now.getFullYear() && calMonth === now.getMonth());
+
+        var firstDay = new Date(calYear, calMonth, 1).getDay();
+        var daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+        calGrid.innerHTML = '';
+
+        /* empty cells before day 1 */
+        for (var e = 0; e < firstDay; e++) {
+          var empty = document.createElement('button');
+          empty.type = 'button';
+          empty.className = 'fp-cal-day fp-day-empty';
+          empty.setAttribute('aria-hidden', 'true');
+          empty.tabIndex = -1;
+          calGrid.appendChild(empty);
+        }
+
+        /* day cells */
+        for (var d = 1; d <= daysInMonth; d++) {
+          var dayDate = new Date(calYear, calMonth, d);
+          dayDate.setHours(0,0,0,0);
+          var isWeekend = (dayDate.getDay() === 0 || dayDate.getDay() === 6);
+          var isPast    = dayDate <= now;
+          var isToday   = (dayDate.getTime() === now.getTime());
+          var isUnavail = isWeekend || isPast;
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fp-cal-day' +
+            (isUnavail ? ' fp-day-unavail' : '') +
+            (isToday   ? ' fp-day-today'   : '');
+          btn.textContent = d;
+          btn.setAttribute('aria-label', MONTHS[calMonth] + ' ' + d + ', ' + calYear);
+
+          if (isUnavail) {
+            btn.disabled = true;
+          } else {
+            (function(yr, mo, dy, btn) {
+              btn.addEventListener('click', function() {
+                /* deselect previous */
+                var prev = calGrid.querySelector('.fp-day-sel');
+                if (prev) prev.classList.remove('fp-day-sel');
+                btn.classList.add('fp-day-sel');
+
+                selDate = new Date(yr, mo, dy);
+                selTime = null;
+
+                var monthNames = ['January','February','March','April','May','June',
+                                  'July','August','September','October','November','December'];
+                var dayNames   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+                selDateLbl.textContent = dayNames[selDate.getDay()] + ', ' + monthNames[mo] + ' ' + dy + ', ' + yr;
+
+                dateVal.value = yr + '-' + pad(mo + 1) + '-' + pad(dy);
+                timeVal.value = '';
+
+                renderTimeSlots();
+                timeWrap.classList.add('show');
+                if (step3Err) step3Err.classList.remove('show');
+              });
+            })(calYear, calMonth, d, btn);
+          }
+
+          /* restore selection highlight if date matches */
+          if (selDate &&
+              selDate.getFullYear() === calYear &&
+              selDate.getMonth()    === calMonth &&
+              selDate.getDate()     === d) {
+            btn.classList.add('fp-day-sel');
+          }
+
+          calGrid.appendChild(btn);
+        }
+      }
+
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+      function renderTimeSlots() {
+        timeGrid.innerHTML = '';
+        TIMES.forEach(function(t) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'fp-time-btn' + (selTime === t ? ' fp-time-sel' : '');
+          btn.textContent = t;
+          btn.addEventListener('click', function() {
+            var prev = timeGrid.querySelector('.fp-time-sel');
+            if (prev) prev.classList.remove('fp-time-sel');
+            btn.classList.add('fp-time-sel');
+            selTime = t;
+            timeVal.value = t;
+            if (step3Err) step3Err.classList.remove('show');
+          });
+          timeGrid.appendChild(btn);
+        });
+      }
+
+      if (calPrev) {
+        calPrev.addEventListener('click', function() {
+          calMonth--;
+          if (calMonth < 0) { calMonth = 11; calYear--; }
+          renderCal();
+        });
+      }
+      if (calNext) {
+        calNext.addEventListener('click', function() {
+          calMonth++;
+          if (calMonth > 11) { calMonth = 0; calYear++; }
+          renderCal();
+        });
+      }
+
+      renderCal();
+
+      /* ─────────────────────────────────────────
+         PURPOSE "OTHER" TOGGLE (Step 2)
+         ───────────────────────────────────────── */
+      var purposeOtherInput = document.getElementById('purposeOther');
+      var fpOtherWrap       = document.getElementById('fpOtherWrap');
+      var purposeOtherText  = document.getElementById('purposeOtherText');
+
+      document.querySelectorAll('input[name="fingerprintPurpose"]').forEach(function(radio) {
+        radio.addEventListener('change', function() {
+          var showOther = (this.value === 'Other');
+          fpOtherWrap.classList.toggle('show', showOther);
+          if (purposeOtherText) purposeOtherText.required = showOther;
+        });
+      });
+
+      /* ─────────────────────────────────────────
+         PRICING ESTIMATE (Step 6)
+         ───────────────────────────────────────── */
+      var fpEstAddl  = document.getElementById('fpEstAddl');
+      var fpEstTotal = document.getElementById('fpEstTotal');
+
+      function updateFpPricing() {
+        var numCardsEl = document.getElementById('numCards');
+        if (!numCardsEl || !numCardsEl.value) return;
+        var count = parseInt(numCardsEl.value, 10);
+        if (isNaN(count)) count = 5; /* "5+" */
+        var addlCount = Math.max(0, count - 1);
+        var addlAmt   = addlCount * 25;
+        var total     = 35 + addlAmt;
+        if (fpEstAddl)  fpEstAddl.textContent  = addlAmt > 0 ? '+$' + addlAmt : '—';
+        if (fpEstTotal) fpEstTotal.textContent  = '$' + total;
+      }
+
+      /* ─────────────────────────────────────────
+         MULTI-STEP NAVIGATION
+         ───────────────────────────────────────── */
+      var TOTAL_STEPS = 8;
+      var currentStep = 1;
+
+      function showStep(n) {
+        currentStep = n;
+        for (var i = 1; i <= TOTAL_STEPS; i++) {
+          var el = document.getElementById('step' + i);
+          if (el) el.style.display = (i === n) ? '' : 'none';
+        }
+        var bar = document.getElementById('fhBar');
+        if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(1) + '%';
+        var lbl = document.getElementById('fhStepLabel');
+        if (lbl) lbl.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
+        var stepEl = document.getElementById('step' + n);
+        if (stepEl) {
+          stepEl.classList.remove('ms-step-enter');
+          void stepEl.offsetWidth;
+          stepEl.classList.add('ms-step-enter');
+        }
+        if (n === 6) updateFpPricing();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function validateStep(n) {
+        /* Custom validation for calendar step */
+        if (n === 3) {
+          if (!dateVal.value || !timeVal.value) {
+            if (step3Err) step3Err.classList.add('show');
+            return false;
+          }
+          return true;
+        }
+        var stepEl = document.getElementById('step' + n);
+        if (!stepEl) return true;
+        var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
+        for (var i = 0; i < fields.length; i++) {
+          if (!fields[i].checkValidity()) {
+            fields[i].focus();
+            fields[i].reportValidity();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      /* Continue buttons */
+      var continueBtns = document.querySelectorAll('.ms-btn-continue');
+      for (var c = 0; c < continueBtns.length; c++) {
+        continueBtns[c].addEventListener('click', (function(btn) {
+          return function() {
+            var next = parseInt(btn.getAttribute('data-next'), 10);
+            if (validateStep(currentStep)) showStep(next);
+          };
+        })(continueBtns[c]));
+      }
+
+      /* Back buttons */
+      var backBtns = document.querySelectorAll('.ms-btn-back');
+      for (var b = 0; b < backBtns.length; b++) {
+        backBtns[b].addEventListener('click', (function(btn) {
+          return function() {
+            var prev = parseInt(btn.getAttribute('data-prev'), 10);
+            showStep(prev);
+          };
+        })(backBtns[b]));
+      }
+
+      showStep(1);
+
+      /* ─────────────────────────────────────────
+         FORM SUBMIT
+         ───────────────────────────────────────── */
+      var form      = document.getElementById('fpForm');
+      var success   = document.getElementById('fpSuccess');
+      var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
+      if (form && success) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (!validateStep(8)) return;
+          if (submitBtn) submitBtn.disabled = true;
+
+          var data = new FormData(form);
+          var emailEl = document.getElementById('email');
+          if (emailEl && emailEl.value) data.append('_replyto', emailEl.value);
+
+          /* TODO: Replace with your Formspree endpoint ID */
+          fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          })
+          .then(function(response) {
+            if (response.ok) {
+              form.style.display = 'none';
+              success.classList.add('show');
+              success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+              return response.json().then(function(payload) {
+                var msg = (payload.errors || [])
+                  .map(function(err) { return err.message; })
+                  .join(' ') || 'There was a problem submitting your request. Please try again.';
+                alert(msg);
+                if (submitBtn) submitBtn.disabled = false;
+              });
+            }
+          })
+          .catch(function() {
+            alert('Unable to submit. Please check your connection or contact us directly at (773) 669-0915.');
+            if (submitBtn) submitBtn.disabled = false;
+          });
+        });
+      }
+
+    }());
+  </script>
+
+</body>
+</html>
