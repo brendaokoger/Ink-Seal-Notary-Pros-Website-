@@ -635,16 +635,17 @@
 
             <div class="on-pricing-grid">
               <div class="on-pricing-item">
-                <span class="on-pricing-name">Standard FD-258 Fingerprinting (per card)</span>
-                <span class="on-pricing-price">$35</span>
+                <span class="on-pricing-name">FD-258 Fingerprinting — First Card</span>
+                <span class="on-pricing-price">$55</span>
               </div>
               <div class="on-pricing-item">
-                <span class="on-pricing-name">Additional FD-258 Cards (each)</span>
-                <span class="on-pricing-price">$25</span>
+                <span class="on-pricing-name">Each Additional Card (same appointment)</span>
+                <span class="on-pricing-price">$10</span>
               </div>
             </div>
 
-            <p class="on-pricing-note">No payment is collected at this time. Final pricing is confirmed by Ink &amp; Seal Notary Pros before your appointment.</p>
+            <p class="on-pricing-note" style="margin-bottom:0">Need multiple fingerprint cards? Save time by completing all required FD-258 cards during the same appointment for only $10 per additional card.</p>
+            <p class="on-pricing-note" style="margin-top:10px">No payment is collected at this time. Final pricing is confirmed by Ink &amp; Seal Notary Pros before your appointment.</p>
           </div>
 
           <!-- Live estimate -->
@@ -665,17 +666,17 @@
             <div class="on-estimate-rows">
               <div class="fp-est-row">
                 <span class="fp-est-label">First FD-258 Card</span>
-                <span class="fp-est-val">$35</span>
+                <span class="fp-est-val">$55</span>
               </div>
               <div class="fp-est-row">
-                <span class="fp-est-label">Additional Cards</span>
+                <span class="fp-est-label">Additional Cards ($10 each)</span>
                 <span class="fp-est-val" id="fpEstAddl">—</span>
               </div>
             </div>
 
             <div class="on-estimate-total">
               <span class="on-estimate-total-label">Estimated Total</span>
-              <span class="on-estimate-total-val" id="fpEstTotal">$35</span>
+              <span class="on-estimate-total-val" id="fpEstTotal">$55</span>
             </div>
 
             <p class="on-estimate-note">Final pricing may vary. No payment is requested at this time.</p>
@@ -1073,8 +1074,8 @@
         var count = parseInt(numCardsEl.value, 10);
         if (isNaN(count)) count = 5; /* "5+" */
         var addlCount = Math.max(0, count - 1);
-        var addlAmt   = addlCount * 25;
-        var total     = 35 + addlAmt;
+        var addlAmt   = addlCount * 10;
+        var total     = 55 + addlAmt;
         if (fpEstAddl)  fpEstAddl.textContent  = addlAmt > 0 ? '+$' + addlAmt : '—';
         if (fpEstTotal) fpEstTotal.textContent  = '$' + total;
       }
