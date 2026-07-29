@@ -6242,6 +6242,31 @@ a.btn-gold:hover {
   margin-top: 52px;
 }
 
+/* pricing disclaimer — homepage CTA context */
+.price-disclaimer {
+  font-size: .72rem;
+  color: var(--txt-m);
+  line-height: 1.7;
+  margin-top: 14px;
+  max-width: 480px;
+}
+.included-cta .price-disclaimer {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 560px;
+}
+
+/* pricing disclaimer — apostille form intro */
+.price-disclaimer--form {
+  font-size: .8rem;
+  color: var(--navy);
+  border-left: 3px solid var(--gold);
+  padding: 11px 16px;
+  margin-bottom: 8px;
+  line-height: 1.65;
+  max-width: 100%;
+}
+
 @media (max-width: 840px) {
   .included-grid { grid-template-columns: repeat(2, 1fr); }
 }
