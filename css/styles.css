@@ -482,8 +482,8 @@ ul    { list-style: none; }
   background: var(--navy);
   border: 1px solid var(--gold-2);
   color: var(--ivory);
-  font-size: .66rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-  padding: 19px 44px;
+  font-size: .66rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  padding: 16px 44px;
   white-space: nowrap;
   box-shadow: 0 4px 28px rgba(11,24,41,.18);
   transition: background .28s var(--ease), border-color .28s var(--ease), box-shadow .28s var(--ease), transform .22s var(--ease);
@@ -500,8 +500,8 @@ ul    { list-style: none; }
   background: var(--ivory);
   border: 1px solid var(--gold-2);
   color: var(--navy);
-  font-size: .66rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
-  padding: 19px 44px;
+  font-size: .66rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  padding: 16px 44px;
   white-space: nowrap;
   transition: background .28s var(--ease), border-color .28s var(--ease), color .28s var(--ease), box-shadow .28s var(--ease), transform .22s var(--ease);
 }
@@ -518,7 +518,33 @@ ul    { list-style: none; }
   gap: 18px;
   align-self: flex-start;
   flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 18px;
+}
+.hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: .8;
+}
+.hero-badge::before {
+  content: '✓';
+  color: var(--gold);
+  font-weight: 700;
+  font-size: .9em;
+  flex-shrink: 0;
+  opacity: 1;
 }
 
 .hero-locale {
@@ -1698,7 +1724,7 @@ ul    { list-style: none; }
     min-height: auto;
   }
   .hero-left {
-    padding: 48px 28px 44px;
+    padding: 36px 28px 32px;
     order: 1;
   }
   .h-hero        { font-size: clamp(1.7rem, 5.6vw, 2.4rem); overflow-wrap: break-word; }
@@ -1802,13 +1828,15 @@ ul    { list-style: none; }
   .logo       { height: 83px; max-width: 242px; }
   .drawer-inner { padding: 0 16px; }
 
-  .hero-left  { padding: 36px 18px 32px; }
+  .hero-left  { padding: 26px 18px 22px; }
   .h-hero     { font-size: clamp(1.45rem, 6.2vw, 1.85rem); }
   .hero-rule  { margin: 16px 0 20px; max-width: 220px; }
-  .hero-sub   { font-size: .88rem; }
+  .hero-sub   { font-size: .86rem; }
   .hero-trust { margin-bottom: 26px; }
   .ht-item    { max-width: 100%; }
-  .hero-right { padding: 0 14px 44px; }
+  .hero-right { padding: 0 14px 36px; }
+  .hero-badges { flex-direction: column; gap: 5px; margin-top: 12px; }
+  .hero-badge { font-size: .62rem; opacity: .75; }
   .hero-img   { height: 72vw; min-height: 200px; max-height: 360px; }
 
   .services   { padding-top: 48px; }
@@ -1873,7 +1901,7 @@ ul    { list-style: none; }
   .header-inner { padding: 0 12px; height: var(--hh); }
   .logo         { height: 76px; max-width: 213px; }
   .drawer-inner { padding: 0 12px; }
-  .hero-left    { padding: 28px 14px 24px; }
+  .hero-left    { padding: 20px 14px 18px; }
   .container    { padding: 0 14px; }
   .h-hero       { font-size: clamp(1.35rem, 6.8vw, 1.6rem); }
   .headline-gold { font-size: 1.12em; }
@@ -1893,8 +1921,10 @@ ul    { list-style: none; }
 @media (max-width: 840px) {
   .hero-btns { flex-direction: column; align-self: stretch; gap: 10px; }
   .btn-hero,
-  .btn-hero-2 { width: 100%; justify-content: center; padding: 16px 24px; white-space: normal; word-break: break-word; }
-  .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 24px; }
+  .btn-hero-2 { width: 100%; justify-content: center; padding: 14px 24px; white-space: normal; word-break: break-word; }
+  .hero-sub { font-size: .88rem; line-height: 1.82; margin-top: 20px; margin-bottom: 18px; }
+  .hero-badges { gap: 6px 16px; margin-top: 14px; }
+  .hero-badge { font-size: .64rem; }
 }
 
 /* ── Trust bar — compact on tablet ── */
