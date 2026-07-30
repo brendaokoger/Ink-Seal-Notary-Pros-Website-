@@ -422,6 +422,7 @@ ul    { list-style: none; }
   line-height: 1.92;
   color: var(--txt-b);
   max-width: 480px;
+  margin-top: 32px;
   margin-bottom: 28px;
 }
 
