@@ -326,6 +326,13 @@ ul    { list-style: none; }
   white-space: nowrap;
 }
 
+/* line 2 variant — brand gold italic, slightly lighter weight */
+.headline-line-2 {
+  color: var(--gold-2);
+  font-style: italic;
+  font-weight: 600;
+}
+
 /* line 2 — metallic antique gold italic, same visual dominance as line 1 */
 .headline-gold {
   display: block;
