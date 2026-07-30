@@ -358,6 +358,19 @@ ul    { list-style: none; }
 .hero-br-d { display: inline; }
 .hero-br-m { display: none; }
 
+/* service tagline — gold italic beneath the hero heading */
+.hero-svc-line {
+  font-family: var(--script);
+  font-style: italic;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  color: var(--gold-2);
+  letter-spacing: .05em;
+  line-height: 1.55;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
 /* hero subheadline — benefit statement beneath h1 */
 .hero-subline {
   display: flex;
