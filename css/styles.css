@@ -430,7 +430,7 @@ ul    { list-style: none; }
   color: var(--txt-b);
   max-width: 480px;
   margin-top: 32px;
-  margin-bottom: 28px;
+  margin-bottom: 0;
 }
 
 /* micro trust signals above the CTAs */
@@ -525,7 +525,43 @@ ul    { list-style: none; }
   gap: 18px;
   align-self: flex-start;
   flex-wrap: wrap;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.hero-trust-row {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 0 26px;
+  margin: 20px 0 24px;
+}
+.hero-trust-row li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .67rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+  opacity: .88;
+}
+.hero-trust-row li::before {
+  content: '✓';
+  color: var(--gold);
+  font-weight: 700;
+  font-size: .88em;
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+.hero-reassurance {
+  font-size: .76rem;
+  color: var(--txt-m);
+  line-height: 1.68;
+  max-width: 460px;
+  margin-top: 16px;
 }
 
 .hero-locale {
@@ -1901,7 +1937,10 @@ ul    { list-style: none; }
   .hero-btns { flex-direction: column; align-self: stretch; gap: 10px; }
   .btn-hero,
   .btn-hero-2 { width: 100%; justify-content: center; padding: 16px 24px; white-space: normal; word-break: break-word; }
-  .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 24px; }
+  .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 0; }
+  .hero-trust-row { flex-direction: column; gap: 8px 0; margin: 14px 0 18px; }
+  .hero-trust-row li { white-space: normal; font-size: .63rem; }
+  .hero-reassurance { font-size: .73rem; margin-top: 12px; max-width: 100%; }
 }
 
 /* ── Trust bar — compact on tablet ── */
