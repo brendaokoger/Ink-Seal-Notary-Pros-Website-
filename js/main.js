@@ -100,7 +100,7 @@
       '.sec-label', '.h-section', '.section-lead',
       '.service-card', '.feat-item', '.process-step',
       '.on-info-card', '.contact-block',
-      '.faq-item'
+      '.faq-item', '.inc-card', '.review-invite'
     ];
     var revealEls = Array.from(document.querySelectorAll(revealSels.join(',')));
     if (revealEls.length) {
