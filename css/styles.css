@@ -308,7 +308,7 @@ ul    { list-style: none; }
 
 /* headline container — sets the scale for both lines */
 .h-hero {
-  font-size: clamp(1.8rem, 2.3vw, 2.6rem);
+  font-size: clamp(2.2rem, 3.0vw, 3.4rem);
   line-height: 1;
   margin-bottom: 0;
   max-width: 100%;
@@ -1815,7 +1815,7 @@ ul    { list-style: none; }
   .header-inner { padding: 0 36px; gap: 24px; }
   .logo         { height: 149px; max-width: 415px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
-  .h-hero       { font-size: clamp(1.9rem, 2.4vw, 2.6rem); }
+  .h-hero       { font-size: clamp(2.2rem, 2.8vw, 3.0rem); }
   .svc-grid     { gap: 18px; }
   .svc-card     { padding-left: 22px; padding-right: 22px; }
   .trust-inner  { gap: 56px; }
@@ -1883,7 +1883,7 @@ ul    { list-style: none; }
     padding: 48px 28px 44px;
     order: 1;
   }
-  .h-hero        { font-size: clamp(1.55rem, 4.6vw, 2.0rem); overflow-wrap: break-word; }
+  .h-hero        { font-size: clamp(1.8rem, 5.5vw, 2.8rem); overflow-wrap: break-word; }
   .headline-main { white-space: normal; line-height: 1.12; overflow-wrap: break-word; }
   .headline-gold { white-space: normal; font-size: 1.22em; line-height: 1.22; margin-top: .04em; overflow-wrap: break-word; text-wrap: balance; }
   .hero-subline  { font-size: .66rem; gap: 8px; margin-top: 16px; }
@@ -1987,7 +1987,7 @@ ul    { list-style: none; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
-  .h-hero     { font-size: clamp(1.3rem, 5.4vw, 1.6rem); }
+  .h-hero     { font-size: clamp(1.4rem, 5.6vw, 1.9rem); }
   .hero-rule  { margin: 16px 0 20px; max-width: 220px; }
   .hero-sub   { font-size: .88rem; }
   .hero-trust { margin-bottom: 26px; }
@@ -2062,7 +2062,7 @@ ul    { list-style: none; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
-  .h-hero       { font-size: clamp(1.15rem, 5.8vw, 1.4rem); }
+  .h-hero       { font-size: clamp(1.2rem, 5.8vw, 1.5rem); }
   .headline-gold { font-size: 1.12em; }
   .svc-card     { padding: 34px 16px 28px; }
   .footer-logo  { height: 80px; max-width: 200px; }
