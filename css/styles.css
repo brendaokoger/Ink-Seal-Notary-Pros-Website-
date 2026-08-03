@@ -563,6 +563,49 @@ ul    { list-style: none; }
   transform: translateY(-2px);
 }
 
+/* secondary text links beneath primary CTA */
+.hero-secondary-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  margin-top: 16px;
+  align-items: center;
+}
+.hero-link-secondary {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--navy);
+  border-bottom: 1px solid rgba(212,175,55,.46);
+  padding-bottom: 2px;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.hero-link-secondary:hover {
+  color: var(--gold-3);
+  border-color: var(--gold);
+}
+
+/* micro reassurance line beneath CTAs */
+.hero-micro-trust {
+  font-size: .62rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  letter-spacing: .04em;
+  line-height: 1.7;
+  margin-top: 18px;
+  max-width: 480px;
+}
+
+/* trust bar: centred strip without a leading label */
+.trust-bar-inner--centered {
+  justify-content: center;
+}
+.trust-bar-inner--centered .tb-list {
+  flex: initial;
+  justify-content: center;
+}
+
 .hero-btns {
   display: flex;
   gap: 18px;
@@ -2139,6 +2182,8 @@ ul    { list-style: none; }
   .btn-hero,
   .btn-hero-2 { width: 100%; justify-content: center; padding: 16px 24px; white-space: normal; word-break: break-word; }
   .hero-primary-cta { align-self: stretch; border-radius: 8px; }
+  .hero-secondary-links { flex-direction: column; gap: 10px; margin-top: 14px; }
+  .hero-micro-trust { font-size: .58rem; margin-top: 14px; max-width: 100%; }
   .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 28px; }
   .hero-trust-row { flex-direction: column; gap: 8px 0; margin: 14px 0 18px; }
   .hero-trust-row li { white-space: normal; font-size: .63rem; }
