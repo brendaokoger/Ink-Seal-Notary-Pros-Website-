@@ -34,7 +34,8 @@ ul    { list-style: none; }
   --script:     'Cormorant Garamond', Georgia, serif;
   --display:    'Cinzel', Georgia, serif;
   --sans:       'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-  --hh:         176px;
+  --hh:         120px;
+  --marquee-h:  54px;
   --ease:       cubic-bezier(.4,0,.2,1);
   --max:        1360px;
 }
@@ -98,18 +99,24 @@ ul    { list-style: none; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 500;
-  height: var(--hh);
   background: #ffffff;
   border-bottom: 1px solid var(--border);
-  transition: box-shadow .3s var(--ease);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow .3s var(--ease), background .3s var(--ease), backdrop-filter .3s var(--ease);
 }
-.header.scrolled { box-shadow: 0 2px 32px rgba(10,25,47,.10); }
+.header.scrolled {
+  box-shadow: 0 2px 32px rgba(10,25,47,.10);
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
 
 .header-inner {
   max-width: var(--max);
   margin: 0 auto;
   padding: 0 52px;
-  height: 100%;
+  height: var(--hh);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -118,16 +125,16 @@ ul    { list-style: none; }
 
 .logo-wrap { flex-shrink: 0; }
 .logo {
-  height: 168px;
+  height: 88px;
   width: auto;
-  max-width: 490px;
+  max-width: 280px;
   object-fit: contain;
   object-position: left center;
   display: block;
   mix-blend-mode: multiply;
 }
 
-.nav { flex: 1; min-width: 0; display: flex; justify-content: center; align-items: center; }
+.nav { display: none; }
 .nav-link {
   display: inline-block;
   padding: 10px 28px;
@@ -162,7 +169,7 @@ ul    { list-style: none; }
   gap: 16px;
 }
 .btn-nav {
-  display: inline-flex; align-items: center; gap: 11px;
+  display: none; align-items: center; gap: 11px;
   background: var(--navy);
   border: 1px solid var(--gold-2);
   color: #fff;
@@ -190,9 +197,9 @@ ul    { list-style: none; }
 }
 .btn-nav:hover .btn-nav-arrow { transform: translateX(5px); }
 
-/* BURGER — luxury minimal, mobile only */
+/* BURGER — luxury minimal, always visible */
 .burger {
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
@@ -282,13 +289,57 @@ ul    { list-style: none; }
 .drawer-link:hover::before { transform: translateY(-50%) scaleX(1); }
 
 /* ═══════════════════════════════════════════════════════════
+   MARQUEE RIBBON  (inside fixed header, below logo/burger row)
+   ═══════════════════════════════════════════════════════════ */
+.marquee-ribbon {
+  background: #071B46;
+  height: var(--marquee-h);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marqueeScroll 20s linear infinite;
+  will-change: transform;
+}
+@media (hover: hover) {
+  .marquee-track:hover { animation-play-state: paused; }
+}
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-content {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: 'Manrope', var(--sans);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #B38A2E;
+  padding-right: 2em;
+}
+.mq-sep {
+  color: #B38A2E;
+  opacity: .6;
+  margin: 0 1.2em;
+  font-size: .52em;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
    HERO — two-column, full-bleed image
    ═══════════════════════════════════════════════════════════ */
 .hero {
-  padding-top: var(--hh);
+  padding-top: calc(var(--hh) + var(--marquee-h));
   display: grid;
   grid-template-columns: 58fr 42fr;
-  min-height: calc(var(--hh) + 76vh);
+  min-height: calc(var(--hh) + var(--marquee-h) + 72vh);
 }
 
 .hero-left {
@@ -1909,9 +1960,10 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 1200px
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 1200px) {
+  :root         { --hh: 108px; }
   .container    { padding: 0 36px; }
-  .header-inner { padding: 0 36px; gap: 24px; }
-  .logo         { height: 149px; max-width: 415px; }
+  .header-inner { padding: 0 36px; gap: 0; }
+  .logo         { height: 78px; max-width: 245px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
   .h-hero       { font-size: clamp(2.2rem, 2.8vw, 3.0rem); }
   .svc-grid     { gap: 18px; }
@@ -1954,20 +2006,14 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (compact header, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 130px; }
-
-  /* ── mobile: logo left, burger right; hide desktop nav ── */
-  .nav { display: none; }
-  .btn-nav { display: none; }
-  .burger { display: flex; }
+  :root { --hh: 84px; }
 
   .header-inner {
     padding: 0 20px;
     gap: 0;
-    height: var(--hh);
   }
   .logo-wrap { flex-shrink: 0; }
-  .logo { height: 116px; width: auto; max-width: 338px; }
+  .logo { height: 62px; width: auto; max-width: 190px; }
   .hero-br-d { display: none; }
   .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
@@ -2082,10 +2128,10 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 112px; }
+  :root { --hh: 72px; }
   .container  { padding: 0 18px; }
-  .header-inner { padding: 0 16px; height: var(--hh); }
-  .logo       { height: 99px; max-width: 290px; }
+  .header-inner { padding: 0 16px; }
+  .logo       { height: 52px; max-width: 162px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -2158,9 +2204,9 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  :root { --hh: 102px; }
-  .header-inner { padding: 0 12px; height: var(--hh); }
-  .logo         { height: 90px; max-width: 252px; }
+  :root { --hh: 64px; }
+  .header-inner { padding: 0 12px; }
+  .logo         { height: 46px; max-width: 145px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
