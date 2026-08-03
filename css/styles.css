@@ -321,12 +321,14 @@ ul    { list-style: none; }
 }
 
 .eyebrow {
-  font-size: .72rem;
-  font-weight: 600;
-  letter-spacing: .38em;
+  font-family: 'Manrope', var(--sans);
+  font-size: .68rem;
+  font-weight: 500;
+  letter-spacing: .18em;
   text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 30px;
+  color: #B38A2E;
+  margin-top: 4px;
+  margin-bottom: 38px;
 }
 
 /* headline container — sets the scale for both lines */
@@ -2127,7 +2129,7 @@ ul    { list-style: none; }
   .prefooter-text { min-width: 0; }
 
   /* about */
-  .eyebrow { font-size: .58rem; letter-spacing: .34em; }
+  .eyebrow { font-size: .58rem; letter-spacing: .16em; }
   .ab-hero { padding-bottom: 36px; }
   .ab-hero-header { padding-top: 28px; padding-bottom: 0; }
   .ab-portrait-card { width: 180px; }
@@ -2224,7 +2226,7 @@ ul    { list-style: none; }
   .svc-main-h { font-size: clamp(1.35rem, 5.8vw, 1.65rem); text-wrap: balance; }
   .svc-main-h em { display: inline; font-size: .92em; margin-top: 0; }
   .headline-gold { font-size: 1.16em; line-height: 1.26; }
-  .eyebrow { font-size: .54rem; letter-spacing: .3em; margin-bottom: 18px; }
+  .eyebrow { font-size: .54rem; letter-spacing: .15em; margin-bottom: 18px; }
   .sec-tag  { font-size: .54rem; letter-spacing: .28em; }
   .hero-subline  { font-size: .6rem; letter-spacing: .18em; gap: 7px; margin-top: 14px; }
   .hero-trust-list { gap: 7px 16px; margin-bottom: 26px; }
