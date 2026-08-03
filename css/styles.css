@@ -2004,14 +2004,14 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (compact header, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 130px; }
+  :root { --hh: 80px; }
 
   .header-inner {
     padding: 0 20px;
     gap: 0;
   }
   .logo-wrap { flex-shrink: 0; }
-  .logo { height: 116px; width: auto; max-width: 338px; }
+  .logo { height: 48px; width: auto; max-width: 148px; }
   .hero-br-d { display: none; }
   .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
@@ -2126,10 +2126,10 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 112px; }
+  :root { --hh: 76px; }
   .container  { padding: 0 18px; }
   .header-inner { padding: 0 16px; height: var(--hh); }
-  .logo       { height: 99px; max-width: 290px; }
+  .logo       { height: 44px; max-width: 136px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -2202,9 +2202,9 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  :root { --hh: 102px; }
+  :root { --hh: 72px; }
   .header-inner { padding: 0 12px; height: var(--hh); }
-  .logo         { height: 90px; max-width: 252px; }
+  .logo         { height: 40px; max-width: 124px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
@@ -3738,12 +3738,9 @@ ul    { list-style: none; }
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
-.eyebrow                { animation: revealUp .75s cubic-bezier(.215,.61,.355,1) .00s both; }
-.h-hero                 { animation: revealUp .85s cubic-bezier(.215,.61,.355,1) .12s both; }
-.hero-sub               { animation: revealUp .80s cubic-bezier(.215,.61,.355,1) .24s both; }
-.hero-primary-cta       { animation: revealUp .70s cubic-bezier(.215,.61,.355,1) .38s both; }
-.hero-secondary-links   { animation: revealUp .65s cubic-bezier(.215,.61,.355,1) .48s both; }
-.hero-micro-trust       { animation: revealUp .60s cubic-bezier(.215,.61,.355,1) .54s both; }
+.h-hero                 { animation: revealUp .85s cubic-bezier(.215,.61,.355,1) .00s both; }
+.hero-sub               { animation: revealUp .80s cubic-bezier(.215,.61,.355,1) .16s both; }
+.hero-primary-cta       { animation: revealUp .70s cubic-bezier(.215,.61,.355,1) .30s both; }
 /* legacy selectors kept for elements used outside the hero */
 .hero-subline     { animation: revealUp .65s cubic-bezier(.215,.61,.355,1) .18s both; }
 .hero-rule        { animation: revealUp .6s  cubic-bezier(.215,.61,.355,1) .24s both; }
