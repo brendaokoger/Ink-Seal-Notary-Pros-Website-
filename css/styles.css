@@ -164,9 +164,11 @@ ul    { list-style: none; }
 
 .header-end {
   flex-shrink: 0;
+  flex-grow: 0;
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-left: auto;
 }
 .btn-nav {
   display: none; align-items: center; gap: 11px;
@@ -2063,20 +2065,20 @@ ul    { list-style: none; }
   :root { --hh: 84px; }
 
   .header-inner {
-    padding: 0 20px;
+    padding: 0 22px;
     justify-content: space-between;
+    align-items: center;
     gap: 0;
   }
   .logo-wrap {
     display: block;
     flex-shrink: 0;
-    margin-right: auto;
+    flex-grow: 0;
   }
   .logo {
     display: block;
     width: 200px;
     height: auto;
-    min-height: unset;
     max-width: none;
   }
   .hero-br-d { display: none; }
