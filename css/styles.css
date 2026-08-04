@@ -2084,25 +2084,33 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (compact header, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 96px; }
+  :root { --hh: 100px; }
 
   .header-inner {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0 22px;
+    height: 100px;
+    box-sizing: border-box;
     gap: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
   .logo-wrap {
     display: block;
-    flex-shrink: 0;
-    flex-grow: 0;
+    flex: 0 0 auto;
   }
   .logo {
     display: block;
-    width: 200px;
+    width: 210px;
     height: auto;
-    max-width: none;
+    max-height: 72px;
+    max-width: 210px;
+    object-fit: contain;
+    object-position: left center;
   }
   .hero-br-d { display: none; }
   .hero-br-m { display: inline; }
@@ -2224,10 +2232,10 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 78px; }
+  :root { --hh: 92px; }
   .container  { padding: 0 18px; }
-  .header-inner { padding: 0 18px; height: var(--hh); }
-  .logo       { width: 185px; height: auto; max-width: none; }
+  .header-inner { padding: 0 18px; height: 92px; }
+  .logo       { width: 190px; height: auto; max-height: 66px; max-width: 190px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -2300,9 +2308,9 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 400px  (small phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
-  :root { --hh: 72px; }
-  .header-inner { padding: 0 14px; height: var(--hh); }
-  .logo         { width: 160px; height: auto; max-width: none; }
+  :root { --hh: 88px; }
+  .header-inner { padding: 0 16px; height: 88px; }
+  .logo         { width: 170px; height: auto; max-height: 60px; max-width: 170px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
