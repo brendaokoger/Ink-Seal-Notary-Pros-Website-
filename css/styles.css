@@ -401,6 +401,17 @@ ul    { list-style: none; }
   margin-bottom: 38px;
 }
 
+/* eyebrow above headline */
+.hero-eyebrow {
+  font-family: 'Manrope', var(--sans);
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 20px;
+}
+
 /* headline container — sets the scale for both lines */
 .h-hero {
   font-size: clamp(2.6rem, 3.6vw, 4.2rem);
@@ -3788,9 +3799,10 @@ ul    { list-style: none; }
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: none; }
 }
-.h-hero                 { animation: revealUp .85s cubic-bezier(.215,.61,.355,1) .00s both; }
-.hero-sub               { animation: revealUp .80s cubic-bezier(.215,.61,.355,1) .16s both; }
-.hero-primary-cta       { animation: revealUp .70s cubic-bezier(.215,.61,.355,1) .30s both; }
+.hero-eyebrow           { animation: revealUp .70s cubic-bezier(.215,.61,.355,1) .00s both; }
+.h-hero                 { animation: revealUp .85s cubic-bezier(.215,.61,.355,1) .12s both; }
+.hero-sub               { animation: revealUp .80s cubic-bezier(.215,.61,.355,1) .26s both; }
+.hero-primary-cta       { animation: revealUp .70s cubic-bezier(.215,.61,.355,1) .40s both; }
 /* legacy selectors kept for elements used outside the hero */
 .hero-subline     { animation: revealUp .65s cubic-bezier(.215,.61,.355,1) .18s both; }
 .hero-rule        { animation: revealUp .6s  cubic-bezier(.215,.61,.355,1) .24s both; }
