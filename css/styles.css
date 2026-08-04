@@ -2017,7 +2017,7 @@ ul    { list-style: none; }
 @media (max-width: 1200px) {
   .container    { padding: 0 36px; }
   .header-inner { padding: 0 36px; gap: 24px; }
-  .logo         { height: 149px; max-width: 415px; }
+  .logo         { height: 149px; width: auto; max-width: 415px; }
   .hero-left    { padding: 72px 52px 72px 36px; }
   .h-hero       { font-size: clamp(2.2rem, 2.8vw, 3.0rem); }
   .svc-grid     { gap: 18px; }
@@ -2064,10 +2064,21 @@ ul    { list-style: none; }
 
   .header-inner {
     padding: 0 20px;
+    justify-content: space-between;
     gap: 0;
   }
-  .logo-wrap { flex-shrink: 0; }
-  .logo { width: 200px; height: auto; max-width: 200px; max-height: 68px; }
+  .logo-wrap {
+    display: block;
+    flex-shrink: 0;
+    margin-right: auto;
+  }
+  .logo {
+    display: block;
+    width: 200px;
+    height: auto;
+    min-height: unset;
+    max-width: none;
+  }
   .hero-br-d { display: none; }
   .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
@@ -2191,7 +2202,7 @@ ul    { list-style: none; }
   :root { --hh: 78px; }
   .container  { padding: 0 18px; }
   .header-inner { padding: 0 18px; height: var(--hh); }
-  .logo       { width: 185px; height: auto; max-width: 185px; max-height: 62px; }
+  .logo       { width: 185px; height: auto; max-width: none; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
@@ -2266,7 +2277,7 @@ ul    { list-style: none; }
 @media (max-width: 400px) {
   :root { --hh: 72px; }
   .header-inner { padding: 0 14px; height: var(--hh); }
-  .logo         { width: 160px; height: auto; max-width: 160px; max-height: 54px; }
+  .logo         { width: 160px; height: auto; max-width: none; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
