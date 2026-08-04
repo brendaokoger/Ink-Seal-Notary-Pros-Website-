@@ -2060,14 +2060,14 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 840px  (compact header, stacked hero)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 840px) {
-  :root { --hh: 80px; }
+  :root { --hh: 84px; }
 
   .header-inner {
     padding: 0 20px;
     gap: 0;
   }
   .logo-wrap { flex-shrink: 0; }
-  .logo { height: 48px; width: auto; max-width: 148px; }
+  .logo { width: 200px; height: auto; max-width: 200px; max-height: 68px; }
   .hero-br-d { display: none; }
   .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
@@ -2078,21 +2078,22 @@ ul    { list-style: none; }
     min-height: auto;
   }
   .hero-left {
-    padding: 48px 28px 44px;
+    padding: 44px 28px 40px;
     order: 1;
   }
   .hero-credential { font-size: .5rem; letter-spacing: .2em; margin-bottom: 16px; flex-wrap: wrap; }
   .hero-credential::before,
   .hero-credential::after { flex: 0 0 16px; }
-  .h-hero        { font-size: clamp(1.8rem, 5.5vw, 2.8rem); overflow-wrap: break-word; }
+  .h-hero        { font-size: clamp(1.5rem, 4.5vw, 2.1rem); overflow-wrap: break-word; }
   .headline-main { white-space: normal; line-height: 1.12; overflow-wrap: break-word; }
-  .headline-gold { white-space: normal; font-size: 1.22em; line-height: 1.22; margin-top: .04em; overflow-wrap: break-word; text-wrap: balance; }
+  .headline-gold { white-space: normal; font-size: 1.18em; line-height: 1.2; margin-top: .04em; overflow-wrap: break-word; text-wrap: balance; }
   .hero-subline  { font-size: .66rem; gap: 8px; margin-top: 16px; }
   .hero-rule     { margin: 20px 0 24px; max-width: 260px; }
   .hero-sub {
     max-width: 100%;
-    font-size: .91rem;
-    margin-bottom: 22px;
+    font-size: .86rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   .hero-trust-list { gap: 8px 22px; margin-bottom: 32px; }
   .hero-trust-list li { font-size: .64rem; }
@@ -2187,16 +2188,16 @@ ul    { list-style: none; }
    RESPONSIVE — ≤ 580px  (phones)
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 580px) {
-  :root { --hh: 76px; }
+  :root { --hh: 78px; }
   .container  { padding: 0 18px; }
-  .header-inner { padding: 0 16px; height: var(--hh); }
-  .logo       { height: 44px; max-width: 136px; }
+  .header-inner { padding: 0 18px; height: var(--hh); }
+  .logo       { width: 185px; height: auto; max-width: 185px; max-height: 62px; }
   .drawer-inner { padding: 0 16px; }
 
   .hero-left  { padding: 36px 18px 32px; }
-  .h-hero     { font-size: clamp(1.4rem, 5.6vw, 1.9rem); }
+  .h-hero     { font-size: clamp(1.35rem, 5vw, 1.65rem); }
   .hero-rule  { margin: 16px 0 20px; max-width: 220px; }
-  .hero-sub   { font-size: .88rem; }
+  .hero-sub   { font-size: .82rem; line-height: 1.65; }
   .hero-trust { margin-bottom: 26px; }
   .ht-item    { max-width: 100%; }
   .hero-right { padding: 0 14px 44px; }
@@ -2264,8 +2265,8 @@ ul    { list-style: none; }
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 400px) {
   :root { --hh: 72px; }
-  .header-inner { padding: 0 12px; height: var(--hh); }
-  .logo         { height: 40px; max-width: 124px; }
+  .header-inner { padding: 0 14px; height: var(--hh); }
+  .logo         { width: 160px; height: auto; max-width: 160px; max-height: 54px; }
   .drawer-inner { padding: 0 12px; }
   .hero-left    { padding: 28px 14px 24px; }
   .container    { padding: 0 14px; }
@@ -2291,7 +2292,8 @@ ul    { list-style: none; }
   .hero-primary-cta { align-self: stretch; border-radius: 8px; }
   .hero-secondary-links { flex-direction: column; gap: 10px; margin-top: 14px; }
   .hero-micro-trust { font-size: .58rem; margin-top: 14px; max-width: 100%; }
-  .hero-sub { font-size: .88rem; line-height: 1.82; margin-bottom: 28px; }
+  .hero-sub { font-size: .84rem; line-height: 1.68; margin-bottom: 24px; }
+  .hero-primary-cta { align-self: flex-start; width: auto; border-radius: 6px; padding: 15px 36px; }
   .hero-trust-row { flex-direction: column; gap: 8px 0; margin: 14px 0 18px; }
   .hero-trust-row li { white-space: normal; font-size: .63rem; }
   .hero-reassurance { font-size: .73rem; margin-top: 12px; margin-bottom: 16px; max-width: 100%; }
