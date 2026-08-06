@@ -5,7 +5,7 @@
 
 /* ── reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html  { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+html  { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; overflow-x: clip; }
 body  { font-family: var(--sans); background: var(--ivory); color: var(--navy); }
 a     { text-decoration: none; color: inherit; }
 img   { display: block; max-width: 100%; }
@@ -326,6 +326,10 @@ ul    { list-style: none; }
   overflow: hidden;
   display: flex;
   align-items: center;
+  /* force a compositing layer so overflow:hidden correctly clips
+     the translate-animated .marquee-track on iOS Safari */
+  transform: translateZ(0);
+  contain: layout paint;
 }
 .marquee-track {
   display: flex;
@@ -390,7 +394,7 @@ ul    { list-style: none; }
 .hero-left::after {
   content: '';
   position: absolute;
-  top: 10%; left: -5%;
+  top: 10%; left: 0;        /* was -5%; negative offset caused leftward overflow on WebKit */
   width: 80%; height: 65%;
   background: radial-gradient(ellipse at 40% 40%, rgba(212,175,55,.07) 0%, transparent 68%);
   pointer-events: none;
