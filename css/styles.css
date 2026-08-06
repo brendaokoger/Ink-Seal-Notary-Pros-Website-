@@ -290,28 +290,30 @@ ul    { list-style: none; }
 .drawer-link:hover { color: var(--gold); padding-left: 28px; }
 .drawer-link:hover::before { transform: translateY(-50%) scaleX(1); }
 
-/* Drawer CTA — gold pill button */
+/* Drawer CTA — navy pill with gold border, matches site theme */
 .drawer-link.drawer-cta {
   margin: 18px 0 22px;
   padding: 16px 28px;
-  background: var(--gold);
-  color: #071b46;
-  border-bottom: none;
+  background: #0F2148;
+  border: 1px solid var(--gold);
+  color: var(--ivory);
+  border-bottom: 1px solid var(--gold);
   border-radius: 16px;
   text-align: center;
   justify-content: center;
   font-weight: 700;
   font-size: .72rem;
   letter-spacing: .16em;
-  box-shadow: 0 4px 16px rgba(212,175,55,.22);
-  transition: background .22s var(--ease), box-shadow .22s var(--ease), transform .18s var(--ease);
+  box-shadow: 0 4px 16px rgba(15,33,72,.32);
+  transition: background .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease), transform .18s var(--ease);
 }
 .drawer-link.drawer-cta::before { display: none; }
 .drawer-link.drawer-cta:hover {
-  background: var(--gold-2);
-  color: #071b46;
+  background: #0A1A3D;
+  border-color: var(--gold-2);
+  color: var(--ivory);
   padding-left: 28px;
-  box-shadow: 0 6px 24px rgba(212,175,55,.32);
+  box-shadow: 0 6px 20px rgba(212,175,55,.14);
   transform: translateY(-1px);
 }
 
@@ -1337,9 +1339,9 @@ ul    { list-style: none; }
 }
 .footer-logo-wrap { display: block; margin-bottom: 0; }
 .footer-logo {
-  height: 116px;
+  height: 148px;
   width: auto;
-  max-width: 340px;
+  max-width: 360px;
   object-fit: contain;
   object-position: left center;
   display: block;
@@ -1400,6 +1402,58 @@ ul    { list-style: none; }
 .footer-legal span { color: var(--border); font-size: .74rem; }
 .fc-legal { font-size: .74rem; color: var(--txt-m); transition: color .18s; }
 .fc-legal:hover { color: var(--gold); }
+
+/* ── Footer: Business Hours ── */
+.footer-hours {
+  list-style: none; padding: 0; margin: 0 0 8px;
+}
+.footer-hours li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 8px; padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.footer-hours li:last-child { border-bottom: none; }
+.fh-day { font-size: .7rem; font-weight: 400; color: rgba(255,255,255,.5); white-space: nowrap; }
+.fh-time { font-size: .7rem; font-weight: 500; color: rgba(255,255,255,.74); text-align: right; }
+.fc-title--hours { margin-top: 28px; }
+
+/* ── Footer: Service Areas ── */
+.footer-areas {
+  list-style: none; padding: 0; margin: 0 0 10px;
+}
+.footer-areas li {
+  display: flex; align-items: center; gap: 7px;
+  font-size: .78rem; color: rgba(255,255,255,.72);
+  padding: 3px 0;
+}
+.footer-areas li::before {
+  content: '◆'; font-size: .3rem;
+  color: var(--gold-2); flex-shrink: 0;
+}
+.footer-areas-note {
+  font-size: .68rem; font-weight: 300; line-height: 1.72;
+  color: rgba(255,255,255,.38); margin-top: 4px;
+}
+
+/* ── Footer: Google Reviews badge ── */
+.footer-reviews {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 22px; padding: 8px 14px 8px 12px;
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 6px; text-decoration: none;
+  transition: border-color .2s var(--ease), background .2s var(--ease);
+}
+.footer-reviews:hover {
+  border-color: rgba(212,175,55,.52);
+  background: rgba(212,175,55,.06);
+}
+.footer-stars {
+  color: var(--gold); font-size: .9rem; letter-spacing: -.3px; line-height: 1;
+}
+.footer-reviews-text {
+  font-size: .62rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.65);
+}
 
 /* ═══════════════════════════════════════════════════════════
    FAQ PAGE HERO
@@ -2079,7 +2133,7 @@ ul    { list-style: none; }
   .trust-inner  { gap: 56px; }
   .trust-right  { gap: 32px 40px; }
   .footer-top   { grid-template-columns: auto 1fr 1fr 1fr 1fr; gap: 28px; }
-  .footer-logo  { height: 104px; max-width: 290px; }
+  .footer-logo  { height: 130px; max-width: 310px; }
   .ab-hero-header { padding-top: 68px; padding-bottom: 44px; }
   .ab-main-heading { font-size: clamp(3.4rem, 6.5vw, 7.5rem); }
   .trust-badges-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -2097,9 +2151,9 @@ ul    { list-style: none; }
   .step-arr     { display: none; }
   .trust-inner  { grid-template-columns: 240px 1fr; gap: 40px; }
   .trust-right  { gap: 24px 32px; }
-  .footer-top   { grid-template-columns: auto 1fr 1fr; gap: 22px; }
+  .footer-top   { grid-template-columns: repeat(2, 1fr); gap: 32px 24px; padding-top: 56px; }
   .footer-brand { grid-column: 1 / -1; }
-  .footer-logo  { height: 104px; max-width: 290px; }
+  .footer-logo  { height: 128px; max-width: 310px; }
   .ab-founder-content { flex-direction: column; gap: 32px; }
   .ab-founder-portrait-block { width: 100%; }
   .ab-portrait-card { width: 200px; }
@@ -2247,7 +2301,7 @@ ul    { list-style: none; }
   /* footer */
   .footer-top   { grid-template-columns: 1fr 1fr; gap: 28px; padding-top: 52px; }
   .footer-brand { grid-column: 1 / -1; }
-  .footer-logo  { height: 92px; max-width: 260px; }
+  .footer-logo  { height: 114px; max-width: 280px; }
 
   /* new sections */
   .trust-badges-section { padding: 40px 0; }
@@ -2328,7 +2382,7 @@ ul    { list-style: none; }
   .faq-cta     { padding: 60px 0; }
   .faq-cta-btns { flex-direction: column; align-items: stretch; }
 
-  .footer-logo  { height: 86px; max-width: 240px; }
+  .footer-logo  { height: 100px; max-width: 260px; }
   .footer-top   { grid-template-columns: 1fr; gap: 24px; padding-top: 44px; }
   .footer-bar-inner { flex-direction: column; gap: 8px; text-align: center; }
   .social-row   { justify-content: space-evenly; gap: 0; margin-top: 12px; margin-bottom: 12px; }
@@ -2347,7 +2401,7 @@ ul    { list-style: none; }
   .h-hero       { font-size: clamp(1.2rem, 5.8vw, 1.5rem); }
   .headline-gold { font-size: 1.12em; }
   .svc-card     { padding: 34px 16px 28px; }
-  .footer-logo  { height: 80px; max-width: 200px; }
+  .footer-logo  { height: 92px; max-width: 220px; }
   .ab-services-grid { grid-template-columns: 1fr; }
   .ab-portrait-card { width: 180px; }
   .ab-portrait-img  { height: 220px; }
@@ -5588,8 +5642,9 @@ a.btn-gold:hover {
 .drawer-cta {
   margin-top: 12px;
   display: inline-block;
-  background: var(--gold);
-  color: #fff !important;
+  background: #0F2148;
+  border: 1px solid var(--gold);
+  color: var(--ivory) !important;
   border-radius: 4px;
   padding: 10px 22px !important;
   font-weight: 600;
