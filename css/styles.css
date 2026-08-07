@@ -7800,6 +7800,7 @@ a.btn-gold:hover {
   object-fit: contain;
   display: block;
   margin: 0 auto 22px;
+  filter: brightness(0) invert(1);
 }
 .ft-tagline {
   font-family: 'Manrope', var(--sans);
