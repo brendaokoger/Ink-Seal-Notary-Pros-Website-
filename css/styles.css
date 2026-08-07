@@ -1351,10 +1351,6 @@ ul    { list-style: none; }
   padding-top: 92px;
   padding-bottom: 72px;
 }
-/* Gold filter — renders any dark PNG logo as --gold (#D4AF37) on dark backgrounds.
-   brightness(0)→black · invert(1)→white · sepia(1)→warm cream
-   saturate(12.5)+hue-rotate(-14deg)→gold hue · brightness(0.831)→#D4AF37 */
-
 .footer-logo-wrap { display: block; margin-bottom: 0; }
 .footer-logo {
   height: 210px;
@@ -1364,7 +1360,7 @@ ul    { list-style: none; }
   object-position: left center;
   display: block;
   margin-bottom: 20px;
-  filter: brightness(0) invert(1) sepia(1) saturate(12.5) hue-rotate(-14deg) brightness(0.831);
+  filter: brightness(0) invert(1);
 }
 .social-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
 .social-link {
@@ -4033,7 +4029,7 @@ ul    { list-style: none; }
 .form-hdr-logo img {
   height: 32px;
   width: auto;
-  filter: brightness(0) invert(1) sepia(1) saturate(12.5) hue-rotate(-14deg) brightness(0.831);
+  filter: brightness(0) invert(1);
   opacity: .88;
 }
 .form-hdr-center {
@@ -7805,7 +7801,7 @@ a.btn-gold:hover {
   object-fit: contain;
   display: block;
   margin: 0 auto 22px;
-  filter: brightness(0) invert(1) sepia(1) saturate(12.5) hue-rotate(-14deg) brightness(0.831);
+  filter: brightness(0) invert(1);
 }
 .ft-tagline {
   font-family: 'Manrope', var(--sans);
