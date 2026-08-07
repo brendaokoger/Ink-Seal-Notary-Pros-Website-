@@ -7439,7 +7439,7 @@ a.btn-gold:hover {
 }
 .ab-open-grid {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 380px 1fr;
   gap: 72px;
   align-items: start;
   padding-top: 88px;
@@ -7496,7 +7496,7 @@ a.btn-gold:hover {
 }
 .ab-open-portrait-img {
   width: 100%;
-  height: 380px;
+  height: 460px;
   object-fit: cover;
   object-position: center 10%;
   display: block;
@@ -7529,40 +7529,49 @@ a.btn-gold:hover {
   line-height: 1.5;
 }
 
-/* Credential strip */
-.ab-credential-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+/* Signature graphic beneath attribution */
+.ab-open-signature {
+  margin-top: 14px;
+  color: var(--gold-3);
+  opacity: .38;
+}
+.ab-open-sig-svg {
+  width: 88px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Trust cards */
+.ab-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--border);
-  padding: 28px 0;
-  gap: 0;
 }
-.ab-cred-item {
+.ab-trust-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 9px;
-  padding: 8px 32px;
+  text-align: center;
+  padding: 32px 16px 36px;
+  border-right: 1px solid var(--border);
+  gap: 16px;
 }
-.ab-cred-gem {
-  font-size: .42rem;
+.ab-trust-card:last-child { border-right: none; }
+.ab-trust-icon {
+  width: 34px;
+  height: 34px;
   color: var(--gold);
   flex-shrink: 0;
 }
-.ab-cred-label {
-  font-size: .58rem;
-  font-weight: 600;
-  letter-spacing: .24em;
+.ab-trust-name {
+  font-family: 'Manrope', var(--sans);
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .2em;
   text-transform: uppercase;
   color: var(--navy);
-  white-space: nowrap;
-}
-.ab-cred-rule {
-  width: 1px;
-  height: 24px;
-  background: var(--border);
-  flex-shrink: 0;
+  line-height: 1.65;
 }
 
 /* ── The Standard: dark conviction section ── */
@@ -7650,37 +7659,37 @@ a.btn-gold:hover {
 
 /* ── Responsive overrides — About redesign ── */
 @media (max-width: 960px) {
-  .ab-open-grid         { grid-template-columns: 1fr 260px; gap: 48px; }
-  .ab-open-portrait-img { height: 340px; }
+  .ab-open-grid         { grid-template-columns: 300px 1fr; gap: 48px; }
+  .ab-open-portrait-img { height: 400px; }
 }
 @media (max-width: 840px) {
-  .ab-open-grid         { grid-template-columns: 1fr; gap: 40px; padding-top: 52px; padding-bottom: 52px; }
-  .ab-open-portrait-col { flex-direction: row; align-items: flex-start; gap: 20px; }
-  .ab-open-portrait-frame { width: 190px; flex-shrink: 0; }
-  .ab-open-portrait-img { height: 240px; }
-  .ab-open-attribution  { text-align: left; padding-top: 8px; }
-  .ab-open-attr-rule    { margin-left: 0; }
+  .ab-open-grid         { grid-template-columns: 1fr; gap: 36px; padding-top: 52px; padding-bottom: 48px; }
+  .ab-open-portrait-col { align-items: center; }
+  .ab-open-portrait-frame { width: 260px; }
+  .ab-open-portrait-img { height: 320px; }
+  .ab-open-attribution  { text-align: center; padding-top: 14px; }
+  .ab-open-attr-rule    { margin: 0 auto 14px; }
+  .ab-open-sig-svg      { margin: 0 auto; }
   .ab-standard          { padding: 76px 0 88px; }
   .ab-standard-pillars  { grid-template-columns: 1fr; }
   .ab-pillar            { padding: 28px 0; }
   .ab-pillar + .ab-pillar { border-left: none; border-top: 1px solid rgba(212,175,55,.12); }
-  .ab-cred-rule         { display: none; }
-  .ab-cred-item         { padding: 6px 20px; }
+  /* Trust cards: 2×2 at tablet */
+  .ab-trust-grid               { grid-template-columns: repeat(2, 1fr); }
+  .ab-trust-card:nth-child(2)  { border-right: none; }
+  .ab-trust-card:nth-child(3)  { border-top: 1px solid var(--border); }
+  .ab-trust-card:nth-child(4)  { border-top: 1px solid var(--border); border-right: none; }
 }
 @media (max-width: 580px) {
-  .ab-open-grid         { padding-top: 36px; padding-bottom: 44px; gap: 28px; }
+  .ab-open-grid         { padding-top: 36px; padding-bottom: 40px; gap: 24px; }
   .ab-open-h1           { font-size: clamp(1.9rem, 7vw, 2.6rem); margin-bottom: 24px; }
   .ab-open-lead         { font-size: .9rem; }
   .ab-open-body         { font-size: .84rem; }
-  .ab-open-portrait-col { flex-direction: column; align-items: center; }
-  .ab-open-portrait-frame { width: 180px; }
-  .ab-open-portrait-img { height: 220px; }
-  .ab-open-attribution  { text-align: center; padding-top: 14px; }
-  .ab-open-attr-rule    { margin: 0 auto 14px; }
+  .ab-open-portrait-frame { width: 220px; }
+  .ab-open-portrait-img { height: 268px; }
   .ab-standard-quote    { font-size: clamp(1.15rem, 5.2vw, 1.65rem); margin-bottom: 36px; }
   .ab-standard          { padding: 60px 0 72px; }
   .ab-standard-rule     { margin-bottom: 40px; }
-  .ab-credential-strip  { padding: 18px 0; }
-  .ab-cred-item         { padding: 5px 14px; }
-  .ab-cred-label        { font-size: .52rem; letter-spacing: .18em; }
+  .ab-trust-card        { padding: 24px 12px 28px; gap: 12px; }
+  .ab-trust-name        { font-size: .5rem; letter-spacing: .16em; }
 }

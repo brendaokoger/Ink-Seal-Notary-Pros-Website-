@@ -54,24 +54,12 @@
 
       <div class="ab-open-grid">
 
-        <!-- Text column -->
-        <div class="ab-open-text">
-          <p class="ab-open-eyebrow">Ink &amp; Seal Notary Pros</p>
-          <h1 class="ab-open-h1">Built for the moments<br>that matter most.</h1>
-
-          <p class="ab-open-lead">Ink &amp; Seal Notary Pros was built to simplify one of the most important parts of your personal and professional life — ensuring your documents are handled accurately, securely, and with concierge-level attention from submission through completion.</p>
-
-          <p class="ab-open-body">With expertise in notarial law and document authentication, Brenda Koger founded Ink &amp; Seal on a singular conviction: every client deserves clear guidance, accurate documents, and a seamless experience — not a process that feels uncertain or unnecessarily complicated.</p>
-
-          <p class="ab-open-body">Today, Ink &amp; Seal serves individuals, families, legal professionals, and businesses nationwide, with every engagement delivered at a standard most clients have never experienced from a notary service.</p>
-        </div>
-
-        <!-- Portrait column -->
+        <!-- Portrait column — first in DOM = first visually at every breakpoint -->
         <div class="ab-open-portrait-col">
           <div class="ab-open-portrait-frame">
             <img
               src="images/ink-seal-website-photo.png"
-              alt="Brenda Koger, Founder and CEO of Ink and Seal Notary Pros"
+              alt="Brenda Koger, Founder and Professional Notary at Ink and Seal Notary Pros"
               class="ab-open-portrait-img"
               width="480" height="600"
             />
@@ -79,33 +67,75 @@
           <div class="ab-open-attribution">
             <div class="ab-open-attr-rule"></div>
             <p class="ab-open-attr-name">Brenda Koger</p>
-            <p class="ab-open-attr-title">Founder &amp; CEO, Ink &amp; Seal Notary Pros</p>
+            <p class="ab-open-attr-title">Founder &amp; Professional Notary</p>
+            <div class="ab-open-signature" aria-hidden="true">
+              <svg class="ab-open-sig-svg" viewBox="0 0 140 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 20 C14 6 22 4 28 14 C32 21 36 10 46 13 C56 16 62 8 74 7 C88 6 100 16 112 11 C122 7 130 14 136 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M6 28 C28 25 60 27 88 26 C110 25 126 28 136 26" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" opacity="0.55"/>
+              </svg>
+            </div>
           </div>
+        </div>
+
+        <!-- Text column -->
+        <div class="ab-open-text">
+          <p class="ab-open-eyebrow">Ink &amp; Seal Notary Pros</p>
+          <h1 class="ab-open-h1">Built for the moments<br>that matter most.</h1>
+
+          <p class="ab-open-lead">Most people come to a notary service feeling uncertain — unsure which documents they need, unclear on timelines, and left to figure it out on their own. Brenda Koger built Ink &amp; Seal to change that. Every engagement begins with a real conversation, a clear plan, and someone who genuinely cares that the process goes right.</p>
+
+          <p class="ab-open-body">Brenda has seen firsthand how confusing document authentication can be — especially for apostilles, legal filings, or time-sensitive paperwork that has to be done precisely right. She created Ink &amp; Seal to fill that gap: a service where clients receive concierge-level attention, accurate preparation, and direct answers at every step — never left wondering what happens next.</p>
+
+          <p class="ab-open-body">Today, Ink &amp; Seal serves individuals, families, attorneys, and businesses throughout Illinois, Indiana, and across the country. The standard has never changed: clear communication, transparent pricing, and document handling you can trust — from submission through delivery.</p>
         </div>
 
       </div>
 
-      <!-- Credential strip -->
-      <div class="ab-credential-strip">
-        <div class="ab-cred-item">
-          <span class="ab-cred-gem" aria-hidden="true">◆</span>
-          <span class="ab-cred-label">Licensed Notary Public</span>
+      <!-- Trust cards -->
+      <div class="ab-trust-grid" role="list">
+
+        <div class="ab-trust-card" role="listitem">
+          <div class="ab-trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 4 L40 10 L40 24 C40 34 32 41 24 45 C16 41 8 34 8 24 L8 10 Z"/>
+              <polyline points="18 24 22 28 30 19"/>
+            </svg>
+          </div>
+          <p class="ab-trust-name">Secure Document<br>Handling</p>
         </div>
-        <div class="ab-cred-rule" aria-hidden="true"></div>
-        <div class="ab-cred-item">
-          <span class="ab-cred-gem" aria-hidden="true">◆</span>
-          <span class="ab-cred-label">Remote Online Notarization</span>
+
+        <div class="ab-trust-card" role="listitem">
+          <div class="ab-trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="24 6 28.9 17.6 42 19 32.5 27.8 35.4 41 24 34.2 12.6 41 15.5 27.8 6 19 19.1 17.6"/>
+            </svg>
+          </div>
+          <p class="ab-trust-name">Concierge-Level<br>Service</p>
         </div>
-        <div class="ab-cred-rule" aria-hidden="true"></div>
-        <div class="ab-cred-item">
-          <span class="ab-cred-gem" aria-hidden="true">◆</span>
-          <span class="ab-cred-label">Serving Clients Nationwide</span>
+
+        <div class="ab-trust-card" role="listitem">
+          <div class="ab-trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 4h20a2 2 0 0 1 2 2v24a2 2 0 0 1-2 2h-6l-4 6-4-6h-6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>
+              <circle cx="24" cy="18" r="5"/>
+              <polyline points="21 18 23 20 28 15"/>
+            </svg>
+          </div>
+          <p class="ab-trust-name">Illinois &amp; Indiana<br>Commissioned</p>
         </div>
-        <div class="ab-cred-rule" aria-hidden="true"></div>
-        <div class="ab-cred-item">
-          <span class="ab-cred-gem" aria-hidden="true">◆</span>
-          <span class="ab-cred-label">Illinois &amp; Indiana Licensed</span>
+
+        <div class="ab-trust-card" role="listitem">
+          <div class="ab-trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="24" cy="24" r="18"/>
+              <path d="M6 24 C12 18 18 22 24 24 C30 26 36 22 42 24"/>
+              <path d="M6 24 C12 30 18 26 24 24 C30 22 36 28 42 24"/>
+              <line x1="24" y1="6" x2="24" y2="42"/>
+            </svg>
+          </div>
+          <p class="ab-trust-name">Nationwide<br>Client Support</p>
         </div>
+
       </div>
 
     </div>
