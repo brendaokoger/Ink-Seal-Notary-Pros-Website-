@@ -6,7 +6,7 @@
 /* ── reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html  { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; overflow-x: clip; }
-body  { font-family: var(--sans); background: var(--ivory); color: var(--navy); }
+body  { font-family: var(--sans); background: var(--ivory); color: var(--navy); overflow-x: hidden; }
 a     { text-decoration: none; color: inherit; }
 img   { display: block; max-width: 100%; }
 ul    { list-style: none; }
@@ -669,6 +669,7 @@ ul    { list-style: none; }
   display: inline-flex; align-items: center; justify-content: center;
   background: transparent;
   border: 1px solid var(--gold);
+  border-radius: 16px;
   color: var(--navy);
   font-size: .66rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
   padding: 19px 44px;
@@ -7778,4 +7779,197 @@ a.btn-gold:hover {
   .ab-services .ab-services-grid { grid-template-columns: 1fr; gap: 18px; }
   .ab-services-lead     { margin-bottom: 40px; }
   .ab-services-h        { font-size: clamp(1.4rem, 5.5vw, 1.9rem); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — PREMIUM REDESIGN  (ft-* namespace)
+   ═══════════════════════════════════════════════════════════ */
+
+/* .footer { background: var(--navy-dark); } defined above */
+
+/* ── Brand strip ── */
+.ft-brand-strip {
+  padding: 72px 0 44px;
+  text-align: center;
+}
+.ft-logo-link { display: inline-block; }
+.ft-logo {
+  height: 172px;
+  width: auto;
+  max-width: 440px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 22px;
+}
+.ft-tagline {
+  font-family: 'Manrope', var(--sans);
+  font-size: .54rem;
+  font-weight: 600;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  line-height: 2;
+  opacity: .82;
+}
+
+/* ── Thin gold divider rule ── */
+.ft-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212,175,55,.3) 22%,
+    rgba(212,175,55,.3) 78%,
+    transparent
+  );
+}
+
+/* ── Main link columns ── */
+.ft-body { padding: 52px 0 56px; }
+.ft-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 1fr;
+  gap: 0 56px;
+  align-items: start;
+}
+.ft-col-title {
+  font-family: 'Manrope', var(--sans);
+  font-size: .52rem;
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  line-height: 1;
+}
+.ft-col-title--spaced { margin-top: 30px; }
+
+/* Link list */
+.ft-list { list-style: none; padding: 0; margin: 0; }
+.ft-list li { margin: 0; }
+.ft-link {
+  display: block;
+  font-size: .82rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.56);
+  padding: 5px 0;
+  line-height: 1.4;
+  transition: color .18s;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.ft-link:hover { color: var(--gold); }
+
+/* Contact list */
+.ft-contact-list { list-style: none; padding: 0; margin: 0 0 4px; }
+.ft-contact-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 10px;
+}
+.ft-contact-icon {
+  width: 14px; height: 14px;
+  color: var(--gold-3); flex-shrink: 0; margin-top: 3px;
+}
+
+/* Hours */
+.ft-hours { list-style: none; padding: 0; margin: 0; }
+.ft-hours li {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 8px; padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.ft-hours li:last-child { border-bottom: none; }
+.ft-day  { font-size: .7rem; font-weight: 300; color: rgba(255,255,255,.4); white-space: nowrap; }
+.ft-time { font-size: .7rem; font-weight: 500; color: rgba(255,255,255,.64); text-align: right; }
+
+/* Service areas */
+.ft-areas { list-style: none; padding: 0; margin: 0 0 8px; }
+.ft-areas li {
+  display: flex; align-items: center; gap: 7px;
+  font-size: .78rem; color: rgba(255,255,255,.58);
+  padding: 3px 0;
+}
+.ft-areas li::before {
+  content: '◆'; font-size: .28rem;
+  color: var(--gold-2); flex-shrink: 0;
+}
+.ft-areas-note {
+  font-size: .67rem; font-weight: 300; line-height: 1.72;
+  color: rgba(255,255,255,.3);
+  margin-bottom: 22px;
+}
+
+/* Social icons */
+.ft-social { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.ft-social-link {
+  width: 34px; height: 34px;
+  border: 1px solid rgba(212,175,55,.24);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.ft-social-link:hover {
+  border-color: rgba(212,175,55,.52);
+  background: rgba(212,175,55,.08);
+  transform: translateY(-2px);
+}
+
+/* Google Reviews badge */
+.ft-reviews {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 13px; border: 1px solid rgba(212,175,55,.2);
+  border-radius: 5px; text-decoration: none;
+  transition: border-color .2s, background .2s;
+}
+.ft-reviews:hover {
+  border-color: rgba(212,175,55,.44);
+  background: rgba(212,175,55,.06);
+}
+.ft-stars { color: var(--gold); font-size: .88rem; letter-spacing: -.3px; line-height: 1; }
+.ft-reviews-text {
+  font-size: .6rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(255,255,255,.5);
+}
+
+/* ── Footer bar ── */
+.ft-bar {
+  border-top: 1px solid rgba(255,255,255,.07);
+  background: rgba(0,0,0,.2);
+  padding: 18px 0 14px;
+}
+.ft-bar-inner {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.ft-copy { font-size: .7rem; color: rgba(255,255,255,.3); }
+.ft-legal { display: flex; align-items: center; gap: 10px; }
+.ft-legal span { color: rgba(255,255,255,.18); font-size: .7rem; }
+.ft-legal-link { font-size: .7rem; color: rgba(255,255,255,.36); transition: color .18s; }
+.ft-legal-link:hover { color: var(--gold); }
+.ft-disclaimer {
+  font-size: .64rem; font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,.22);
+  text-align: center;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+
+/* ── Footer responsive ── */
+@media (max-width: 960px) {
+  .ft-brand-strip { padding: 60px 0 36px; }
+  .ft-logo        { height: 145px; max-width: 370px; }
+  .ft-grid        { grid-template-columns: 1fr 1fr; gap: 36px 48px; }
+}
+@media (max-width: 580px) {
+  .ft-brand-strip { padding: 48px 0 30px; }
+  .ft-logo        { height: 100px; max-width: 260px; }
+  .ft-tagline     { font-size: .47rem; letter-spacing: .16em; }
+  .ft-body        { padding: 40px 0 44px; }
+  .ft-grid        { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .ft-bar-inner   { flex-direction: column; gap: 8px; text-align: center; }
+  .ft-legal       { justify-content: center; }
+}
+@media (max-width: 400px) {
+  .ft-logo { height: 84px; max-width: 218px; }
+  .ft-grid { grid-template-columns: 1fr; gap: 28px; }
 }
