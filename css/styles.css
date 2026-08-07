@@ -7457,26 +7457,26 @@ a.btn-gold:hover {
 }
 .ab-open-h1 {
   font-family: var(--serif);
-  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.8rem);
   font-weight: 600;
   color: var(--navy);
-  letter-spacing: -.025em;
-  line-height: 1.12;
-  margin-bottom: 36px;
+  letter-spacing: -.022em;
+  line-height: 1.14;
+  margin-bottom: 32px;
 }
 .ab-open-lead {
-  font-size: .97rem;
+  font-size: .96rem;
   font-weight: 300;
-  line-height: 1.86;
+  line-height: 1.9;
   color: var(--txt-b);
-  margin-bottom: 22px;
+  margin-bottom: 26px;
 }
 .ab-open-body {
   font-size: .88rem;
   font-weight: 300;
-  line-height: 1.84;
+  line-height: 1.88;
   color: var(--txt-b);
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 .ab-open-body:last-child { margin-bottom: 0; }
 
@@ -7493,6 +7493,11 @@ a.btn-gold:hover {
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 0 14px 52px rgba(10,25,47,.12), 0 2px 6px rgba(10,25,47,.05);
+  transition: box-shadow .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+}
+.ab-open-portrait-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 72px rgba(10,25,47,.16), 0 4px 12px rgba(10,25,47,.06);
 }
 .ab-open-portrait-img {
   width: 100%;
@@ -7553,17 +7558,22 @@ a.btn-gold:hover {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 32px 16px 36px;
+  padding: 36px 16px 40px;
   border-right: 1px solid var(--border);
   gap: 16px;
+  transition: background .22s;
+  cursor: default;
 }
+.ab-trust-card:hover { background: rgba(212,175,55,.025); }
 .ab-trust-card:last-child { border-right: none; }
 .ab-trust-icon {
   width: 34px;
   height: 34px;
   color: var(--gold);
   flex-shrink: 0;
+  transition: transform .38s cubic-bezier(.16,1,.3,1);
 }
+.ab-trust-card:hover .ab-trust-icon { transform: translateY(-4px); }
 .ab-trust-name {
   font-family: 'Manrope', var(--sans);
   font-size: .54rem;
@@ -7572,6 +7582,51 @@ a.btn-gold:hover {
   text-transform: uppercase;
   color: var(--navy);
   line-height: 1.65;
+}
+
+/* ── Services editorial intro (about page) ── */
+.ab-services-lead {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 56px;
+}
+.ab-services-eyebrow {
+  display: block;
+  font-family: 'Manrope', var(--sans);
+  font-size: .55rem;
+  font-weight: 600;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.ab-services-h {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.ab-services-intro {
+  font-size: .9rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--txt-b);
+}
+/* 2×2 service grid on about page */
+.ab-services .ab-services-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 0;
+}
+.ab-services .ab-service-card {
+  padding: 48px 32px 44px;
+}
+.ab-services .ab-service-desc {
+  font-size: .84rem;
+  line-height: 1.82;
 }
 
 /* ── The Standard: dark conviction section ── */
@@ -7682,7 +7737,7 @@ a.btn-gold:hover {
 }
 @media (max-width: 580px) {
   .ab-open-grid         { padding-top: 36px; padding-bottom: 40px; gap: 24px; }
-  .ab-open-h1           { font-size: clamp(1.9rem, 7vw, 2.6rem); margin-bottom: 24px; }
+  .ab-open-h1           { font-size: clamp(1.75rem, 7vw, 2.3rem); margin-bottom: 22px; }
   .ab-open-lead         { font-size: .9rem; }
   .ab-open-body         { font-size: .84rem; }
   .ab-open-portrait-frame { width: 220px; }
@@ -7690,6 +7745,9 @@ a.btn-gold:hover {
   .ab-standard-quote    { font-size: clamp(1.15rem, 5.2vw, 1.65rem); margin-bottom: 36px; }
   .ab-standard          { padding: 60px 0 72px; }
   .ab-standard-rule     { margin-bottom: 40px; }
-  .ab-trust-card        { padding: 24px 12px 28px; gap: 12px; }
+  .ab-trust-card        { padding: 28px 12px 32px; gap: 12px; }
   .ab-trust-name        { font-size: .5rem; letter-spacing: .16em; }
+  .ab-services .ab-services-grid { grid-template-columns: 1fr; gap: 18px; }
+  .ab-services-lead     { margin-bottom: 40px; }
+  .ab-services-h        { font-size: clamp(1.4rem, 5.5vw, 1.9rem); }
 }

@@ -100,7 +100,11 @@
       '.sec-label', '.h-section', '.section-lead',
       '.service-card', '.feat-item', '.process-step',
       '.on-info-card', '.contact-block',
-      '.faq-item', '.inc-card', '.review-invite'
+      '.faq-item', '.inc-card', '.review-invite',
+      /* About page */
+      '.ab-open-portrait-col', '.ab-open-text',
+      '.ab-trust-card', '.ab-pillar', '.ab-service-card',
+      '.ab-services-lead', '.ab-cta-inner'
     ];
     var revealEls = Array.from(document.querySelectorAll(revealSels.join(',')));
     if (revealEls.length) {
