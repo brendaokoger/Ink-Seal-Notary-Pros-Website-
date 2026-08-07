@@ -7427,3 +7427,260 @@ a.btn-gold:hover {
   .tr-success-actions { flex-direction: column; align-items: stretch; }
   .tr-success-btn     { text-align: center; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ABOUT PAGE — REDESIGNED
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Opening: two-column intro ── */
+.ab-open {
+  padding-top: var(--hh);
+  background: var(--ivory);
+}
+.ab-open-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 72px;
+  align-items: start;
+  padding-top: 88px;
+  padding-bottom: 64px;
+}
+.ab-open-eyebrow {
+  display: block;
+  font-family: 'Manrope', var(--sans);
+  font-size: .56rem;
+  font-weight: 600;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 22px;
+}
+.ab-open-h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: -.025em;
+  line-height: 1.12;
+  margin-bottom: 36px;
+}
+.ab-open-lead {
+  font-size: .97rem;
+  font-weight: 300;
+  line-height: 1.86;
+  color: var(--txt-b);
+  margin-bottom: 22px;
+}
+.ab-open-body {
+  font-size: .88rem;
+  font-weight: 300;
+  line-height: 1.84;
+  color: var(--txt-b);
+  margin-bottom: 18px;
+}
+.ab-open-body:last-child { margin-bottom: 0; }
+
+/* Portrait column */
+.ab-open-portrait-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+}
+.ab-open-portrait-frame {
+  width: 100%;
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 14px 52px rgba(10,25,47,.12), 0 2px 6px rgba(10,25,47,.05);
+}
+.ab-open-portrait-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  object-position: center 10%;
+  display: block;
+}
+.ab-open-attribution {
+  text-align: center;
+  padding-top: 20px;
+}
+.ab-open-attr-rule {
+  width: 36px;
+  height: 1px;
+  background: var(--gold-3);
+  opacity: .6;
+  margin: 0 auto 14px;
+}
+.ab-open-attr-name {
+  font-family: var(--serif);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 4px;
+}
+.ab-open-attr-title {
+  font-size: .74rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--txt-m);
+  line-height: 1.5;
+}
+
+/* Credential strip */
+.ab-credential-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding: 28px 0;
+  gap: 0;
+}
+.ab-cred-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 32px;
+}
+.ab-cred-gem {
+  font-size: .42rem;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.ab-cred-label {
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--navy);
+  white-space: nowrap;
+}
+.ab-cred-rule {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ── The Standard: dark conviction section ── */
+.ab-standard {
+  background: var(--navy-dark);
+  padding: 108px 0 120px;
+  position: relative;
+  overflow: hidden;
+}
+.ab-standard-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.ab-standard-quote {
+  font-family: var(--script);
+  font-style: italic;
+  font-size: clamp(1.35rem, 2.4vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.54;
+  color: var(--gold-2);
+  letter-spacing: .022em;
+  margin: 0 auto 48px;
+  padding: 0;
+  border: none;
+  max-width: 780px;
+}
+.ab-standard-rule {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+.ab-standard-rule-line {
+  flex: 0 0 64px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .28;
+}
+.ab-standard-gem {
+  font-size: .38rem;
+  color: var(--gold);
+  opacity: .6;
+}
+.ab-standard-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  text-align: left;
+}
+.ab-pillar {
+  padding: 40px 36px;
+  border-top: 1px solid rgba(212,175,55,.14);
+}
+.ab-pillar + .ab-pillar {
+  border-left: 1px solid rgba(212,175,55,.1);
+}
+.ab-pillar-num {
+  font-family: var(--display);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: rgba(212,175,55,.15);
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: .06em;
+}
+.ab-pillar-h {
+  font-family: var(--serif);
+  font-size: .92rem;
+  font-weight: 600;
+  letter-spacing: -.014em;
+  color: rgba(255,255,255,.88);
+  margin-bottom: 14px;
+  line-height: 1.3;
+}
+.ab-pillar-p {
+  font-size: .81rem;
+  font-weight: 300;
+  line-height: 1.84;
+  color: rgba(255,255,255,.5);
+}
+
+/* ── Responsive overrides — About redesign ── */
+@media (max-width: 960px) {
+  .ab-open-grid         { grid-template-columns: 1fr 260px; gap: 48px; }
+  .ab-open-portrait-img { height: 340px; }
+}
+@media (max-width: 840px) {
+  .ab-open-grid         { grid-template-columns: 1fr; gap: 40px; padding-top: 52px; padding-bottom: 52px; }
+  .ab-open-portrait-col { flex-direction: row; align-items: flex-start; gap: 20px; }
+  .ab-open-portrait-frame { width: 190px; flex-shrink: 0; }
+  .ab-open-portrait-img { height: 240px; }
+  .ab-open-attribution  { text-align: left; padding-top: 8px; }
+  .ab-open-attr-rule    { margin-left: 0; }
+  .ab-standard          { padding: 76px 0 88px; }
+  .ab-standard-pillars  { grid-template-columns: 1fr; }
+  .ab-pillar            { padding: 28px 0; }
+  .ab-pillar + .ab-pillar { border-left: none; border-top: 1px solid rgba(212,175,55,.12); }
+  .ab-cred-rule         { display: none; }
+  .ab-cred-item         { padding: 6px 20px; }
+}
+@media (max-width: 580px) {
+  .ab-open-grid         { padding-top: 36px; padding-bottom: 44px; gap: 28px; }
+  .ab-open-h1           { font-size: clamp(1.9rem, 7vw, 2.6rem); margin-bottom: 24px; }
+  .ab-open-lead         { font-size: .9rem; }
+  .ab-open-body         { font-size: .84rem; }
+  .ab-open-portrait-col { flex-direction: column; align-items: center; }
+  .ab-open-portrait-frame { width: 180px; }
+  .ab-open-portrait-img { height: 220px; }
+  .ab-open-attribution  { text-align: center; padding-top: 14px; }
+  .ab-open-attr-rule    { margin: 0 auto 14px; }
+  .ab-standard-quote    { font-size: clamp(1.15rem, 5.2vw, 1.65rem); margin-bottom: 36px; }
+  .ab-standard          { padding: 60px 0 72px; }
+  .ab-standard-rule     { margin-bottom: 40px; }
+  .ab-credential-strip  { padding: 18px 0; }
+  .ab-cred-item         { padding: 5px 14px; }
+  .ab-cred-label        { font-size: .52rem; letter-spacing: .18em; }
+}
