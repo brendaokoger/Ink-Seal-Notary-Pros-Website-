@@ -7800,7 +7800,8 @@ a.btn-gold:hover {
   object-fit: contain;
   display: block;
   margin: 0 auto 22px;
-  filter: brightness(0) invert(1);
+  /* gold tint: colourises the dark PNG to match --gold (#D4AF37) */
+  filter: brightness(0) invert(1) sepia(1) saturate(4) hue-rotate(5deg) brightness(0.88);
 }
 .ft-tagline {
   font-family: 'Manrope', var(--sans);
