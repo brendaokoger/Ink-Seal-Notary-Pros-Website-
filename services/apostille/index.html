@@ -3,44 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Apostille Document Review | Ink &amp; Seal Notary Pros</title>
-  <meta name="description" content="Submit your document for apostille review with Ink &amp; Seal Notary Pros. Our team will review your document and contact you with pricing, processing instructions, and next steps." />
-  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/services/apostille" />
+  <title>Apostille Services | Ink &amp; Seal Notary Pros</title>
+  <meta name="description" content="Professional apostille services for vital records, corporate documents, Illinois-issued papers, and more. State-commissioned notary handling apostille authentication for international use nationwide." />
+  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/services/apostille/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/styles.css" />
 </head>
 <body>
 
-  <!-- ═══ FORM HEADER ═════════════════════════════════════ -->
-  <header class="form-hdr" id="header">
-    <div class="form-hdr-inner container">
-      <a href="/" class="form-hdr-logo" aria-label="Ink &amp; Seal Notary Pros — Home">
-        <img src="/images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" />
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="/" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="/images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
       </a>
-      <div class="form-hdr-center">
-        <a href="/#services" class="form-hdr-back">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="10" height="10"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-          Back to Services
-        </a>
-        <span class="form-hdr-title">Apostille Document Review</span>
-      </div>
-      <div class="form-hdr-step">
-        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 8</span>
-        <span class="form-hdr-step-name" id="fhStepName">Select Your Service</span>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="/"                    class="nav-link">Home</a>
+        <a href="/about.html"          class="nav-link">About Us</a>
+        <a href="/services/apostille/" class="nav-link active">Services</a>
+        <a href="/faq.html"            class="nav-link">FAQs</a>
+        <a href="/#contact"            class="nav-link">Contact</a>
+      </nav>
+      <div class="header-end">
+        <a href="#start" class="btn-nav">Start My Apostille</a>
+        <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-bar"></span>
+          <span class="burger-text">MENU</span>
+        </button>
       </div>
     </div>
-    <div class="form-hdr-progress">
-      <div class="form-hdr-bar" id="fhBar" style="width:16.7%"></div>
+    <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
+      <div class="drawer-inner">
+        <a href="/"                    class="drawer-link">Home</a>
+        <a href="/about.html"          class="drawer-link">About Us</a>
+        <a href="/services/apostille/" class="drawer-link">Services</a>
+        <a href="/faq.html"            class="drawer-link">FAQs</a>
+        <a href="/#contact"            class="drawer-link">Contact</a>
+        <a href="#start"               class="drawer-link drawer-cta">Start My Apostille</a>
+      </div>
     </div>
   </header>
+
+  <!-- ═══ HUB HERO ════════════════════════════════════════ -->
+  <section class="aph-hero" aria-label="Apostille Services">
+    <div class="container">
+      <span class="aph-hero-tag">Professional Apostille Services</span>
+      <h1 class="aph-hero-h">Apostille Services</h1>
+      <p class="aph-hero-sub">Document authentication for international use — handled with precision, discretion, and concierge-level care.</p>
+      <div class="aph-hero-btns">
+        <a href="#start"    class="btn-hero">Start My Apostille</a>
+        <a href="#doc-type" class="btn-hero-2">Find Your Service</a>
+      </div>
+      <div class="aph-hero-rule" aria-hidden="true">
+        <span class="aph-hero-rule-line"></span>
+        <span class="aph-hero-rule-gem">◆</span>
+        <span class="aph-hero-rule-line"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT TYPE OF DOCUMENT? ═══════════════════════════ -->
+  <section class="aph-doctype" id="doc-type" aria-labelledby="aph-doctype-heading">
+    <div class="container">
+      <div class="aph-doctype-hdr">
+        <span class="aph-doctype-tag">Document Type Guide</span>
+        <h2 class="aph-doctype-h" id="aph-doctype-heading">What Type of Document Do You Need Apostilled?</h2>
+        <p class="aph-doctype-sub">Select the category that best fits your document for specialized guidance and a streamlined review process.</p>
+      </div>
+      <div class="aph-card-grid">
+
+        <!-- Card 1: Illinois -->
+        <div class="aph-card">
+          <div class="aph-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>
+          </div>
+          <h3 class="aph-card-h">Illinois Apostille Services</h3>
+          <p class="aph-card-p">Have a document issued or notarized in Illinois? We can help determine the appropriate authentication and Apostille process.</p>
+          <a href="/services/apostille/illinois/" class="aph-card-cta">
+            Explore Illinois Apostille Services
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 2: Vital Records -->
+        <div class="aph-card">
+          <div class="aph-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+          </div>
+          <h3 class="aph-card-h">Birth, Marriage &amp; Death Certificate Apostille</h3>
+          <p class="aph-card-p">Get vital records reviewed for Apostille eligibility and international use.</p>
+          <a href="/services/apostille/vital-records/" class="aph-card-cta">
+            Apostille a Vital Record
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 3: Corporate -->
+        <div class="aph-card">
+          <div class="aph-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <h3 class="aph-card-h">Corporate &amp; Commercial Document Apostille</h3>
+          <p class="aph-card-p">Apostille assistance for corporate records, business documents, commercial agreements, certificates, and other company documentation.</p>
+          <a href="/services/apostille/corporate/" class="aph-card-cta">
+            Explore Business Apostille Services
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 4: Translation + Apostille -->
+        <div class="aph-card">
+          <div class="aph-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="M22 22l-5-10-5 10"/><path d="M14 18h6"/></svg>
+          </div>
+          <h3 class="aph-card-h">Certified Document Translation + Apostille</h3>
+          <p class="aph-card-p">Need both translation and Apostille assistance? Coordinate both services through one streamlined process.</p>
+          <a href="/services/apostille/translation-apostille/" class="aph-card-cta">
+            Explore Translation + Apostille
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FORM ANCHOR + INTRO ══════════════════════════════ -->
+  <div id="start">
+    <div class="aph-form-intro">
+      <div class="container">
+        <span class="aph-form-intro-tag">Secure Review Request</span>
+        <h2 class="aph-form-intro-h">Begin Your Apostille Review</h2>
+        <p class="aph-form-intro-sub">Complete the form below and our team will review your documents and contact you with pricing and next steps.</p>
+      </div>
+    </div>
+
+    <!-- Sticky form progress bar (JS targets: fhStepLabel, fhStepName, fhBar) -->
+    <div class="aph-form-progress" role="status" aria-live="polite" aria-label="Form progress">
+      <div class="container aph-form-progress-inner">
+        <a href="#doc-type" class="aph-form-back">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="11" height="11" aria-hidden="true"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+          Back to Services
+        </a>
+        <div class="aph-form-step-wrap">
+          <span class="aph-form-step-label" id="fhStepLabel">Step 1 of 8</span>
+          <span class="aph-form-step-name"  id="fhStepName">Select Your Service</span>
+        </div>
+        <div style="min-width:100px"></div>
+      </div>
+      <div class="aph-form-progress-track">
+        <div class="aph-form-progress-fill" id="fhBar" style="width:12.5%"></div>
+      </div>
+    </div>
 
   <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
   <section class="on-form-section">
     <div class="container">
 
-      <p class="form-intro-text">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
       <p class="price-disclaimer price-disclaimer--form">No payment is required to submit this form. Apostille service pricing starts at $175 per eligible document after your documents are reviewed and your order is approved. You will not be charged for submitting a request. Final pricing depends on document type, destination country, processing speed, notarization requirements, government fees, shipping, and any additional services.</p>
 
       <!-- Success message -->
@@ -981,6 +1104,7 @@
 
     </div>
   </section>
+  </div><!-- /#start -->
 
   <!-- ═══ FOOTER ════════════════════════════════════════════ -->
   <footer class="footer">
@@ -998,13 +1122,21 @@
       </div>
 
       <div class="footer-col">
-        <h5 class="fc-title">Services</h5>
+        <h5 class="fc-title">Apostille Services</h5>
         <ul>
-          <li><a href="/services/apostille"   class="fc-link">Apostille Services</a></li>
-          <li><a href="/services/notary"      class="fc-link">Remote Online Notarization</a></li>
-          <li><a href="/services/translation" class="fc-link">Certified Translation Services</a></li>
-          <li><a href="/#services"   class="fc-link">Embassy Legalization Services</a></li>
-          <li><a href="/#services"   class="fc-link">Fingerprinting Services</a></li>
+          <li><a href="/services/apostille/"                        class="fc-link">Apostille Services</a></li>
+          <li><a href="/services/apostille/illinois/"               class="fc-link">Illinois Apostille</a></li>
+          <li><a href="/services/apostille/vital-records/"          class="fc-link">Vital Records Apostille</a></li>
+          <li><a href="/services/apostille/corporate/"              class="fc-link">Corporate Document Apostille</a></li>
+          <li><a href="/services/apostille/translation-apostille/"  class="fc-link">Translation + Apostille</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 class="fc-title">All Services</h5>
+        <ul>
+          <li><a href="/services/notary/"         class="fc-link">Remote Online Notarization</a></li>
+          <li><a href="/services/translation/"    class="fc-link">Certified Translation</a></li>
+          <li><a href="/services/fingerprinting/" class="fc-link">FD-258 Fingerprinting</a></li>
         </ul>
       </div>
 
@@ -1097,7 +1229,9 @@
           if (!sigPadReady) { initSigPad(); sigPadReady = true; }
           else if (sigResizeFn) { sigResizeFn(); }
         }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        var startEl = document.getElementById('start');
+        if (startEl) startEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
       function validateStep(n) {
@@ -1462,7 +1596,9 @@
             // Show thank-you page after GAS submission was attempted
             arForm.style.display = 'none';
             if (arSuccess) arSuccess.classList.add('show');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            var startEl = document.getElementById('start');
+            if (startEl) startEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
 
             // ── Step 2: Google Drive upload (background — never blocks the client) ──
             if (selectedFiles.length === 0) {
