@@ -7934,6 +7934,37 @@ a.btn-gold:hover {
   text-transform: uppercase; color: rgba(255,255,255,.5);
 }
 
+/* ── Credential strip (between ft-body and ft-bar) ── */
+.ft-cred-strip {
+  border-top: 1px solid rgba(212,175,55,.13);
+  border-bottom: 1px solid rgba(212,175,55,.13);
+  padding: 13px 0;
+}
+.ft-cred-list {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 4px 0;
+}
+.ft-cred-list li {
+  font-family: 'Manrope', var(--sans);
+  font-size: .56rem; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255,255,255,.38);
+  padding: 3px 24px;
+  position: relative;
+}
+.ft-cred-list li:not(:last-child)::after {
+  content: '◆';
+  font-size: .26rem; color: var(--gold-2); opacity: .5;
+  position: absolute; right: -1px; top: 50%;
+  transform: translateY(-50%);
+}
+@media (max-width: 640px) {
+  .ft-cred-list { flex-direction: column; align-items: center; gap: 5px; }
+  .ft-cred-list li { padding: 0; }
+  .ft-cred-list li:not(:last-child)::after { display: none; }
+}
+
 /* ── Footer bar ── */
 .ft-bar {
   border-top: 1px solid rgba(255,255,255,.07);
