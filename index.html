@@ -120,103 +120,121 @@
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
   <link rel="stylesheet" href="css/styles.css?v=6" />
   <style>
-#is-intro{position:fixed;inset:0;background:#0A192F;z-index:9999;display:flex;align-items:center;justify-content:center;pointer-events:none}
+/* Intro: navy overlay shrinks left-to-right behind the signing quill */
+#is-intro{position:fixed;inset:0;z-index:9997;background:#0A192F;will-change:clip-path}
 .is-intro-skip #is-intro{display:none}
-#is-intro-inner{display:flex;flex-direction:column;align-items:center;gap:20px;padding:0 32px;width:100%;max-width:560px}
-#is-intro-logo{opacity:0;transform:translateY(8px);will-change:opacity,transform}
-#is-intro-logo img{display:block;width:210px;max-width:56vw;height:auto;filter:brightness(0) invert(1);pointer-events:none;user-select:none;-webkit-user-select:none}
-#is-intro-sig-svg{display:block;width:100%;height:auto;overflow:visible}
-#is-pen{will-change:transform}
-#is-intro[data-exit]{opacity:0;transition:opacity .38s cubic-bezier(.4,0,.6,1)}
-@media(prefers-reduced-motion:reduce){#is-intro{display:none!important}}
+/* Gold stroke floats above everything */
+#is-stroke-svg{position:fixed;inset:0;z-index:9998;pointer-events:none;width:100%;height:100%;overflow:visible}
+/* Quill: the actual brand pen, rides at the wipe boundary */
+#is-quill{position:fixed;z-index:9999;pointer-events:none;top:0;left:0;will-change:transform,opacity}
+@media(prefers-reduced-motion:reduce){#is-intro,#is-stroke-svg,#is-quill{display:none!important}}
   </style>
   <script>(function(){try{if(sessionStorage.getItem('is-intro-v1')){document.documentElement.classList.add('is-intro-skip')}}catch(e){}}());</script>
 </head>
 <body>
 
   <!-- ═══ INTRO ANIMATION ══════════════════════════════════ -->
-  <div id="is-intro" aria-hidden="true" role="presentation">
-    <div id="is-intro-inner">
-      <div id="is-intro-logo">
-        <img src="images/ink-seal-feather-logo-web.png" alt="" draggable="false" />
-      </div>
-      <svg id="is-intro-sig-svg" viewBox="0 0 590 85" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <defs>
-          <filter id="is-glow" x="-25%" y="-80%" width="150%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <path id="is-sig-path"
-          d="M 30,65 C 36,28 58,16 100,32 C 130,44 144,64 182,56 C 208,49 230,34 275,44 C 304,51 322,66 365,57 C 394,50 424,34 474,42 C 502,48 524,62 558,54"
-          fill="none" stroke="#D4AF37" stroke-width="2.1"
-          stroke-linecap="round" stroke-linejoin="round"
-          filter="url(#is-glow)"
-        />
-        <g id="is-pen" opacity="0">
-          <rect x="-2" y="-26" width="4" height="24" rx="1" fill="#C5A059"/>
-          <path d="M -2,-2 L 2,-2 L 0,0 Z" fill="#8B6914"/>
-          <line x1="0.6" y1="-24" x2="0.6" y2="-8" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
-        </g>
-      </svg>
-    </div>
-  </div>
+  <div id="is-intro" aria-hidden="true"></div>
+  <svg id="is-stroke-svg" aria-hidden="true">
+    <defs>
+      <filter id="is-glow" x="-30%" y="-120%" width="160%" height="340%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <path id="is-stroke-path" fill="none" stroke="#D4AF37" stroke-width="1.6"
+      stroke-linecap="round" stroke-linejoin="round" filter="url(#is-glow)"/>
+  </svg>
+  <img id="is-quill" src="images/ink-seal-quill.png" alt="" aria-hidden="true" draggable="false"/>
   <script>
 (function(){
   'use strict';
-  var EL=document.getElementById('is-intro');
-  if(!EL||document.documentElement.classList.contains('is-intro-skip'))return;
+  if(document.documentElement.classList.contains('is-intro-skip'))return;
+  var OVL=document.getElementById('is-intro');
+  if(!OVL)return;
   try{sessionStorage.setItem('is-intro-v1','1');}catch(e){}
 
-  var path=document.getElementById('is-sig-path');
-  var pen=document.getElementById('is-pen');
-  var logo=document.getElementById('is-intro-logo');
-
-  var T_APPEAR=80,T_SIGN=780,T_PAUSE=30,T_LOGO_IN=270,T_HOLD=180,T_EXIT=360;
+  var QUILL=document.getElementById('is-quill');
+  var SSVG=document.getElementById('is-stroke-svg');
+  var SPATH=document.getElementById('is-stroke-path');
 
   function eio(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
 
-  var L=path.getTotalLength();
-  path.style.strokeDasharray=L;
-  path.style.strokeDashoffset=L;
+  var vw=window.innerWidth, vh=window.innerHeight;
 
-  var p0=path.getPointAtLength(0),p1=path.getPointAtLength(1);
-  var a0=Math.atan2(p1.y-p0.y,p1.x-p0.x)*180/Math.PI+45;
-  pen.setAttribute('transform','translate('+p0.x+','+p0.y+') rotate('+a0+')');
+  /* Quill display size — 6.5% of viewport width, clamped 52-84px */
+  var QW=Math.min(84,Math.max(52,vw*0.065));
+  /* Nib tip offset within the quill element (from its top-left corner)
+     Source image: 152×223px, tip measured at (10, 217) */
+  var TIP_X=QW*(10/152);
+  var TIP_Y=QW*(217/152);
+  QUILL.style.width=QW+'px';
+  QUILL.style.opacity='0';
 
-  var t0=null;
+  /* Signature stroke path — a single elegant arc across the full viewport */
+  var x0=vw*0.12, y0=vh*0.50;
+  var cx1=vw*0.30, cy1=vh*0.38;
+  var cx2=vw*0.68, cy2=vh*0.60;
+  var x3=vw*0.96, y3=vh*0.46;
+  SPATH.setAttribute('d','M '+x0+','+y0+' C '+cx1+','+cy1+' '+cx2+','+cy2+' '+x3+','+y3);
+  var L=SPATH.getTotalLength();
+  SPATH.style.strokeDasharray=L;
+  SPATH.style.strokeDashoffset=L;
+
+  /* Place quill at stroke start, tip aligned */
+  var pt0=SPATH.getPointAtLength(0);
+  QUILL.style.left=(pt0.x-TIP_X)+'px';
+  QUILL.style.top=(pt0.y-TIP_Y)+'px';
+
+  /* Timings (ms): appear → sign → linger → fade-stroke */
+  var TA=130, TS=840, TL=90, TF=400;
+  var signDone=false, t0=null;
+
   function tick(now){
     if(!t0)t0=now;
     var dt=now-t0;
 
-    if(dt<T_APPEAR){
-      pen.setAttribute('opacity',(dt/T_APPEAR).toFixed(3));
-      requestAnimationFrame(tick);
-      return;
+    /* Phase 1 — quill fades in */
+    if(dt<TA){
+      QUILL.style.opacity=(dt/TA).toFixed(3);
+      requestAnimationFrame(tick); return;
     }
 
-    var p=Math.min((dt-T_APPEAR)/T_SIGN,1);
-    var ep=eio(p);
-    var d=ep*L;
+    /* Phase 2 — quill sweeps right drawing the stroke; overlay wipes with it */
+    if(dt<TA+TS){
+      var p=Math.min((dt-TA)/TS,1);
+      var ep=eio(p);
+      var len=ep*L;
+      SPATH.style.strokeDashoffset=L*(1-ep);
+      var pt=SPATH.getPointAtLength(len);
+      QUILL.style.left=(pt.x-TIP_X)+'px';
+      QUILL.style.top=(pt.y-TIP_Y)+'px';
+      /* Clip-path: navy overlay covers only the right side of the pen */
+      var cx=((pt.x/vw)*100).toFixed(2);
+      OVL.style.clipPath='polygon('+cx+'% 0,100% 0,100% 100%,'+cx+'% 100%)';
+      requestAnimationFrame(tick); return;
+    }
 
-    path.style.strokeDashoffset=L*(1-ep);
+    /* Signing complete — remove overlay and quill once */
+    if(!signDone){
+      signDone=true;
+      OVL.style.clipPath='polygon(100% 0,100% 0,100% 100%,100% 100%)';
+      QUILL.style.opacity='0';
+      if(OVL.parentNode)OVL.parentNode.removeChild(OVL);
+      if(QUILL.parentNode)QUILL.parentNode.removeChild(QUILL);
+    }
 
-    var pt=path.getPointAtLength(d);
-    var pt2=path.getPointAtLength(Math.min(d+1.5,L));
-    var ang=Math.atan2(pt2.y-pt.y,pt2.x-pt.x)*180/Math.PI+45;
-    pen.setAttribute('transform','translate('+pt.x+','+pt.y+') rotate('+ang+')');
-    pen.setAttribute('opacity','1');
+    /* Phase 3 — brief linger: stroke rests on top of revealed homepage */
+    if(dt<TA+TS+TL){requestAnimationFrame(tick); return;}
 
-    if(p<1){requestAnimationFrame(tick);return;}
+    /* Phase 4 — stroke fades out, homepage takes over completely */
+    if(dt<TA+TS+TL+TF){
+      SSVG.style.opacity=(1-(dt-TA-TS-TL)/TF).toFixed(3);
+      requestAnimationFrame(tick); return;
+    }
 
-    setTimeout(function(){
-      pen.setAttribute('opacity','0');
-      logo.style.cssText+=';transition:opacity '+T_LOGO_IN+'ms ease,transform '+T_LOGO_IN+'ms ease;opacity:1;transform:translateY(0)';
-      setTimeout(function(){
-        EL.setAttribute('data-exit','');
-        setTimeout(function(){EL.parentNode&&EL.parentNode.removeChild(EL);},T_EXIT+60);
-      },T_LOGO_IN+T_HOLD);
-    },T_PAUSE);
+    /* Done */
+    if(SSVG.parentNode)SSVG.parentNode.removeChild(SSVG);
   }
 
   requestAnimationFrame(tick);
