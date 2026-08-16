@@ -242,10 +242,9 @@
      TS    — quill signs         (navy solid, stroke draws)
      TQ    — quill lifts         (navy still covers page)
      TP    — signature holds     (deliberate pause on navy)
-     TWIPE — wipe sweep          (gold line sweeps L→R, navy clips away)
-     TFADE — stroke fades        (clean handover to homepage)
-     Total ≈ 2 590 ms                                                      */
-  var TA=150, TS=1480, TQ=110, TP=350, TWIPE=360, TFADE=150;
+     TWIPE — wipe sweep          (gold line + overlay removed at sweep end)
+     Total ≈ 2 450 ms                                                      */
+  var TA=150, TS=1480, TQ=110, TP=350, TWIPE=360;
   var rmd={q:0,o:0,s:0}, t0=null;
 
   function rm(el,k){
@@ -313,17 +312,8 @@
       requestAnimationFrame(tick); return;
     }
 
-    /* Wipe complete: overlay and wipe line gone */
+    /* Wipe complete: overlay, wipe line, and signature all gone together */
     rm(OVL,'o');
-    WL.setAttribute('opacity','0');
-
-    /* ── Phase 5: stroke fades (→ +TFADE) — clean handover to homepage ─ */
-    if(dt<TA+TS+TQ+TP+TWIPE+TFADE){
-      SSVG.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP-TWIPE)/TFADE).toFixed(3);
-      requestAnimationFrame(tick); return;
-    }
-
-    /* Done */
     rm(SSVG,'s');
   }
 
