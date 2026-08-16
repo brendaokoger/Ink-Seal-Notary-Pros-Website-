@@ -126,7 +126,9 @@
   background:#0A192F;
   pointer-events:all;        /* block all page interaction while visible */
 }
-.is-intro-skip #is-intro{display:none!important}
+.is-intro-skip #is-intro,
+.is-intro-skip #is-stroke-svg,
+.is-intro-skip #is-quill{display:none!important}
 
 /* Gold stroke SVG — above overlay, stays visible as navy dissolves */
 #is-stroke-svg{
@@ -312,9 +314,12 @@
       requestAnimationFrame(tick); return;
     }
 
-    /* Wipe complete: overlay, wipe line, and signature all gone together */
+    /* Wipe complete: force invisible this paint frame, then remove from DOM */
     rm(OVL,'o');
+    SSVG.style.opacity='0';   /* hide immediately — don't wait for DOM removal */
+    QUILL.style.opacity='0';
     rm(SSVG,'s');
+    rm(QUILL,'q');
   }
 
   requestAnimationFrame(tick);
