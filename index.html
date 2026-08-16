@@ -232,7 +232,7 @@
      TOF — overlay fades           (homepage revealed, stroke stays on top)
      TSF — stroke fades            (clean handover to homepage)
      Total ≈ 1 380 ms                                                      */
-  var TA=150, TS=1480, TQ=110, TOF=330, TSF=200;
+  var TA=150, TS=1480, TQ=110, TP=350, TOF=330, TSF=200;
   var rmd={q:0,o:0,s:0}, t0=null;
 
   function rm(el,k){
@@ -274,20 +274,26 @@
     /* Quill is gone; remove from DOM */
     rm(QUILL,'q');
 
-    /* ── Phase 3: overlay fades (TA+TS+TQ → TA+TS+TQ+TOF) ────────────
+    /* ── Phase 3: pause (TA+TS+TQ → TA+TS+TQ+TP) ──────────────────────
+       Completed signature rests on navy — deliberate, premium beat.      */
+    if(dt<TA+TS+TQ+TP){
+      requestAnimationFrame(tick); return;
+    }
+
+    /* ── Phase 4: overlay fades (→ +TOF) ───────────────────────────────
        Homepage is revealed beneath the fading navy.
        Gold stroke stays fully visible on top — it IS the reveal moment. */
-    if(dt<TA+TS+TQ+TOF){
-      OVL.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ)/TOF).toFixed(3);
+    if(dt<TA+TS+TQ+TP+TOF){
+      OVL.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP)/TOF).toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
     /* Overlay is gone; remove from DOM */
     rm(OVL,'o');
 
-    /* ── Phase 4: stroke fades (→ +TSF) — clean handover to homepage ─── */
-    if(dt<TA+TS+TQ+TOF+TSF){
-      SSVG.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TOF)/TSF).toFixed(3);
+    /* ── Phase 5: stroke fades (→ +TSF) — clean handover to homepage ─── */
+    if(dt<TA+TS+TQ+TP+TOF+TSF){
+      SSVG.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP-TOF)/TSF).toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
