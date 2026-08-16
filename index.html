@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=7" />
+  <link rel="stylesheet" href="css/styles.css?v=8" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -767,13 +767,189 @@
   }());
   </script>
 
-  <!-- ═══ MARQUEE RIBBON (section break) ══════════════════════ -->
-  <div class="marquee-ribbon" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-content">APOSTILLE <span class="mq-sep">◆</span> ONLINE NOTARY <span class="mq-sep">◆</span> FINGERPRINTING <span class="mq-sep">◆</span> TRANSLATION <span class="mq-sep">◆</span>&nbsp;&nbsp;</span>
-      <span class="marquee-content" aria-hidden="true">APOSTILLE <span class="mq-sep">◆</span> ONLINE NOTARY <span class="mq-sep">◆</span> FINGERPRINTING <span class="mq-sep">◆</span> TRANSLATION <span class="mq-sep">◆</span>&nbsp;&nbsp;</span>
-    </div>
-  </div>
+  <!-- ═══ INK LINE SERVICE RIBBON ═════════════════════════════
+       The gold ink introduced by the pen animation continues
+       guiding the visitor through Ink & Seal.
+       ══════════════════════════════════════════════════════════ -->
+  <div class="ink-ribbon" id="ink-ribbon">
+
+    <!-- Keyboard / screen-reader accessible nav (visually hidden until focused) -->
+    <nav class="ink-sr-nav" aria-label="Our services">
+      <a href="/services/apostille/">Apostille</a>
+      <a href="/services/notary/">Remote Online Notary</a>
+      <a href="/services/translation/">Certified Translation</a>
+      <a href="/services/fingerprinting/">FD-258 Fingerprinting</a>
+    </nav>
+
+    <!-- Visual scrolling track — aria-hidden; keyboard nav above handles AT access -->
+    <div class="ink-track" id="ink-track" aria-hidden="true">
+
+      <!-- ── Set A ── -->
+      <div class="ink-set">
+
+        <div class="ink-item" data-svc="apostille">
+          <!-- Micro: seal circle draws, cross fades in -->
+          <svg class="ink-micro ink-micro-apos" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <circle class="seal-ring" cx="13" cy="4.5" r="3.5"/>
+            <line x1="13" y1="2.2" x2="13" y2="6.8"/>
+            <line x1="10.5" y1="4.5" x2="15.5" y2="4.5"/>
+          </svg>
+          <a href="/services/apostille/" tabindex="-1">APOSTILLE</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="ron">
+          <!-- Micro: checkmark draws left to right -->
+          <svg class="ink-micro ink-micro-ron" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+            <polyline class="chk" points="3,6 8,8.5 23,1.5"/>
+          </svg>
+          <a href="/services/notary/" tabindex="-1">REMOTE ONLINE NOTARY</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="trans">
+          <!-- Micro: single ink line gently splits into two (two languages) -->
+          <svg class="ink-micro ink-micro-trans" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <line class="ln-a" x1="2" y1="4.5" x2="24" y2="4.5"/>
+            <line class="ln-b" x1="2" y1="4.5" x2="24" y2="4.5"/>
+          </svg>
+          <a href="/services/translation/" tabindex="-1">CERTIFIED TRANSLATION</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="fp">
+          <!-- Micro: fingerprint arcs draw outward from inner to outer -->
+          <svg class="ink-micro ink-micro-fp" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <path class="arc-a" d="M 11 8.5 Q 13 2.0 15 8.5"/>
+            <path class="arc-b" d="M 8.5 8.5 Q 13 -0.5 17.5 8.5"/>
+            <path class="arc-c" d="M 6 8.5 Q 13 -3.5 20 8.5"/>
+          </svg>
+          <a href="/services/fingerprinting/" tabindex="-1">FD-258 FINGERPRINTING</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+      </div><!-- /ink-set A -->
+
+      <!-- ── Set B (seamless-loop duplicate) ── -->
+      <div class="ink-set">
+
+        <div class="ink-item" data-svc="apostille">
+          <svg class="ink-micro ink-micro-apos" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <circle class="seal-ring" cx="13" cy="4.5" r="3.5"/>
+            <line x1="13" y1="2.2" x2="13" y2="6.8"/>
+            <line x1="10.5" y1="4.5" x2="15.5" y2="4.5"/>
+          </svg>
+          <a href="/services/apostille/" tabindex="-1">APOSTILLE</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="ron">
+          <svg class="ink-micro ink-micro-ron" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round">
+            <polyline class="chk" points="3,6 8,8.5 23,1.5"/>
+          </svg>
+          <a href="/services/notary/" tabindex="-1">REMOTE ONLINE NOTARY</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="trans">
+          <svg class="ink-micro ink-micro-trans" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <line class="ln-a" x1="2" y1="4.5" x2="24" y2="4.5"/>
+            <line class="ln-b" x1="2" y1="4.5" x2="24" y2="4.5"/>
+          </svg>
+          <a href="/services/translation/" tabindex="-1">CERTIFIED TRANSLATION</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+        <div class="ink-item" data-svc="fp">
+          <svg class="ink-micro ink-micro-fp" viewBox="0 0 26 9" fill="none" stroke="currentColor" stroke-width="0.85" stroke-linecap="round">
+            <path class="arc-a" d="M 11 8.5 Q 13 2.0 15 8.5"/>
+            <path class="arc-b" d="M 8.5 8.5 Q 13 -0.5 17.5 8.5"/>
+            <path class="arc-c" d="M 6 8.5 Q 13 -3.5 20 8.5"/>
+          </svg>
+          <a href="/services/fingerprinting/" tabindex="-1">FD-258 FINGERPRINTING</a>
+        </div>
+
+        <span class="ink-sep"></span>
+
+      </div><!-- /ink-set B -->
+
+    </div><!-- /ink-track -->
+
+  </div><!-- /ink-ribbon -->
+
+  <script>
+  /* ── INK LINE — center-zone micro-animation driver ───────── */
+  (function(){
+  'use strict';
+
+  var ribbon = document.getElementById('ink-ribbon');
+  var track  = document.getElementById('ink-track');
+  if (!ribbon || !track) return;
+
+  /* Respect reduced-motion: CSS already halts animation;
+     we just don't run the JS center-detection either.     */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+
+  var items  = track.querySelectorAll('.ink-item');
+  var active = null;
+  var raf    = null;
+
+  /* Half-width of the center activation zone in px */
+  var HALF_ZONE = 140;
+
+  function update() {
+    var cx = window.innerWidth / 2;
+    var nearest = null;
+    var bestDist = HALF_ZONE;
+
+    for (var i = 0; i < items.length; i++) {
+      var r = items[i].getBoundingClientRect();
+      var dist = Math.abs(r.left + r.width * 0.5 - cx);
+      if (dist < bestDist) { bestDist = dist; nearest = items[i]; }
+    }
+
+    if (nearest !== active) {
+      if (active) active.classList.remove('ink-center');
+      active = nearest;
+      if (active) active.classList.add('ink-center');
+    }
+
+    raf = requestAnimationFrame(update);
+  }
+
+  /* Pause rAF while hovering (CSS pauses the animation;
+     no need to keep scanning while items are stationary). */
+  ribbon.addEventListener('mouseenter', function(){
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+  });
+  ribbon.addEventListener('mouseleave', function(){
+    if (!raf) raf = requestAnimationFrame(update);
+  });
+
+  /* Stop rAF when ribbon is off-screen (performance) */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      if (entries[0].isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(update);
+      } else {
+        if (raf) { cancelAnimationFrame(raf); raf = null; }
+        if (active) { active.classList.remove('ink-center'); active = null; }
+      }
+    }, { threshold: 0 });
+    io.observe(ribbon);
+  } else {
+    raf = requestAnimationFrame(update);
+  }
+
+  }());
+  </script>
 
   <!-- ═══ SERVICES ══════════════════════════════════════════ -->
   <section class="services" id="services">
