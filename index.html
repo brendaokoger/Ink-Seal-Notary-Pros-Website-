@@ -310,16 +310,17 @@
       /* Gold boundary line rides the clip edge */
       WL.setAttribute('x1', xPx.toFixed(1));
       WL.setAttribute('x2', xPx.toFixed(1));
-      WL.setAttribute('opacity', pw<1 ? '1' : '0');
+      /* Stroke fades out over the last 30% of the wipe so it is already
+         fully gone before cleanup runs — avoids a one-frame linger */
+      var sOp = epw < 0.70 ? 1 : Math.max(0,(1-epw)/0.30);
+      SPATH.style.opacity = sOp.toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
-    /* Wipe complete: force invisible this paint frame, then remove from DOM */
+    /* Wipe complete: stroke is already opacity-0; remove elements from DOM */
+    SSVG.style.display='none';
     rm(OVL,'o');
-    SSVG.style.opacity='0';   /* hide immediately — don't wait for DOM removal */
-    QUILL.style.opacity='0';
     rm(SSVG,'s');
-    rm(QUILL,'q');
   }
 
   requestAnimationFrame(tick);
