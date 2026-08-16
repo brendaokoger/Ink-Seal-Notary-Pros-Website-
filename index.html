@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=6" />
+  <link rel="stylesheet" href="css/styles.css?v=7" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -364,6 +364,408 @@
            fetchpriority="high" />
     </div>
   </section>
+
+  <!-- ═══ WHERE IS YOUR DOCUMENT GOING? (Phase 2) ═════════════ -->
+  <section class="drt-section" id="document-routing">
+    <div class="drt-container">
+
+      <div class="drt-header">
+        <p class="drt-eyebrow">Document Destination Guide</p>
+        <h2 class="drt-title">Where Is Your Document Going?</h2>
+        <p class="drt-subtitle">Tell us your destination and document type — we'll show you exactly what's needed.</p>
+      </div>
+
+      <!-- Progress indicator -->
+      <div class="drt-progress" role="list" aria-label="Steps">
+        <div class="drt-prog-item is-active" id="drt-si-1" role="listitem">
+          <div class="drt-prog-num" aria-hidden="true">1</div>
+          <span class="drt-prog-label">Destination</span>
+        </div>
+        <div class="drt-prog-connector" id="drt-con-1" aria-hidden="true"></div>
+        <div class="drt-prog-item" id="drt-si-2" role="listitem">
+          <div class="drt-prog-num" aria-hidden="true">2</div>
+          <span class="drt-prog-label">Document</span>
+        </div>
+        <div class="drt-prog-connector" id="drt-con-2" aria-hidden="true"></div>
+        <div class="drt-prog-item" id="drt-si-3" role="listitem">
+          <div class="drt-prog-num" aria-hidden="true">3</div>
+          <span class="drt-prog-label">Your Plan</span>
+        </div>
+      </div>
+
+      <!-- Panel 1: Country search -->
+      <div class="drt-panel is-active" id="drt-p1" role="group" aria-label="Step 1: Select destination country">
+        <div class="drt-search-wrap">
+          <svg class="drt-search-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="drt-search-input" id="drt-csearch" type="search"
+            placeholder="Search country (e.g. Germany, Mexico, Philippines…)"
+            autocomplete="off" spellcheck="false"
+            aria-label="Search for destination country"
+            aria-controls="drt-clist" aria-autocomplete="list" />
+        </div>
+        <ul class="drt-clist" id="drt-clist" role="listbox" aria-label="Countries"></ul>
+      </div>
+
+      <!-- Panel 2: Document type -->
+      <div class="drt-panel" id="drt-p2" role="group" aria-label="Step 2: Select document type">
+        <button class="drt-back-btn" id="drt-back1" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          <span id="drt-back1-lbl">Back</span>
+        </button>
+        <p class="drt-panel-q">What type of document needs authentication?</p>
+        <div class="drt-doc-grid" id="drt-docgrid" role="listbox" aria-label="Document types"></div>
+      </div>
+
+      <!-- Panel 3: Summary + CTA -->
+      <div class="drt-panel" id="drt-p3" role="group" aria-label="Step 3: Review your plan">
+        <button class="drt-back-btn" id="drt-back2" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          Change document type
+        </button>
+        <div class="drt-summary-card">
+          <div class="drt-sum-rows">
+            <div class="drt-sum-row">
+              <div class="drt-sum-ico" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="drt-sum-lbl">Destination</div>
+                <div class="drt-sum-val" id="drt-sv-country"></div>
+              </div>
+            </div>
+            <div class="drt-sum-row">
+              <div class="drt-sum-ico" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="drt-sum-lbl">Document</div>
+                <div class="drt-sum-val" id="drt-sv-doc"></div>
+              </div>
+            </div>
+          </div>
+          <div class="drt-sum-note-wrap">
+            <p class="drt-sum-note" id="drt-sv-note"></p>
+          </div>
+        </div>
+        <a href="/services/apostille/#start" class="drt-cta-btn" id="drt-cta">
+          Get My Apostille Quote
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="drt-restart-btn" id="drt-restart" type="button">Start over</button>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+  (function(){
+  'use strict';
+
+  /* ── Country data: [flag, name, hague, popular] ─────────── */
+  var C=[
+    ['🇦🇱','Albania',true,false],
+    ['🇦🇷','Argentina',true,true],
+    ['🇦🇲','Armenia',true,false],
+    ['🇦🇺','Australia',true,true],
+    ['🇦🇹','Austria',true,false],
+    ['🇦🇿','Azerbaijan',true,false],
+    ['🇧🇭','Bahrain',false,false],
+    ['🇧🇩','Bangladesh',false,false],
+    ['🇧🇾','Belarus',true,false],
+    ['🇧🇪','Belgium',true,false],
+    ['🇧🇴','Bolivia',true,false],
+    ['🇧🇦','Bosnia & Herzegovina',true,false],
+    ['🇧🇷','Brazil',true,true],
+    ['🇧🇬','Bulgaria',true,false],
+    ['🇨🇦','Canada',false,true],
+    ['🇨🇱','Chile',true,false],
+    ['🇨🇳','China',false,true],
+    ['🇨🇴','Colombia',true,true],
+    ['🇨🇷','Costa Rica',true,false],
+    ['🇭🇷','Croatia',true,false],
+    ['🇨🇺','Cuba',false,false],
+    ['🇨🇾','Cyprus',true,false],
+    ['🇨🇿','Czech Republic',true,false],
+    ['🇩🇰','Denmark',true,false],
+    ['🇩🇴','Dominican Republic',true,false],
+    ['🇪🇨','Ecuador',true,false],
+    ['🇪🇬','Egypt',true,false],
+    ['🇸🇻','El Salvador',true,false],
+    ['🇪🇪','Estonia',true,false],
+    ['🇫🇮','Finland',true,false],
+    ['🇫🇷','France',true,true],
+    ['🇬🇪','Georgia',true,false],
+    ['🇩🇪','Germany',true,true],
+    ['🇬🇭','Ghana',false,false],
+    ['🇬🇷','Greece',true,false],
+    ['🇬🇹','Guatemala',true,false],
+    ['🇭🇳','Honduras',true,false],
+    ['🇭🇺','Hungary',true,false],
+    ['🇮🇳','India',true,true],
+    ['🇮🇩','Indonesia',false,false],
+    ['🇮🇪','Ireland',true,false],
+    ['🇮🇱','Israel',true,false],
+    ['🇮🇹','Italy',true,true],
+    ['🇯🇵','Japan',true,true],
+    ['🇯🇴','Jordan',false,false],
+    ['🇰🇿','Kazakhstan',true,false],
+    ['🇰🇪','Kenya',false,false],
+    ['🇰🇬','Kyrgyzstan',true,false],
+    ['🇰🇼','Kuwait',false,false],
+    ['🇱🇻','Latvia',true,false],
+    ['🇱🇧','Lebanon',false,false],
+    ['🇱🇹','Lithuania',true,false],
+    ['🇱🇺','Luxembourg',true,false],
+    ['🇲🇾','Malaysia',false,false],
+    ['🇲🇹','Malta',true,false],
+    ['🇲🇽','Mexico',true,true],
+    ['🇲🇩','Moldova',true,false],
+    ['🇲🇪','Montenegro',true,false],
+    ['🇲🇦','Morocco',true,false],
+    ['🇳🇱','Netherlands',true,false],
+    ['🇳🇿','New Zealand',true,false],
+    ['🇳🇮','Nicaragua',true,false],
+    ['🇳🇬','Nigeria',false,false],
+    ['🇲🇰','North Macedonia',true,false],
+    ['🇳🇴','Norway',true,false],
+    ['🇴🇲','Oman',false,false],
+    ['🇵🇰','Pakistan',false,false],
+    ['🇵🇦','Panama',true,false],
+    ['🇵🇾','Paraguay',true,false],
+    ['🇵🇪','Peru',true,false],
+    ['🇵🇭','Philippines',true,true],
+    ['🇵🇱','Poland',true,true],
+    ['🇵🇹','Portugal',true,false],
+    ['🇶🇦','Qatar',false,false],
+    ['🇷🇴','Romania',true,false],
+    ['🇷🇺','Russia',true,false],
+    ['🇸🇦','Saudi Arabia',true,false],
+    ['🇸🇳','Senegal',false,false],
+    ['🇷🇸','Serbia',true,false],
+    ['🇸🇬','Singapore',false,false],
+    ['🇸🇰','Slovakia',true,false],
+    ['🇸🇮','Slovenia',true,false],
+    ['🇿🇦','South Africa',true,false],
+    ['🇰🇷','South Korea',true,true],
+    ['🇪🇸','Spain',true,true],
+    ['🇱🇰','Sri Lanka',false,false],
+    ['🇸🇪','Sweden',true,false],
+    ['🇨🇭','Switzerland',true,false],
+    ['🇹🇯','Tajikistan',true,false],
+    ['🇹🇿','Tanzania',false,false],
+    ['🇹🇭','Thailand',false,false],
+    ['🇹🇳','Tunisia',true,false],
+    ['🇹🇷','Turkey',true,false],
+    ['🇦🇪','UAE',true,false],
+    ['🇺🇦','Ukraine',true,true],
+    ['🇬🇧','United Kingdom',true,true],
+    ['🇺🇾','Uruguay',true,false],
+    ['🇺🇿','Uzbekistan',true,false],
+    ['🇻🇪','Venezuela',true,false],
+    ['🇻🇳','Vietnam',false,false]
+  ];
+
+  /* ── Document types: [svgPaths, label, formValue] ────────── */
+  var SVG_ATTR='width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+  var D=[
+    ['<circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/>',
+     'Birth Certificate','Birth Certificate'],
+    ['<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+     'Marriage Certificate','Marriage Certificate'],
+    ['<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="8" y1="9" x2="10" y2="9"/>',
+     'Death Certificate','Death Certificate'],
+    ['<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+     'Divorce Decree','Divorce Decree'],
+    ['<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+     'Diploma / Transcript','School Document'],
+    ['<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+     'Power of Attorney','Power of Attorney'],
+    ['<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+     'Corporate Document','Business Document'],
+    ['<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>',
+     'Affidavit','Affidavit'],
+    ['<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><polyline points="9 12 11 14 15 10"/>',
+     'Background Check','Other']
+  ];
+
+  /* ── State ───────────────────────────────────────────────── */
+  var st={country:'',hague:true,docLabel:'',docVal:''};
+
+  /* ── DOM refs ────────────────────────────────────────────── */
+  var p1=document.getElementById('drt-p1'),
+      p2=document.getElementById('drt-p2'),
+      p3=document.getElementById('drt-p3'),
+      csearch=document.getElementById('drt-csearch'),
+      clist=document.getElementById('drt-clist'),
+      docgrid=document.getElementById('drt-docgrid'),
+      back1lbl=document.getElementById('drt-back1-lbl'),
+      svCountry=document.getElementById('drt-sv-country'),
+      svDoc=document.getElementById('drt-sv-doc'),
+      svNote=document.getElementById('drt-sv-note'),
+      cta=document.getElementById('drt-cta');
+
+  /* ── Step indicator ──────────────────────────────────────── */
+  function setStep(n){
+    for(var i=1;i<=3;i++){
+      var si=document.getElementById('drt-si-'+i);
+      si.classList.remove('is-active','is-done');
+      if(i<n) si.classList.add('is-done');
+      else if(i===n) si.classList.add('is-active');
+    }
+    for(var j=1;j<=2;j++){
+      var con=document.getElementById('drt-con-'+j);
+      if(j<n) con.classList.add('is-filled');
+      else con.classList.remove('is-filled');
+    }
+    p1.classList.toggle('is-active',n===1);
+    p2.classList.toggle('is-active',n===2);
+    p3.classList.toggle('is-active',n===3);
+    if(n===1) csearch.focus();
+  }
+
+  /* ── Country list ────────────────────────────────────────── */
+  function renderCountries(q){
+    q=(q||'').toLowerCase().trim();
+    var items=[],i;
+    for(i=0;i<C.length;i++){
+      if(q&&C[i][1].toLowerCase().indexOf(q)===-1) continue;
+      items.push(C[i]);
+    }
+    if(!q){
+      items.sort(function(a,b){
+        if(a[3]&&!b[3]) return -1;
+        if(!a[3]&&b[3]) return 1;
+        return a[1].localeCompare(b[1]);
+      });
+    }
+    if(!items.length){
+      clist.innerHTML='<li class="drt-no-results">No results — try another spelling</li>';
+      return;
+    }
+    var html='';
+    for(i=0;i<items.length;i++){
+      var c=items[i];
+      html+='<li class="drt-country-opt" role="option" data-n="'+esc(c[1])+'" data-h="'+(c[2]?'1':'0')+'" tabindex="0">'
+        +'<span class="drt-cflag" aria-hidden="true">'+c[0]+'</span>'
+        +'<span class="drt-cname">'+esc(c[1])+'</span>'
+        +(!q&&c[3]?'<span class="drt-pop-badge">Popular</span>':'')
+        +'</li>';
+    }
+    clist.innerHTML=html;
+    var opts=clist.querySelectorAll('.drt-country-opt');
+    for(var k=0;k<opts.length;k++){
+      (function(el){
+        el.addEventListener('click',function(){ pickCountry(el); });
+        el.addEventListener('keydown',function(e){
+          if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pickCountry(el); }
+        });
+      })(opts[k]);
+    }
+  }
+
+  function pickCountry(el){
+    st.country=el.getAttribute('data-n');
+    st.hague=el.getAttribute('data-h')==='1';
+    back1lbl.textContent='← '+st.country;
+    renderDoctypes();
+    setStep(2);
+  }
+
+  /* ── Doctype grid ────────────────────────────────────────── */
+  function renderDoctypes(){
+    var html='',i;
+    for(i=0;i<D.length;i++){
+      var d=D[i];
+      html+='<div class="drt-doc-card" role="option" tabindex="0" data-idx="'+i+'" aria-label="'+esc(d[1])+'">'
+        +'<div class="drt-doc-ico" aria-hidden="true"><svg '+SVG_ATTR+'>'+d[0]+'</svg></div>'
+        +'<span class="drt-doc-lbl">'+esc(d[1])+'</span>'
+        +'</div>';
+    }
+    docgrid.innerHTML=html;
+    var cards=docgrid.querySelectorAll('.drt-doc-card');
+    for(var k=0;k<cards.length;k++){
+      (function(card){
+        card.addEventListener('click',function(){ pickDoc(card); });
+        card.addEventListener('keydown',function(e){
+          if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pickDoc(card); }
+        });
+      })(cards[k]);
+    }
+  }
+
+  function pickDoc(card){
+    var idx=parseInt(card.getAttribute('data-idx'),10);
+    var d=D[idx];
+    st.docLabel=d[1]; st.docVal=d[2];
+
+    // Remove prior selection
+    var prev=docgrid.querySelector('.is-sel');
+    if(prev) prev.classList.remove('is-sel');
+    card.classList.add('is-sel');
+
+    // Fill summary
+    svCountry.textContent=st.country;
+    svDoc.textContent=st.docLabel;
+
+    var note=st.hague
+      ? 'Your '+st.docLabel+' requires an apostille to be legally recognized in '+st.country+'. Under the Hague Convention, no embassy legalization is needed — just the apostille stamp. We handle the full process: notarization, certification, apostille, and delivery.'
+      : 'Documents for '+st.country+' require notarization and may need additional authentication beyond an apostille. Our team will confirm the exact requirements and manage every step for you.';
+    svNote.textContent=note;
+
+    // Persist selections for apostille form
+    try{
+      sessionStorage.setItem('drtCountry',st.country);
+      sessionStorage.setItem('drtDocType',st.docVal);
+    }catch(e){}
+
+    setStep(3);
+  }
+
+  /* ── Back / restart ──────────────────────────────────────── */
+  document.getElementById('drt-back1').addEventListener('click',function(){ setStep(1); });
+  document.getElementById('drt-back2').addEventListener('click',function(){ setStep(2); });
+  document.getElementById('drt-restart').addEventListener('click',function(){
+    st={country:'',hague:true,docLabel:'',docVal:''};
+    csearch.value='';
+    renderCountries('');
+    setStep(1);
+  });
+
+  /* ── Search filter ───────────────────────────────────────── */
+  csearch.addEventListener('input',function(){ renderCountries(csearch.value); });
+
+  /* ── Keyboard arrow navigation in country list ───────────── */
+  csearch.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){
+      e.preventDefault();
+      var first=clist.querySelector('.drt-country-opt');
+      if(first) first.focus();
+    }
+  });
+  clist.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      e.preventDefault();
+      var focused=document.activeElement;
+      var opts=Array.prototype.slice.call(clist.querySelectorAll('.drt-country-opt'));
+      var idx=opts.indexOf(focused);
+      if(e.key==='ArrowDown') idx=Math.min(idx+1,opts.length-1);
+      else idx=Math.max(idx-1,0);
+      if(idx>=0) opts[idx].focus();
+      else csearch.focus();
+    }
+    if(e.key==='Escape') csearch.focus();
+  });
+
+  /* ── Helpers ─────────────────────────────────────────────── */
+  function esc(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ── Init ────────────────────────────────────────────────── */
+  renderCountries('');
+
+  }());
+  </script>
 
   <!-- ═══ MARQUEE RIBBON (section break) ══════════════════════ -->
   <div class="marquee-ribbon" aria-hidden="true">
