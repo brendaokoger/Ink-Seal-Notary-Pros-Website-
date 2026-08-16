@@ -120,121 +120,179 @@
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
   <link rel="stylesheet" href="css/styles.css?v=6" />
   <style>
-/* Intro: navy overlay shrinks left-to-right behind the signing quill */
-#is-intro{position:fixed;inset:0;z-index:9997;background:#0A192F;will-change:clip-path}
-.is-intro-skip #is-intro{display:none}
-/* Gold stroke floats above everything */
-#is-stroke-svg{position:fixed;inset:0;z-index:9998;pointer-events:none;width:100%;height:100%;overflow:visible}
-/* Quill: the actual brand pen, rides at the wipe boundary */
-#is-quill{position:fixed;z-index:9999;pointer-events:none;top:0;left:0;will-change:transform,opacity}
-@media(prefers-reduced-motion:reduce){#is-intro,#is-stroke-svg,#is-quill{display:none!important}}
+/* ── Intro overlay: solid navy, covers page completely until signing ends ── */
+#is-intro{
+  position:fixed;inset:0;z-index:9000;
+  background:#0A192F;
+  pointer-events:all;        /* block all page interaction while visible */
+}
+.is-intro-skip #is-intro{display:none!important}
+
+/* Gold stroke SVG — above overlay, stays visible as navy dissolves */
+#is-stroke-svg{
+  position:fixed;inset:0;z-index:9001;
+  pointer-events:none;
+  width:100%;height:100%;
+  overflow:visible;
+}
+
+/* Brand quill — topmost, moves with stroke tip */
+#is-quill{
+  position:fixed;z-index:9002;
+  pointer-events:none;
+  top:0;left:0;
+  display:block;
+}
+
+@media(prefers-reduced-motion:reduce){
+  #is-intro,#is-stroke-svg,#is-quill{display:none!important}
+}
   </style>
   <script>(function(){try{if(sessionStorage.getItem('is-intro-v1')){document.documentElement.classList.add('is-intro-skip')}}catch(e){}}());</script>
 </head>
 <body>
 
   <!-- ═══ INTRO ANIMATION ══════════════════════════════════ -->
-  <div id="is-intro" aria-hidden="true"></div>
+  <!--
+    Three-layer stack (page hidden until phase 3):
+      #is-quill      z:9002  — brand quill image, tracks stroke tip
+      #is-stroke-svg z:9001  — gold stroke, stays visible during overlay fade
+      #is-intro      z:9000  — solid navy overlay, fully hides page during signing
+    Sequence: quill appears → pen signs (navy stays solid) →
+              quill lifts → navy fades (stroke + homepage visible) → stroke fades
+  -->
+  <div id="is-intro" aria-hidden="true" role="presentation"></div>
+
   <svg id="is-stroke-svg" aria-hidden="true">
     <defs>
-      <filter id="is-glow" x="-30%" y="-120%" width="160%" height="340%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="b"/>
+      <filter id="is-glow" x="-40%" y="-150%" width="180%" height="400%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.4" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
     </defs>
-    <path id="is-stroke-path" fill="none" stroke="#D4AF37" stroke-width="1.6"
-      stroke-linecap="round" stroke-linejoin="round" filter="url(#is-glow)"/>
+    <path id="is-stroke-path"
+      fill="none" stroke="#D4AF37" stroke-width="1.8"
+      stroke-linecap="round" stroke-linejoin="round"
+      filter="url(#is-glow)"/>
   </svg>
+
   <img id="is-quill" src="images/ink-seal-quill.png" alt="" aria-hidden="true" draggable="false"/>
+
   <script>
 (function(){
   'use strict';
+  /* Skip on repeat visits — flag was set before this script ran */
   if(document.documentElement.classList.contains('is-intro-skip'))return;
   var OVL=document.getElementById('is-intro');
   if(!OVL)return;
+  /* Mark session so the animation won't replay */
   try{sessionStorage.setItem('is-intro-v1','1');}catch(e){}
 
   var QUILL=document.getElementById('is-quill');
-  var SSVG=document.getElementById('is-stroke-svg');
+  var SSVG =document.getElementById('is-stroke-svg');
   var SPATH=document.getElementById('is-stroke-path');
 
+  /* Ease in-out cubic */
   function eio(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
 
   var vw=window.innerWidth, vh=window.innerHeight;
 
-  /* Quill display size — 6.5% of viewport width, clamped 52-84px */
-  var QW=Math.min(84,Math.max(52,vw*0.065));
-  /* Nib tip offset within the quill element (from its top-left corner)
-     Source image: 152×223px, tip measured at (10, 217) */
-  var TIP_X=QW*(10/152);
-  var TIP_Y=QW*(217/152);
-  QUILL.style.width=QW+'px';
-  QUILL.style.opacity='0';
+  /* ── Quill sizing ────────────────────────────────────────────────────────
+     Display width: 12% of viewport, clamped 60–100px.
+     Source PNG: 152×223. Nib tip measured at pixel (10, 217).           */
+  var QW = Math.min(100, Math.max(60, vw * 0.12));
+  var TIP_X = QW * (10 / 152);   /* nib x from quill element top-left */
+  var TIP_Y = QW * (217 / 152);  /* nib y from quill element top-left */
+  QUILL.style.width   = QW + 'px';
+  QUILL.style.opacity = '0';
 
-  /* Signature stroke path — a single elegant arc across the full viewport */
-  var x0=vw*0.12, y0=vh*0.50;
-  var cx1=vw*0.30, cy1=vh*0.38;
-  var cx2=vw*0.68, cy2=vh*0.60;
-  var x3=vw*0.96, y3=vh*0.46;
-  SPATH.setAttribute('d','M '+x0+','+y0+' C '+cx1+','+cy1+' '+cx2+','+cy2+' '+x3+','+y3);
-  var L=SPATH.getTotalLength();
-  SPATH.style.strokeDasharray=L;
-  SPATH.style.strokeDashoffset=L;
+  /* ── Stroke path ─────────────────────────────────────────────────────────
+     A single elegant arc — starts left of center, sweeps to right edge.
+     All coordinates are percentage of viewport so it's fully responsive. */
+  var x0=vw*0.10, y0=vh*0.52;
+  var c1x=vw*0.30, c1y=vh*0.37;
+  var c2x=vw*0.68, c2y=vh*0.62;
+  var x3=vw*0.93, y3=vh*0.48;
+  SPATH.setAttribute('d',
+    'M '+x0+','+y0+' C '+c1x+','+c1y+' '+c2x+','+c2y+' '+x3+','+y3);
 
-  /* Place quill at stroke start, tip aligned */
-  var pt0=SPATH.getPointAtLength(0);
-  QUILL.style.left=(pt0.x-TIP_X)+'px';
-  QUILL.style.top=(pt0.y-TIP_Y)+'px';
+  var L = SPATH.getTotalLength();
+  SPATH.style.strokeDasharray  = L;
+  SPATH.style.strokeDashoffset = L;   /* hidden to start */
 
-  /* Timings (ms): appear → sign → linger → fade-stroke */
-  var TA=130, TS=840, TL=90, TF=400;
-  var signDone=false, t0=null;
+  /* Place quill tip exactly at stroke start */
+  var s0 = SPATH.getPointAtLength(0);
+  QUILL.style.left = (s0.x - TIP_X) + 'px';
+  QUILL.style.top  = (s0.y - TIP_Y) + 'px';
+
+  /* ── Phase durations (ms) ───────────────────────────────────────────────
+     TA  — quill fades in          (navy stays solid)
+     TS  — quill signs             (navy stays solid, stroke draws)
+     TQ  — quill lifts / fades out (navy still covers page)
+     TOF — overlay fades           (homepage revealed, stroke stays on top)
+     TSF — stroke fades            (clean handover to homepage)
+     Total ≈ 1 380 ms                                                      */
+  var TA=100, TS=680, TQ=80, TOF=320, TSF=200;
+  var rmd={q:0,o:0,s:0}, t0=null;
+
+  function rm(el,k){
+    if(!rmd[k]&&el&&el.parentNode){el.parentNode.removeChild(el);rmd[k]=1;}
+  }
 
   function tick(now){
     if(!t0)t0=now;
     var dt=now-t0;
 
-    /* Phase 1 — quill fades in */
+    /* ── Phase 0: quill appears (0 → TA) ─────────────────────────────── */
     if(dt<TA){
       QUILL.style.opacity=(dt/TA).toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
-    /* Phase 2 — quill sweeps right drawing the stroke; overlay wipes with it */
+    /* ── Phase 1: signing (TA → TA+TS) — overlay stays fully solid ───── */
     if(dt<TA+TS){
-      var p=Math.min((dt-TA)/TS,1);
-      var ep=eio(p);
-      var len=ep*L;
-      SPATH.style.strokeDashoffset=L*(1-ep);
-      var pt=SPATH.getPointAtLength(len);
-      QUILL.style.left=(pt.x-TIP_X)+'px';
-      QUILL.style.top=(pt.y-TIP_Y)+'px';
-      /* Clip-path: navy overlay covers only the right side of the pen */
-      var cx=((pt.x/vw)*100).toFixed(2);
-      OVL.style.clipPath='polygon('+cx+'% 0,100% 0,100% 100%,'+cx+'% 100%)';
+      var p  = Math.min((dt-TA)/TS, 1);
+      var ep = eio(p);
+      /* Reveal stroke behind quill */
+      SPATH.style.strokeDashoffset = (L*(1-ep)).toFixed(2);
+      /* Move quill so nib tip = current stroke endpoint */
+      var pt = SPATH.getPointAtLength(ep*L);
+      QUILL.style.left = (pt.x-TIP_X)+'px';
+      QUILL.style.top  = (pt.y-TIP_Y)+'px';
       requestAnimationFrame(tick); return;
     }
 
-    /* Signing complete — remove overlay and quill once */
-    if(!signDone){
-      signDone=true;
-      OVL.style.clipPath='polygon(100% 0,100% 0,100% 100%,100% 100%)';
-      QUILL.style.opacity='0';
-      if(OVL.parentNode)OVL.parentNode.removeChild(OVL);
-      if(QUILL.parentNode)QUILL.parentNode.removeChild(QUILL);
+    /* Ensure stroke is fully drawn before pen lifts */
+    SPATH.style.strokeDashoffset='0';
+
+    /* ── Phase 2: quill lifts (TA+TS → TA+TS+TQ) ─────────────────────── */
+    if(dt<TA+TS+TQ){
+      QUILL.style.opacity = Math.max(0, 1-(dt-TA-TS)/TQ).toFixed(3);
+      requestAnimationFrame(tick); return;
     }
 
-    /* Phase 3 — brief linger: stroke rests on top of revealed homepage */
-    if(dt<TA+TS+TL){requestAnimationFrame(tick); return;}
+    /* Quill is gone; remove from DOM */
+    rm(QUILL,'q');
 
-    /* Phase 4 — stroke fades out, homepage takes over completely */
-    if(dt<TA+TS+TL+TF){
-      SSVG.style.opacity=(1-(dt-TA-TS-TL)/TF).toFixed(3);
+    /* ── Phase 3: overlay fades (TA+TS+TQ → TA+TS+TQ+TOF) ────────────
+       Homepage is revealed beneath the fading navy.
+       Gold stroke stays fully visible on top — it IS the reveal moment. */
+    if(dt<TA+TS+TQ+TOF){
+      OVL.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ)/TOF).toFixed(3);
+      requestAnimationFrame(tick); return;
+    }
+
+    /* Overlay is gone; remove from DOM */
+    rm(OVL,'o');
+
+    /* ── Phase 4: stroke fades (→ +TSF) — clean handover to homepage ─── */
+    if(dt<TA+TS+TQ+TOF+TSF){
+      SSVG.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TOF)/TSF).toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
     /* Done */
-    if(SSVG.parentNode)SSVG.parentNode.removeChild(SSVG);
+    rm(SSVG,'s');
   }
 
   requestAnimationFrame(tick);
