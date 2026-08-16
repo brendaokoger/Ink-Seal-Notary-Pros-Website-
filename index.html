@@ -156,13 +156,8 @@
 
   <!-- ═══ INTRO ANIMATION ══════════════════════════════════ -->
   <!--
-    Three-layer stack (page hidden until phase 3):
-      #is-quill      z:9002  — brand quill image, tracks stroke tip
-      #is-stroke-svg z:9001  — gold stroke, stays visible during overlay fade
-      #is-intro      z:9000  — solid navy overlay, fully hides page during signing
     Sequence: quill appears → pen signs (navy solid) → quill lifts →
-              signature holds → gold wipe line sweeps L→R (navy clips away,
-              homepage revealed behind it) → stroke fades
+              signature holds → signature fades → overlay fades → homepage
   -->
   <div id="is-intro" aria-hidden="true" role="presentation"></div>
 
@@ -172,21 +167,11 @@
         <feGaussianBlur in="SourceGraphic" stdDeviation="2.4" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
-      <!-- Glow for the vertical wipe boundary — spreads horizontally only -->
-      <filter id="is-wipe-glow" x="-500%" y="0%" width="1100%" height="100%">
-        <feGaussianBlur stdDeviation="3" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
     </defs>
     <path id="is-stroke-path"
       fill="none" stroke="#D4AF37" stroke-width="1.8"
       stroke-linecap="round" stroke-linejoin="round"
       filter="url(#is-glow)"/>
-    <!-- Vertical wipe line: marks the reveal boundary during the final transition -->
-    <line id="is-wipe-line" x1="0" x2="0" y1="-50" y2="10000"
-      stroke="#D4AF37" stroke-width="1.5"
-      filter="url(#is-wipe-glow)"
-      opacity="0"/>
   </svg>
 
   <img id="is-quill" src="images/ink-seal-quill.png" alt="" aria-hidden="true" draggable="false"/>
@@ -204,7 +189,6 @@
   var QUILL=document.getElementById('is-quill');
   var SSVG =document.getElementById('is-stroke-svg');
   var SPATH=document.getElementById('is-stroke-path');
-  var WL   =document.getElementById('is-wipe-line');
 
   /* Ease in-out cubic */
   function eio(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
@@ -240,13 +224,14 @@
   QUILL.style.top  = (s0.y - TIP_Y) + 'px';
 
   /* ── Phase durations (ms) ───────────────────────────────────────────────
-     TA    — quill fades in      (navy solid)
-     TS    — quill signs         (navy solid, stroke draws)
-     TQ    — quill lifts         (navy still covers page)
-     TP    — signature holds     (deliberate pause on navy)
-     TWIPE — wipe sweep          (gold line + overlay removed at sweep end)
-     Total ≈ 2 450 ms                                                      */
-  var TA=150, TS=1480, TQ=110, TP=350, TWIPE=360;
+     TA  — quill fades in      (navy solid)
+     TS  — quill signs         (navy solid, stroke draws)
+     TQ  — quill lifts         (navy still covers page)
+     TP  — signature holds     (deliberate pause — everything on navy)
+     TSF — signature fades out (pen + stroke gone before homepage opens)
+     TOF — overlay fades       (homepage reveals, nothing on top)
+     Total ≈ 2 570 ms                                                      */
+  var TA=150, TS=1480, TQ=110, TP=350, TSF=180, TOF=300;
   var rmd={q:0,o:0,s:0}, t0=null;
 
   function rm(el,k){
@@ -294,33 +279,26 @@
       requestAnimationFrame(tick); return;
     }
 
-    /* ── Phase 4: wipe sweep (→ +TWIPE) ────────────────────────────────
-       A vertical gold line sweeps left→right across the full viewport.
-       The navy overlay clips away behind it (inset from left), so the
-       homepage is revealed exactly where the line has passed.
-       The completed signature stays visible on top throughout.           */
-    if(dt<TA+TS+TQ+TP+TWIPE){
-      var pw = Math.min((dt-TA-TS-TQ-TP)/TWIPE, 1);
-      /* Ease-out cubic: confident swipe that decelerates at the edge */
-      var epw = 1-Math.pow(1-pw,3);
-      var xPx  = epw * vw;
-      var xPct = (epw * 100).toFixed(2);
-      /* Clip overlay: navy retreats left→right behind the sweep line */
-      OVL.style.clipPath = 'inset(0 0 0 '+xPct+'%)';
-      /* Gold boundary line rides the clip edge */
-      WL.setAttribute('x1', xPx.toFixed(1));
-      WL.setAttribute('x2', xPx.toFixed(1));
-      /* Stroke fades out over the last 30% of the wipe so it is already
-         fully gone before cleanup runs — avoids a one-frame linger */
-      var sOp = epw < 0.70 ? 1 : Math.max(0,(1-epw)/0.30);
-      SPATH.style.opacity = sOp.toFixed(3);
+    /* ── Phase 4: signature fades out (→ +TSF) ─────────────────────────
+       Pen and stroke disappear completely — navy still covers page.       */
+    if(dt<TA+TS+TQ+TP+TSF){
+      SSVG.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP)/TSF).toFixed(3);
       requestAnimationFrame(tick); return;
     }
 
-    /* Wipe complete: stroke is already opacity-0; remove elements from DOM */
+    /* Signature fully gone — remove before homepage opens */
+    SSVG.style.opacity='0';
     SSVG.style.display='none';
-    rm(OVL,'o');
     rm(SSVG,'s');
+
+    /* ── Phase 5: overlay fades (→ +TOF) — homepage reveals cleanly ──── */
+    if(dt<TA+TS+TQ+TP+TSF+TOF){
+      OVL.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP-TSF)/TOF).toFixed(3);
+      requestAnimationFrame(tick); return;
+    }
+
+    /* Done */
+    rm(OVL,'o');
   }
 
   requestAnimationFrame(tick);
