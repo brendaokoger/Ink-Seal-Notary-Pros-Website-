@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=8" />
+  <link rel="stylesheet" href="css/styles.css?v=9" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -343,8 +343,6 @@
   <!-- ═══ HERO ═════════════════════════════════════════════ -->
   <section class="hero" id="home">
     <div class="hero-left hero-animate">
-      <p class="hero-eyebrow">Trusted. Secure. Professional.</p>
-
       <h1 class="hero-title">
         Documents Handled
         <span class="hero-title-accent">With Precision</span>
@@ -367,6 +365,83 @@
 
   <!-- ═══ WHERE IS YOUR DOCUMENT GOING? (Phase 2) ═════════════ -->
   <section class="drt-section" id="document-routing">
+
+    <!-- ── Ink & Seal circular seal — authority watermark ──────
+         Embossed gold on navy at ~5.5% opacity.
+         Appears as a premium background element, never interferes
+         with content readability. The seal arc paths are id-scoped
+         with "drt-" prefix to avoid collisions with other inline SVGs.
+    ────────────────────────────────────────────────────────────── -->
+    <div class="drt-wm" aria-hidden="true" role="presentation">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">
+        <defs>
+          <!-- Text path for "INK & SEAL" — clockwise arc through top, left → right -->
+          <path id="drt-arc-t" d="M 55,250 A 195,195 0 0 1 445,250"/>
+          <!-- Text path for "NOTARY PROS" — counterclockwise arc through bottom, left → right -->
+          <path id="drt-arc-b" d="M 55,250 A 195,195 0 0 0 445,250"/>
+        </defs>
+
+        <!-- Scalloped outer border (52 bumps, alternating r219/r231, polygon approx) -->
+        <path d="M 250.00,31.00 L 263.95,19.42 L 276.40,32.60 L 291.64,22.78 L 302.41,37.36 L 318.72,29.46 L 327.66,45.23 L 344.81,39.35 L 351.77,56.09 L 369.51,52.31 L 374.41,69.77 L 392.46,68.16 L 395.22,86.08 L 413.34,86.66 L 413.92,104.78 L 431.84,107.54 L 430.23,125.59 L 447.69,130.49 L 443.91,148.23 L 460.65,155.19 L 454.77,172.34 L 470.54,181.28 L 462.64,197.59 L 477.22,208.36 L 467.40,223.60 L 480.58,236.05 L 469.00,250.00 L 480.58,263.95 L 467.40,276.40 L 477.22,291.64 L 462.64,302.41 L 470.54,318.72 L 454.77,327.66 L 460.65,344.81 L 443.91,351.77 L 447.69,369.51 L 430.23,374.41 L 431.84,392.46 L 413.92,395.22 L 413.34,413.34 L 395.22,413.92 L 392.46,431.84 L 374.41,430.23 L 369.51,447.69 L 351.77,443.91 L 344.81,460.65 L 327.66,454.77 L 318.72,470.54 L 302.41,462.64 L 291.64,477.22 L 276.40,467.40 L 263.95,480.58 L 250.00,469.00 L 236.05,480.58 L 223.60,467.40 L 208.36,477.22 L 197.59,462.64 L 181.28,470.54 L 172.34,454.77 L 155.19,460.65 L 148.23,443.91 L 130.49,447.69 L 125.59,430.23 L 107.54,431.84 L 104.78,413.92 L 86.66,413.34 L 86.08,395.22 L 68.16,392.46 L 69.77,374.41 L 52.31,369.51 L 56.09,351.77 L 39.35,344.81 L 45.23,327.66 L 29.46,318.72 L 37.36,302.41 L 22.78,291.64 L 32.60,276.40 L 19.42,263.95 L 31.00,250.00 L 19.42,236.05 L 32.60,223.60 L 22.78,208.36 L 37.36,197.59 L 29.46,181.28 L 45.23,172.34 L 39.35,155.19 L 56.09,148.23 L 52.31,130.49 L 69.77,125.59 L 68.16,107.54 L 86.08,104.78 L 86.66,86.66 L 104.78,86.08 L 107.54,68.16 L 125.59,69.77 L 130.49,52.31 L 148.23,56.09 L 155.19,39.35 L 172.34,45.23 L 181.28,29.46 L 197.59,37.36 L 208.36,22.78 L 223.60,32.60 L 236.05,19.42 Z"
+          stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+
+        <!-- Outer smooth concentric ring -->
+        <circle cx="250" cy="250" r="214" stroke="currentColor" stroke-width="1.3"/>
+
+        <!-- Inner ring — separates text zone from center field -->
+        <circle cx="250" cy="250" r="178" stroke="currentColor" stroke-width="1.0"/>
+        <!-- Subtle hairline just inside inner ring -->
+        <circle cx="250" cy="250" r="172" stroke="currentColor" stroke-width="0.5"/>
+
+        <!-- ── Circular text ── -->
+        <text font-family="'Playfair Display', Georgia, serif"
+              font-size="22" font-weight="600" letter-spacing="5"
+              fill="currentColor">
+          <textPath href="#drt-arc-t" startOffset="50%" text-anchor="middle">INK &amp; SEAL</textPath>
+        </text>
+        <text font-family="'Playfair Display', Georgia, serif"
+              font-size="22" font-weight="600" letter-spacing="5"
+              fill="currentColor">
+          <textPath href="#drt-arc-b" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
+        </text>
+
+        <!-- Stars at 9 and 3 o'clock (r≈188 from center) -->
+        <text x="63"  y="256" font-size="11" fill="currentColor" text-anchor="middle">★</text>
+        <text x="437" y="256" font-size="11" fill="currentColor" text-anchor="middle">★</text>
+        <!-- Flanking accent dots -->
+        <circle cx="77"  cy="250" r="2.0" fill="currentColor"/>
+        <circle cx="85"  cy="250" r="2.0" fill="currentColor"/>
+        <circle cx="415" cy="250" r="2.0" fill="currentColor"/>
+        <circle cx="423" cy="250" r="2.0" fill="currentColor"/>
+
+        <!-- ── Central quill feather ── -->
+        <g transform="translate(250,250)"
+           stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <!-- Feather silhouette -->
+          <path d="M 0,-108 C -42,-86 -56,-34 -50,20 C -44,58 -22,74 0,84
+                         C 22,74 44,58 50,20 C 56,-34 42,-86 0,-108 Z" stroke-width="1.3"/>
+          <!-- Central spine (rachis) -->
+          <path d="M 0,-108 C 7,-50 8,14 0,84" stroke-width="1.6"/>
+          <!-- Left barbs (vanes) -->
+          <path d="M 0,-95 Q -26,-71 -46,-45" stroke-width="0.75"/>
+          <path d="M 0,-77 Q -33,-49 -53,-21" stroke-width="0.75"/>
+          <path d="M 0,-58 Q -36,-26 -52,6"   stroke-width="0.75"/>
+          <path d="M 0,-38 Q -36,-5  -48,29"  stroke-width="0.75"/>
+          <path d="M 0,-18 Q -30,16  -37,52"  stroke-width="0.75"/>
+          <path d="M 0,2  Q -19,36  -16,66"   stroke-width="0.75"/>
+          <!-- Right barbs (mirror) -->
+          <path d="M 0,-95 Q 26,-71 46,-45" stroke-width="0.75"/>
+          <path d="M 0,-77 Q 33,-49 53,-21" stroke-width="0.75"/>
+          <path d="M 0,-58 Q 36,-26 52,6"   stroke-width="0.75"/>
+          <path d="M 0,-38 Q 36,-5  48,29"  stroke-width="0.75"/>
+          <path d="M 0,-18 Q 30,16  37,52"  stroke-width="0.75"/>
+          <path d="M 0,2  Q 19,36  16,66"   stroke-width="0.75"/>
+          <!-- Calamus / nib tip -->
+          <path d="M -8,73 L 0,86 L 8,73" stroke-width="1.2"/>
+        </g>
+      </svg>
+    </div>
+
     <div class="drt-container">
 
       <div class="drt-header">

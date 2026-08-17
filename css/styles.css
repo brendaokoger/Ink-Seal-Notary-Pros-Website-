@@ -8979,3 +8979,25 @@ a.btn-gold:hover {
   .ink-item { padding: 0 18px; }
   .ink-item a { font-size: .52rem; letter-spacing: .12em; }
 }
+
+/* ════ DRT WATERMARK — Ink & Seal circular seal ════ */
+.drt-wm {
+  position: absolute;
+  top: 50%;
+  right: -130px;
+  transform: translateY(-50%);
+  width: 500px;
+  height: 500px;
+  pointer-events: none;
+  z-index: 0;
+  color: rgba(212,175,55,.055); /* embossed gold on navy ~5.5% */
+}
+.drt-container { position: relative; z-index: 1; }
+@media (max-width: 1200px) { .drt-wm { right: -170px; } }
+@media (max-width: 900px)  { .drt-wm { width: 380px; height: 380px; right: -100px; } }
+@media (max-width: 600px)  {
+  .drt-wm {
+    width: 260px; height: 260px;
+    right: -60px; top: auto; bottom: -30px; transform: none;
+  }
+}
