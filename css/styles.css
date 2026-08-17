@@ -1934,6 +1934,291 @@ ul    { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
+   THE DOCUMENT VAULT — premium archive, not a card grid
+   Namespace: vault-*
+
+   Every document's name and full "commonly requested for" list is
+   real static HTML (see the comment above the section markup) — the
+   `hidden` attribute and the grid-rows accordion trick below control
+   what's VISIBLE, never what EXISTS, so nothing here depends on JS
+   to be crawlable.
+   ═══════════════════════════════════════════════════════════ */
+.vault-section {
+  background: var(--navy);
+  padding: 68px 0 76px;
+  scroll-margin-top: var(--hh);
+}
+
+.vault-header { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+.vault-title {
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 3.2vw, 2.7rem);
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  margin: 0 0 12px;
+}
+.vault-sub {
+  font-size: .85rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.54);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Category tabs ────────────────────────────────────────────── */
+.vault-tabs {
+  display: flex;
+  justify-content: center;
+  max-width: 640px;
+  margin: 0 auto 6px;
+}
+.vault-tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  flex: 1;
+  text-align: center;
+  padding: 12px 10px;
+  position: relative;
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.42);
+  transition: color .3s var(--ease);
+}
+.vault-tab + .vault-tab { border-left: 1px solid rgba(212,175,55,.16); }
+.vault-tab:hover { color: rgba(255,255,255,.78); }
+.vault-tab::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  transition: width .4s var(--ease);
+}
+.vault-tab.is-active { color: #fff; }
+.vault-tab.is-active::after { width: 56%; }
+.vault-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ── The archive ─────────────────────────────────────────────── */
+.vault-archive {
+  max-width: 720px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(212,175,55,.14);
+}
+
+@keyframes vaultPanelIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+/* Restarts naturally every time [hidden] is removed — no JS timing. */
+.vault-panel:not([hidden]) { animation: vaultPanelIn .5s var(--ease) both; }
+
+.vault-panel-h {
+  font-family: var(--sans);
+  font-size: .66rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(212,175,55,.5);
+  margin: 22px 4px 2px;
+}
+
+.vault-list { list-style: none; margin: 0; padding: 0; }
+.vault-item { border-bottom: 1px solid rgba(212,175,55,.12); }
+
+.vault-item-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 19px 4px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+}
+/* The gold accent that "draws" left-to-right when the file opens. */
+.vault-item-btn::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), rgba(212,175,55,.32));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .55s var(--ease);
+  pointer-events: none;
+}
+.vault-item.is-open .vault-item-btn::before { transform: scaleX(1); }
+
+.vault-item-name {
+  display: inline-block;
+  min-width: 0;                 /* lets long names wrap instead of overflowing */
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.82);
+  line-height: 1.35;
+  transition: color .3s var(--ease), transform .4s var(--ease);
+}
+.vault-item-btn:hover .vault-item-name { color: #fff; }
+/* The "file slides forward" cue — a restrained shift, not a slide. */
+.vault-item.is-open .vault-item-name { color: var(--gold); transform: translateX(8px); }
+
+.vault-item-toggle { position: relative; width: 15px; height: 15px; flex-shrink: 0; }
+.vault-item-toggle::before,
+.vault-item-toggle::after {
+  content: '';
+  position: absolute;
+  background: rgba(255,255,255,.35);
+  transition: background .3s var(--ease), transform .3s var(--ease);
+}
+.vault-item-toggle::before { left: 0; top: 50%; width: 100%; height: 1px; transform: translateY(-50%); }
+.vault-item-toggle::after  { top: 0; left: 50%; width: 1px; height: 100%; transform: translateX(-50%); }
+.vault-item.is-open .vault-item-toggle::before,
+.vault-item.is-open .vault-item-toggle::after { background: var(--gold); }
+.vault-item.is-open .vault-item-toggle::after  { transform: translateX(-50%) scaleY(0); }
+
+/* Reuses the exact grid-template-rows 0fr->1fr technique the FAQ
+   accordion already uses elsewhere on this page. */
+.vault-item-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .45s var(--ease);
+}
+.vault-item.is-open .vault-item-panel { grid-template-rows: 1fr; }
+.vault-item-inner { overflow: hidden; }
+
+.vault-item-label {
+  margin: 6px 4px 10px;
+  font-family: var(--sans);
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(212,175,55,.6);
+}
+.vault-item-reasons {
+  list-style: none;
+  margin: 0 4px 22px;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.vault-item-reasons li {
+  position: relative;
+  padding-left: 18px;
+  font-size: .82rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255,255,255,.68);
+}
+.vault-item-reasons li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: .68em;
+  width: 8px; height: 1px;
+  background: rgba(212,175,55,.6);
+}
+
+.vault-item-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 0 4px 24px;
+}
+.vault-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #E0C368 0%, var(--gold) 48%, #B8912F 100%);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 13px 24px;
+  border-radius: 4px;
+  transition: filter .22s ease, transform .18s ease;
+}
+.vault-cta-primary:hover { filter: brightness(1.07); transform: translateY(-1px); }
+.vault-cta-primary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+.vault-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 1px solid rgba(212,175,55,.28);
+  border-radius: 3px;
+  color: rgba(255,255,255,.6);
+  font-family: var(--sans);
+  font-size: .64rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 18px;
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+}
+.vault-cta-secondary:hover {
+  color: var(--gold);
+  border-color: rgba(212,175,55,.55);
+  background: rgba(212,175,55,.06);
+}
+.vault-cta-secondary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.vault-note {
+  max-width: 640px;
+  margin: 30px auto 0;
+  padding: 0 20px;
+  font-size: .68rem;
+  font-weight: 300;
+  line-height: 1.65;
+  text-align: center;
+  color: rgba(255,255,255,.32);
+}
+
+/* ── Mobile: same accordion-in-place pattern, tightened spacing ── */
+@media (max-width: 799px) {
+  .vault-section { padding: 48px 0 56px; }
+  .vault-header  { margin-bottom: 26px; }
+  .vault-title   { font-size: clamp(1.5rem, 6.4vw, 1.85rem); }
+  .vault-sub     { font-size: .8rem; }
+
+  .vault-tab { font-size: .62rem; padding: 10px 4px; letter-spacing: .05em; }
+
+  .vault-item-btn  { padding: 15px 2px; gap: 12px; }
+  .vault-item-name { font-size: .9rem; }
+
+  .vault-item-ctas { flex-direction: column; align-items: stretch; }
+  .vault-cta-primary,
+  .vault-cta-secondary { justify-content: center; width: 100%; }
+}
+@media (max-width: 380px) {
+  .vault-tab { font-size: .56rem; }
+}
+
+/* ── Reduced motion: content appears immediately, no draw/slide ── */
+@media (prefers-reduced-motion: reduce) {
+  .vault-panel:not([hidden]) { animation: none !important; }
+  .vault-item-name, .vault-item-btn::before,
+  .vault-item-toggle::before, .vault-item-toggle::after,
+  .vault-tab::after, .vault-item-panel,
+  .vault-cta-primary, .vault-cta-secondary { transition: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════
    PRICING TRANSPARENCY SECTION
    ═══════════════════════════════════════════════════════════ */
 .pricing-section {

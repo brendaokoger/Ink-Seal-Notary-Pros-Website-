@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=23" />
+  <link rel="stylesheet" href="css/styles.css?v=24" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -1696,6 +1696,545 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══ THE DOCUMENT VAULT ═══════════════════════════════════
+       A premium document archive, not a card grid. Four category
+       tabs switch which list is shown; each document is a ledger-
+       style row that opens in place to reveal a concise "commonly
+       requested for" panel + CTAs.
+
+       SEO: every category panel and every document's name and full
+       "commonly requested for" list is real, static HTML present in
+       the initial page source — CSS (the .faq-a-style grid-rows
+       trick) and the `hidden` attribute control what's VISIBLE, not
+       what EXISTS. Nothing here is written by JavaScript. Each
+       document carries a stable id + data-slug so a future dedicated
+       page (e.g. /services/apostille/birth-certificate/) can be
+       wired in later without restructuring this markup.
+       Namespace: vault-*   Do NOT modify sections outside this block.
+  ═════════════════════════════════════════════════════════════ -->
+  <section class="vault-section" id="document-vault" aria-labelledby="vault-title">
+    <div class="container">
+
+      <div class="vault-header">
+        <h2 class="vault-title" id="vault-title">The Document Vault</h2>
+        <p class="vault-sub">What are you authenticating?</p>
+      </div>
+
+      <div class="vault-tabs" role="tablist" aria-label="Document categories">
+        <button type="button" class="vault-tab is-active" role="tab"
+                id="vault-tab-personal" aria-selected="true" aria-controls="vault-panel-personal"
+                data-cat="personal">Personal</button>
+        <button type="button" class="vault-tab" role="tab" tabindex="-1"
+                id="vault-tab-legal" aria-selected="false" aria-controls="vault-panel-legal"
+                data-cat="legal">Legal</button>
+        <button type="button" class="vault-tab" role="tab" tabindex="-1"
+                id="vault-tab-academic" aria-selected="false" aria-controls="vault-panel-academic"
+                data-cat="academic">Academic</button>
+        <button type="button" class="vault-tab" role="tab" tabindex="-1"
+                id="vault-tab-business" aria-selected="false" aria-controls="vault-panel-business"
+                data-cat="business">Business</button>
+      </div>
+
+      <div class="vault-archive" id="vault-archive">
+
+        <!-- ── PERSONAL ─────────────────────────────────────── -->
+        <div class="vault-panel is-active" role="tabpanel" id="vault-panel-personal"
+             aria-labelledby="vault-tab-personal">
+          <h3 class="vault-panel-h">Personal Documents</h3>
+          <ul class="vault-list">
+
+            <li class="vault-item" id="vault-doc-birth-certificate">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-birth-certificate-panel" data-slug="birth-certificate">
+                <span class="vault-item-name">Birth Certificate</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-birth-certificate-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Dual citizenship matters</li>
+                    <li>Marriage abroad</li>
+                    <li>Immigration-related matters</li>
+                    <li>International registration or legal use</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-marriage-certificate">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-marriage-certificate-panel" data-slug="marriage-certificate">
+                <span class="vault-item-name">Marriage Certificate</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-marriage-certificate-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Name change abroad</li>
+                    <li>Spousal visa applications</li>
+                    <li>International divorce proceedings</li>
+                    <li>Dual citizenship or residency matters</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-death-certificate">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-death-certificate-panel" data-slug="death-certificate">
+                <span class="vault-item-name">Death Certificate</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-death-certificate-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International estate settlement</li>
+                    <li>Foreign inheritance matters</li>
+                    <li>Repatriation-related paperwork</li>
+                    <li>Insurance or legal proceedings abroad</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-divorce-decree">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-divorce-decree-panel" data-slug="divorce-decree">
+                <span class="vault-item-name">Divorce Decree</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-divorce-decree-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Remarriage abroad</li>
+                    <li>International custody matters</li>
+                    <li>Property or asset proceedings abroad</li>
+                    <li>Visa or residency applications</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- /vault-panel-personal -->
+
+        <!-- ── LEGAL ────────────────────────────────────────── -->
+        <div class="vault-panel" role="tabpanel" id="vault-panel-legal"
+             aria-labelledby="vault-tab-legal" hidden>
+          <h3 class="vault-panel-h">Legal Documents</h3>
+          <ul class="vault-list">
+
+            <li class="vault-item" id="vault-doc-power-of-attorney">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-power-of-attorney-panel" data-slug="power-of-attorney">
+                <span class="vault-item-name">Power of Attorney</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-power-of-attorney-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Real estate transactions abroad</li>
+                    <li>Managing foreign financial accounts</li>
+                    <li>Representing family members overseas</li>
+                    <li>International business matters</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-affidavit">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-affidavit-panel" data-slug="affidavit">
+                <span class="vault-item-name">Affidavit</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-affidavit-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International court proceedings</li>
+                    <li>Foreign visa or immigration matters</li>
+                    <li>Overseas property matters</li>
+                    <li>Cross-border legal declarations</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-court-document">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-court-document-panel" data-slug="court-document">
+                <span class="vault-item-name">Court Document</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-court-document-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International legal proceedings</li>
+                    <li>Foreign court recognition</li>
+                    <li>Cross-border custody or civil matters</li>
+                    <li>International enforcement of judgments</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-notarized-document">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-notarized-document-panel" data-slug="notarized-document">
+                <span class="vault-item-name">Notarized Document</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-notarized-document-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>General international business use</li>
+                    <li>Cross-border contracts</li>
+                    <li>Foreign registration matters</li>
+                    <li>International legal verification</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- /vault-panel-legal -->
+
+        <!-- ── ACADEMIC ─────────────────────────────────────── -->
+        <div class="vault-panel" role="tabpanel" id="vault-panel-academic"
+             aria-labelledby="vault-tab-academic" hidden>
+          <h3 class="vault-panel-h">Academic Documents</h3>
+          <ul class="vault-list">
+
+            <li class="vault-item" id="vault-doc-diploma">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-diploma-panel" data-slug="diploma">
+                <span class="vault-item-name">Diploma</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-diploma-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Studying abroad</li>
+                    <li>International employment applications</li>
+                    <li>Foreign credential recognition</li>
+                    <li>Professional licensing overseas</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-transcript">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-transcript-panel" data-slug="transcript">
+                <span class="vault-item-name">Transcript</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-transcript-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Graduate school applications abroad</li>
+                    <li>Foreign credential evaluation</li>
+                    <li>International employment verification</li>
+                    <li>Professional licensing overseas</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-degree-certificate">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-degree-certificate-panel" data-slug="degree-certificate">
+                <span class="vault-item-name">Degree / Certificate</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-degree-certificate-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International employment matters</li>
+                    <li>Foreign licensing or certification</li>
+                    <li>Study-abroad requirements</li>
+                    <li>Credential recognition overseas</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-school-record">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-school-record-panel" data-slug="school-record">
+                <span class="vault-item-name">School Record</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-school-record-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International school enrollment</li>
+                    <li>Immigration-related matters</li>
+                    <li>Foreign credential verification</li>
+                    <li>Custody or guardianship matters abroad</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- /vault-panel-academic -->
+
+        <!-- ── BUSINESS ─────────────────────────────────────── -->
+        <div class="vault-panel" role="tabpanel" id="vault-panel-business"
+             aria-labelledby="vault-tab-business" hidden>
+          <h3 class="vault-panel-h">Business Documents</h3>
+          <ul class="vault-list">
+
+            <li class="vault-item" id="vault-doc-articles-of-incorporation">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-articles-of-incorporation-panel" data-slug="articles-of-incorporation">
+                <span class="vault-item-name">Articles of Incorporation / Organization</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-articles-of-incorporation-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Opening a foreign business entity</li>
+                    <li>International banking matters</li>
+                    <li>Foreign investment or registration</li>
+                    <li>Cross-border business licensing</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-certificate-of-good-standing">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-certificate-of-good-standing-panel" data-slug="certificate-of-good-standing">
+                <span class="vault-item-name">Certificate of Good Standing</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-certificate-of-good-standing-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Foreign business registration</li>
+                    <li>International banking relationships</li>
+                    <li>Overseas contract or bid requirements</li>
+                    <li>Cross-border licensing matters</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-corporate-resolution">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-corporate-resolution-panel" data-slug="corporate-resolution">
+                <span class="vault-item-name">Corporate Resolution</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-corporate-resolution-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>Authorizing overseas transactions</li>
+                    <li>International banking matters</li>
+                    <li>Foreign subsidiary matters</li>
+                    <li>Cross-border business authority</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="vault-item" id="vault-doc-business-agreement">
+              <button type="button" class="vault-item-btn" aria-expanded="false"
+                      aria-controls="vault-doc-business-agreement-panel" data-slug="business-agreement">
+                <span class="vault-item-name">Business Agreement</span>
+                <span class="vault-item-toggle" aria-hidden="true"></span>
+              </button>
+              <div class="vault-item-panel" id="vault-doc-business-agreement-panel">
+                <div class="vault-item-inner">
+                  <p class="vault-item-label">Commonly requested for:</p>
+                  <ul class="vault-item-reasons">
+                    <li>International contract enforcement</li>
+                    <li>Cross-border partnership matters</li>
+                    <li>Foreign vendor or client relationships</li>
+                    <li>Overseas business registration</li>
+                  </ul>
+                  <div class="vault-item-ctas">
+                    <a href="/services/apostille/#start" class="vault-cta-primary">Start My Apostille</a>
+                    <a href="/services/apostille/#start" class="vault-cta-secondary">Start Document Review</a>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div><!-- /vault-panel-business -->
+
+      </div><!-- /vault-archive -->
+
+      <p class="vault-note">Eligibility and requirements vary by document, issuing authority, and destination. We confirm apostille eligibility before any processing begins.</p>
+
+    </div>
+  </section>
+
+  <script>
+  /* ── THE DOCUMENT VAULT — category tabs + in-place document reveal ──
+     Two independent, small state machines:
+       1. Category tabs (ARIA tablist): swap which .vault-panel is
+          visible; closes any open document when switching.
+       2. Document accordion within the active panel: one open at a
+          time, using the same grid-template-rows 0fr->1fr technique
+          as the FAQ accordion elsewhere on this page.
+     All content already exists in the DOM (see comment above the
+     section) — this script only toggles visibility/aria state.
+  ─────────────────────────────────────────────────────────────────── */
+  (function () {
+  'use strict';
+
+  var archive = document.getElementById('vault-archive');
+  if (!archive) return;
+
+  var tabs  = [].slice.call(document.querySelectorAll('.vault-tab'));
+  var panels = {};
+  tabs.forEach(function (t) {
+    panels[t.getAttribute('data-cat')] = document.getElementById(t.getAttribute('aria-controls'));
+  });
+
+  function closeAllItemsIn(panel) {
+    panel.querySelectorAll('.vault-item.is-open').forEach(function (li) {
+      li.classList.remove('is-open');
+      li.querySelector('.vault-item-btn').setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function selectTab(cat, moveFocus) {
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-cat') === cat;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if (on && moveFocus) t.focus();
+    });
+    Object.keys(panels).forEach(function (key) {
+      var panel = panels[key];
+      var on = key === cat;
+      if (on) {
+        panel.hidden = false;
+        panel.classList.add('is-active');
+      } else {
+        closeAllItemsIn(panel);
+        panel.classList.remove('is-active');
+        panel.hidden = true;
+      }
+    });
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectTab(tab.getAttribute('data-cat'), false); });
+    tab.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var next = tabs[(i + d + tabs.length) % tabs.length];
+      selectTab(next.getAttribute('data-cat'), true);
+    });
+  });
+
+  /* Document accordion: one open at a time within its own panel */
+  archive.querySelectorAll('.vault-item-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item  = this.closest('.vault-item');
+      var panel = this.closest('.vault-panel');
+      var isOpen = item.classList.contains('is-open');
+      closeAllItemsIn(panel);
+      if (!isOpen) {
+        item.classList.add('is-open');
+        this.setAttribute('aria-expanded', 'true');
+        /* Bring the opened row fully into view without a page-length
+           jump — keeps mobile interaction close to what was tapped. */
+        if (window.matchMedia('(max-width: 799px)').matches) {
+          setTimeout(function () {
+            item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }, 260);
+        }
+      }
+    });
+  });
+
+  }());
+  </script>
 
   <!-- ═══ FAQ PREVIEW ═════════════════════════════════════ -->
   <section class="faq-preview" id="faq">
