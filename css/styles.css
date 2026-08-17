@@ -8176,11 +8176,6 @@ a.btn-gold:hover {
 
 /* ── Header ── */
 .drt-header{text-align:center;margin-bottom:52px;}
-.drt-eyebrow{
-  font-family:var(--sans);font-size:.70rem;font-weight:600;
-  letter-spacing:.15em;text-transform:uppercase;color:var(--gold);
-  margin-bottom:14px;
-}
 .drt-title{
   font-family:var(--serif);
   font-size:clamp(1.85rem,4.5vw,2.9rem);
