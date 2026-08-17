@@ -8434,7 +8434,8 @@ a.btn-gold:hover {
 .jrn {
   background: var(--navy);
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden intentionally removed — it would create a scroll
+     container and prevent position:sticky from working on .jrn-pin */
 }
 
 /* ── DESKTOP: sticky scroll-driven layout ───────────────────── */
@@ -8491,18 +8492,21 @@ a.btn-gold:hover {
     position: relative;
   }
 
-  /* All panels stacked; JS toggles is-active */
+  /* All panels stacked; JS toggles is-active.
+     top:50% + translateY(-50%) centers each panel in the column;
+     the 18px offset on inactive state creates the slide-in animation. */
   .jrn-panel {
     position: absolute;
     left: 52px; right: 60px;
+    top: 50%;
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(calc(-50% + 18px));
     transition: opacity .55s ease, transform .55s ease;
     pointer-events: none;
   }
   .jrn-panel.is-active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-50%);
     pointer-events: auto;
   }
 }
@@ -8653,10 +8657,10 @@ a.btn-gold:hover {
   transition: opacity .5s ease, transform .5s ease;
 }
 
-/* Document: hidden by default (slides in at s1) */
+/* Document: faint ghost at stage 0 (intro panel), fully visible at s1+ */
 .jrn-doc-g {
-  opacity: 0;
-  transform: translateY(32px);
+  opacity: 0.12;
+  transform: translateY(8px);
   transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
 }
 
