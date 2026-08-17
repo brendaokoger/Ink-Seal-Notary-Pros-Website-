@@ -101,6 +101,10 @@
       '.service-card', '.feat-item', '.process-step',
       '.on-info-card', '.contact-block',
       '.faq-item', '.inc-card', '.review-invite',
+      /* Credentials: .cred-strip only toggles r-vis so its own CSS can key
+         the divider draw-in off it (its box-level fade is neutralized in
+         CSS); .cred-item and .cred-seal use the generic fade as designed. */
+      '.cred-strip', '.cred-item', '.cred-seal',
       /* About page */
       '.ab-open-portrait-col', '.ab-open-text',
       '.ab-trust-card', '.ab-pillar', '.ab-service-card',

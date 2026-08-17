@@ -1792,62 +1792,145 @@ ul    { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   TRUST BADGES SECTION
+   CREDENTIALS — slim premium authority strip
+   Namespace: cred-*
+   One continuous line of typography, not four cards. A large
+   Ink & Seal seal sits behind it as a faint watermark. Reveal
+   is handled by the site's existing IntersectionObserver system
+   (js/main.js revealSels) via the shared .r-wait/.r-vis classes.
    ═══════════════════════════════════════════════════════════ */
-.trust-badges-section {
-  background: var(--ivory);
+.cred-section {
+  position: relative;
+  background: var(--ivory-2);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  padding: 52px 0;
+  padding: 64px 0;
+  overflow: hidden;              /* crops the watermark at the edges */
 }
-.trust-badges-grid {
+
+/* Watermark: large, faint, centered — pressed into the stock rather
+   than pasted on top. Purely decorative. Owns its own opacity
+   transition (rather than the shared .r-wait box-fade) so its
+   permanent centering transform is never touched by the reveal. */
+.cred-seal {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(560px, 62vw, 920px);
+  height: clamp(560px, 62vw, 920px);
+  transform: translate(-50%, -50%);
+  opacity: .06;
+  pointer-events: none;
+  z-index: 0;
+}
+.cred-seal.r-wait {
+  opacity: 0;
+  transform: translate(-50%, -50%);   /* stays centered — no slide */
+  transition: opacity 1.1s var(--ease);
+}
+/* transform is repeated here (not just opacity): the shared
+   .r-wait.r-vis rule elsewhere in this file also sets transform, at
+   equal specificity, and would win on source order otherwise — wiping
+   the centering translate and leaving the watermark pinned by its
+   top-left corner instead of its center. */
+.cred-seal.r-wait.r-vis { opacity: .06; transform: translate(-50%, -50%); }
+
+/* .r-wait/.r-vis are toggled on the strip purely so the divider below
+   can key off them; the shared box-level fade is neutralized here —
+   only the individual .cred-item children fade/rise. */
+.cred-strip.r-wait { opacity: 1; transform: none; }
+.cred-strip {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  align-items: start;
+  gap: 0;
+  max-width: 1180px;
+  margin: 0 auto;
 }
-.tbs-item {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 20px 22px;
-  background: #fff;
-  border: 1px solid rgba(212,175,55,.18);
-  border-top: 2px solid var(--gold-2);
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(10,25,47,.05);
-  transition: border-color .24s var(--ease), box-shadow .24s var(--ease), transform .24s var(--ease);
+/* Fine gold dividers as a single background image on the grid itself —
+   no per-item elements, so mobile can redraw the pattern independently. */
+.cred-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to bottom, transparent, var(--gold) 18%, var(--gold) 82%, transparent),
+    linear-gradient(to bottom, transparent, var(--gold) 18%, var(--gold) 82%, transparent),
+    linear-gradient(to bottom, transparent, var(--gold) 18%, var(--gold) 82%, transparent);
+  background-repeat: no-repeat;
+  background-size: 1px 68%;
+  background-position: 25% center, 50% center, 75% center;
+  opacity: .45;
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform .8s var(--ease), opacity .8s var(--ease);
 }
-.tbs-item:hover {
-  border-color: rgba(212,175,55,.4);
-  box-shadow: 0 8px 28px rgba(10,25,47,.10);
-  transform: translateY(-3px);
-}
-.tbs-icon {
-  flex-shrink: 0;
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: rgba(212,175,55,.08);
-  border: 1px solid rgba(212,175,55,.28);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gold-3);
-  transition: background .24s var(--ease), border-color .24s var(--ease);
-}
-.tbs-item:hover .tbs-icon {
-  background: rgba(212,175,55,.14);
-  border-color: rgba(212,175,55,.46);
-}
-.tbs-icon svg { width: 22px; height: 22px; stroke-width: 1.3; }
-.tbs-text { flex: 1; min-width: 0; }
-.tbs-title {
+.cred-strip.r-vis::before { transform: scaleY(1); }
+
+.cred-item { padding: 4px 28px; text-align: center; }
+
+.cred-title {
   font-family: var(--serif);
-  font-size: .9rem; font-weight: 700;
-  color: var(--navy); line-height: 1.25;
-  margin-bottom: 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 8px;
 }
-.tbs-sub {
-  font-size: .7rem; font-weight: 400;
-  color: var(--txt-m); letter-spacing: .02em;
-  line-height: 1.4;
+.cred-sub {
+  font-size: .68rem;
+  font-weight: 400;
+  color: var(--txt-m);
+  letter-spacing: .02em;
+  line-height: 1.5;
+}
+
+/* ── Desktop tuning ──────────────────────────────────────────── */
+@media (min-width: 1041px) {
+  .cred-title { font-size: 1.05rem; }
+}
+@media (max-width: 1100px) and (min-width: 800px) {
+  .cred-item  { padding: 4px 18px; }
+  .cred-title { font-size: .92rem; }
+}
+
+/* ── Mobile: refined 2 × 2, no cards, cross-hairline divider ──── */
+@media (max-width: 799px) {
+  .cred-section { padding: 48px 0; }
+  .cred-seal {
+    width: clamp(420px, 130vw, 620px);
+    height: clamp(420px, 130vw, 620px);
+    opacity: .05;
+  }
+  .cred-seal.r-wait { opacity: 0; }
+  .cred-seal.r-wait.r-vis { opacity: .05; transform: translate(-50%, -50%); }
+  .cred-strip {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 26px;
+  }
+  .cred-strip::before {
+    background-image:
+      linear-gradient(to bottom, transparent, var(--gold) 10%, var(--gold) 90%, transparent),
+      linear-gradient(to right,  transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+    background-size: 1px 100%, 100% 1px;
+    background-position: 50% center, center 50%;
+  }
+  .cred-item  { padding: 0 10px; }
+  .cred-title { font-size: .82rem; letter-spacing: .04em; }
+  .cred-sub   { font-size: .64rem; }
+}
+@media (max-width: 380px) {
+  .cred-title { font-size: .76rem; }
+  .cred-sub   { font-size: .6rem; }
+}
+
+/* ── Reduced motion: no draw-in, everything present immediately ── */
+@media (prefers-reduced-motion: reduce) {
+  .cred-item, .cred-seal, .cred-strip::before { transition: none !important; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2014,7 +2097,6 @@ ul    { list-style: none; }
   .footer-logo  { height: 185px; max-width: 445px; }
   .ab-hero-header { padding-top: 68px; padding-bottom: 44px; }
   .ab-main-heading { font-size: clamp(3.4rem, 6.5vw, 7.5rem); }
-  .trust-badges-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
 }
 
@@ -2175,7 +2257,6 @@ ul    { list-style: none; }
   .footer-logo  { height: 162px; max-width: 396px; }
 
   /* new sections */
-  .trust-badges-section { padding: 40px 0; }
   .pricing-section { padding: 72px 0 80px; }
   .prefooter-cta { padding: 56px 0; }
   .prefooter-cta-inner { flex-direction: column; text-align: center; gap: 32px; }
@@ -2213,9 +2294,6 @@ ul    { list-style: none; }
   .trust-right { gap: 20px; }
 
   /* new sections */
-  .trust-badges-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .tbs-item { padding: 16px; gap: 10px; }
-  .tbs-title { font-size: .82rem; }
   .pricing-grid { gap: 16px; }
   .pricing-amount { font-size: 2.8rem; }
   .prefooter-cta { padding: 48px 0; }
@@ -2330,16 +2408,6 @@ ul    { list-style: none; }
   .hero-sub { font-size: .78rem; margin-bottom: 18px; }
 }
 
-/* ── Trust badges — clean 2-col on phones ── */
-@media (max-width: 580px) {
-  .trust-badges-section { padding: 36px 0; }
-  .trust-badges-grid    { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .tbs-item  { padding: 14px 12px; gap: 10px; }
-  .tbs-icon  { width: 38px; height: 38px; }
-  .tbs-icon svg { width: 18px; height: 18px; }
-  .tbs-title { font-size: .78rem; text-wrap: balance; }
-  .tbs-sub   { font-size: .62rem; }
-}
 
 /* ── Hero Quick Services — stack on mobile ── */
 @media (max-width: 840px) {
@@ -2403,21 +2471,6 @@ ul    { list-style: none; }
   .faq-q-text    { font-size: .82rem; }
   .faq-a-inner p { font-size: .76rem; padding-bottom: 18px; }
   .faq-more svg  { flex-shrink: 0; }
-}
-
-/* ── Contact section ── */
-@media (max-width: 580px) {
-  .contact-section { padding: 44px 0 52px; }
-  .contact-heading { font-size: clamp(1.3rem, 5.2vw, 1.7rem); }
-  .contact-sub     { font-size: .78rem; margin-bottom: 28px; }
-  .contact-cta     { width: 100%; text-align: center; margin-top: 28px; display: flex; justify-content: center; }
-  .cd-link         { font-size: .8rem; word-break: break-all; }
-  .cd-text         { font-size: .8rem; }
-  .contact-seal    { display: none; }
-}
-@media (max-width: 840px) {
-  .contact-inner   { flex-direction: column; gap: 36px; }
-  .contact-seal    { display: none; }
 }
 
 /* ── Footer — cleaner on mobile ── */
@@ -6109,89 +6162,6 @@ a.btn-gold:hover {
   .reviews-section { padding: 56px 0; }
 }
 
-/* ---------- Contact Section ---------- */
-.contact-section {
-  background: var(--navy);
-  padding: 68px 0;
-  position: relative;
-  overflow: hidden;
-}
-.contact-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 56px;
-}
-.contact-content { max-width: 560px; }
-.contact-heading {
-  font-family: var(--serif);
-  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 14px;
-  line-height: 1.2;
-}
-.contact-sub {
-  font-size: 0.95rem;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 36px;
-}
-.contact-promise {
-  margin-top: 22px;
-  font-size: .76rem;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.8;
-  color: rgba(255,255,255,.42);
-  max-width: 440px;
-}
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 36px;
-}
-.contact-detail {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cd-icon {
-  width: 18px;
-  height: 18px;
-  color: var(--gold);
-  flex-shrink: 0;
-}
-.cd-link {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
-  transition: color 0.2s;
-}
-.cd-link:hover { color: var(--gold); }
-.cd-text {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
-}
-.contact-cta { display: inline-flex; }
-.contact-seal {
-  width: 200px;
-  height: 200px;
-  flex-shrink: 0;
-  opacity: 0.6;
-}
-.contact-seal svg { width: 100%; height: 100%; }
-@media (max-width: 900px) {
-  .contact-inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 36px;
-  }
-  .contact-seal { display: none; }
-  .contact-section { padding: 64px 0; }
-}
-
 /* ---------- sec-label light variants ---------- */
 .sec-label--light .sec-line,
 .sec-line--light { background: rgba(255,255,255,0.35); opacity: 1; }
@@ -6236,7 +6206,6 @@ a.btn-gold:hover {
   .feat-band { padding: 36px 0; }
   .success-section { padding: 52px 0; }
   .reviews-section { padding: 44px 0; }
-  .contact-section { padding: 52px 0; }
 }
 
 /* ============================================================
