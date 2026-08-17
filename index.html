@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=13" />
+  <link rel="stylesheet" href="css/styles.css?v=14" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -1289,8 +1289,23 @@
     update();
   }
 
-  /* ── Mobile: IntersectionObserver reveal on .r-wait cards ── */
-  /* (shared with existing r-wait system; nothing extra needed) */
+  /* ── Mobile: IntersectionObserver reveal on .jrn-mobile-wrap .r-wait ── */
+  /* The main.js r-wait system does not observe journey cards, so we      */
+  /* add a dedicated observer here for the mobile vertical timeline.       */
+  else if (window.IntersectionObserver) {
+    var mobObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('r-vis');
+          mobObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+    var mobItems = document.querySelectorAll('.jrn-mobile-wrap .r-wait');
+    for (var mi = 0; mi < mobItems.length; mi++) {
+      mobObs.observe(mobItems[mi]);
+    }
+  }
 
   }());
   </script>
