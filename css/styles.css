@@ -8444,13 +8444,13 @@ a.btn-gold:hover {
   /* NO overflow — would break position:sticky on .jrn-pin */
 }
 
-/* Mobile container: hidden on desktop (base rule) */
-.jrn-mob { display: none; }
+/* Mobile container: hidden on desktop (base rule — !important beats cached CSS) */
+.jrn-mob { display: none !important; }
 
 /* ── DESKTOP (≥ 800px) ─────────────────────────────────────── */
 @media (min-width: 800px) {
-  /* 600vh section = scroll space for 5 stages */
-  .jrn { height: 600vh; }
+  /* 400vh section = scroll space for continuous cinematic animation */
+  .jrn { height: 400vh; }
 
   /* Sticky pin fills one viewport height while section scrolls.
      body/html have overflow-x:clip (NOT hidden), so sticky works.
@@ -8502,7 +8502,7 @@ a.btn-gold:hover {
     height: 0%;
     background: linear-gradient(180deg, var(--gold) 0%, rgba(212,175,55,.55) 100%);
     border-radius: 1px;
-    transition: height .28s ease;
+    /* No transition — height is JS-driven every scroll frame */
   }
 
   /* Step item */
@@ -8580,6 +8580,11 @@ a.btn-gold:hover {
     margin-top: 5px;
   }
 
+  /* Completed stages: dimly acknowledged (dot stays, label fades back) */
+  .jrn-step.is-past .jrn-dot    { background: rgba(212,175,55,.44); border-color: rgba(212,175,55,.44); box-shadow: none; }
+  .jrn-step.is-past .jrn-snum   { color: rgba(212,175,55,.48); }
+  .jrn-step.is-past .jrn-slabel { color: rgba(255,255,255,.40); }
+
   /* CTA (stage 5 only) */
   .jrn-cta-wrap {
     margin-top: 22px;
@@ -8619,13 +8624,31 @@ a.btn-gold:hover {
     height: auto;
     overflow: visible;
   }
+
+  /* Desktop SVG is driven by JS inline styles every frame —
+     CSS transitions cause visible lag; kill them all here.
+     Mobile SVG (#jrn-svg-m) is unaffected (uses at-sN classes + CSS). */
+  #jrn-svg .jrn-folder-g,
+  #jrn-svg .jrn-doc-g,
+  #jrn-svg .jrn-scan-g,
+  #jrn-svg .jrn-rl,
+  #jrn-svg .jrn-corner,
+  #jrn-svg .jrn-status-g,
+  #jrn-svg .jrn-seal-g,
+  #jrn-svg .jrn-env-g,
+  #jrn-svg .jrn-flap,
+  #jrn-svg .jrn-env-check,
+  #jrn-svg .jrn-check-mark {
+    transition: none !important;
+    animation:  none !important;
+  }
 }
 
 /* ── MOBILE (≤ 799px) ─────────────────────────────────────── */
 @media (max-width: 799px) {
   .jrn { height: auto; }
   .jrn-pin { display: none; }
-  .jrn-mob { display: block; }
+  .jrn-mob { display: block !important; }
 
   /* Section header */
   .jrn-mob-hdr {

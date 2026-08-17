@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=16" />
+  <link rel="stylesheet" href="css/styles.css?v=17" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -1389,17 +1389,17 @@
   </section><!-- /jrn -->
 
   <script>
-  /* ── YOUR DOCUMENT'S JOURNEY — scroll + intersection driver ──────
+  /* ── YOUR DOCUMENT'S JOURNEY — continuous cinematic scroll driver ──
      Desktop (≥ 800px):
-       • CSS position:sticky keeps .jrn-pin visible throughout the 600vh
-         section. body/html use overflow-x:clip (not hidden), so sticky works.
-       • JS reads scroll progress (0–1) through section, maps to stages 1–5.
-       • Updates: SVG at-sN class, .is-active on .jrn-step, gold track fill
-         height, .jrn-cta-wrap visibility (shows at stage 5).
+       • .jrn-pin is position:sticky (400vh section).
+       • p = 0→1 maps entire section scroll to a single progress value.
+       • Every SVG element is driven via inline styles every RAF frame —
+         NO stage classes, NO snapping. The document is always on screen,
+         continuously transforming through all five stages.
      Mobile (< 800px):
-       • .jrn-mob-svg-wrap is position:sticky below the fixed header.
-       • IntersectionObserver on .jrn-mob-card: reveals card, updates mobile SVG.
-     Both respect prefers-reduced-motion.
+       • .jrn-mob-svg-wrap is position:sticky below fixed header.
+       • IntersectionObserver on .jrn-mob-card updates SVG at-sN class.
+     Both branches respect prefers-reduced-motion.
   ─────────────────────────────────────────────────────────────────── */
   (function () {
   'use strict';
@@ -1407,12 +1407,10 @@
   var section = document.getElementById('your-journey');
   if (!section) return;
 
-  /* ── Reduced motion: jump to final state ── */
+  /* ── Reduced motion: jump straight to final state ── */
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     var allSvgs = document.querySelectorAll('.jrn-svg');
-    for (var ri = 0; ri < allSvgs.length; ri++) {
-      allSvgs[ri].className.baseVal = 'jrn-svg at-s5';
-    }
+    for (var ri = 0; ri < allSvgs.length; ri++) allSvgs[ri].className.baseVal = 'jrn-svg at-s5';
     var allSteps = document.querySelectorAll('.jrn-step, .jrn-mob-card');
     for (var rj = 0; rj < allSteps.length; rj++) allSteps[rj].classList.add('is-active');
     var rCta = document.getElementById('jrn-cta-wrap');
@@ -1420,65 +1418,219 @@
     return;
   }
 
-  /* ══ DESKTOP: scroll-progress → stage 1–5 ══════════════════════ */
+  /* ── Interpolation helpers ── */
+  function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
+  function lerp(a, b, t)  { return a + (b - a) * t; }
+  function norm(x, a, b)  { return clamp((x - a) / (b - a), 0, 1); }
+  function easeOut(t)     { return 1 - Math.pow(1 - t, 2.5); }
+  function easeIn(t)      { return t * t * t; }
+  function smooth(t)      { return t * t * (3 - 2 * t); }
+
+  /* ══ DESKTOP: one continuous p=0→1 drives every SVG element ══════ */
   if (window.innerWidth >= 800) {
 
     var svg     = document.getElementById('jrn-svg');
+    if (!svg) return;
+
     var steps   = document.querySelectorAll('.jrn-step');
     var fill    = document.getElementById('jrn-track-fill');
     var ctaWrap = document.getElementById('jrn-cta-wrap');
-    var cur     = 0;
+
+    /* Cache SVG element references (query once, reuse every frame) */
+    var elFolder  = svg.querySelector('.jrn-folder-g');
+    var elDoc     = svg.querySelector('.jrn-doc-g');
+    var elScan    = svg.querySelector('.jrn-scan-g');
+    var elRls     = svg.querySelectorAll('.jrn-rl');
+    var elCorners = svg.querySelectorAll('.jrn-corner');
+    var elStatus  = svg.querySelector('.jrn-status-g');
+    var elSPrep   = svg.querySelector('.jrn-status-prepared');
+    var elSAuth   = svg.querySelector('.jrn-status-auth');
+    var elSeal    = svg.querySelector('.jrn-seal-g');
+    var elEnv     = svg.querySelector('.jrn-env-g');
+    var elFlap    = svg.querySelector('.jrn-flap');
+    var elEnvChk  = svg.querySelector('.jrn-env-check');
+    var elChkMark = svg.querySelector('.jrn-check-mark');
+
+    /* Stage starts (p values): used for label highlight + track fill */
+    var stageStarts = [0.00, 0.15, 0.38, 0.55, 0.75];
+
     var ticking = false;
+    var prevP   = -1;
 
-    if (!svg) return;
-
-    function setStage(n) {
-      if (n === cur) return;
-      cur = n;
-
-      /* SVG stage class drives all animations */
-      svg.className.baseVal = 'jrn-svg at-s' + n;
-
-      /* Highlight active step in timeline */
-      for (var i = 0; i < steps.length; i++) {
-        var s = parseInt(steps[i].getAttribute('data-step'), 10);
-        steps[i].classList.toggle('is-active', s === n);
+    /* Seal press: returns { y, s, o } for a given 0–1 sub-progress */
+    function sealValues(sp) {
+      if (sp <= 0) return { y: -52, s: 0.80, o: 0 };
+      if (sp >= 1) return { y:   0, s: 1.00, o: 1 };
+      var t;
+      if (sp < 0.55) {
+        t = sp / 0.55;
+        return { y: lerp(-52,  6, easeOut(t)), s: lerp(0.80, 0.97, easeOut(t)), o: clamp(t * 3, 0, 1) };
+      } else if (sp < 0.74) {
+        t = (sp - 0.55) / 0.19;
+        return { y: lerp(6, -5, smooth(t)),    s: lerp(0.97, 1.04, smooth(t)),  o: 1 };
+      } else {
+        t = (sp - 0.74) / 0.26;
+        return { y: lerp(-5, 0, smooth(t)),    s: lerp(1.04, 1.00, smooth(t)),  o: 1 };
       }
-
-      /* Gold track fill: 0% at stage 1, 100% at stage 5 */
-      if (fill) fill.style.height = ((n - 1) / 4 * 100) + '%';
-
-      /* CTA becomes visible at stage 5 */
-      if (ctaWrap) ctaWrap.classList.toggle('is-visible', n === 5);
     }
 
     function update() {
       var rect      = section.getBoundingClientRect();
       var available = section.offsetHeight - window.innerHeight;
-      var scrolled  = -rect.top;
-      var progress  = available > 0
-        ? Math.max(0, Math.min(1, scrolled / available))
-        : 0;
+      var p         = available > 0 ? clamp(-rect.top / available, 0, 1) : 0;
 
-      /* Map 0–1 to stages 1–5 (5 equal buckets) */
-      var stage = Math.max(1, Math.min(5, Math.ceil(progress * 5 + 0.0001)));
+      /* Skip redundant frames */
+      if (Math.abs(p - prevP) < 0.00015) { ticking = false; return; }
+      prevP = p;
 
-      setStage(stage);
+      /* ── Gold track: fills continuously with p ── */
+      if (fill) fill.style.height = (p * 100) + '%';
+
+      /* ── Stage labels: active (bright) | past (dim gold) | future (muted) ── */
+      var activeIdx = 0;
+      for (var si = 0; si < stageStarts.length; si++) {
+        if (p >= stageStarts[si]) activeIdx = si;
+      }
+      for (var i = 0; i < steps.length; i++) {
+        var sn = parseInt(steps[i].getAttribute('data-step'), 10) - 1;
+        steps[i].classList.toggle('is-active', sn === activeIdx);
+        steps[i].classList.toggle('is-past',   sn < activeIdx);
+      }
+
+      /* ── CTA: single class toggle (CSS transition handles reveal) ── */
+      if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.92);
+
+      /* ════════════════════════════════════════════════════════════
+         SVG ELEMENT UPDATES — all driven by p, no snapping
+         Ranges: received 0–0.15 | reviewed 0.15–0.38 | prepared 0.38–0.55
+                 authenticated 0.55–0.75 | returned 0.75–0.92 | cta 0.92–1.0
+         ════════════════════════════════════════════════════════════ */
+
+      /* FOLDER — rises in at start, sinks before scan begins */
+      var fldIn  = easeOut(norm(p, 0.00, 0.10));
+      var fldOut = easeOut(norm(p, 0.13, 0.22));
+      if (elFolder) {
+        elFolder.style.opacity   = Math.max(0, fldIn - fldOut);
+        elFolder.style.transform = 'translateY(' + lerp(22, 0, fldIn) + 'px)';
+      }
+
+      /* DOCUMENT — always the hero; moves continuously throughout */
+      var docOp, docY;
+      if (p < 0.08) {
+        /* resting at center */
+        docOp = 1; docY = 0;
+      } else if (p < 0.15) {
+        /* lifts above folder */
+        docY = lerp(0, -14, smooth(norm(p, 0.08, 0.15)));
+        docOp = 1;
+      } else if (p < 0.22) {
+        /* returns to center as folder sinks */
+        docY = lerp(-14, 0, smooth(norm(p, 0.15, 0.22)));
+        docOp = 1;
+      } else if (p < 0.60) {
+        /* steady during review + prepared stages */
+        docY = 0; docOp = 1;
+      } else if (p < 0.66) {
+        /* micro-press as seal lands */
+        docY = lerp(0, 6, smooth(norm(p, 0.60, 0.66)));
+        docOp = 1;
+      } else if (p < 0.73) {
+        /* rebound */
+        docY = lerp(6, 0, smooth(norm(p, 0.66, 0.73)));
+        docOp = 1;
+      } else if (p < 0.80) {
+        docY = 0; docOp = 1;
+      } else {
+        /* slides into envelope */
+        var envSlide = norm(p, 0.80, 0.90);
+        docY  = lerp(0, 56, easeIn(envSlide));
+        docOp = 1 - smooth(envSlide);
+      }
+      if (elDoc) {
+        elDoc.style.opacity   = docOp;
+        elDoc.style.transform = 'translateY(' + docY + 'px)';
+      }
+
+      /* SCAN LINE — position tracks scroll directly (no time-based animation) */
+      var scanOp;
+      if      (p < 0.15) scanOp = 0;
+      else if (p < 0.20) scanOp = easeOut(norm(p, 0.15, 0.20));
+      else if (p < 0.35) scanOp = 1;
+      else if (p < 0.42) scanOp = 1 - easeOut(norm(p, 0.35, 0.42));
+      else                scanOp = 0;
+      var scanY = lerp(0, 215, smooth(norm(p, 0.15, 0.38)));
+      if (elScan) {
+        elScan.style.opacity   = scanOp;
+        elScan.style.transform = 'translateY(' + scanY + 'px)';
+      }
+
+      /* REVIEW LINES — appear as scan passes each line, dim in prepared, gone in auth */
+      var rlStarts = [0.20, 0.24, 0.28, 0.32];
+      for (var ri = 0; ri < elRls.length; ri++) {
+        var rs = rlStarts[ri], rlOp;
+        if      (p < rs)        rlOp = 0;
+        else if (p < rs + 0.05) rlOp = easeOut(norm(p, rs, rs + 0.05));
+        else if (p < 0.38)      rlOp = 1;
+        else if (p < 0.50)      rlOp = lerp(1, 0.42, norm(p, 0.38, 0.50));
+        else if (p < 0.58)      rlOp = lerp(0.42, 0, norm(p, 0.50, 0.58));
+        else                    rlOp = 0;
+        elRls[ri].style.opacity = rlOp;
+      }
+
+      /* CORNER MARKS — draw in during prepared stage */
+      var cornerDash = lerp(22, 0, easeOut(norm(p, 0.38, 0.52)));
+      for (var ci = 0; ci < elCorners.length; ci++) {
+        elCorners[ci].style.strokeDashoffset = cornerDash;
+      }
+
+      /* STATUS BADGE — fades in during prepared, text cross-fades at auth */
+      var statusOp = easeOut(norm(p, 0.44, 0.55));
+      if (elStatus) elStatus.style.opacity = statusOp;
+      var authT = smooth(norm(p, 0.62, 0.70));
+      if (elSPrep) elSPrep.style.opacity = 1 - authT;
+      if (elSAuth) elSAuth.style.opacity = authT;
+
+      /* SEAL — scroll-driven press with overshoot, then exits with envelope */
+      var sv      = sealValues(norm(p, 0.57, 0.73));
+      var sealOut = easeOut(norm(p, 0.78, 0.87));
+      if (elSeal) {
+        elSeal.style.opacity         = Math.max(0, sv.o - sealOut);
+        elSeal.style.transform       = 'translateY(' + lerp(sv.y, 56, sealOut) + 'px) scale(' + lerp(sv.s, 0.9, sealOut) + ')';
+        elSeal.style.transformOrigin = '150px 158px';
+      }
+
+      /* ENVELOPE — rises from below as returned stage begins */
+      var envInP = easeOut(norm(p, 0.75, 0.87));
+      if (elEnv) {
+        elEnv.style.opacity   = envInP;
+        elEnv.style.transform = 'translateY(' + lerp(56, 0, envInP) + 'px)';
+      }
+
+      /* FLAP — flips closed as document enters */
+      var flapSY = lerp(1, -1, smooth(norm(p, 0.84, 0.92)));
+      if (elFlap) {
+        elFlap.style.transform       = 'scale(1,' + flapSY + ')';
+        elFlap.style.transformOrigin = '150px 290px';
+      }
+
+      /* ENVELOPE CHECK + CHECKMARK DRAW */
+      var envChkOp = easeOut(norm(p, 0.88, 0.95));
+      if (elEnvChk)  elEnvChk.style.opacity          = envChkOp;
+      if (elChkMark) elChkMark.style.strokeDashoffset = lerp(26, 0, easeOut(norm(p, 0.90, 0.97)));
+
       ticking = false;
     }
 
     window.addEventListener('scroll', function () {
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
-
     window.addEventListener('resize', function () {
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
-
-    update(); /* run once at page load */
+    update(); /* run immediately so initial state is correct */
   }
 
-  /* ══ MOBILE: IntersectionObserver → SVG + card reveals ══════════ */
+  /* ══ MOBILE: IntersectionObserver → SVG at-sN class updates ══════ */
   else {
 
     var svgM  = document.getElementById('jrn-svg-m');
@@ -1500,10 +1652,8 @@
           if (!isNaN(n)) setStageM(n);
         });
       }, { threshold: 0.40, rootMargin: '0px 0px -8% 0px' });
-
       for (var mi = 0; mi < cards.length; mi++) io.observe(cards[mi]);
     } else {
-      /* Fallback: show all immediately */
       for (var fi = 0; fi < cards.length; fi++) cards[fi].classList.add('is-active');
       if (svgM) svgM.className.baseVal = 'jrn-svg at-s5';
     }
