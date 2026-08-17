@@ -8630,120 +8630,6 @@ a.btn-gold:hover {
 }
 
 
-/* ════════════════════════════════════════════════════════════
-   SERVICE STRIP  (static premium bar)
-   Namespace: svc-strip / svc-*
-   ════════════════════════════════════════════════════════════ */
-
-/* ── Strip container ────────────────────────────────────────── */
-.svc-strip {
-  background: var(--navy);
-  border-top: 1px solid rgba(212,175,55,.13);
-  border-bottom: 1px solid rgba(212,175,55,.13);
-  /* one-time reveal: starts hidden */
-  opacity: 0;
-  transform: translateY(7px);
-  transition: opacity .65s ease, transform .65s ease;
-}
-.svc-strip.svc-strip--in {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* Reduced-motion: always visible, no transition */
-@media (prefers-reduced-motion: reduce) {
-  .svc-strip {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* ── Inner row ──────────────────────────────────────────────── */
-.svc-strip-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 20px 32px;
-  position: relative;
-}
-
-/* Thin gold underline — runs the full width behind the row */
-.svc-strip-inner::before {
-  content: '';
-  position: absolute;
-  left: 6%; right: 6%;
-  bottom: 12px;
-  height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    rgba(212,175,55,.08) 4%,
-    rgba(212,175,55,.20) 18%,
-    rgba(212,175,55,.20) 82%,
-    rgba(212,175,55,.08) 96%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-
-/* ── Service links ──────────────────────────────────────────── */
-.svc-strip-item {
-  color: rgba(212,175,55,.72);
-  font-family: var(--sans);
-  font-size: .605rem;
-  font-weight: 600;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 10px 30px;
-  white-space: nowrap;
-  transition: color .22s ease;
-}
-.svc-strip-item:hover,
-.svc-strip-item:focus-visible {
-  color: rgba(212,175,55,1);
-}
-.svc-strip-item:focus-visible {
-  outline: 2px solid rgba(212,175,55,.55);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* ── Dot separators ─────────────────────────────────────────── */
-.svc-strip-div {
-  display: inline-block;
-  width: 3px; height: 3px;
-  border-radius: 50%;
-  background: rgba(212,175,55,.32);
-  flex-shrink: 0;
-  align-self: center;
-}
-
-/* ── Mobile: 2 × 2 grid ─────────────────────────────────────── */
-@media (max-width: 700px) {
-  .svc-strip-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0;
-  }
-  .svc-strip-inner::before { display: none; }
-  .svc-strip-div  { display: none; }
-  .svc-strip-item {
-    text-align: center;
-    padding: 18px 8px;
-    font-size: .56rem;
-    letter-spacing: .16em;
-    border-bottom: 1px solid rgba(212,175,55,.07);
-  }
-  .svc-strip-item:nth-of-type(odd)  { border-right: 1px solid rgba(212,175,55,.07); }
-  .svc-strip-item:nth-of-type(3),
-  .svc-strip-item:nth-of-type(4)    { border-bottom: none; }
-}
-@media (max-width: 380px) {
-  .svc-strip-item { font-size: .52rem; letter-spacing: .12em; padding: 16px 6px; }
-}
-
 /* ════ DRT WATERMARK — Ink & Seal circular seal ════ */
 .drt-wm {
   position: absolute;
@@ -8754,7 +8640,7 @@ a.btn-gold:hover {
   height: 500px;
   pointer-events: none;
   z-index: 0;
-  color: rgba(212,175,55,.055); /* embossed gold on navy ~5.5% */
+  color: rgba(212,175,55,.10); /* embossed gold on navy ~10% */
 }
 .drt-container { position: relative; z-index: 1; }
 @media (max-width: 1200px) { .drt-wm { right: -170px; } }
