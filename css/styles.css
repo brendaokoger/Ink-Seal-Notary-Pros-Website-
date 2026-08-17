@@ -8423,43 +8423,42 @@ a.btn-gold:hover {
 }
 
 /* ════════════════════════════════════════════════════════════
-   YOUR DOCUMENT'S JOURNEY — click/tap controlled
+   YOUR DOCUMENT'S JOURNEY — click/tap controlled, premium stage
    Namespace: jrn-*
 
-   ONE document, ONE animation stage, FIVE user-controlled states.
-   The five stage labels are <button>s; Previous/Next drive the same
-   transitions. JS tweens a single timeline value and writes inline
-   styles to the SVG each frame, so animated SVG nodes must carry no
-   CSS transition or animation of their own (it would fight the tween).
+   ONE document inside ONE animation stage with five interactive
+   states. JS tweens a single timeline value and writes inline styles
+   to the SVG each frame, so animated SVG nodes must carry no CSS
+   transition or animation of their own — it would fight the tween.
 
-   The section is ordinary flow content — no sticky pin and no tall
-   scroll spacer, because scroll no longer drives anything.
+   Materials are SVG gradients + a laid-paper pattern + hand-placed
+   shadow layers. No SVG filters on animated nodes, no images, no
+   animation library: everything is transform/opacity, GPU friendly.
    ════════════════════════════════════════════════════════════ */
 
 .jrn {
   background: var(--navy);
   position: relative;
-  padding: 56px 0;
-  /* keeps the heading clear of the fixed header on anchor jumps */
+  padding: 60px 0 64px;
   scroll-margin-top: var(--hh);
 }
 
-/* Animated SVG nodes are tween-driven: transitions/animations forbidden. */
+/* Tween-driven nodes: no CSS transition/animation. */
 .jrn-folder-b, .jrn-folder-f, .jrn-doc-g, .jrn-scan-g, .jrn-rl,
-.jrn-corner, .jrn-auth-mark, .jrn-status-g, .jrn-s-prep, .jrn-s-auth,
-.jrn-stamp-g, .jrn-env-b, .jrn-env-f, .jrn-flap,
-.jrn-done-line, .jrn-done-txt {
+.jrn-corner, .jrn-edge, .jrn-auth-mark, .jrn-stamp-g, .jrn-die,
+.jrn-stamp-shadow, .jrn-env-b, .jrn-env-f, .jrn-flap-g,
+.jrn-flap-trace, .jrn-env-seal, .jrn-badge {
   transition: none !important;
   animation: none !important;
 }
 
-/* Pre-render state: JS overwrites all of these on the first frame. */
-.jrn-folder-b, .jrn-folder-f, .jrn-scan-g, .jrn-rl,
-.jrn-auth-mark, .jrn-status-g, .jrn-s-auth,
-.jrn-stamp-g, .jrn-env-b, .jrn-env-f, .jrn-done-txt { opacity: 0; }
-.jrn-corner    { stroke-dasharray: 48; stroke-dashoffset: 48; }
-.jrn-done-line { stroke-dasharray: 180; stroke-dashoffset: 180; }
-.jrn-flap      { transform: scaleY(0); transform-origin: 210px 360px; }
+/* Pre-render state — JS overwrites all of this on the first frame. */
+.jrn-folder-b, .jrn-folder-f, .jrn-scan-g, .jrn-rl, .jrn-auth-mark,
+.jrn-stamp-g, .jrn-env-b, .jrn-env-f, .jrn-env-seal, .jrn-badge { opacity: 0; }
+.jrn-corner     { stroke-dasharray: 48;  stroke-dashoffset: 48; }
+.jrn-edge       { stroke-dasharray: 152; stroke-dashoffset: 152; }
+.jrn-flap-trace { stroke-dasharray: 400; stroke-dashoffset: 400; }
+.jrn-flap-g     { transform: scaleY(0); transform-origin: 220px 366px; }
 
 /* ── The animation stage ─────────────────────────────────────── */
 .jrn-vis {
@@ -8471,26 +8470,26 @@ a.btn-gold:hover {
   box-sizing: border-box;
   min-width: 0;
 }
+/* Warm pool of light behind the stage, keeps the artwork off flat navy */
 .jrn-vis::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 58% 48% at 50% 46%,
-    rgba(212,175,55,.08) 0%, transparent 72%);
+  background: radial-gradient(ellipse 60% 50% at 50% 46%,
+    rgba(212,175,55,.085) 0%, rgba(212,175,55,.03) 42%, transparent 72%);
   pointer-events: none;
 }
 .jrn-canvas {
   position: relative;
   z-index: 1;
   width: 100%;
-  /* Capped by viewport height too, so the stage never outgrows the screen */
-  max-width: min(420px, 48vh);
+  max-width: min(470px, 53vh);
 }
-/* overflow:hidden clips objects that travel outside the viewBox
+/* overflow:hidden clips objects travelling outside the viewBox
    (the document once it is inside the envelope). */
 .jrn-svg { width: 100%; height: auto; display: block; overflow: hidden; }
 
-/* ── Previous / Next: quiet controls, not competing CTAs ─────── */
+/* ── Previous / Next: secondary controls ─────────────────────── */
 .jrn-nav {
   position: relative;
   z-index: 1;
@@ -8498,7 +8497,7 @@ a.btn-gold:hover {
   align-items: center;
   justify-content: center;
   gap: 18px;
-  margin-top: 22px;
+  margin-top: 24px;
 }
 .jrn-nav-btn {
   display: inline-flex;
@@ -8515,14 +8514,15 @@ a.btn-gold:hover {
   text-transform: uppercase;
   padding: 10px 15px;
   cursor: pointer;
-  transition: color .22s ease, border-color .22s ease, background .22s ease;
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
 }
 .jrn-nav-btn:hover:not(:disabled) {
   color: var(--gold);
   border-color: rgba(212,175,55,.55);
   background: rgba(212,175,55,.06);
 }
-.jrn-nav-btn:disabled { opacity: .3; cursor: default; }
+.jrn-nav-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.jrn-nav-btn:disabled { opacity: .28; cursor: default; }
 .jrn-nav-btn svg { flex-shrink: 0; }
 .jrn-nav-count {
   font-family: var(--serif);
@@ -8532,7 +8532,6 @@ a.btn-gold:hover {
 }
 .jrn-nav-count b { color: rgba(212,175,55,.9); font-weight: 600; }
 
-/* Screen-reader-only stage announcement */
 .jrn-sr {
   position: absolute;
   width: 1px; height: 1px;
@@ -8543,7 +8542,6 @@ a.btn-gold:hover {
 
 /* ── The five stage controls ─────────────────────────────────── */
 .jrn-step {
-  /* button reset */
   appearance: none;
   background: none;
   border: 0;
@@ -8553,7 +8551,7 @@ a.btn-gold:hover {
   cursor: pointer;
   width: 100%;
   position: relative;
-  transition: background .22s ease;
+  transition: background .25s ease;
 }
 .jrn-step:focus-visible {
   outline: 2px solid var(--gold);
@@ -8571,20 +8569,19 @@ a.btn-gold:hover {
   box-sizing: border-box;
   flex-shrink: 0;
   position: relative;
-  transition: background .3s ease, border-color .3s ease,
-              box-shadow .3s ease, transform .3s ease;
+  transition: background .34s cubic-bezier(.4,0,.2,1),
+              border-color .34s cubic-bezier(.4,0,.2,1),
+              box-shadow .34s cubic-bezier(.4,0,.2,1);
 }
-.jrn-step:hover .jrn-dot { border-color: rgba(212,175,55,.62); }
+.jrn-step:hover .jrn-dot { border-color: rgba(212,175,55,.6); }
 .jrn-step.is-active .jrn-dot {
-  background: var(--gold);
-  border-color: var(--gold);
-  box-shadow: 0 0 14px rgba(212,175,55,.45);
-  transform: scale(1.12);
+  background: linear-gradient(140deg, #F0DFA8 0%, #C9A44C 55%, #8A6B28 100%);
+  border-color: rgba(240,223,168,.9);
+  box-shadow: 0 0 0 3px rgba(212,175,55,.14);
 }
-/* Viewed stages keep a subtle check */
 .jrn-step.is-visited:not(.is-active) .jrn-dot {
-  background: rgba(212,175,55,.5);
-  border-color: rgba(212,175,55,.5);
+  background: rgba(212,175,55,.46);
+  border-color: rgba(212,175,55,.46);
 }
 .jrn-step.is-visited:not(.is-active) .jrn-dot::after {
   content: '';
@@ -8602,9 +8599,9 @@ a.btn-gold:hover {
   font-weight: 600;
   letter-spacing: .2em;
   color: rgba(212,175,55,.3);
-  transition: color .3s ease, font-size .3s ease;
+  transition: color .3s ease;
 }
-.jrn-step:hover .jrn-snum    { color: rgba(212,175,55,.55); }
+.jrn-step:hover .jrn-snum     { color: rgba(212,175,55,.56); }
 .jrn-step.is-active .jrn-snum { color: var(--gold); }
 
 .jrn-slabel {
@@ -8617,11 +8614,11 @@ a.btn-gold:hover {
   line-height: 1.3;
   transition: color .3s ease;
 }
-.jrn-step:hover .jrn-slabel    { color: rgba(255,255,255,.72); }
+.jrn-step:hover .jrn-slabel     { color: rgba(255,255,255,.74); }
 .jrn-step.is-active .jrn-slabel { color: #fff; }
 .jrn-step.is-visited:not(.is-active) .jrn-slabel { color: rgba(255,255,255,.5); }
 
-/* ── DESKTOP (≥ 800px): controls left, stage right ───────────── */
+/* ── DESKTOP (≥ 800px) ───────────────────────────────────────── */
 @media (min-width: 800px) {
   .jrn-inner {
     display: grid;
@@ -8642,21 +8639,21 @@ a.btn-gold:hover {
 
   .jrn-stages {
     position: relative;
-    margin: 20px 0 0;
+    margin: 30px 0 0;
     padding-left: 34px;
   }
   .jrn-track {
     position: absolute;
     left: 6px; top: 20px; bottom: 20px;
     width: 2px;
-    background: rgba(212,175,55,.14);
+    background: rgba(212,175,55,.13);
     border-radius: 1px;
     overflow: hidden;
   }
   .jrn-track-fill {
     width: 100%;
     height: 0%;
-    background: linear-gradient(180deg, var(--gold) 0%, rgba(212,175,55,.55) 100%);
+    background: linear-gradient(180deg, #F0DFA8 0%, var(--gold) 45%, rgba(212,175,55,.5) 100%);
     border-radius: 1px;
   }
 
@@ -8682,7 +8679,6 @@ a.btn-gold:hover {
   .jrn-snum   { font-size: .59rem; margin-bottom: 2px; }
   .jrn-slabel { font-size: .95rem; }
 
-  /* Description belongs to the selected stage only */
   .jrn-sdesc {
     display: block;
     font-family: var(--sans);
@@ -8701,18 +8697,18 @@ a.btn-gold:hover {
   }
 
   .jrn-cta-wrap {
-    margin-top: 22px;
+    margin-top: 26px;
     opacity: 0;
     transform: translateY(10px);
     pointer-events: none;
-    transition: opacity .55s ease, transform .55s ease;
+    transition: opacity .6s ease, transform .6s ease;
   }
   .jrn-cta-wrap.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 }
 
-/* ── MOBILE (≤ 799px): stage on top, large tap targets ───────── */
+/* ── MOBILE (≤ 799px) ────────────────────────────────────────── */
 @media (max-width: 799px) {
-  .jrn { padding: 56px 0 64px; }
+  .jrn { padding: 46px 0 56px; }
 
   .jrn-inner {
     display: flex;
@@ -8723,32 +8719,29 @@ a.btn-gold:hover {
   .jrn-vis      { order: 2; }
   .jrn-cta-wrap { order: 3; }
 
-  .jrn-lead    { display: none; }
-  .jrn-title   { font-size: clamp(1.5rem, 6.5vw, 1.9rem); text-align: center; margin-bottom: 10px; }
-  .jrn-eyebrow { text-align: center; margin-bottom: 8px; }
+  .jrn-title { font-size: clamp(1.6rem, 7vw, 2rem); text-align: center; margin-bottom: 12px; }
+  .jrn-lead  { text-align: center; font-size: .8rem; margin: 0 auto; max-width: 340px; }
 
-  /* Five tap targets in a row. Labels cannot sit side by side at phone
-     widths without colliding, so the track carries the numbers and one
-     centred label names the selected stage. */
+  /* Five tap targets in a row; one centred label names the selection */
   .jrn-stages {
     position: relative;
     display: flex;
     flex-direction: row;
-    margin: 6px 0 0;
+    margin: 20px 0 0;
     padding: 0 0 30px;
   }
   .jrn-track {
     position: absolute;
     left: 10%; right: 10%; top: 25px;
     height: 2px;
-    background: rgba(212,175,55,.14);
+    background: rgba(212,175,55,.13);
     border-radius: 1px;
     overflow: hidden;
   }
   .jrn-track-fill {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, var(--gold) 0%, rgba(212,175,55,.55) 100%);
+    background: linear-gradient(90deg, #F0DFA8 0%, var(--gold) 45%, rgba(212,175,55,.5) 100%);
     border-radius: 1px;
   }
 
@@ -8760,7 +8753,6 @@ a.btn-gold:hover {
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-    /* comfortable tap target */
     min-height: 62px;
     padding: 12px 2px 0;
     position: static;
@@ -8772,7 +8764,6 @@ a.btn-gold:hover {
   .jrn-sdesc     { display: none; }
   .jrn-snum      { font-size: .54rem; margin-bottom: 1px; }
 
-  /* Only the selected stage's label shows, centred under the track */
   .jrn-slabel {
     position: absolute;
     left: 0; right: 0; bottom: 0;
@@ -8780,53 +8771,44 @@ a.btn-gold:hover {
     white-space: nowrap;
     font-size: .82rem;
     opacity: 0;
-    transition: opacity .32s ease;
+    transition: opacity .34s ease;
   }
   .jrn-step.is-active .jrn-slabel { opacity: 1; color: #fff; }
   .jrn-step.is-visited:not(.is-active) .jrn-slabel { opacity: 0; }
 
-  .jrn-vis { margin-top: 4px; }
-  .jrn-nav { margin-top: 20px; gap: 12px; }
-  /* min-height keeps these at a comfortable tap size on touch screens */
+  .jrn-vis     { margin-top: 2px; }
+  .jrn-nav     { margin-top: 20px; gap: 12px; }
   .jrn-nav-btn { padding: 13px 16px; font-size: .62rem; min-height: 46px; }
 
   .jrn-cta-wrap {
-    margin-top: 26px;
+    margin-top: 30px;
     text-align: center;
     opacity: 0;
     transform: translateY(10px);
     pointer-events: none;
-    transition: opacity .55s ease, transform .55s ease;
+    transition: opacity .6s ease, transform .6s ease;
   }
   .jrn-cta-wrap.is-visible { opacity: 1; transform: none; pointer-events: auto; }
-  .jrn-cta-wrap .jrn-tagline { font-size: .9rem; margin-bottom: 14px; }
+  .jrn-cta-wrap .jrn-tagline { font-size: .92rem; margin-bottom: 16px; }
 }
 
-/* ── Shared text + CTA ───────────────────────────────────────── */
-.jrn-eyebrow {
-  font-family: var(--sans);
-  font-size: .60rem;
-  font-weight: 600;
-  letter-spacing: .24em;
-  text-transform: uppercase;
-  color: rgba(212,175,55,.72);
-  margin: 0 0 14px;
-}
+/* ── Headline + supporting copy ──────────────────────────────── */
 .jrn-title {
   font-family: var(--serif);
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.7rem);
   font-weight: 600;
   color: #fff;
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -.025em;
-  margin: 0 0 14px;
+  margin: 0 0 18px;
 }
 .jrn-lead {
-  font-size: .83rem;
+  font-size: .85rem;
   font-weight: 300;
-  color: rgba(255,255,255,.50);
+  color: rgba(255,255,255,.54);
   line-height: 1.8;
   margin: 0;
+  max-width: 27rem;
 }
 .jrn-tagline {
   font-family: var(--serif);
@@ -8834,13 +8816,13 @@ a.btn-gold:hover {
   color: rgba(212,175,55,.85);
   line-height: 1.7;
   font-style: italic;
-  margin: 0 0 18px;
+  margin: 0 0 20px;
 }
 .jrn-cta-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--gold);
+  background: linear-gradient(135deg, #E0C368 0%, var(--gold) 48%, #B8912F 100%);
   color: var(--navy);
   font-family: var(--sans);
   font-size: .70rem;
@@ -8848,24 +8830,26 @@ a.btn-gold:hover {
   letter-spacing: .08em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 14px 26px;
+  padding: 15px 28px;
   border-radius: 4px;
-  transition: background .22s ease, transform .18s ease;
+  transition: filter .22s ease, transform .18s ease;
 }
-.jrn-cta-btn:hover { background: #c5a059; transform: translateY(-1px); }
+.jrn-cta-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+.jrn-cta-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .jrn-cta-btn svg   { flex-shrink: 0; }
 
 /* ── Narrow desktop tuning ───────────────────────────────────── */
 @media (max-width: 1040px) and (min-width: 800px) {
   .jrn-inner    { padding: 0 28px; }
-  .jrn-lead     { display: none; }
-  .jrn-tl-inner { padding-right: 22px; }
+  .jrn-tl-inner { padding-right: 20px; }
   .jrn-vis      { padding-left: 12px; }
+  .jrn-lead     { font-size: .8rem; }
 }
 
-/* ── Reduced motion: states switch without elaborate movement ── */
+/* ── Reduced motion: same states, no elaborate movement ──────── */
 @media (prefers-reduced-motion: reduce) {
-  .jrn-cta-wrap, .jrn-dot, .jrn-snum, .jrn-slabel, .jrn-sdesc, .jrn-nav-btn {
+  .jrn-cta-wrap, .jrn-dot, .jrn-snum, .jrn-slabel, .jrn-sdesc,
+  .jrn-nav-btn, .jrn-step {
     transition: none !important;
   }
 }
