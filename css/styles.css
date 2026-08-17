@@ -8444,12 +8444,19 @@ a.btn-gold:hover {
 }
 
 /* Tween-driven nodes: no CSS transition/animation. */
-.jrn-folder-b, .jrn-folder-f, .jrn-doc-g, .jrn-scan-g, .jrn-rl,
+.jrn-cam, .jrn-folder-b, .jrn-folder-f, .jrn-doc-g, .jrn-scan-g, .jrn-rl,
 .jrn-corner, .jrn-edge, .jrn-auth-mark, .jrn-stamp-g, .jrn-die,
 .jrn-stamp-shadow, .jrn-env-b, .jrn-env-f, .jrn-flap-g,
 .jrn-flap-trace, .jrn-env-seal, .jrn-badge {
   transition: none !important;
   animation: none !important;
+}
+
+/* Camera: transform in viewBox user units from a 0,0 origin */
+.jrn-cam {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  will-change: transform;   /* promote: the camera only ever translates */
 }
 
 /* Pre-render state — JS overwrites all of this on the first frame. */
@@ -8484,6 +8491,16 @@ a.btn-gold:hover {
   z-index: 1;
   width: 100%;
   max-width: min(470px, 53vh);
+}
+@media (max-width: 799px) {
+  /* Artwork is ~1.23x as tall as it is wide, so capping WIDTH by viewport
+     height is what actually bounds the rendered height. */
+  .jrn-canvas { max-width: min(370px, 42vh); }
+}
+@supports (height: 1dvh) {
+  @media (max-width: 799px) {
+    .jrn-canvas { max-width: min(370px, 42dvh); }
+  }
 }
 /* overflow:hidden clips objects travelling outside the viewBox
    (the document once it is inside the envelope). */
@@ -8708,7 +8725,7 @@ a.btn-gold:hover {
 
 /* ── MOBILE (≤ 799px) ────────────────────────────────────────── */
 @media (max-width: 799px) {
-  .jrn { padding: 46px 0 56px; }
+  .jrn { padding: 34px 0 40px; }
 
   .jrn-inner {
     display: flex;
@@ -8719,7 +8736,7 @@ a.btn-gold:hover {
   .jrn-vis      { order: 2; }
   .jrn-cta-wrap { order: 3; }
 
-  .jrn-title { font-size: clamp(1.6rem, 7vw, 2rem); text-align: center; margin-bottom: 12px; }
+  .jrn-title { font-size: clamp(1.5rem, 6.4vw, 1.85rem); text-align: center; margin-bottom: 9px; }
   .jrn-lead  { text-align: center; font-size: .8rem; margin: 0 auto; max-width: 340px; }
 
   /* Five tap targets in a row; one centred label names the selection */
@@ -8727,12 +8744,12 @@ a.btn-gold:hover {
     position: relative;
     display: flex;
     flex-direction: row;
-    margin: 20px 0 0;
-    padding: 0 0 30px;
+    margin: 14px 0 0;
+    padding: 0 0 26px;
   }
   .jrn-track {
     position: absolute;
-    left: 10%; right: 10%; top: 25px;
+    left: 10%; right: 10%; top: 22px;
     height: 2px;
     background: rgba(212,175,55,.13);
     border-radius: 1px;
@@ -8753,8 +8770,8 @@ a.btn-gold:hover {
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-    min-height: 62px;
-    padding: 12px 2px 0;
+    min-height: 56px;
+    padding: 9px 2px 0;
     position: static;
     min-width: 0;
     -webkit-tap-highlight-color: rgba(212,175,55,.16);
@@ -8776,12 +8793,12 @@ a.btn-gold:hover {
   .jrn-step.is-active .jrn-slabel { opacity: 1; color: #fff; }
   .jrn-step.is-visited:not(.is-active) .jrn-slabel { opacity: 0; }
 
-  .jrn-vis     { margin-top: 2px; }
-  .jrn-nav     { margin-top: 20px; gap: 12px; }
+  .jrn-vis     { margin-top: 0; }
+  .jrn-nav     { margin-top: 14px; gap: 12px; }
   .jrn-nav-btn { padding: 13px 16px; font-size: .62rem; min-height: 46px; }
 
   .jrn-cta-wrap {
-    margin-top: 30px;
+    margin-top: 24px;
     text-align: center;
     opacity: 0;
     transform: translateY(10px);

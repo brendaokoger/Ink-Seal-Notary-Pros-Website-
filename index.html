@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=20" />
+  <link rel="stylesheet" href="css/styles.css?v=21" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -524,7 +524,6 @@
         </div>
         <a href="/services/apostille/#start" class="drt-cta-btn" id="drt-cta">
           Start Document Review
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
         </a>
         <button class="drt-restart-btn" id="drt-restart" type="button">Start over</button>
       </div>
@@ -878,7 +877,7 @@
           <h3 class="svc-title">Nationwide Remote Online Notary (RON)</h3>
           <div class="svc-divider"><span class="svc-divider-gem">◆</span></div>
           <p class="svc-desc">Secure video notarization from anywhere in the US — no in-person appointment required.</p>
-          <a href="/services/notary" class="svc-btn svc-btn--outline">Book Online Notary</a>
+          <a href="/services/notary" class="svc-btn svc-btn--outline">Start Online Notarization</a>
         </div>
 
         <div class="svc-card">
@@ -898,7 +897,7 @@
           <h3 class="svc-title">Certified Legal &amp; Academic Translations</h3>
           <div class="svc-divider"><span class="svc-divider-gem">◆</span></div>
           <p class="svc-desc">Certified translations for immigration, legal, academic, and business documents for international use.</p>
-          <a href="/services/translation" class="svc-btn svc-btn--primary">Request Translation Quote</a>
+          <a href="/services/translation" class="svc-btn svc-btn--primary">Request Translation</a>
         </div>
 
         <div class="svc-card">
@@ -915,7 +914,7 @@
           <h3 class="svc-title">Official FD-258 Ink Fingerprinting</h3>
           <div class="svc-divider"><span class="svc-divider-gem">◆</span></div>
           <p class="svc-desc">FBI FD-258 ink fingerprinting for employment, licensing, and immigration. By appointment only.</p>
-          <a href="/services/fingerprinting" class="svc-btn svc-btn--outline">Book Fingerprinting</a>
+          <a href="/services/fingerprinting" class="svc-btn svc-btn--outline">Schedule Fingerprinting</a>
         </div>
 
       </div>
@@ -1010,11 +1009,15 @@
                 <stop offset=".52" stop-color="#FBF7EE"/>
                 <stop offset="1"   stop-color="#F1EADB"/>
               </linearGradient>
-              <!-- Fine laid/linen weave — cheap, no filter cost -->
-              <pattern id="jrnLaid" width="4" height="4" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="0" y2="4" stroke="#8A7A5E" stroke-opacity=".055" stroke-width=".5"/>
-                <line x1="0" y1="0" x2="4" y2="0" stroke="#8A7A5E" stroke-opacity=".032" stroke-width=".5"/>
-              </pattern>
+              <!-- Sheet sheen: light falls across the stock and gathers
+                   slightly at the lower edge. A <pattern> weave was measured
+                   ~10fps cheaper to drop and rendered sub-pixel anyway. -->
+              <linearGradient id="jrnSheen" x1="0" y1="0" x2=".85" y2="1">
+                <stop offset="0"   stop-color="#FFFFFF" stop-opacity=".50"/>
+                <stop offset=".34" stop-color="#FFFFFF" stop-opacity="0"/>
+                <stop offset=".70" stop-color="#C3B79E" stop-opacity=".07"/>
+                <stop offset="1"   stop-color="#AFA48A" stop-opacity=".16"/>
+              </linearGradient>
               <!-- Metallic gold foil -->
               <linearGradient id="jrnFoil" x1="0" y1="0" x2="1" y2=".4">
                 <stop offset="0"   stop-color="#8A6B28"/>
@@ -1078,12 +1081,17 @@
               </linearGradient>
             </defs>
 
+            <!-- ══ CAMERA — frames the active content so no stage renders
+                 against a half-empty frame. The status plate sits outside
+                 it and stays anchored to the foot of the stage. ══════════ -->
+            <g class="jrn-cam">
+
             <!-- ── FOLDER: back board ───────────────────────────── -->
             <g class="jrn-folder-b">
               <ellipse cx="220" cy="534" rx="182" ry="20" fill="url(#jrnShadow)" opacity=".85"/>
               <path d="M58,248 L58,228 Q58,221 65,221 L136,221 Q143,221 146,228 L155,248 Z"
                     fill="#0B2138" stroke="rgba(212,175,55,.20)" stroke-width="1"/>
-              <rect x="58" y="246" width="324" height="294" rx="9"
+              <rect x="58" y="246" width="324" height="400" rx="9"
                     fill="url(#jrnFolderBack)" stroke="rgba(212,175,55,.20)" stroke-width="1"/>
               <rect x="58" y="246" width="324" height="2.5" fill="rgba(255,255,255,.06)"/>
             </g>
@@ -1091,7 +1099,7 @@
             <!-- ── ENVELOPE: back panel (behind the document) ───── -->
             <g class="jrn-env-b">
               <ellipse cx="220" cy="536" rx="190" ry="18" fill="url(#jrnShadow)" opacity=".8"/>
-              <rect x="50" y="300" width="340" height="240" rx="9"
+              <rect x="50" y="300" width="340" height="346" rx="9"
                     fill="url(#jrnEnvBack)" stroke="rgba(212,175,55,.22)" stroke-width="1"/>
             </g>
 
@@ -1104,7 +1112,7 @@
 
               <!-- Sheet -->
               <rect x="120" y="86" width="200" height="280" rx="3" fill="url(#jrnPaper)"/>
-              <rect x="120" y="86" width="200" height="280" rx="3" fill="url(#jrnLaid)"/>
+              <rect x="120" y="86" width="200" height="280" rx="3" fill="url(#jrnSheen)"/>
               <rect x="120" y="86" width="200" height="280" rx="3" fill="none"
                     stroke="#E4DCC9" stroke-width="1"/>
               <!-- Inner gold hairline -->
@@ -1217,7 +1225,7 @@
                  it tilts toward the viewer. The document slides in
                  behind it while it is open. -->
             <g class="jrn-folder-f">
-              <path d="M58,301 a9,9 0 0 1 9,-9 h306 a9,9 0 0 1 9,9 v239 h-324 Z"
+              <path d="M58,301 a9,9 0 0 1 9,-9 h306 a9,9 0 0 1 9,9 v345 h-324 Z"
                     fill="url(#jrnFolderFront)" stroke="rgba(212,175,55,.30)" stroke-width="1"/>
               <rect x="58" y="292" width="324" height="1.6" fill="url(#jrnFoilSoft)" opacity=".7"/>
               <!-- Embossed Ink & Seal crest on the cover -->
@@ -1235,7 +1243,7 @@
 
             <!-- ── ENVELOPE: front panel, flap, seal ── -->
             <g class="jrn-env-f">
-              <path d="M50,375 a9,9 0 0 1 9,-9 h322 a9,9 0 0 1 9,9 v165 h-340 Z"
+              <path d="M50,375 a9,9 0 0 1 9,-9 h322 a9,9 0 0 1 9,9 v271 h-340 Z"
                     fill="url(#jrnEnvFront)" stroke="rgba(212,175,55,.28)" stroke-width="1"/>
               <line x1="50" y1="366" x2="220" y2="418" stroke="rgba(212,175,55,.09)" stroke-width=".8"/>
               <line x1="390" y1="366" x2="220" y2="418" stroke="rgba(212,175,55,.09)" stroke-width=".8"/>
@@ -1288,6 +1296,8 @@
               </g>
             </g>
 
+            </g><!-- /jrn-cam -->
+
             <!-- ── STATUS PLATE — the stage's confirmation ── -->
             <g class="jrn-badge">
               <rect class="jrn-badge-box" x="132" y="497" width="176" height="30" rx="4"
@@ -1324,10 +1334,6 @@
         <p class="jrn-tagline">From your hands.<br>Through authentication.<br>Safely back to you.</p>
         <a href="/services/apostille/#start" class="jrn-cta-btn">
           Start My Apostille
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-          </svg>
         </a>
       </div>
 
@@ -1382,6 +1388,7 @@
   var elFlap    = q('.jrn-flap-g'),   elTrace   = q('.jrn-flap-trace');
   var elEnvSeal = q('.jrn-env-seal');
   var elBadge   = q('.jrn-badge'),    elBadgeTxt= q('.jrn-badge-txt');
+  var elCam     = q('.jrn-cam');
   var elRls     = svg.querySelectorAll('.jrn-rl');
   var elCorners = svg.querySelectorAll('.jrn-corner');
   var elEdges   = svg.querySelectorAll('.jrn-edge');
@@ -1403,6 +1410,10 @@
 
   /* The light reaches each row at these points, so results appear in step */
   var RL_AT  = [0.3679, 0.3781, 0.3883, 0.3985];
+
+  /* One fixed camera scale keeps the scene rasterised once */
+  var CAM_S  = 1.25;
+  var CAM_TX = (220 * (1 - CAM_S)).toFixed(2);
 
   var horiz   = window.matchMedia('(max-width: 799px)').matches;
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1495,6 +1506,17 @@
     /* Gold line traces the closing edge */
     if (elTrace) elTrace.style.strokeDashoffset = kf(p, [[0.955, 400], [0.99, 0, GLIDE]]);
     if (elEnvSeal) elEnvSeal.style.opacity = kf(p, [[0.976, 0], [1, 1, GLIDE]]);
+
+    /* ── CAMERA — frames the active content. Scale is CONSTANT and only
+       the offset animates: re-scaling vector content forces a full
+       re-raster every frame (measured 33fps on a throttled phone during
+       stage 05), whereas translating a promoted layer is compositor work. */
+    var camY = kf(p, [[0, 300], [0.16, 393], [0.30, 252],
+                      [0.85, 252], [0.93, 420], [0.97, 450], [1.00, 450]]);
+    if (elCam) {
+      elCam.style.transform = 'translate(' + CAM_TX + 'px,' +
+                              (270 - camY * CAM_S).toFixed(2) + 'px) scale(' + CAM_S + ')';
+    }
 
     /* ── Which stage is p inside, and how far through it ── */
     var n = 5;
