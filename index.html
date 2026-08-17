@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=18" />
+  <link rel="stylesheet" href="css/styles.css?v=19" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -923,94 +923,84 @@
   </section>
 
   <!-- ═══ YOUR DOCUMENT'S JOURNEY ══════════════════════════════
-       ONE section. ONE pinned stage. ONE document. ONE scroll-scrubbed
-       master timeline (p = 0→1). Every object animates into and out of
-       the SAME stage. No stage classes, no entrance triggers, no cards.
+       ONE document, ONE animation stage, FIVE user-controlled states.
+       The five stage labels are buttons; Previous/Next drive the same
+       transitions. Selecting a stage tweens the shared timeline value
+       p to that stage's end point, so the SAME document animates into
+       the state — forwards or backwards. No scroll scrubbing.
        Namespace: jrn-*   Do NOT modify sections outside this block.
   ═════════════════════════════════════════════════════════════ -->
   <section class="jrn" id="your-journey" aria-labelledby="jrn-title">
-    <div class="jrn-pin" id="jrn-pin">
+    <div class="jrn-inner">
 
-      <!-- LEFT (desktop) / TOP (mobile): heading + 01–05 progress indicator -->
+      <!-- LEFT (desktop) / TOP (mobile): heading + interactive 01–05 -->
       <div class="jrn-tl">
         <div class="jrn-tl-inner">
           <p class="jrn-eyebrow">Authentication, step by step</p>
           <h2 class="jrn-title" id="jrn-title">Your Document's<br>Journey</h2>
-          <p class="jrn-lead">One document. One continuous path. Scroll to follow it from your hands, through authentication, and safely back to you.</p>
+          <p class="jrn-lead">One document, followed from your hands to authentication and safely back. Choose a stage to watch it happen.</p>
 
-          <ol class="jrn-stages" id="jrn-stages">
+          <div class="jrn-stages" id="jrn-stages">
             <div class="jrn-track" aria-hidden="true"><div class="jrn-track-fill" id="jrn-track-fill"></div></div>
 
-            <li class="jrn-step" data-step="1">
+            <button type="button" class="jrn-step" data-step="1">
               <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
               <span class="jrn-step-body">
                 <span class="jrn-snum">01</span>
                 <span class="jrn-slabel">Received</span>
                 <span class="jrn-sdesc">Your document enters the Ink &amp; Seal process individually — never batched, never rushed.</span>
               </span>
-            </li>
+            </button>
 
-            <li class="jrn-step" data-step="2">
+            <button type="button" class="jrn-step" data-step="2">
               <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
               <span class="jrn-step-body">
                 <span class="jrn-snum">02</span>
                 <span class="jrn-slabel">Reviewed</span>
                 <span class="jrn-sdesc">A specialist verifies document type, issuing authority, destination country, and authentication requirements.</span>
               </span>
-            </li>
+            </button>
 
-            <li class="jrn-step" data-step="3">
+            <button type="button" class="jrn-step" data-step="3">
               <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
               <span class="jrn-step-body">
                 <span class="jrn-snum">03</span>
                 <span class="jrn-slabel">Prepared</span>
                 <span class="jrn-sdesc">Your document is prepared for the appropriate process — apostille, notarization, or embassy legalization.</span>
               </span>
-            </li>
+            </button>
 
-            <li class="jrn-step" data-step="4">
+            <button type="button" class="jrn-step" data-step="4">
               <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
               <span class="jrn-step-body">
                 <span class="jrn-snum">04</span>
                 <span class="jrn-slabel">Authenticated</span>
                 <span class="jrn-sdesc">The required authentication is applied — handled precisely, submitted correctly, tracked at every step.</span>
               </span>
-            </li>
+            </button>
 
-            <li class="jrn-step" data-step="5">
+            <button type="button" class="jrn-step" data-step="5">
               <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
               <span class="jrn-step-body">
                 <span class="jrn-snum">05</span>
                 <span class="jrn-slabel">Returned</span>
                 <span class="jrn-sdesc">Your completed documents are securely returned via tracked delivery — the same care from start to finish.</span>
               </span>
-            </li>
-          </ol>
-
-          <!-- Revealed at the END of the master timeline (p ≥ .955) -->
-          <div class="jrn-cta-wrap" id="jrn-cta-wrap">
-            <p class="jrn-tagline">From your hands.<br>Through authentication.<br>Safely back to you.</p>
-            <a href="/services/apostille/#start" class="jrn-cta-btn">
-              Start My Document Review
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                   stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-              </svg>
-            </a>
+            </button>
           </div>
+
+          <p class="jrn-sr" aria-live="polite" id="jrn-live"></p>
         </div>
       </div><!-- /jrn-tl -->
 
       <!-- THE ONE ANIMATION STAGE ─────────────────────────────────
-           Paint order (SVG z-order, back → front):
-             folder-back → envelope-back → DOCUMENT → folder-front
-             → envelope-front/flap → stamp
-           The document passes BEHIND folder-front and envelope-front,
-           which is what makes "into the folder" / "into the envelope"
-           read as physical insertion rather than a fade.
+           Paint order (back → front): folder-back, envelope-back,
+           DOCUMENT, folder-front, envelope-front/flap, stamp.
+           The document passes BEHIND the folder and envelope fronts,
+           so insertion reads as physical rather than as a fade.
       ─────────────────────────────────────────────────────────────── -->
-      <div class="jrn-vis" aria-hidden="true">
-        <div class="jrn-canvas">
+      <div class="jrn-vis">
+        <div class="jrn-canvas" aria-hidden="true">
           <svg class="jrn-svg" id="jrn-svg" viewBox="0 0 420 520"
                preserveAspectRatio="xMidYMid meet" fill="none"
                xmlns="http://www.w3.org/2000/svg">
@@ -1029,10 +1019,7 @@
                     fill="#0b1e38" stroke="rgba(212,175,55,.22)" stroke-width="1"/>
             </g>
 
-            <!-- ══ THE DOCUMENT — one persistent object ══════════
-                 Everything applied to it (scan, verifications, corner
-                 marks, status, authentication mark) lives INSIDE this
-                 group, so it travels with the document. -->
+            <!-- ══ THE DOCUMENT — one persistent object ══════════ -->
             <g class="jrn-doc-g">
 
               <rect x="114" y="94" width="200" height="270" rx="3" fill="rgba(0,0,0,.30)"/>
@@ -1051,9 +1038,7 @@
               <!-- Body copy -->
               <rect x="126" y="157" width="140" height="2.6" rx="1.3" fill="rgba(30,41,59,.34)"/>
               <rect x="126" y="169" width="94"  height="1.6" rx=".8"  fill="rgba(30,41,59,.16)"/>
-              <rect x="126" y="164.2" width="0" height="0" fill="none"/>
               <g fill="rgba(30,41,59,.11)">
-                <rect x="126" y="164" width="0" height="0"/>
                 <rect x="126" y="185" width="168" height="1.6" rx=".8"/>
                 <rect x="126" y="205" width="168" height="1.6" rx=".8"/>
                 <rect x="126" y="225" width="150" height="1.6" rx=".8"/>
@@ -1094,7 +1079,7 @@
                       fill="rgba(184,148,52,.95)" text-anchor="end">Authentication Requirements ✓</text>
               </g>
 
-              <!-- ── SCANNING BEAM — position driven directly by scroll ── -->
+              <!-- ── SCANNING BEAM ── -->
               <g class="jrn-scan-g">
                 <rect x="110" y="82" width="200" height="16" fill="rgba(212,175,55,.10)"/>
                 <rect x="110" y="89" width="200" height="2" rx="1" fill="rgba(212,175,55,.80)"/>
@@ -1167,12 +1152,10 @@
               <line x1="45" y1="360" x2="210" y2="410" stroke="rgba(212,175,55,.10)" stroke-width=".8"/>
               <line x1="375" y1="360" x2="210" y2="410" stroke="rgba(212,175,55,.10)" stroke-width=".8"/>
 
-              <!-- Flap: scaleY(0) = open/folded back (degenerate at the mouth),
-                   scaleY(1) = folded down and closed over the document. -->
+              <!-- Flap: scaleY(0) = open at the mouth, scaleY(1) = folded closed -->
               <path class="jrn-flap" d="M45,360 L210,455 L375,360 Z"
                     fill="#0A192F" stroke="rgba(212,175,55,.30)" stroke-width="1"/>
 
-              <!-- Gold completion line + return status -->
               <line class="jrn-done-line" x1="120" y1="480" x2="300" y2="480"
                     stroke="rgba(212,175,55,.80)" stroke-width="1.4" stroke-linecap="round"/>
               <text class="jrn-done-txt" x="210" y="502" font-family="'Plus Jakarta Sans',sans-serif"
@@ -1180,7 +1163,7 @@
                     fill="rgba(212,175,55,.92)" text-anchor="middle">READY FOR RETURN ✓</text>
             </g>
 
-            <!-- ── THE STAMP — travels in, presses, lifts away ── -->
+            <!-- ── THE STAMP — travels in, presses, pauses, lifts away ── -->
             <g class="jrn-stamp-g">
               <defs>
                 <path id="jrn-st-t" d="M 166,228 A 44,44 0 0 1 254,228"/>
@@ -1202,18 +1185,50 @@
             </g>
 
           </svg>
+        </div><!-- /jrn-canvas -->
+
+        <!-- Subtle previous / next controls under the visual -->
+        <div class="jrn-nav">
+          <button type="button" class="jrn-nav-btn" id="jrn-prev">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+            </svg>
+            Previous
+          </button>
+          <span class="jrn-nav-count" aria-hidden="true"><b id="jrn-count">01</b> / 05</span>
+          <button type="button" class="jrn-nav-btn" id="jrn-next">
+            Next
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+            </svg>
+          </button>
         </div>
       </div><!-- /jrn-vis -->
 
-    </div><!-- /jrn-pin -->
+      <!-- Revealed once the visitor reaches stage 05 -->
+      <div class="jrn-cta-wrap" id="jrn-cta-wrap">
+        <p class="jrn-tagline">From your hands.<br>Through authentication.<br>Safely back to you.</p>
+        <a href="/services/apostille/#start" class="jrn-cta-btn">
+          Start My Document Review
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+    </div><!-- /jrn-inner -->
   </section><!-- /jrn -->
 
   <script>
-  /* ── YOUR DOCUMENT'S JOURNEY — ONE scroll-scrubbed master timeline ──
-     scroll progress === timeline progress. Not "scroll reaches stage =
-     play animation". Every visual property is a pure function of p (0→1),
-     written as inline styles each rAF. Scroll forward → advances.
-     Stop → holds. Scroll back → reverses. Identical on desktop + mobile.
+  /* ── YOUR DOCUMENT'S JOURNEY — click/tap controlled ────────────────
+     render(p) draws the whole scene as a pure function of one timeline
+     value p (0→1). Selecting a stage tweens p to that stage's end point,
+     so the SAME document animates into the state — forward or backward.
+     No scroll listener: p is driven only by user input (plus one
+     optional first-view cue that plays stage 01).
   ─────────────────────────────────────────────────────────────────── */
   (function () {
   'use strict';
@@ -1230,6 +1245,7 @@
   var SMOOTH = function (t) { return t * t * (3 - 2 * t); };
   var OUT    = function (t) { return 1 - Math.pow(1 - t, 2.6); };
   var IN     = function (t) { return t * t * t; };
+  function easeInOut(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
 
   /* Declarative keyframe track: kf(p, [[p,value,easeIntoThisKey], ...]) */
   function kf(p, keys) {
@@ -1258,150 +1274,204 @@
   var elRls     = svg.querySelectorAll('.jrn-rl');
   var elCorners = svg.querySelectorAll('.jrn-corner');
 
-  var steps   = document.querySelectorAll('.jrn-step');
+  var steps   = [].slice.call(document.querySelectorAll('.jrn-step'));
   var fill    = document.getElementById('jrn-track-fill');
   var ctaWrap = document.getElementById('jrn-cta-wrap');
+  var prevBtn = document.getElementById('jrn-prev');
+  var nextBtn = document.getElementById('jrn-next');
+  var countEl = document.getElementById('jrn-count');
+  var liveEl  = document.getElementById('jrn-live');
 
-  /* Timeline stage boundaries — drive the 01–05 indicator only. */
-  var STAGES = [0, 0.26, 0.51, 0.62, 0.87];
+  /* ENDS[n] = the timeline value at which stage n has finished.
+     Each stage owns a contiguous, non-overlapping slice of the timeline,
+     so every stage settles on a clean resting state. */
+  var ENDS  = [0, 0.20, 0.45, 0.62, 0.85, 1.00];
+  var NAMES = ['', 'Received', 'Reviewed', 'Prepared', 'Authenticated', 'Returned'];
 
-  /* Verification reveal points = the p at which the beam crosses each row. */
-  var RL_AT  = [0.334, 0.368, 0.402, 0.436];
+  /* Verification rows reveal exactly as the beam crosses them */
+  var RL_AT = [0.333, 0.351, 0.369, 0.387];
 
-  /* Horizontal indicator on mobile → fill width; vertical on desktop → height. */
   var horiz = window.matchMedia('(max-width: 799px)').matches;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ══════════ THE MASTER TIMELINE ══════════ */
+  /* ══════════ THE SCENE, AS A FUNCTION OF p ══════════ */
   function render(p) {
 
-    /* ── FOLDER: rises in, receives the document, recedes ── */
-    var fBY = kf(p, [[0, 130], [0.06, 0, OUT], [0.20, 0], [0.29, 150, IN]]);
-    var fBO = kf(p, [[0, 0], [0.05, 1, LIN], [0.20, 1], [0.29, 0, LIN]]);
-    if (elFolderB) { elFolderB.style.transform = 'translateY(' + fBY + 'px)'; elFolderB.style.opacity = fBO; }
-    if (elFolderF) { elFolderF.style.transform = 'translateY(' + fBY + 'px)'; elFolderF.style.opacity = fBO; }
+    /* ── STAGE 01 — folder receives the document ── */
+    var fY = kf(p, [[0, 130], [0.08, 0, OUT], [0.22, 0], [0.32, 150, IN]]);
+    var fO = kf(p, [[0, 0], [0.06, 1, LIN], [0.22, 1], [0.31, 0, LIN]]);
+    if (elFolderB) { elFolderB.style.transform = 'translateY(' + fY + 'px)'; elFolderB.style.opacity = fO; }
+    if (elFolderF) { elFolderF.style.transform = 'translateY(' + fY + 'px)'; elFolderF.style.opacity = fO; }
 
-    /* ── THE DOCUMENT: enters → into folder → rises out → pressed → into envelope ── */
+    /* ── THE DOCUMENT — enters, into folder, rises, pressed, into envelope ── */
     var docY = kf(p, [
-      [0.00, -150],            /* entering from above, already visible   */
-      [0.06,  -20, OUT],       /* settles into the stage                 */
-      [0.18,  215, SMOOTH],    /* travels DOWN INTO the folder           */
-      [0.28,    0, OUT],       /* rises back out for review              */
-      [0.73,    0],            /* held while it is scanned and prepared  */
-      [0.775,   8, SMOOTH],    /* compresses under the stamp             */
-      [0.815,   0, OUT],       /* rebounds                               */
-      [0.87,    0],
-      [0.94,  285, IN]         /* slides INTO the envelope               */
+      [0.00, -150],           /* waiting above the stage                */
+      [0.07,  -20, OUT],      /* enters the scene                       */
+      [0.20,  215, SMOOTH],   /* 01 — slides INTO the folder            */
+      [0.30,    0, OUT],      /* 02 — rises back out for review         */
+      [0.72,    0],           /* held while reviewed and prepared       */
+      [0.755,   8, SMOOTH],   /* 04 — compresses under the stamp        */
+      [0.79,    0, OUT],      /* rebounds                               */
+      [0.90,    0],
+      [0.955, 285, IN]        /* 05 — slides INTO the envelope          */
     ]);
     if (elDoc) elDoc.style.transform = 'translateY(' + docY + 'px)';
 
-    /* ── SCANNING BEAM: travels the document top → bottom, scroll-locked ── */
-    var scanY = kf(p, [[0.27, 0], [0.50, 270, LIN]]);
-    var scanO = kf(p, [[0.26, 0], [0.30, 1, LIN], [0.50, 1], [0.55, 0, LIN]]);
+    /* ── STAGE 02 — the scanning beam travels the document ── */
+    var scanY = kf(p, [[0.30, 0], [0.42, 270, LIN]]);
+    var scanO = kf(p, [[0.29, 0], [0.32, 1, LIN], [0.42, 1], [0.45, 0, LIN]]);
     if (elScan) { elScan.style.transform = 'translateY(' + scanY + 'px)'; elScan.style.opacity = scanO; }
 
-    /* ── VERIFICATION RESULTS: appear as the beam crosses each row ── */
     for (var i = 0; i < elRls.length; i++) {
       var at = RL_AT[i];
-      elRls[i].style.opacity = kf(p, [[at, 0], [at + 0.022, 1, LIN], [0.56, 1], [0.66, 0, LIN]]);
+      elRls[i].style.opacity = kf(p, [[at, 0], [at + 0.018, 1, LIN], [0.50, 1], [0.60, 0, LIN]]);
     }
 
-    /* ── PREPARATION MARKS: registration corners draw in ── */
-    var dash = kf(p, [[0.51, 48], [0.62, 0, OUT]]);
+    /* ── STAGE 03 — registration marks draw, PREPARED ✓ ── */
+    var dash = kf(p, [[0.46, 48], [0.56, 0, OUT]]);
     for (var c = 0; c < elCorners.length; c++) elCorners[c].style.strokeDashoffset = dash;
+    if (elStatus) elStatus.style.opacity = kf(p, [[0.52, 0], [0.60, 1, OUT]]);
 
-    /* ── STATUS: PREPARED ✓ → AUTHENTICATED ✓ ── */
-    if (elStatus) elStatus.style.opacity = kf(p, [[0.57, 0], [0.65, 1, OUT]]);
-    var toAuth = kf(p, [[0.79, 0], [0.85, 1, SMOOTH]]);
-    if (elSPrep) elSPrep.style.opacity = 1 - toAuth;
-    if (elSAuth) elSAuth.style.opacity = toAuth;
-
-    /* ── THE STAMP: travels in from upper-right, presses, lifts away ── */
-    var stX = kf(p, [[0.62, 250], [0.73, 0, OUT], [0.805, 0], [0.87, 120, IN]]);
-    var stY = kf(p, [[0.62, -340], [0.73, -22, OUT], [0.775, 10, SMOOTH], [0.805, 0, OUT], [0.87, -320, IN]]);
-    var stS = kf(p, [[0.62, 1.55], [0.73, 1.05, OUT], [0.775, 0.96, SMOOTH], [0.805, 1, OUT], [0.87, 1.5, IN]]);
-    var stO = kf(p, [[0.62, 0], [0.665, 1, LIN], [0.805, 1], [0.86, 0, LIN]]);
+    /* ── STAGE 04 — stamp travels in, presses, PAUSES, lifts away ── */
+    var stX = kf(p, [[0.62, 250], [0.72, 0, OUT], [0.795, 0], [0.845, 120, IN]]);
+    var stY = kf(p, [[0.62, -340], [0.72, -24, OUT], [0.755, 10, SMOOTH],
+                     [0.775, 2, OUT], [0.795, 2], [0.845, -320, IN]]);
+    var stS = kf(p, [[0.62, 1.55], [0.72, 1.06, OUT], [0.755, 0.96, SMOOTH],
+                     [0.775, 1, OUT], [0.795, 1], [0.845, 1.5, IN]]);
+    var stO = kf(p, [[0.62, 0], [0.665, 1, LIN], [0.795, 1], [0.84, 0, LIN]]);
     if (elStamp) {
       elStamp.style.opacity         = stO;
       elStamp.style.transform       = 'translate(' + stX + 'px,' + stY + 'px) scale(' + stS + ')';
       elStamp.style.transformOrigin = '210px 228px';
     }
+    if (elAuth) elAuth.style.opacity = kf(p, [[0.755, 0], [0.80, 1, OUT]]);
+    var toAuth = kf(p, [[0.775, 0], [0.83, 1, SMOOTH]]);
+    if (elSPrep) elSPrep.style.opacity = 1 - toAuth;
+    if (elSAuth) elSAuth.style.opacity = toAuth;
 
-    /* ── AUTHENTICATION MARK: remains on the document ── */
-    if (elAuth) elAuth.style.opacity = kf(p, [[0.775, 0], [0.83, 1, OUT]]);
-
-    /* ── ENVELOPE: enters from below ── */
-    var envY = kf(p, [[0.76, 220], [0.87, 0, OUT]]);
-    var envO = kf(p, [[0.76, 0], [0.82, 1, LIN]]);
+    /* ── STAGE 05 — envelope, insertion, flap, READY FOR RETURN ✓ ── */
+    var envY = kf(p, [[0.855, 220], [0.915, 0, OUT]]);
+    var envO = kf(p, [[0.855, 0], [0.90, 1, LIN]]);
     if (elEnvB) { elEnvB.style.transform = 'translateY(' + envY + 'px)'; elEnvB.style.opacity = envO; }
     if (elEnvF) { elEnvF.style.transform = 'translateY(' + envY + 'px)'; elEnvF.style.opacity = envO; }
 
-    /* ── FLAP: physically folds closed over the document ── */
-    var flapK = kf(p, [[0.925, 0], [0.975, 1, SMOOTH]]);
+    var flapK = kf(p, [[0.945, 0], [0.98, 1, SMOOTH]]);
     if (elFlap) {
       elFlap.style.transform       = 'scaleY(' + flapK + ')';
       elFlap.style.transformOrigin = '210px 360px';
     }
+    if (elDone)    elDone.style.strokeDashoffset = kf(p, [[0.97, 180], [1, 0, OUT]]);
+    if (elDoneTxt) elDoneTxt.style.opacity       = kf(p, [[0.975, 0], [1, 1, LIN]]);
 
-    /* ── COMPLETION: gold line draws, READY FOR RETURN ✓ ── */
-    if (elDone)    elDone.style.strokeDashoffset = kf(p, [[0.96, 180], [0.995, 0, OUT]]);
-    if (elDoneTxt) elDoneTxt.style.opacity       = kf(p, [[0.965, 0], [1, 1, LIN]]);
-
-    /* ── 01–05 PROGRESS INDICATOR (not sections — a readout of `p`) ── */
-    var active = 0;
-    for (var s = 0; s < STAGES.length; s++) if (p >= STAGES[s]) active = s;
-
-    /* Gold line advances continuously and lands exactly on each dot. */
-    var frac = active / 4;
-    if (active < 4) {
-      frac = (active + norm(p, STAGES[active], STAGES[active + 1])) / 4;
-    } else {
-      frac = (4 + norm(p, STAGES[4], 1)) / 4;
-      frac = Math.min(frac, 1);
-    }
+    /* ── Gold progress line: lands exactly on each stage's dot ── */
+    var n = 5;
+    for (var s = 1; s <= 5; s++) { if (p <= ENDS[s] + 1e-9) { n = s; break; } }
+    var frac = clamp((n - 2 + norm(p, ENDS[n - 1], ENDS[n])) / 4, 0, 1);
     if (fill) {
       if (horiz) { fill.style.width = (frac * 100) + '%'; fill.style.height = '100%'; }
       else       { fill.style.height = (frac * 100) + '%'; fill.style.width = '100%'; }
     }
-    for (var k = 0; k < steps.length; k++) {
-      var n = parseInt(steps[k].getAttribute('data-step'), 10) - 1;
-      steps[k].classList.toggle('is-active', n === active);
-      steps[k].classList.toggle('is-past',   n < active);
+
+    if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.985);
+  }
+
+  /* ══════════ TWEEN ENGINE — p is driven by user input ══════════ */
+  var cur = 0, from = 0, target = 0, t0 = 0, dur = 0, raf = 0;
+  var stage = 0;                    /* 0 = untouched, 1–5 = selected */
+  var visited = {};
+
+  function tick(now) {
+    var t = dur <= 0 ? 1 : clamp((now - t0) / dur, 0, 1);
+    cur = lerp(from, target, easeInOut(t));
+    render(cur);
+    if (t < 1) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = 0; cur = target; render(cur);
     }
-
-    /* ── FINAL MESSAGE + CTA, at the end of the timeline ── */
-    if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.955);
   }
 
-  /* ══════════ SCROLL → p ══════════ */
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    render(1);
-    return;
+  function goTo(n) {
+    n = clamp(Math.round(n), 1, 5);
+    var prev = stage || 1;
+    stage = n;
+
+    /* Every stage the animation passes through counts as viewed */
+    var lo = Math.min(prev, n), hi = Math.max(prev, n);
+    for (var v = lo; v <= hi; v++) visited[v] = true;
+    visited[n] = true;
+
+    target = ENDS[n];
+    if (reduced) {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      cur = target; render(cur);
+    } else {
+      from = cur;
+      var d = Math.abs(target - from);
+      dur  = clamp(700 + d * 2400, 700, 2600);
+      t0   = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    syncUI();
   }
 
-  var ticking = false, last = -1;
-
-  function update() {
-    ticking = false;
-    var rect  = section.getBoundingClientRect();
-    var avail = section.offsetHeight - window.innerHeight;
-    var p     = avail > 0 ? clamp(-rect.top / avail, 0, 1) : 0;
-    if (Math.abs(p - last) < 0.0001) return;
-    last = p;
-    render(p);
+  function syncUI() {
+    for (var i = 0; i < steps.length; i++) {
+      var sn = parseInt(steps[i].getAttribute('data-step'), 10);
+      var on = sn === stage;
+      steps[i].classList.toggle('is-active', on);
+      steps[i].classList.toggle('is-visited', !!visited[sn]);
+      if (on) steps[i].setAttribute('aria-current', 'step');
+      else    steps[i].removeAttribute('aria-current');
+    }
+    if (prevBtn) prevBtn.disabled = stage <= 1;
+    if (nextBtn) nextBtn.disabled = stage >= 5;
+    if (countEl) countEl.textContent = '0' + (stage || 1);
+    if (liveEl)  liveEl.textContent  = stage ? ('Stage ' + stage + ' of 5: ' + NAMES[stage]) : '';
   }
-  function onScroll() {
-    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+
+  /* ── Controls ── */
+  for (var b = 0; b < steps.length; b++) {
+    steps[b].addEventListener('click', function () {
+      goTo(parseInt(this.getAttribute('data-step'), 10));
+    });
+  }
+  if (prevBtn) prevBtn.addEventListener('click', function () { goTo((stage || 1) - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function () { goTo((stage || 1) + 1); });
+
+  /* Arrow keys move between stages while the list has focus */
+  var stagesEl = document.getElementById('jrn-stages');
+  if (stagesEl) stagesEl.addEventListener('keydown', function (e) {
+    var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
+          : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    var n = clamp((stage || 1) + d, 1, 5);
+    goTo(n);
+    var btn = steps[n - 1];
+    if (btn) btn.focus();
+  });
+
+  /* ── Initial paint + one first-view cue that plays stage 01 ── */
+  render(0);
+  syncUI();
+
+  function cue() { if (!stage) goTo(1); }
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) { io.disconnect(); cue(); return; }
+      }
+    }, { threshold: 0.35 });
+    io.observe(section);
+  } else {
+    cue();
   }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () {
     horiz = window.matchMedia('(max-width: 799px)').matches;
-    last = -1;
-    onScroll();
+    render(cur);
   }, { passive: true });
-
-  render(0);
-  update();
   }());
   </script>
 
