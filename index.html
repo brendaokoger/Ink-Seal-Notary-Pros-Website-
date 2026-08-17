@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=14" />
+  <link rel="stylesheet" href="css/styles.css?v=15" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -1244,33 +1244,60 @@
     return;
   }
 
-  /* ── Desktop scroll driver (≥ 800px) ── */
+  /* ── Desktop: JS-driven pin + scroll stage driver (≥ 800px) ─────────
+     Replaces CSS position:sticky. The fixed site header (var(--hh) tall,
+     z-index 500) was causing sticky to render behind it. JS-driven fixed
+     positioning is 100% reliable and works regardless of ancestor overflow
+     or z-index stacking.
+     Pin transitions: absolute (above section) → fixed (section in view)
+                      → absolute.is-end (section has exited viewport).
+  ──────────────────────────────────────────────────────────────────────── */
   if (window.innerWidth >= 800) {
 
-    var cur = -1;
+    var pin     = document.getElementById('jrn-pin');
+    var cur     = -1;
     var ticking = false;
 
     function setStage(n) {
       if (n === cur) return;
       cur = n;
-      /* Update SVG class */
       svg.className.baseVal = 'jrn-svg at-s' + n;
-      /* Update active text panel */
       for (var i = 0; i < panels.length; i++) {
-        var match = parseInt(panels[i].getAttribute('data-panel'), 10) === n;
-        panels[i].classList.toggle('is-active', match);
+        panels[i].classList.toggle('is-active',
+          parseInt(panels[i].getAttribute('data-panel'), 10) === n);
       }
     }
 
     function update() {
       var rect = section.getBoundingClientRect();
-      /* Scroll past section top = section is in view (rect.top <= 0)
-         Progress: 0 (entered) → 1 (exiting) */
-      var scrolled  = -rect.top;
-      var available = section.offsetHeight - window.innerHeight;
+      var sTop = rect.top;
+      var sBot = rect.bottom;
+      var vh   = window.innerHeight;
+
+      /* ── Pin class management ── */
+      if (pin) {
+        if (sTop <= 0 && sBot > vh) {
+          /* Section spans full viewport: fix the pin */
+          pin.classList.add('is-fixed');
+          pin.classList.remove('is-end');
+        } else if (sBot <= vh) {
+          /* Section bottom is in or above viewport: anchor pin at end */
+          pin.classList.remove('is-fixed');
+          pin.classList.add('is-end');
+        } else {
+          /* Section not yet reached: pin stays absolute at section top */
+          pin.classList.remove('is-fixed');
+          pin.classList.remove('is-end');
+        }
+      }
+
+      /* ── Stage calculation ── */
+      /* scrolled: px past section top; available: total scroll travel */
+      var scrolled  = -sTop;
+      var available = section.offsetHeight - vh;
       var progress  = available > 0 ? Math.max(0, Math.min(1, scrolled / available)) : 0;
 
-      /* Map to 6 buckets: 0 = intro (0–8%), 1–5 = stages (8–100%) */
+      /* 6 buckets: 0 = intro (0–6%), 1–5 = stages (6–100%) */
       var stage;
       if (progress < 0.06) {
         stage = 0;
@@ -1281,11 +1308,16 @@
       ticking = false;
     }
 
-    window.addEventListener('scroll', function(){
+    window.addEventListener('scroll', function () {
       if (!ticking) { requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
 
-    /* Initial call — handles page load with anchor or mid-page position */
+    /* Re-evaluate on resize (header height / viewport changes) */
+    window.addEventListener('resize', function () {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+
+    /* Initial call — handles page-load at any scroll position */
     update();
   }
 

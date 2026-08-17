@@ -8443,18 +8443,41 @@ a.btn-gold:hover {
    query fails to load (e.g. cached old CSS, parser error, etc.). */
 .jrn-mobile-wrap { display: none; }
 
-/* ── DESKTOP: sticky scroll-driven layout ───────────────────── */
+/* ── DESKTOP: JS-driven pinned layout ───────────────────────── */
 @media (min-width: 800px) {
   .jrn { height: 600vh; }
   /* .jrn-mobile-wrap already display:none from base rule above */
 
+  /* Pin starts absolute at section top; JS transitions it to fixed
+     while the section spans the viewport, then back to absolute at
+     section bottom. This replaces position:sticky which was broken
+     by the fixed site header (z-index 500, height var(--hh)).
+     padding-top:var(--hh) shifts content below the fixed header so
+     the SVG visual is fully visible at all times. */
   .jrn-pin {
-    position: sticky;
+    position: absolute;
     top: 0;
+    left: 0;
+    right: 0;
     height: 100vh;
+    padding-top: var(--hh);
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: 52% 48%;
     overflow: hidden;
+  }
+  /* Added by JS when section spans viewport */
+  .jrn-pin.is-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+  /* Added by JS when section bottom is in or above viewport */
+  .jrn-pin.is-end {
+    position: absolute;
+    top: auto;
+    bottom: 0;
   }
 
   /* Visual column (left) */
@@ -8663,10 +8686,11 @@ a.btn-gold:hover {
   transition: opacity .5s ease, transform .5s ease;
 }
 
-/* Document: faint ghost at stage 0 (intro panel), fully visible at s1+ */
+/* Document: always visible. The document is the hero of the animation —
+   it must be clearly visible the moment the pin enters view. */
 .jrn-doc-g {
-  opacity: 0.12;
-  transform: translateY(8px);
+  opacity: 1;
+  transform: none;
   transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
 }
 
