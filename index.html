@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=17" />
+  <link rel="stylesheet" href="css/styles.css?v=18" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -923,80 +923,71 @@
   </section>
 
   <!-- ═══ YOUR DOCUMENT'S JOURNEY ══════════════════════════════
-       ONE section only. Desktop: CSS position:sticky two-column.
-         LEFT = numbered stage timeline + gold progress track.
-         RIGHT = large animated SVG document.
-       Mobile: compact sticky SVG + IntersectionObserver stage cards.
+       ONE section. ONE pinned stage. ONE document. ONE scroll-scrubbed
+       master timeline (p = 0→1). Every object animates into and out of
+       the SAME stage. No stage classes, no entrance triggers, no cards.
        Namespace: jrn-*   Do NOT modify sections outside this block.
   ═════════════════════════════════════════════════════════════ -->
   <section class="jrn" id="your-journey" aria-labelledby="jrn-title">
-
-    <!-- ══ DESKTOP: sticky two-column (hidden on mobile) ══════════
-         .jrn-pin is position:sticky — sticks while section scrolls.
-         LEFT: timeline + gold progress track.
-         RIGHT: large animated SVG document visual.
-    ═══════════════════════════════════════════════════════════════ -->
     <div class="jrn-pin" id="jrn-pin">
 
-      <!-- LEFT: numbered stage timeline with gold progress track -->
+      <!-- LEFT (desktop) / TOP (mobile): heading + 01–05 progress indicator -->
       <div class="jrn-tl">
         <div class="jrn-tl-inner">
           <p class="jrn-eyebrow">Authentication, step by step</p>
           <h2 class="jrn-title" id="jrn-title">Your Document's<br>Journey</h2>
-          <p class="jrn-lead">Every Ink &amp; Seal engagement follows the same meticulous path. Scroll to watch your document move through each stage.</p>
+          <p class="jrn-lead">One document. One continuous path. Scroll to follow it from your hands, through authentication, and safely back to you.</p>
 
-          <div class="jrn-stages" id="jrn-stages">
-            <!-- Gold progress track (decorative) -->
-            <div class="jrn-track" aria-hidden="true">
-              <div class="jrn-track-fill" id="jrn-track-fill"></div>
-            </div>
+          <ol class="jrn-stages" id="jrn-stages">
+            <div class="jrn-track" aria-hidden="true"><div class="jrn-track-fill" id="jrn-track-fill"></div></div>
 
-            <div class="jrn-step" data-step="1">
-              <div class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></div>
-              <div class="jrn-step-body">
+            <li class="jrn-step" data-step="1">
+              <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
+              <span class="jrn-step-body">
                 <span class="jrn-snum">01</span>
-                <h3 class="jrn-slabel">Received</h3>
-                <p class="jrn-sdesc">Your documents enter the Ink &amp; Seal review process individually — never batched, never rushed.</p>
-              </div>
-            </div>
+                <span class="jrn-slabel">Received</span>
+                <span class="jrn-sdesc">Your document enters the Ink &amp; Seal process individually — never batched, never rushed.</span>
+              </span>
+            </li>
 
-            <div class="jrn-step" data-step="2">
-              <div class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></div>
-              <div class="jrn-step-body">
+            <li class="jrn-step" data-step="2">
+              <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
+              <span class="jrn-step-body">
                 <span class="jrn-snum">02</span>
-                <h3 class="jrn-slabel">Reviewed</h3>
-                <p class="jrn-sdesc">A specialist verifies document type, issuing authority, destination country, and authentication requirements before anything proceeds.</p>
-              </div>
-            </div>
+                <span class="jrn-slabel">Reviewed</span>
+                <span class="jrn-sdesc">A specialist verifies document type, issuing authority, destination country, and authentication requirements.</span>
+              </span>
+            </li>
 
-            <div class="jrn-step" data-step="3">
-              <div class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></div>
-              <div class="jrn-step-body">
+            <li class="jrn-step" data-step="3">
+              <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
+              <span class="jrn-step-body">
                 <span class="jrn-snum">03</span>
-                <h3 class="jrn-slabel">Prepared</h3>
-                <p class="jrn-sdesc">Your document is prepared for the appropriate process — apostille, notarization, embassy legalization, or translation.</p>
-              </div>
-            </div>
+                <span class="jrn-slabel">Prepared</span>
+                <span class="jrn-sdesc">Your document is prepared for the appropriate process — apostille, notarization, or embassy legalization.</span>
+              </span>
+            </li>
 
-            <div class="jrn-step" data-step="4">
-              <div class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></div>
-              <div class="jrn-step-body">
+            <li class="jrn-step" data-step="4">
+              <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
+              <span class="jrn-step-body">
                 <span class="jrn-snum">04</span>
-                <h3 class="jrn-slabel">Authenticated</h3>
-                <p class="jrn-sdesc">The required authentication is applied — handled precisely, submitted correctly, and tracked at every step.</p>
-              </div>
-            </div>
+                <span class="jrn-slabel">Authenticated</span>
+                <span class="jrn-sdesc">The required authentication is applied — handled precisely, submitted correctly, tracked at every step.</span>
+              </span>
+            </li>
 
-            <div class="jrn-step" data-step="5">
-              <div class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></div>
-              <div class="jrn-step-body">
+            <li class="jrn-step" data-step="5">
+              <span class="jrn-step-pip" aria-hidden="true"><span class="jrn-dot"></span></span>
+              <span class="jrn-step-body">
                 <span class="jrn-snum">05</span>
-                <h3 class="jrn-slabel">Returned</h3>
-                <p class="jrn-sdesc">Your completed, authenticated documents are securely returned via tracked delivery — the same care carried from start to finish.</p>
-              </div>
-            </div>
-          </div><!-- /jrn-stages -->
+                <span class="jrn-slabel">Returned</span>
+                <span class="jrn-sdesc">Your completed documents are securely returned via tracked delivery — the same care from start to finish.</span>
+              </span>
+            </li>
+          </ol>
 
+          <!-- Revealed at the END of the master timeline (p ≥ .955) -->
           <div class="jrn-cta-wrap" id="jrn-cta-wrap">
             <p class="jrn-tagline">From your hands.<br>Through authentication.<br>Safely back to you.</p>
             <a href="/services/apostille/#start" class="jrn-cta-btn">
@@ -1007,658 +998,410 @@
               </svg>
             </a>
           </div>
-        </div><!-- /jrn-tl-inner -->
+        </div>
       </div><!-- /jrn-tl -->
 
-      <!-- RIGHT: large animated SVG document (aria-hidden; timeline carries text) -->
+      <!-- THE ONE ANIMATION STAGE ─────────────────────────────────
+           Paint order (SVG z-order, back → front):
+             folder-back → envelope-back → DOCUMENT → folder-front
+             → envelope-front/flap → stamp
+           The document passes BEHIND folder-front and envelope-front,
+           which is what makes "into the folder" / "into the envelope"
+           read as physical insertion rather than a fade.
+      ─────────────────────────────────────────────────────────────── -->
       <div class="jrn-vis" aria-hidden="true">
         <div class="jrn-canvas">
-          <svg class="jrn-svg" id="jrn-svg" viewBox="0 0 300 380" fill="none"
+          <svg class="jrn-svg" id="jrn-svg" viewBox="0 0 420 520"
+               preserveAspectRatio="xMidYMid meet" fill="none"
                xmlns="http://www.w3.org/2000/svg">
 
-            <!-- ── FOLDER — stage 1 ─────────────────────── -->
-            <g class="jrn-folder-g">
-              <rect x="30" y="215" width="240" height="148" rx="5"
-                    fill="#0d2240" stroke="rgba(212,175,55,.25)" stroke-width="1"/>
-              <line x1="30" y1="215" x2="270" y2="215"
-                    stroke="rgba(212,175,55,.50)" stroke-width="1.4"/>
-              <path d="M30,215 L30,200 Q30,195 35,195 L95,195 Q100,195 102,200 L106,215 Z"
+            <!-- ── FOLDER: back panel ───────────────────────────── -->
+            <g class="jrn-folder-b">
+              <path d="M55,250 L55,231 Q55,225 61,225 L127,225 Q133,225 136,231 L144,250 Z"
+                    fill="#0b1e38" stroke="rgba(212,175,55,.20)" stroke-width="1"/>
+              <rect x="55" y="248" width="310" height="272" rx="8"
+                    fill="#0c2140" stroke="rgba(212,175,55,.20)" stroke-width="1"/>
+            </g>
+
+            <!-- ── ENVELOPE: back panel (behind the document) ───── -->
+            <g class="jrn-env-b">
+              <rect x="45" y="300" width="330" height="220" rx="8"
                     fill="#0b1e38" stroke="rgba(212,175,55,.22)" stroke-width="1"/>
-              <text x="46" y="244" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="8" font-weight="600" letter-spacing="2.5"
-                    fill="rgba(212,175,55,.48)">RECEIVED</text>
-              <rect x="46" y="258" width="76" height="1.5" rx=".75" fill="rgba(212,175,55,.14)"/>
-              <rect x="46" y="270" width="56" height="1.5" rx=".75" fill="rgba(212,175,55,.09)"/>
             </g>
 
-            <!-- ── DOCUMENT — main element (stages 1–4, exits stage 5) ── -->
+            <!-- ══ THE DOCUMENT — one persistent object ══════════
+                 Everything applied to it (scan, verifications, corner
+                 marks, status, authentication mark) lives INSIDE this
+                 group, so it travels with the document. -->
             <g class="jrn-doc-g">
-              <!-- Shadow -->
-              <rect x="53" y="31" width="200" height="253" rx="3" fill="rgba(0,0,0,.28)"/>
-              <!-- Paper -->
-              <rect x="50" y="28" width="200" height="253" rx="3"
-                    fill="#FAFAFA" stroke="#E0DBD3" stroke-width="1"/>
-              <!-- Navy header -->
-              <rect x="50" y="28" width="200" height="46" rx="3" fill="#0A192F"/>
-              <rect x="50" y="52" width="200" height="22" fill="#0A192F"/>
-              <!-- Brand name -->
-              <text x="65" y="51" font-family="'Playfair Display',Georgia,serif"
-                    font-size="10" font-weight="600" letter-spacing="2.5"
-                    fill="rgba(212,175,55,.76)">INK &amp; SEAL</text>
-              <text x="65" y="64" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6" letter-spacing="2.8"
-                    fill="rgba(255,255,255,.30)">NOTARY PROS</text>
-              <!-- Doc heading lines -->
-              <rect x="65" y="88"  width="138" height="2.5" rx="1.25" fill="rgba(30,41,59,.38)"/>
-              <rect x="65" y="99"  width="92"  height="1.5" rx=".75"  fill="rgba(30,41,59,.18)"/>
-              <!-- Body text lines -->
-              <rect x="65" y="118" width="152" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="130" width="128" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="142" width="144" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="154" width="108" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="174" width="148" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="186" width="122" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="198" width="138" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-              <rect x="65" y="210" width="98"  height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
+
+              <rect x="114" y="94" width="200" height="270" rx="3" fill="rgba(0,0,0,.30)"/>
+              <rect x="110" y="90" width="200" height="270" rx="3"
+                    fill="#FAF8F4" stroke="#E3DDD2" stroke-width="1"/>
+
+              <!-- Navy letterhead -->
+              <path d="M110,93 a3,3 0 0 1 3,-3 h194 a3,3 0 0 1 3,3 v49 h-200 Z" fill="#0A192F"/>
+              <text x="126" y="118" font-family="'Playfair Display',Georgia,serif"
+                    font-size="11" font-weight="600" letter-spacing="2.6"
+                    fill="rgba(212,175,55,.80)">INK &amp; SEAL</text>
+              <text x="126" y="132" font-family="'Plus Jakarta Sans',sans-serif"
+                    font-size="6" letter-spacing="2.9"
+                    fill="rgba(255,255,255,.34)">NOTARY PROS</text>
+
+              <!-- Body copy -->
+              <rect x="126" y="157" width="140" height="2.6" rx="1.3" fill="rgba(30,41,59,.34)"/>
+              <rect x="126" y="169" width="94"  height="1.6" rx=".8"  fill="rgba(30,41,59,.16)"/>
+              <rect x="126" y="164.2" width="0" height="0" fill="none"/>
+              <g fill="rgba(30,41,59,.11)">
+                <rect x="126" y="164" width="0" height="0"/>
+                <rect x="126" y="185" width="168" height="1.6" rx=".8"/>
+                <rect x="126" y="205" width="168" height="1.6" rx=".8"/>
+                <rect x="126" y="225" width="150" height="1.6" rx=".8"/>
+                <rect x="126" y="245" width="168" height="1.6" rx=".8"/>
+                <rect x="126" y="265" width="132" height="1.6" rx=".8"/>
+                <rect x="126" y="285" width="160" height="1.6" rx=".8"/>
+                <rect x="126" y="305" width="112" height="1.6" rx=".8"/>
+              </g>
+
               <!-- Signature -->
-              <line x1="65" y1="248" x2="148" y2="248"
-                    stroke="rgba(30,41,59,.17)" stroke-width="1"/>
-              <text x="65" y="260" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" fill="rgba(30,41,59,.22)">Authorized Signature</text>
-              <!-- Fold crease top-right -->
-              <path d="M234,28 L250,44 L234,44 Z" fill="#E8E3DC"/>
-              <path d="M234,28 L250,44" stroke="#D4D0CA" stroke-width=".8"/>
-            </g>
+              <line x1="126" y1="332" x2="212" y2="332" stroke="rgba(30,41,59,.18)" stroke-width="1"/>
+              <text x="126" y="344" font-family="'Plus Jakarta Sans',sans-serif"
+                    font-size="6.5" fill="rgba(30,41,59,.24)">Authorized Signature</text>
 
-            <!-- ── SCAN LINE — stage 2 ─────────────────── -->
-            <g class="jrn-scan-g">
-              <rect class="jrn-scan-rect" x="50" y="72" width="200" height="9"
-                    fill="rgba(212,175,55,.06)"/>
-              <rect class="jrn-scan-rect" x="50" y="75" width="200" height="1.8"
-                    fill="rgba(212,175,55,.68)" rx=".9"/>
-            </g>
-
-            <!-- ── REVIEW REVEAL LINES — stage 2, staggered ── -->
-            <g class="jrn-rl-g" aria-hidden="true">
+              <!-- ── VERIFICATION RESULTS (revealed by the passing beam) ── -->
               <g class="jrn-rl jrn-rl-1">
-                <rect x="50" y="114" width="200" height="10" fill="rgba(212,175,55,.055)"/>
-                <rect x="50" y="118" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.34)"/>
-                <text x="246" y="124" font-family="'Plus Jakarta Sans',sans-serif"
-                      font-size="6.5" fill="rgba(212,175,55,.68)" text-anchor="end">Document type ✓</text>
+                <rect x="112" y="154" width="196" height="16" fill="rgba(212,175,55,.06)"/>
+                <rect x="126" y="164" width="62" height="1.6" rx=".8" fill="rgba(212,175,55,.42)"/>
+                <text x="300" y="169" font-family="'Plus Jakarta Sans',sans-serif" font-size="7"
+                      fill="rgba(184,148,52,.95)" text-anchor="end">Document Type ✓</text>
               </g>
               <g class="jrn-rl jrn-rl-2">
-                <rect x="50" y="138" width="200" height="10" fill="rgba(212,175,55,.055)"/>
-                <rect x="50" y="142" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.34)"/>
-                <text x="246" y="148" font-family="'Plus Jakarta Sans',sans-serif"
-                      font-size="6.5" fill="rgba(212,175,55,.68)" text-anchor="end">Issuing authority ✓</text>
+                <rect x="112" y="194" width="196" height="16" fill="rgba(212,175,55,.06)"/>
+                <rect x="126" y="204" width="62" height="1.6" rx=".8" fill="rgba(212,175,55,.42)"/>
+                <text x="300" y="209" font-family="'Plus Jakarta Sans',sans-serif" font-size="7"
+                      fill="rgba(184,148,52,.95)" text-anchor="end">Issuing Authority ✓</text>
               </g>
               <g class="jrn-rl jrn-rl-3">
-                <rect x="50" y="170" width="200" height="10" fill="rgba(212,175,55,.055)"/>
-                <rect x="50" y="174" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.34)"/>
-                <text x="246" y="180" font-family="'Plus Jakarta Sans',sans-serif"
-                      font-size="6.5" fill="rgba(212,175,55,.68)" text-anchor="end">Destination country ✓</text>
+                <rect x="112" y="234" width="196" height="16" fill="rgba(212,175,55,.06)"/>
+                <rect x="126" y="244" width="62" height="1.6" rx=".8" fill="rgba(212,175,55,.42)"/>
+                <text x="300" y="249" font-family="'Plus Jakarta Sans',sans-serif" font-size="7"
+                      fill="rgba(184,148,52,.95)" text-anchor="end">Destination Country ✓</text>
               </g>
               <g class="jrn-rl jrn-rl-4">
-                <rect x="50" y="194" width="200" height="10" fill="rgba(212,175,55,.055)"/>
-                <rect x="50" y="198" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.34)"/>
-                <text x="246" y="204" font-family="'Plus Jakarta Sans',sans-serif"
-                      font-size="6.5" fill="rgba(212,175,55,.68)" text-anchor="end">Auth. requirements ✓</text>
+                <rect x="112" y="274" width="196" height="16" fill="rgba(212,175,55,.06)"/>
+                <rect x="126" y="284" width="62" height="1.6" rx=".8" fill="rgba(212,175,55,.42)"/>
+                <text x="300" y="289" font-family="'Plus Jakarta Sans',sans-serif" font-size="7"
+                      fill="rgba(184,148,52,.95)" text-anchor="end">Authentication Requirements ✓</text>
               </g>
+
+              <!-- ── SCANNING BEAM — position driven directly by scroll ── -->
+              <g class="jrn-scan-g">
+                <rect x="110" y="82" width="200" height="16" fill="rgba(212,175,55,.10)"/>
+                <rect x="110" y="89" width="200" height="2" rx="1" fill="rgba(212,175,55,.80)"/>
+              </g>
+
+              <!-- ── PREPARATION / REGISTRATION MARKS ── -->
+              <g class="jrn-corners-g">
+                <path class="jrn-corner" d="M142,116 L118,116 L118,140"
+                      stroke="rgba(212,175,55,.85)" stroke-width="1.7" stroke-linecap="round"/>
+                <path class="jrn-corner" d="M278,116 L302,116 L302,140"
+                      stroke="rgba(212,175,55,.85)" stroke-width="1.7" stroke-linecap="round"/>
+                <path class="jrn-corner" d="M142,344 L118,344 L118,320"
+                      stroke="rgba(212,175,55,.85)" stroke-width="1.7" stroke-linecap="round"/>
+                <path class="jrn-corner" d="M278,344 L302,344 L302,320"
+                      stroke="rgba(212,175,55,.85)" stroke-width="1.7" stroke-linecap="round"/>
+              </g>
+
+              <!-- ── AUTHENTICATION MARK — remains after the stamp lifts ── -->
+              <g class="jrn-auth-mark">
+                <defs>
+                  <path id="jrn-am-t" d="M 172,228 A 38,38 0 0 1 248,228"/>
+                  <path id="jrn-am-b" d="M 174,228 A 36,36 0 0 0 246,228"/>
+                </defs>
+                <circle cx="210" cy="228" r="44" fill="rgba(212,175,55,.05)"/>
+                <circle cx="210" cy="228" r="44" stroke="rgba(184,148,52,.72)" stroke-width="1.2"/>
+                <circle cx="210" cy="228" r="37" stroke="rgba(184,148,52,.40)" stroke-width=".8"/>
+                <text font-family="'Playfair Display',Georgia,serif" font-size="7" font-weight="600"
+                      letter-spacing="2.6" fill="rgba(184,148,52,.78)">
+                  <textPath href="#jrn-am-t" startOffset="50%" text-anchor="middle">INK &amp; SEAL</textPath>
+                </text>
+                <text font-family="'Playfair Display',Georgia,serif" font-size="6.4" font-weight="600"
+                      letter-spacing="2.2" fill="rgba(184,148,52,.62)">
+                  <textPath href="#jrn-am-b" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
+                </text>
+                <text x="210" y="238" font-family="'Playfair Display',Georgia,serif"
+                      font-size="25" font-weight="700" fill="rgba(184,148,52,.80)"
+                      text-anchor="middle" letter-spacing="2">IS</text>
+              </g>
+
+              <!-- ── STATUS: PREPARED ✓ → AUTHENTICATED ✓ ── -->
+              <g class="jrn-status-g">
+                <rect x="188" y="296" width="120" height="21" rx="3"
+                      fill="rgba(250,248,244,.92)" stroke="rgba(184,148,52,.60)" stroke-width="1"/>
+                <text class="jrn-s-prep" x="248" y="310" font-family="'Plus Jakarta Sans',sans-serif"
+                      font-size="7.6" font-weight="600" letter-spacing="1.3"
+                      fill="rgba(160,126,40,.98)" text-anchor="middle">PREPARED ✓</text>
+                <text class="jrn-s-auth" x="248" y="310" font-family="'Plus Jakarta Sans',sans-serif"
+                      font-size="6.9" font-weight="600" letter-spacing="1.0"
+                      fill="rgba(160,126,40,.98)" text-anchor="middle">AUTHENTICATED ✓</text>
+              </g>
+
+            </g><!-- /jrn-doc-g -->
+
+            <!-- ── FOLDER: front panel — document slides BEHIND this ── -->
+            <g class="jrn-folder-f">
+              <path d="M55,298 a8,8 0 0 1 8,-8 h294 a8,8 0 0 1 8,8 v222 h-310 Z"
+                    fill="#102a4c" stroke="rgba(212,175,55,.30)" stroke-width="1"/>
+              <line x1="55" y1="291" x2="365" y2="291" stroke="rgba(212,175,55,.46)" stroke-width="1.4"/>
+              <text x="80" y="330" font-family="'Plus Jakarta Sans',sans-serif"
+                    font-size="8" font-weight="600" letter-spacing="2.6"
+                    fill="rgba(212,175,55,.50)">RECEIVED</text>
+              <rect x="80" y="345" width="86" height="1.6" rx=".8" fill="rgba(212,175,55,.16)"/>
+              <rect x="80" y="357" width="60" height="1.6" rx=".8" fill="rgba(212,175,55,.10)"/>
             </g>
 
-            <!-- ── CORNER MARKS — stage 3+ ─────────────── -->
-            <g class="jrn-corners-g" aria-hidden="true">
-              <path class="jrn-corner" d="M64,50 L50,50 L50,66"
-                    stroke="rgba(212,175,55,.82)" stroke-width="1.6" stroke-linecap="round"/>
-              <path class="jrn-corner" d="M236,50 L250,50 L250,66"
-                    stroke="rgba(212,175,55,.82)" stroke-width="1.6" stroke-linecap="round"/>
-              <path class="jrn-corner" d="M64,259 L50,259 L50,243"
-                    stroke="rgba(212,175,55,.82)" stroke-width="1.6" stroke-linecap="round"/>
-              <path class="jrn-corner" d="M236,259 L250,259 L250,243"
-                    stroke="rgba(212,175,55,.82)" stroke-width="1.6" stroke-linecap="round"/>
+            <!-- ── ENVELOPE: front panel, flap, completion ── -->
+            <g class="jrn-env-f">
+              <path d="M45,368 a8,8 0 0 1 8,-8 h314 a8,8 0 0 1 8,8 v152 h-330 Z"
+                    fill="#102a4c" stroke="rgba(212,175,55,.30)" stroke-width="1"/>
+              <line x1="45" y1="360" x2="210" y2="410" stroke="rgba(212,175,55,.10)" stroke-width=".8"/>
+              <line x1="375" y1="360" x2="210" y2="410" stroke="rgba(212,175,55,.10)" stroke-width=".8"/>
+
+              <!-- Flap: scaleY(0) = open/folded back (degenerate at the mouth),
+                   scaleY(1) = folded down and closed over the document. -->
+              <path class="jrn-flap" d="M45,360 L210,455 L375,360 Z"
+                    fill="#0A192F" stroke="rgba(212,175,55,.30)" stroke-width="1"/>
+
+              <!-- Gold completion line + return status -->
+              <line class="jrn-done-line" x1="120" y1="480" x2="300" y2="480"
+                    stroke="rgba(212,175,55,.80)" stroke-width="1.4" stroke-linecap="round"/>
+              <text class="jrn-done-txt" x="210" y="502" font-family="'Plus Jakarta Sans',sans-serif"
+                    font-size="8" font-weight="600" letter-spacing="2.0"
+                    fill="rgba(212,175,55,.92)" text-anchor="middle">READY FOR RETURN ✓</text>
             </g>
 
-            <!-- ── STATUS BADGE — stage 3+ ────────────── -->
-            <g class="jrn-status-g" aria-hidden="true">
-              <rect x="65" y="224" width="88" height="17" rx="3"
-                    fill="none" stroke="rgba(212,175,55,.52)" stroke-width="1"/>
-              <text class="jrn-status-prepared" x="109" y="236"
-                    font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="7.5" font-weight="600" letter-spacing="1.2"
-                    fill="rgba(212,175,55,.82)" text-anchor="middle">PREPARED</text>
-              <text class="jrn-status-auth" x="109" y="236"
-                    font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" font-weight="600" letter-spacing="1.0"
-                    fill="rgba(212,175,55,.92)" text-anchor="middle">AUTHENTICATED</text>
-            </g>
-
-            <!-- ── SEAL IMPRESSION — stage 4+ ────────── -->
-            <g class="jrn-seal-g" aria-hidden="true">
+            <!-- ── THE STAMP — travels in, presses, lifts away ── -->
+            <g class="jrn-stamp-g">
               <defs>
-                <path id="jrn-arc-t" d="M 116,158 A 34,34 0 0 1 184,158"/>
-                <path id="jrn-arc-b" d="M 116,158 A 34,34 0 0 0 184,158"/>
+                <path id="jrn-st-t" d="M 166,228 A 44,44 0 0 1 254,228"/>
+                <path id="jrn-st-b" d="M 168,228 A 42,42 0 0 0 252,228"/>
               </defs>
-              <circle cx="150" cy="158" r="41" fill="rgba(212,175,55,.05)"/>
-              <circle cx="150" cy="158" r="41" stroke="rgba(212,175,55,.80)" stroke-width="1.3"/>
-              <circle cx="150" cy="158" r="34" stroke="rgba(212,175,55,.45)" stroke-width=".9"/>
-              <text font-family="'Playfair Display',Georgia,serif"
-                    font-size="7.5" font-weight="600" letter-spacing="3.0"
-                    fill="rgba(212,175,55,.72)">
-                <textPath href="#jrn-arc-t" startOffset="50%" text-anchor="middle">INK &amp; SEAL</textPath>
+              <circle cx="210" cy="228" r="54" fill="#0A192F" stroke="rgba(212,175,55,.88)" stroke-width="1.6"/>
+              <circle cx="210" cy="228" r="43" stroke="rgba(212,175,55,.50)" stroke-width=".9"/>
+              <text font-family="'Playfair Display',Georgia,serif" font-size="8" font-weight="600"
+                    letter-spacing="3.0" fill="rgba(212,175,55,.88)">
+                <textPath href="#jrn-st-t" startOffset="50%" text-anchor="middle">INK &amp; SEAL</textPath>
               </text>
-              <text font-family="'Playfair Display',Georgia,serif"
-                    font-size="7.5" font-weight="600" letter-spacing="3.0"
-                    fill="rgba(212,175,55,.72)">
-                <textPath href="#jrn-arc-b" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
+              <text font-family="'Playfair Display',Georgia,serif" font-size="7.2" font-weight="600"
+                    letter-spacing="2.4" fill="rgba(212,175,55,.70)">
+                <textPath href="#jrn-st-b" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
               </text>
-              <text x="150" y="166" font-family="'Playfair Display',Georgia,serif"
-                    font-size="25" font-weight="700" fill="rgba(212,175,55,.78)"
+              <text x="210" y="239" font-family="'Playfair Display',Georgia,serif"
+                    font-size="28" font-weight="700" fill="rgba(212,175,55,.92)"
                     text-anchor="middle" letter-spacing="2">IS</text>
             </g>
 
-            <!-- ── ENVELOPE — stage 5 ──────────────────── -->
-            <g class="jrn-env-g" aria-hidden="true">
-              <rect x="28" y="286" width="244" height="86" rx="5"
-                    fill="#0d2240" stroke="rgba(212,175,55,.28)" stroke-width="1"/>
-              <line x1="28"  y1="286" x2="150" y2="336"
-                    stroke="rgba(212,175,55,.09)" stroke-width=".8"/>
-              <line x1="272" y1="286" x2="150" y2="336"
-                    stroke="rgba(212,175,55,.09)" stroke-width=".8"/>
-              <path class="jrn-flap"
-                    d="M28,286 L150,344 L272,286 Z"
-                    fill="#0A192F" stroke="rgba(212,175,55,.26)" stroke-width="1"/>
-              <g class="jrn-env-check">
-                <circle cx="150" cy="352" r="13" fill="rgba(212,175,55,.08)"
-                        stroke="rgba(212,175,55,.78)" stroke-width="1.3"/>
-                <polyline class="jrn-check-mark"
-                          points="143,352 148,358 157,345"
-                          stroke="rgba(212,175,55,1)" stroke-width="1.6"
-                          stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              </g>
-            </g>
-
           </svg>
-        </div><!-- /jrn-canvas -->
+        </div>
       </div><!-- /jrn-vis -->
 
     </div><!-- /jrn-pin -->
-
-    <!-- ══ MOBILE: sticky mini SVG + IO-revealed stage cards ══════
-         .jrn-mob is display:none on desktop.
-         .jrn-mob-svg-wrap is position:sticky so the SVG remains
-         visible above the header as the user scrolls through cards.
-         IntersectionObserver on .jrn-mob-card updates SVG class.
-    ═══════════════════════════════════════════════════════════════ -->
-    <div class="jrn-mob" id="jrn-mob">
-
-      <div class="jrn-mob-hdr">
-        <p class="jrn-eyebrow">Authentication, step by step</p>
-        <h2 class="jrn-title" id="jrn-title-m">Your Document's Journey</h2>
-        <p class="jrn-lead" style="max-width:360px;margin:0 auto;">Every Ink &amp; Seal engagement follows the same meticulous path.</p>
-      </div>
-
-      <!-- Sticky SVG wrapper — sticks below the fixed header while scrolling stages -->
-      <div class="jrn-mob-svg-wrap" aria-hidden="true">
-        <svg class="jrn-svg" id="jrn-svg-m" viewBox="0 0 300 380" fill="none"
-             xmlns="http://www.w3.org/2000/svg">
-          <!-- FOLDER -->
-          <g class="jrn-folder-g">
-            <rect x="30" y="215" width="240" height="148" rx="5"
-                  fill="#0d2240" stroke="rgba(212,175,55,.28)" stroke-width="1.2"/>
-            <line x1="30" y1="215" x2="270" y2="215"
-                  stroke="rgba(212,175,55,.52)" stroke-width="1.5"/>
-            <path d="M30,215 L30,200 Q30,195 35,195 L95,195 Q100,195 102,200 L106,215 Z"
-                  fill="#0b1e38" stroke="rgba(212,175,55,.24)" stroke-width="1"/>
-            <text x="48" y="244" font-family="'Plus Jakarta Sans',sans-serif"
-                  font-size="8" font-weight="600" letter-spacing="2.5"
-                  fill="rgba(212,175,55,.52)">RECEIVED</text>
-          </g>
-          <!-- DOCUMENT -->
-          <g class="jrn-doc-g">
-            <rect x="53" y="31" width="200" height="253" rx="3" fill="rgba(0,0,0,.28)"/>
-            <rect x="50" y="28" width="200" height="253" rx="3"
-                  fill="#FAFAFA" stroke="#E0DBD3" stroke-width="1"/>
-            <rect x="50" y="28" width="200" height="46" rx="3" fill="#0A192F"/>
-            <rect x="50" y="52" width="200" height="22" fill="#0A192F"/>
-            <text x="65" y="51" font-family="'Playfair Display',Georgia,serif"
-                  font-size="10" font-weight="600" letter-spacing="2.5"
-                  fill="rgba(212,175,55,.78)">INK &amp; SEAL</text>
-            <text x="65" y="64" font-family="'Plus Jakarta Sans',sans-serif"
-                  font-size="6" letter-spacing="2.8" fill="rgba(255,255,255,.32)">NOTARY PROS</text>
-            <rect x="65" y="88"  width="138" height="2.5" rx="1.25" fill="rgba(30,41,59,.38)"/>
-            <rect x="65" y="118" width="152" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <rect x="65" y="130" width="128" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <rect x="65" y="142" width="144" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <rect x="65" y="154" width="108" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <rect x="65" y="174" width="148" height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <rect x="65" y="210" width="98"  height="1.5" rx=".75" fill="rgba(30,41,59,.11)"/>
-            <path d="M234,28 L250,44 L234,44 Z" fill="#E8E3DC"/>
-          </g>
-          <!-- SCAN -->
-          <g class="jrn-scan-g">
-            <rect class="jrn-scan-rect" x="50" y="72" width="200" height="9"
-                  fill="rgba(212,175,55,.06)"/>
-            <rect class="jrn-scan-rect" x="50" y="75" width="200" height="2"
-                  fill="rgba(212,175,55,.72)" rx="1"/>
-          </g>
-          <!-- REVIEW LINES -->
-          <g class="jrn-rl-g">
-            <g class="jrn-rl jrn-rl-1">
-              <rect x="50" y="118" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.36)"/>
-              <text x="246" y="124" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" fill="rgba(212,175,55,.72)" text-anchor="end">Document type ✓</text>
-            </g>
-            <g class="jrn-rl jrn-rl-2">
-              <rect x="50" y="142" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.36)"/>
-              <text x="246" y="148" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" fill="rgba(212,175,55,.72)" text-anchor="end">Issuing authority ✓</text>
-            </g>
-            <g class="jrn-rl jrn-rl-3">
-              <rect x="50" y="174" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.36)"/>
-              <text x="246" y="180" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" fill="rgba(212,175,55,.72)" text-anchor="end">Destination country ✓</text>
-            </g>
-            <g class="jrn-rl jrn-rl-4">
-              <rect x="50" y="198" width="200" height="1.5" rx=".75" fill="rgba(212,175,55,.36)"/>
-              <text x="246" y="204" font-family="'Plus Jakarta Sans',sans-serif"
-                    font-size="6.5" fill="rgba(212,175,55,.72)" text-anchor="end">Auth. requirements ✓</text>
-            </g>
-          </g>
-          <!-- CORNERS -->
-          <g class="jrn-corners-g">
-            <path class="jrn-corner" d="M64,50 L50,50 L50,66"
-                  stroke="rgba(212,175,55,.84)" stroke-width="1.8" stroke-linecap="round"/>
-            <path class="jrn-corner" d="M236,50 L250,50 L250,66"
-                  stroke="rgba(212,175,55,.84)" stroke-width="1.8" stroke-linecap="round"/>
-            <path class="jrn-corner" d="M64,259 L50,259 L50,243"
-                  stroke="rgba(212,175,55,.84)" stroke-width="1.8" stroke-linecap="round"/>
-            <path class="jrn-corner" d="M236,259 L250,259 L250,243"
-                  stroke="rgba(212,175,55,.84)" stroke-width="1.8" stroke-linecap="round"/>
-          </g>
-          <!-- STATUS -->
-          <g class="jrn-status-g">
-            <rect x="65" y="224" width="88" height="17" rx="3"
-                  fill="none" stroke="rgba(212,175,55,.54)" stroke-width="1"/>
-            <text class="jrn-s-prep" x="109" y="236" font-family="'Plus Jakarta Sans',sans-serif"
-                  font-size="7.5" font-weight="600" letter-spacing="1.2"
-                  fill="rgba(212,175,55,.84)" text-anchor="middle">PREPARED ✓</text>
-            <text class="jrn-s-auth" x="109" y="236" font-family="'Plus Jakarta Sans',sans-serif"
-                  font-size="6.5" font-weight="600" letter-spacing="1.0"
-                  fill="rgba(212,175,55,.92)" text-anchor="middle">AUTHENTICATED ✓</text>
-          </g>
-          <!-- SEAL -->
-          <g class="jrn-seal-g">
-            <defs>
-              <path id="jrn-arc-t-m" d="M 116,158 A 34,34 0 0 1 184,158"/>
-              <path id="jrn-arc-b-m" d="M 116,158 A 34,34 0 0 0 184,158"/>
-            </defs>
-            <circle cx="150" cy="158" r="42" fill="rgba(212,175,55,.05)"/>
-            <circle cx="150" cy="158" r="42" stroke="rgba(212,175,55,.82)" stroke-width="1.4"/>
-            <circle cx="150" cy="158" r="34" stroke="rgba(212,175,55,.46)" stroke-width=".9"/>
-            <text font-family="'Playfair Display',Georgia,serif" font-size="7.5" font-weight="600"
-                  letter-spacing="3.0" fill="rgba(212,175,55,.74)">
-              <textPath href="#jrn-arc-t-m" startOffset="50%" text-anchor="middle">INK &amp; SEAL</textPath>
-            </text>
-            <text font-family="'Playfair Display',Georgia,serif" font-size="7.5" font-weight="600"
-                  letter-spacing="3.0" fill="rgba(212,175,55,.74)">
-              <textPath href="#jrn-arc-b-m" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
-            </text>
-            <text x="150" y="165" font-family="'Playfair Display',Georgia,serif"
-                  font-size="26" font-weight="700" fill="rgba(212,175,55,.80)"
-                  text-anchor="middle" letter-spacing="2">IS</text>
-          </g>
-          <!-- ENVELOPE -->
-          <g class="jrn-env-g">
-            <rect x="28" y="290" width="244" height="82" rx="5"
-                  fill="#0d2240" stroke="rgba(212,175,55,.30)" stroke-width="1.2"/>
-            <path class="jrn-flap" d="M28,290 L150,346 L272,290 Z"
-                  fill="#0A192F" stroke="rgba(212,175,55,.28)" stroke-width="1"/>
-            <text x="150" y="320" font-family="'Plus Jakarta Sans',sans-serif"
-                  font-size="6.5" font-weight="600" letter-spacing="1.8"
-                  fill="rgba(212,175,55,.54)" text-anchor="middle">READY FOR RETURN ✓</text>
-            <g class="jrn-env-check">
-              <circle cx="150" cy="356" r="14" fill="rgba(212,175,55,.08)"
-                      stroke="rgba(212,175,55,.80)" stroke-width="1.4"/>
-              <polyline class="jrn-check-mark"
-                        points="143,356 148,362 158,349"
-                        stroke="rgba(212,175,55,1)" stroke-width="1.8"
-                        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </g>
-          </g>
-        </svg>
-      </div><!-- /jrn-mob-svg-wrap -->
-
-      <!-- Stage cards: IO triggers SVG updates + card reveals -->
-      <div class="jrn-mob-stages">
-
-        <div class="jrn-mob-card" data-stage="1">
-          <div class="jrn-mob-num">01</div>
-          <div class="jrn-mob-body">
-            <h3 class="jrn-mob-label">Received</h3>
-            <p class="jrn-mob-desc">Your documents enter the Ink &amp; Seal review process individually — never batched, never rushed.</p>
-          </div>
-        </div>
-
-        <div class="jrn-mob-card" data-stage="2">
-          <div class="jrn-mob-num">02</div>
-          <div class="jrn-mob-body">
-            <h3 class="jrn-mob-label">Reviewed</h3>
-            <p class="jrn-mob-desc">A specialist verifies document type, issuing authority, destination country, and authentication requirements.</p>
-          </div>
-        </div>
-
-        <div class="jrn-mob-card" data-stage="3">
-          <div class="jrn-mob-num">03</div>
-          <div class="jrn-mob-body">
-            <h3 class="jrn-mob-label">Prepared</h3>
-            <p class="jrn-mob-desc">Your document is prepared for the appropriate process — apostille, notarization, or embassy legalization.</p>
-          </div>
-        </div>
-
-        <div class="jrn-mob-card" data-stage="4">
-          <div class="jrn-mob-num">04</div>
-          <div class="jrn-mob-body">
-            <h3 class="jrn-mob-label">Authenticated</h3>
-            <p class="jrn-mob-desc">The required authentication is applied — handled precisely, submitted correctly, tracked every step.</p>
-          </div>
-        </div>
-
-        <div class="jrn-mob-card" data-stage="5">
-          <div class="jrn-mob-num">05</div>
-          <div class="jrn-mob-body">
-            <h3 class="jrn-mob-label">Returned</h3>
-            <p class="jrn-mob-desc">Your completed, authenticated documents are securely returned via tracked delivery — the same care from start to finish.</p>
-          </div>
-        </div>
-
-      </div><!-- /jrn-mob-stages -->
-
-      <div class="jrn-mob-footer">
-        <p class="jrn-tagline">From your hands.<br>Through authentication.<br>Safely back to you.</p>
-        <a href="/services/apostille/#start" class="jrn-cta-btn">
-          Start My Document Review
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
-
-    </div><!-- /jrn-mob -->
-
   </section><!-- /jrn -->
 
   <script>
-  /* ── YOUR DOCUMENT'S JOURNEY — continuous cinematic scroll driver ──
-     Desktop (≥ 800px):
-       • .jrn-pin is position:sticky (400vh section).
-       • p = 0→1 maps entire section scroll to a single progress value.
-       • Every SVG element is driven via inline styles every RAF frame —
-         NO stage classes, NO snapping. The document is always on screen,
-         continuously transforming through all five stages.
-     Mobile (< 800px):
-       • .jrn-mob-svg-wrap is position:sticky below fixed header.
-       • IntersectionObserver on .jrn-mob-card updates SVG at-sN class.
-     Both branches respect prefers-reduced-motion.
+  /* ── YOUR DOCUMENT'S JOURNEY — ONE scroll-scrubbed master timeline ──
+     scroll progress === timeline progress. Not "scroll reaches stage =
+     play animation". Every visual property is a pure function of p (0→1),
+     written as inline styles each rAF. Scroll forward → advances.
+     Stop → holds. Scroll back → reverses. Identical on desktop + mobile.
   ─────────────────────────────────────────────────────────────────── */
   (function () {
   'use strict';
 
   var section = document.getElementById('your-journey');
-  if (!section) return;
+  var svg     = document.getElementById('jrn-svg');
+  if (!section || !svg) return;
 
-  /* ── Reduced motion: jump straight to final state ── */
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var allSvgs = document.querySelectorAll('.jrn-svg');
-    for (var ri = 0; ri < allSvgs.length; ri++) allSvgs[ri].className.baseVal = 'jrn-svg at-s5';
-    var allSteps = document.querySelectorAll('.jrn-step, .jrn-mob-card');
-    for (var rj = 0; rj < allSteps.length; rj++) allSteps[rj].classList.add('is-active');
-    var rCta = document.getElementById('jrn-cta-wrap');
-    if (rCta) rCta.classList.add('is-visible');
-    return;
-  }
-
-  /* ── Interpolation helpers ── */
+  /* ── math ── */
   function clamp(x, a, b) { return x < a ? a : x > b ? b : x; }
   function lerp(a, b, t)  { return a + (b - a) * t; }
   function norm(x, a, b)  { return clamp((x - a) / (b - a), 0, 1); }
-  function easeOut(t)     { return 1 - Math.pow(1 - t, 2.5); }
-  function easeIn(t)      { return t * t * t; }
-  function smooth(t)      { return t * t * (3 - 2 * t); }
+  var LIN    = function (t) { return t; };
+  var SMOOTH = function (t) { return t * t * (3 - 2 * t); };
+  var OUT    = function (t) { return 1 - Math.pow(1 - t, 2.6); };
+  var IN     = function (t) { return t * t * t; };
 
-  /* ══ DESKTOP: one continuous p=0→1 drives every SVG element ══════ */
-  if (window.innerWidth >= 800) {
-
-    var svg     = document.getElementById('jrn-svg');
-    if (!svg) return;
-
-    var steps   = document.querySelectorAll('.jrn-step');
-    var fill    = document.getElementById('jrn-track-fill');
-    var ctaWrap = document.getElementById('jrn-cta-wrap');
-
-    /* Cache SVG element references (query once, reuse every frame) */
-    var elFolder  = svg.querySelector('.jrn-folder-g');
-    var elDoc     = svg.querySelector('.jrn-doc-g');
-    var elScan    = svg.querySelector('.jrn-scan-g');
-    var elRls     = svg.querySelectorAll('.jrn-rl');
-    var elCorners = svg.querySelectorAll('.jrn-corner');
-    var elStatus  = svg.querySelector('.jrn-status-g');
-    var elSPrep   = svg.querySelector('.jrn-status-prepared');
-    var elSAuth   = svg.querySelector('.jrn-status-auth');
-    var elSeal    = svg.querySelector('.jrn-seal-g');
-    var elEnv     = svg.querySelector('.jrn-env-g');
-    var elFlap    = svg.querySelector('.jrn-flap');
-    var elEnvChk  = svg.querySelector('.jrn-env-check');
-    var elChkMark = svg.querySelector('.jrn-check-mark');
-
-    /* Stage starts (p values): used for label highlight + track fill */
-    var stageStarts = [0.00, 0.15, 0.38, 0.55, 0.75];
-
-    var ticking = false;
-    var prevP   = -1;
-
-    /* Seal press: returns { y, s, o } for a given 0–1 sub-progress */
-    function sealValues(sp) {
-      if (sp <= 0) return { y: -52, s: 0.80, o: 0 };
-      if (sp >= 1) return { y:   0, s: 1.00, o: 1 };
-      var t;
-      if (sp < 0.55) {
-        t = sp / 0.55;
-        return { y: lerp(-52,  6, easeOut(t)), s: lerp(0.80, 0.97, easeOut(t)), o: clamp(t * 3, 0, 1) };
-      } else if (sp < 0.74) {
-        t = (sp - 0.55) / 0.19;
-        return { y: lerp(6, -5, smooth(t)),    s: lerp(0.97, 1.04, smooth(t)),  o: 1 };
-      } else {
-        t = (sp - 0.74) / 0.26;
-        return { y: lerp(-5, 0, smooth(t)),    s: lerp(1.04, 1.00, smooth(t)),  o: 1 };
+  /* Declarative keyframe track: kf(p, [[p,value,easeIntoThisKey], ...]) */
+  function kf(p, keys) {
+    if (p <= keys[0][0]) return keys[0][1];
+    for (var i = 1; i < keys.length; i++) {
+      if (p <= keys[i][0]) {
+        var a = keys[i - 1], b = keys[i];
+        var span = b[0] - a[0];
+        var t = span <= 0 ? 1 : (p - a[0]) / span;
+        return lerp(a[1], b[1], (b[2] || SMOOTH)(t));
       }
     }
-
-    function update() {
-      var rect      = section.getBoundingClientRect();
-      var available = section.offsetHeight - window.innerHeight;
-      var p         = available > 0 ? clamp(-rect.top / available, 0, 1) : 0;
-
-      /* Skip redundant frames */
-      if (Math.abs(p - prevP) < 0.00015) { ticking = false; return; }
-      prevP = p;
-
-      /* ── Gold track: fills continuously with p ── */
-      if (fill) fill.style.height = (p * 100) + '%';
-
-      /* ── Stage labels: active (bright) | past (dim gold) | future (muted) ── */
-      var activeIdx = 0;
-      for (var si = 0; si < stageStarts.length; si++) {
-        if (p >= stageStarts[si]) activeIdx = si;
-      }
-      for (var i = 0; i < steps.length; i++) {
-        var sn = parseInt(steps[i].getAttribute('data-step'), 10) - 1;
-        steps[i].classList.toggle('is-active', sn === activeIdx);
-        steps[i].classList.toggle('is-past',   sn < activeIdx);
-      }
-
-      /* ── CTA: single class toggle (CSS transition handles reveal) ── */
-      if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.92);
-
-      /* ════════════════════════════════════════════════════════════
-         SVG ELEMENT UPDATES — all driven by p, no snapping
-         Ranges: received 0–0.15 | reviewed 0.15–0.38 | prepared 0.38–0.55
-                 authenticated 0.55–0.75 | returned 0.75–0.92 | cta 0.92–1.0
-         ════════════════════════════════════════════════════════════ */
-
-      /* FOLDER — rises in at start, sinks before scan begins */
-      var fldIn  = easeOut(norm(p, 0.00, 0.10));
-      var fldOut = easeOut(norm(p, 0.13, 0.22));
-      if (elFolder) {
-        elFolder.style.opacity   = Math.max(0, fldIn - fldOut);
-        elFolder.style.transform = 'translateY(' + lerp(22, 0, fldIn) + 'px)';
-      }
-
-      /* DOCUMENT — always the hero; moves continuously throughout */
-      var docOp, docY;
-      if (p < 0.08) {
-        /* resting at center */
-        docOp = 1; docY = 0;
-      } else if (p < 0.15) {
-        /* lifts above folder */
-        docY = lerp(0, -14, smooth(norm(p, 0.08, 0.15)));
-        docOp = 1;
-      } else if (p < 0.22) {
-        /* returns to center as folder sinks */
-        docY = lerp(-14, 0, smooth(norm(p, 0.15, 0.22)));
-        docOp = 1;
-      } else if (p < 0.60) {
-        /* steady during review + prepared stages */
-        docY = 0; docOp = 1;
-      } else if (p < 0.66) {
-        /* micro-press as seal lands */
-        docY = lerp(0, 6, smooth(norm(p, 0.60, 0.66)));
-        docOp = 1;
-      } else if (p < 0.73) {
-        /* rebound */
-        docY = lerp(6, 0, smooth(norm(p, 0.66, 0.73)));
-        docOp = 1;
-      } else if (p < 0.80) {
-        docY = 0; docOp = 1;
-      } else {
-        /* slides into envelope */
-        var envSlide = norm(p, 0.80, 0.90);
-        docY  = lerp(0, 56, easeIn(envSlide));
-        docOp = 1 - smooth(envSlide);
-      }
-      if (elDoc) {
-        elDoc.style.opacity   = docOp;
-        elDoc.style.transform = 'translateY(' + docY + 'px)';
-      }
-
-      /* SCAN LINE — position tracks scroll directly (no time-based animation) */
-      var scanOp;
-      if      (p < 0.15) scanOp = 0;
-      else if (p < 0.20) scanOp = easeOut(norm(p, 0.15, 0.20));
-      else if (p < 0.35) scanOp = 1;
-      else if (p < 0.42) scanOp = 1 - easeOut(norm(p, 0.35, 0.42));
-      else                scanOp = 0;
-      var scanY = lerp(0, 215, smooth(norm(p, 0.15, 0.38)));
-      if (elScan) {
-        elScan.style.opacity   = scanOp;
-        elScan.style.transform = 'translateY(' + scanY + 'px)';
-      }
-
-      /* REVIEW LINES — appear as scan passes each line, dim in prepared, gone in auth */
-      var rlStarts = [0.20, 0.24, 0.28, 0.32];
-      for (var ri = 0; ri < elRls.length; ri++) {
-        var rs = rlStarts[ri], rlOp;
-        if      (p < rs)        rlOp = 0;
-        else if (p < rs + 0.05) rlOp = easeOut(norm(p, rs, rs + 0.05));
-        else if (p < 0.38)      rlOp = 1;
-        else if (p < 0.50)      rlOp = lerp(1, 0.42, norm(p, 0.38, 0.50));
-        else if (p < 0.58)      rlOp = lerp(0.42, 0, norm(p, 0.50, 0.58));
-        else                    rlOp = 0;
-        elRls[ri].style.opacity = rlOp;
-      }
-
-      /* CORNER MARKS — draw in during prepared stage */
-      var cornerDash = lerp(22, 0, easeOut(norm(p, 0.38, 0.52)));
-      for (var ci = 0; ci < elCorners.length; ci++) {
-        elCorners[ci].style.strokeDashoffset = cornerDash;
-      }
-
-      /* STATUS BADGE — fades in during prepared, text cross-fades at auth */
-      var statusOp = easeOut(norm(p, 0.44, 0.55));
-      if (elStatus) elStatus.style.opacity = statusOp;
-      var authT = smooth(norm(p, 0.62, 0.70));
-      if (elSPrep) elSPrep.style.opacity = 1 - authT;
-      if (elSAuth) elSAuth.style.opacity = authT;
-
-      /* SEAL — scroll-driven press with overshoot, then exits with envelope */
-      var sv      = sealValues(norm(p, 0.57, 0.73));
-      var sealOut = easeOut(norm(p, 0.78, 0.87));
-      if (elSeal) {
-        elSeal.style.opacity         = Math.max(0, sv.o - sealOut);
-        elSeal.style.transform       = 'translateY(' + lerp(sv.y, 56, sealOut) + 'px) scale(' + lerp(sv.s, 0.9, sealOut) + ')';
-        elSeal.style.transformOrigin = '150px 158px';
-      }
-
-      /* ENVELOPE — rises from below as returned stage begins */
-      var envInP = easeOut(norm(p, 0.75, 0.87));
-      if (elEnv) {
-        elEnv.style.opacity   = envInP;
-        elEnv.style.transform = 'translateY(' + lerp(56, 0, envInP) + 'px)';
-      }
-
-      /* FLAP — flips closed as document enters */
-      var flapSY = lerp(1, -1, smooth(norm(p, 0.84, 0.92)));
-      if (elFlap) {
-        elFlap.style.transform       = 'scale(1,' + flapSY + ')';
-        elFlap.style.transformOrigin = '150px 290px';
-      }
-
-      /* ENVELOPE CHECK + CHECKMARK DRAW */
-      var envChkOp = easeOut(norm(p, 0.88, 0.95));
-      if (elEnvChk)  elEnvChk.style.opacity          = envChkOp;
-      if (elChkMark) elChkMark.style.strokeDashoffset = lerp(26, 0, easeOut(norm(p, 0.90, 0.97)));
-
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', function () {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    window.addEventListener('resize', function () {
-      if (!ticking) { requestAnimationFrame(update); ticking = true; }
-    }, { passive: true });
-    update(); /* run immediately so initial state is correct */
+    return keys[keys.length - 1][1];
   }
 
-  /* ══ MOBILE: IntersectionObserver → SVG at-sN class updates ══════ */
-  else {
+  /* ── cached nodes ── */
+  var q = function (s) { return svg.querySelector(s); };
+  var elFolderB = q('.jrn-folder-b'), elFolderF = q('.jrn-folder-f');
+  var elDoc     = q('.jrn-doc-g'),    elScan    = q('.jrn-scan-g');
+  var elAuth    = q('.jrn-auth-mark'),elStatus  = q('.jrn-status-g');
+  var elSPrep   = q('.jrn-s-prep'),   elSAuth   = q('.jrn-s-auth');
+  var elStamp   = q('.jrn-stamp-g');
+  var elEnvB    = q('.jrn-env-b'),    elEnvF    = q('.jrn-env-f');
+  var elFlap    = q('.jrn-flap');
+  var elDone    = q('.jrn-done-line'),elDoneTxt = q('.jrn-done-txt');
+  var elRls     = svg.querySelectorAll('.jrn-rl');
+  var elCorners = svg.querySelectorAll('.jrn-corner');
 
-    var svgM  = document.getElementById('jrn-svg-m');
-    var cards = document.querySelectorAll('.jrn-mob-card');
-    var curM  = 0;
+  var steps   = document.querySelectorAll('.jrn-step');
+  var fill    = document.getElementById('jrn-track-fill');
+  var ctaWrap = document.getElementById('jrn-cta-wrap');
 
-    function setStageM(n) {
-      if (n === curM || !svgM) return;
-      curM = n;
-      svgM.className.baseVal = 'jrn-svg at-s' + n;
+  /* Timeline stage boundaries — drive the 01–05 indicator only. */
+  var STAGES = [0, 0.26, 0.51, 0.62, 0.87];
+
+  /* Verification reveal points = the p at which the beam crosses each row. */
+  var RL_AT  = [0.334, 0.368, 0.402, 0.436];
+
+  /* Horizontal indicator on mobile → fill width; vertical on desktop → height. */
+  var horiz = window.matchMedia('(max-width: 799px)').matches;
+
+  /* ══════════ THE MASTER TIMELINE ══════════ */
+  function render(p) {
+
+    /* ── FOLDER: rises in, receives the document, recedes ── */
+    var fBY = kf(p, [[0, 130], [0.06, 0, OUT], [0.20, 0], [0.29, 150, IN]]);
+    var fBO = kf(p, [[0, 0], [0.05, 1, LIN], [0.20, 1], [0.29, 0, LIN]]);
+    if (elFolderB) { elFolderB.style.transform = 'translateY(' + fBY + 'px)'; elFolderB.style.opacity = fBO; }
+    if (elFolderF) { elFolderF.style.transform = 'translateY(' + fBY + 'px)'; elFolderF.style.opacity = fBO; }
+
+    /* ── THE DOCUMENT: enters → into folder → rises out → pressed → into envelope ── */
+    var docY = kf(p, [
+      [0.00, -150],            /* entering from above, already visible   */
+      [0.06,  -20, OUT],       /* settles into the stage                 */
+      [0.18,  215, SMOOTH],    /* travels DOWN INTO the folder           */
+      [0.28,    0, OUT],       /* rises back out for review              */
+      [0.73,    0],            /* held while it is scanned and prepared  */
+      [0.775,   8, SMOOTH],    /* compresses under the stamp             */
+      [0.815,   0, OUT],       /* rebounds                               */
+      [0.87,    0],
+      [0.94,  285, IN]         /* slides INTO the envelope               */
+    ]);
+    if (elDoc) elDoc.style.transform = 'translateY(' + docY + 'px)';
+
+    /* ── SCANNING BEAM: travels the document top → bottom, scroll-locked ── */
+    var scanY = kf(p, [[0.27, 0], [0.50, 270, LIN]]);
+    var scanO = kf(p, [[0.26, 0], [0.30, 1, LIN], [0.50, 1], [0.55, 0, LIN]]);
+    if (elScan) { elScan.style.transform = 'translateY(' + scanY + 'px)'; elScan.style.opacity = scanO; }
+
+    /* ── VERIFICATION RESULTS: appear as the beam crosses each row ── */
+    for (var i = 0; i < elRls.length; i++) {
+      var at = RL_AT[i];
+      elRls[i].style.opacity = kf(p, [[at, 0], [at + 0.022, 1, LIN], [0.56, 1], [0.66, 0, LIN]]);
     }
 
-    if (window.IntersectionObserver && cards.length) {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-active');
-          var n = parseInt(entry.target.getAttribute('data-stage'), 10);
-          if (!isNaN(n)) setStageM(n);
-        });
-      }, { threshold: 0.40, rootMargin: '0px 0px -8% 0px' });
-      for (var mi = 0; mi < cards.length; mi++) io.observe(cards[mi]);
+    /* ── PREPARATION MARKS: registration corners draw in ── */
+    var dash = kf(p, [[0.51, 48], [0.62, 0, OUT]]);
+    for (var c = 0; c < elCorners.length; c++) elCorners[c].style.strokeDashoffset = dash;
+
+    /* ── STATUS: PREPARED ✓ → AUTHENTICATED ✓ ── */
+    if (elStatus) elStatus.style.opacity = kf(p, [[0.57, 0], [0.65, 1, OUT]]);
+    var toAuth = kf(p, [[0.79, 0], [0.85, 1, SMOOTH]]);
+    if (elSPrep) elSPrep.style.opacity = 1 - toAuth;
+    if (elSAuth) elSAuth.style.opacity = toAuth;
+
+    /* ── THE STAMP: travels in from upper-right, presses, lifts away ── */
+    var stX = kf(p, [[0.62, 250], [0.73, 0, OUT], [0.805, 0], [0.87, 120, IN]]);
+    var stY = kf(p, [[0.62, -340], [0.73, -22, OUT], [0.775, 10, SMOOTH], [0.805, 0, OUT], [0.87, -320, IN]]);
+    var stS = kf(p, [[0.62, 1.55], [0.73, 1.05, OUT], [0.775, 0.96, SMOOTH], [0.805, 1, OUT], [0.87, 1.5, IN]]);
+    var stO = kf(p, [[0.62, 0], [0.665, 1, LIN], [0.805, 1], [0.86, 0, LIN]]);
+    if (elStamp) {
+      elStamp.style.opacity         = stO;
+      elStamp.style.transform       = 'translate(' + stX + 'px,' + stY + 'px) scale(' + stS + ')';
+      elStamp.style.transformOrigin = '210px 228px';
+    }
+
+    /* ── AUTHENTICATION MARK: remains on the document ── */
+    if (elAuth) elAuth.style.opacity = kf(p, [[0.775, 0], [0.83, 1, OUT]]);
+
+    /* ── ENVELOPE: enters from below ── */
+    var envY = kf(p, [[0.76, 220], [0.87, 0, OUT]]);
+    var envO = kf(p, [[0.76, 0], [0.82, 1, LIN]]);
+    if (elEnvB) { elEnvB.style.transform = 'translateY(' + envY + 'px)'; elEnvB.style.opacity = envO; }
+    if (elEnvF) { elEnvF.style.transform = 'translateY(' + envY + 'px)'; elEnvF.style.opacity = envO; }
+
+    /* ── FLAP: physically folds closed over the document ── */
+    var flapK = kf(p, [[0.925, 0], [0.975, 1, SMOOTH]]);
+    if (elFlap) {
+      elFlap.style.transform       = 'scaleY(' + flapK + ')';
+      elFlap.style.transformOrigin = '210px 360px';
+    }
+
+    /* ── COMPLETION: gold line draws, READY FOR RETURN ✓ ── */
+    if (elDone)    elDone.style.strokeDashoffset = kf(p, [[0.96, 180], [0.995, 0, OUT]]);
+    if (elDoneTxt) elDoneTxt.style.opacity       = kf(p, [[0.965, 0], [1, 1, LIN]]);
+
+    /* ── 01–05 PROGRESS INDICATOR (not sections — a readout of `p`) ── */
+    var active = 0;
+    for (var s = 0; s < STAGES.length; s++) if (p >= STAGES[s]) active = s;
+
+    /* Gold line advances continuously and lands exactly on each dot. */
+    var frac = active / 4;
+    if (active < 4) {
+      frac = (active + norm(p, STAGES[active], STAGES[active + 1])) / 4;
     } else {
-      for (var fi = 0; fi < cards.length; fi++) cards[fi].classList.add('is-active');
-      if (svgM) svgM.className.baseVal = 'jrn-svg at-s5';
+      frac = (4 + norm(p, STAGES[4], 1)) / 4;
+      frac = Math.min(frac, 1);
     }
+    if (fill) {
+      if (horiz) { fill.style.width = (frac * 100) + '%'; fill.style.height = '100%'; }
+      else       { fill.style.height = (frac * 100) + '%'; fill.style.width = '100%'; }
+    }
+    for (var k = 0; k < steps.length; k++) {
+      var n = parseInt(steps[k].getAttribute('data-step'), 10) - 1;
+      steps[k].classList.toggle('is-active', n === active);
+      steps[k].classList.toggle('is-past',   n < active);
+    }
+
+    /* ── FINAL MESSAGE + CTA, at the end of the timeline ── */
+    if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.955);
   }
 
+  /* ══════════ SCROLL → p ══════════ */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    render(1);
+    return;
+  }
+
+  var ticking = false, last = -1;
+
+  function update() {
+    ticking = false;
+    var rect  = section.getBoundingClientRect();
+    var avail = section.offsetHeight - window.innerHeight;
+    var p     = avail > 0 ? clamp(-rect.top / avail, 0, 1) : 0;
+    if (Math.abs(p - last) < 0.0001) return;
+    last = p;
+    render(p);
+  }
+  function onScroll() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () {
+    horiz = window.matchMedia('(max-width: 799px)').matches;
+    last = -1;
+    onScroll();
+  }, { passive: true });
+
+  render(0);
+  update();
   }());
   </script>
 

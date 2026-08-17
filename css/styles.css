@@ -8423,75 +8423,124 @@ a.btn-gold:hover {
 }
 
 /* ════════════════════════════════════════════════════════════
-   YOUR DOCUMENT'S JOURNEY  (scroll-driven)
+   YOUR DOCUMENT'S JOURNEY — one pinned stage, one scrubbed timeline
    Namespace: jrn-*
-   Desktop (≥ 800px):
-     • .jrn is 600vh tall — provides scroll space for 5 stages.
-     • .jrn-pin is position:sticky — stays visible the whole time.
-       body/html use overflow-x:clip (NOT hidden), so sticky works.
-     • LEFT col (.jrn-tl): numbered stages + gold progress track.
-     • RIGHT col (.jrn-vis): large animated SVG document.
-   Mobile (≤ 799px):
-     • .jrn-mob-svg-wrap is position:sticky — SVG stays visible.
-     • IntersectionObserver on .jrn-mob-card updates SVG stage class.
-   SVG stage controlled by at-s1…at-s5 class on .jrn-svg.
+
+   Architecture:
+     • .jrn is tall (450vh desktop / 340vh mobile) purely to supply
+       scroll distance for the master timeline.
+     • .jrn-pin is position:sticky and stays visible for that entire
+       distance, so the reserved scroll NEVER shows as blank space.
+       (body/html use overflow-x:clip — NOT hidden — so sticky works.)
+     • Every SVG object is positioned by JS inline styles as a pure
+       function of scroll progress. There are NO stage classes, NO
+       @keyframes and NO transitions on animated SVG nodes — a CSS
+       transition would decouple the visual from the scroll position
+       and break scrubbing.
    ════════════════════════════════════════════════════════════ */
 
-/* ── Section shell ──────────────────────────────────────────── */
 .jrn {
   background: var(--navy);
   position: relative;
-  /* NO overflow — would break position:sticky on .jrn-pin */
+  /* NO overflow here — it would break position:sticky on .jrn-pin */
 }
 
-/* Mobile container: hidden on desktop (base rule — !important beats cached CSS) */
-.jrn-mob { display: none !important; }
+.jrn-pin {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
 
-/* ── DESKTOP (≥ 800px) ─────────────────────────────────────── */
+/* Animated SVG nodes are scroll-driven: transitions/animations forbidden. */
+.jrn-folder-b, .jrn-folder-f, .jrn-doc-g, .jrn-scan-g, .jrn-rl,
+.jrn-corner, .jrn-auth-mark, .jrn-status-g, .jrn-s-prep, .jrn-s-auth,
+.jrn-stamp-g, .jrn-env-b, .jrn-env-f, .jrn-flap,
+.jrn-done-line, .jrn-done-txt {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Pre-render state: JS overwrites all of these on first frame. */
+.jrn-folder-b, .jrn-folder-f, .jrn-scan-g, .jrn-rl,
+.jrn-auth-mark, .jrn-status-g, .jrn-s-auth,
+.jrn-stamp-g, .jrn-env-b, .jrn-env-f, .jrn-done-txt { opacity: 0; }
+.jrn-corner    { stroke-dasharray: 48; stroke-dashoffset: 48; }
+.jrn-done-line { stroke-dasharray: 180; stroke-dashoffset: 180; }
+.jrn-flap      { transform: scaleY(0); transform-origin: 210px 360px; }
+
+/* ── The animation stage ─────────────────────────────────────── */
+.jrn-vis {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.jrn-vis::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 58% 48% at 50% 50%,
+    rgba(212,175,55,.08) 0%, transparent 72%);
+  pointer-events: none;
+}
+.jrn-canvas {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* preserveAspectRatio letterboxes the artwork; overflow:hidden clips objects
+   that travel outside the viewBox (the document once it is inside the
+   envelope) so they cannot spill past the edge of the stage. */
+.jrn-svg { width: 100%; height: 100%; display: block; overflow: hidden; }
+
+/* ── DESKTOP (≥ 800px): heading left, stage right ────────────── */
 @media (min-width: 800px) {
-  /* 400vh section = scroll space for continuous cinematic animation */
-  .jrn { height: 400vh; }
+  .jrn { height: 450vh; }
 
-  /* Sticky pin fills one viewport height while section scrolls.
-     body/html have overflow-x:clip (NOT hidden), so sticky works.
-     Each column uses padding-top:var(--hh) to keep content below
-     the fixed site header (height var(--hh), z-index 500). */
   .jrn-pin {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    height: 100vh;
     display: grid;
-    grid-template-columns: 44% 56%;
-    overflow: hidden;
+    grid-template-columns: 42% 58%;
+    /* Definite row height — an `auto` row would size to the SVG's
+       intrinsic aspect ratio and overflow the pinned viewport. */
+    grid-template-rows: minmax(0, 1fr);
   }
 
-  /* LEFT: timeline column */
   .jrn-tl {
     display: flex;
     align-items: center;
     overflow: hidden;
+    min-height: 0;
+    min-width: 0;
     border-right: 1px solid rgba(212,175,55,.09);
   }
   .jrn-tl-inner {
     width: 100%;
-    padding: var(--hh) 44px 32px 64px;
+    padding: calc(var(--hh) + 10px) 40px 28px 64px;
     box-sizing: border-box;
   }
 
-  /* Stage list + gold progress track */
+  .jrn-vis { padding: calc(var(--hh) + 10px) 48px 28px 20px; }
+
+  /* Vertical 01–05 indicator with gold progress line */
   .jrn-stages {
     position: relative;
-    margin-top: 20px;
-    padding-left: 32px;
+    margin: 18px 0 0;
+    padding: 0 0 0 32px;
+    list-style: none;
   }
-
-  /* Gold vertical track */
   .jrn-track {
     position: absolute;
-    left: 5px;
-    top: 14px;
-    bottom: 14px;
+    left: 5px; top: 14px; bottom: 14px;
     width: 2px;
     background: rgba(212,175,55,.14);
     border-radius: 1px;
@@ -8502,232 +8551,201 @@ a.btn-gold:hover {
     height: 0%;
     background: linear-gradient(180deg, var(--gold) 0%, rgba(212,175,55,.55) 100%);
     border-radius: 1px;
-    /* No transition — height is JS-driven every scroll frame */
   }
 
-  /* Step item */
   .jrn-step {
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 8px 0;
+    padding: 7px 0;
     position: relative;
   }
-  /* Dot on the track */
   .jrn-step-pip {
     position: absolute;
     left: -32px;
     width: 12px;
-    padding-top: 13px;
+    padding-top: 12px;
     display: flex;
     justify-content: center;
   }
-  .jrn-dot {
-    display: block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 2px solid rgba(212,175,55,.22);
-    background: transparent;
-    transition: background .38s ease, border-color .38s ease, box-shadow .38s ease;
-    flex-shrink: 0;
-  }
-  .jrn-step.is-active .jrn-dot {
-    background: var(--gold);
-    border-color: var(--gold);
-    box-shadow: 0 0 14px rgba(212,175,55,.42);
-  }
+  .jrn-step-body { flex: 1; display: block; }
 
-  .jrn-step-body { flex: 1; }
-
-  .jrn-snum {
-    display: block;
-    font-family: var(--serif);
-    font-size: .59rem;
-    font-weight: 600;
-    letter-spacing: .2em;
-    color: rgba(212,175,55,.28);
-    margin-bottom: 2px;
-    transition: color .38s ease;
-  }
-  .jrn-step.is-active .jrn-snum { color: rgba(212,175,55,.68); }
-
-  .jrn-slabel {
-    font-family: var(--serif);
-    font-size: .94rem;
-    font-weight: 600;
-    color: rgba(255,255,255,.26);
-    letter-spacing: -.01em;
-    margin: 0;
-    transition: color .38s ease;
-    line-height: 1.3;
-  }
-  .jrn-step.is-active .jrn-slabel { color: #fff; }
-
-  /* Description: hidden → expands when active */
   .jrn-sdesc {
-    font-size: .76rem;
+    display: block;
+    font-size: .755rem;
     font-weight: 300;
     color: transparent;
-    line-height: 1.72;
+    line-height: 1.7;
     overflow: hidden;
     max-height: 0;
-    transition: color .4s ease .08s, max-height .4s ease, margin .3s ease;
+    transition: color .4s ease .06s, max-height .4s ease, margin .3s ease;
   }
   .jrn-step.is-active .jrn-sdesc {
     color: rgba(255,255,255,.56);
-    max-height: 90px;
+    max-height: 92px;
     margin-top: 5px;
   }
 
-  /* Completed stages: dimly acknowledged (dot stays, label fades back) */
-  .jrn-step.is-past .jrn-dot    { background: rgba(212,175,55,.44); border-color: rgba(212,175,55,.44); box-shadow: none; }
-  .jrn-step.is-past .jrn-snum   { color: rgba(212,175,55,.48); }
-  .jrn-step.is-past .jrn-slabel { color: rgba(255,255,255,.40); }
-
-  /* CTA (stage 5 only) */
   .jrn-cta-wrap {
-    margin-top: 22px;
+    margin-top: 20px;
     opacity: 0;
     transform: translateY(10px);
     pointer-events: none;
-    transition: opacity .5s ease, transform .5s ease;
+    transition: opacity .55s ease, transform .55s ease;
   }
   .jrn-cta-wrap.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+}
 
-  /* RIGHT: SVG visual column */
-  .jrn-vis {
+/* ── MOBILE (≤ 799px): stage on top, horizontal indicator above it ── */
+@media (max-width: 799px) {
+  .jrn { height: 340vh; }
+
+  .jrn-pin {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: var(--hh) 56px 32px 24px;
+    flex-direction: column;
+    padding: calc(var(--hh) + 14px) 20px 16px;
     box-sizing: border-box;
   }
-  /* Subtle gold glow behind document */
-  .jrn-vis::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 55% 45% at 50% 52%,
-      rgba(212,175,55,.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .jrn-canvas {
-    width: 100%;
-    max-width: 400px;
+
+  .jrn-tl-inner { width: 100%; }
+  .jrn-lead { display: none; }
+  .jrn-title { font-size: clamp(1.5rem, 6.5vw, 1.9rem); text-align: center; margin-bottom: 10px; }
+  .jrn-eyebrow { text-align: center; margin-bottom: 8px; }
+
+  /* Horizontal 01–05 indicator. Five labels cannot sit side by side at
+     phone widths without colliding, so the track carries the numbers and
+     a single centred label names the stage the document is currently in. */
+  .jrn-stages {
     position: relative;
-    z-index: 1;
-  }
-  .jrn-svg {
-    width: 100%;
-    height: auto;
-    overflow: visible;
-  }
-
-  /* Desktop SVG is driven by JS inline styles every frame —
-     CSS transitions cause visible lag; kill them all here.
-     Mobile SVG (#jrn-svg-m) is unaffected (uses at-sN classes + CSS). */
-  #jrn-svg .jrn-folder-g,
-  #jrn-svg .jrn-doc-g,
-  #jrn-svg .jrn-scan-g,
-  #jrn-svg .jrn-rl,
-  #jrn-svg .jrn-corner,
-  #jrn-svg .jrn-status-g,
-  #jrn-svg .jrn-seal-g,
-  #jrn-svg .jrn-env-g,
-  #jrn-svg .jrn-flap,
-  #jrn-svg .jrn-env-check,
-  #jrn-svg .jrn-check-mark {
-    transition: none !important;
-    animation:  none !important;
-  }
-}
-
-/* ── MOBILE (≤ 799px) ─────────────────────────────────────── */
-@media (max-width: 799px) {
-  .jrn { height: auto; }
-  .jrn-pin { display: none; }
-  .jrn-mob { display: block !important; }
-
-  /* Section header */
-  .jrn-mob-hdr {
-    text-align: center;
-    padding: calc(var(--hh) + 48px) 24px 24px;
-  }
-
-  /* Sticky SVG — stays below fixed header while scrolling stages */
-  .jrn-mob-svg-wrap {
-    position: -webkit-sticky;
-    position: sticky;
-    top: var(--hh);
-    z-index: 1;
-    background: var(--navy);
-    padding: 14px 56px 10px;
-    text-align: center;
-    border-bottom: 1px solid rgba(212,175,55,.08);
-  }
-  .jrn-mob-svg-wrap .jrn-svg {
-    width: 100%;
-    max-width: 200px;
-    height: auto;
-    overflow: visible;
-    display: inline-block;
-  }
-
-  /* Stage cards */
-  .jrn-mob-stages { padding: 0 24px; margin-top: 20px; }
-
-  .jrn-mob-card {
     display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(212,175,55,.08);
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: opacity .5s ease, transform .5s ease;
+    flex-direction: row;
+    margin: 4px 0 0;
+    padding: 0 0 26px;
+    list-style: none;
   }
-  .jrn-mob-card:last-child { border-bottom: none; }
-  .jrn-mob-card.is-active  { opacity: 1; transform: none; }
+  .jrn-track {
+    position: absolute;
+    left: 10%; right: 10%; top: 5px;
+    height: 2px;
+    background: rgba(212,175,55,.14);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .jrn-track-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, rgba(212,175,55,.55) 100%);
+    border-radius: 1px;
+  }
 
-  .jrn-mob-num {
-    font-family: var(--serif);
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: rgba(212,175,55,.26);
-    line-height: 1;
-    min-width: 38px;
-    flex-shrink: 0;
-    padding-top: 2px;
-    transition: color .38s ease;
-  }
-  .jrn-mob-card.is-active .jrn-mob-num { color: rgba(212,175,55,.64); }
-
-  .jrn-mob-label {
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #fff;
-    margin: 0 0 8px;
-    letter-spacing: -.01em;
-  }
-  .jrn-mob-desc {
-    font-size: .82rem;
-    font-weight: 300;
-    color: rgba(255,255,255,.60);
-    line-height: 1.74;
-    margin: 0;
-  }
-  .jrn-mob-body { flex: 1; }
-
-  .jrn-mob-footer {
-    padding: 36px 24px 72px;
+  /* position:static so the active label below resolves against .jrn-stages */
+  .jrn-step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    padding: 0;
+    position: static;
+    min-width: 0;
   }
+  .jrn-step-pip { display: flex; justify-content: center; margin-bottom: 9px; }
+  .jrn-step-body { display: block; min-width: 0; }
+  .jrn-sdesc { display: none; }
+  .jrn-snum { font-size: .5rem; margin-bottom: 1px; }
+
+  /* Only the active stage's label is shown, centred under the whole track */
+  .jrn-slabel {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: .78rem;
+    opacity: 0;
+    transition: opacity .32s ease;
+  }
+  .jrn-step.is-active .jrn-slabel { opacity: 1; color: #fff; }
+  .jrn-step.is-past   .jrn-slabel { opacity: 0; }
+
+  /* Stage fills the remaining height. The bottom padding reserves room for
+     the final message + CTA so they never sit on top of the artwork. */
+  .jrn-vis { flex: 1; min-height: 0; padding: 6px 0 150px; }
+
+  /* Final message + CTA reveal over the foot of the stage */
+  .jrn-cta-wrap {
+    position: absolute;
+    left: 20px; right: 20px; bottom: 18px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity .55s ease, transform .55s ease;
+  }
+  .jrn-cta-wrap.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+  .jrn-cta-wrap .jrn-tagline { font-size: .88rem; margin-bottom: 14px; }
 }
 
-/* ── Shared text + CTA styles ──────────────────────────────── */
+/* ── Shared indicator styling ────────────────────────────────── */
+.jrn-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(212,175,55,.22);
+  background: transparent;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  position: relative;
+  transition: background .34s ease, border-color .34s ease, box-shadow .34s ease;
+}
+.jrn-step.is-active .jrn-dot {
+  background: var(--gold);
+  border-color: var(--gold);
+  box-shadow: 0 0 14px rgba(212,175,55,.42);
+}
+/* Completed stages carry a subtle checkmark */
+.jrn-step.is-past .jrn-dot {
+  background: rgba(212,175,55,.55);
+  border-color: rgba(212,175,55,.55);
+}
+.jrn-step.is-past .jrn-dot::after {
+  content: '';
+  position: absolute;
+  left: 2.4px; top: 0.6px;
+  width: 3px; height: 6px;
+  border: solid var(--navy);
+  border-width: 0 1.6px 1.6px 0;
+  transform: rotate(43deg);
+}
+
+.jrn-snum {
+  display: block;
+  font-family: var(--serif);
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .2em;
+  color: rgba(212,175,55,.28);
+  margin-bottom: 2px;
+  transition: color .34s ease;
+}
+.jrn-step.is-active .jrn-snum { color: rgba(212,175,55,.72); }
+.jrn-step.is-past   .jrn-snum { color: rgba(212,175,55,.46); }
+
+.jrn-slabel {
+  display: block;
+  font-family: var(--serif);
+  font-size: .93rem;
+  font-weight: 600;
+  color: rgba(255,255,255,.26);
+  letter-spacing: -.01em;
+  margin: 0;
+  line-height: 1.3;
+  transition: color .34s ease;
+}
+.jrn-step.is-active .jrn-slabel { color: #fff; }
+.jrn-step.is-past   .jrn-slabel { color: rgba(255,255,255,.44); }
+
+/* ── Shared text + CTA ───────────────────────────────────────── */
 .jrn-eyebrow {
   font-family: var(--sans);
   font-size: .60rem;
@@ -8750,16 +8768,16 @@ a.btn-gold:hover {
   font-size: .83rem;
   font-weight: 300;
   color: rgba(255,255,255,.50);
-  line-height: 1.80;
+  line-height: 1.8;
   margin: 0;
 }
 .jrn-tagline {
   font-family: var(--serif);
-  font-size: 1.0rem;
+  font-size: 1rem;
   color: rgba(212,175,55,.85);
-  line-height: 1.72;
+  line-height: 1.7;
   font-style: italic;
-  margin: 0 0 20px;
+  margin: 0 0 18px;
 }
 .jrn-cta-btn {
   display: inline-flex;
@@ -8780,160 +8798,20 @@ a.btn-gold:hover {
 .jrn-cta-btn:hover { background: #c5a059; transform: translateY(-1px); }
 .jrn-cta-btn svg   { flex-shrink: 0; }
 
-/* ── SVG default states (before any stage class) ────────────── */
-
-/* Folder: hidden, rises in at stage 1 */
-.jrn-folder-g {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .6s cubic-bezier(.22,1,.36,1),
-              transform .6s cubic-bezier(.22,1,.36,1);
-}
-
-/* Document: fully visible — hero element, visible the moment section enters view */
-.jrn-doc-g {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
-}
-
-/* Scan line: hidden */
-.jrn-scan-g {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
-}
-
-/* Review checklist lines */
-.jrn-rl { opacity: 0; transition: opacity .4s ease; }
-
-/* Corner marks (stroke-dashoffset draw) */
-.jrn-corner {
-  stroke-dasharray: 22;
-  stroke-dashoffset: 22;
-  transition: stroke-dashoffset .5s cubic-bezier(.22,1,.36,1);
-}
-
-/* Status badge */
-.jrn-status-g { opacity: 0; transition: opacity .4s ease; }
-.jrn-s-auth   { opacity: 0; transition: opacity .3s ease; }
-.jrn-s-prep   { opacity: 1; transition: opacity .3s ease; }
-
-/* Seal: hidden, above + smaller */
-.jrn-seal-g {
-  opacity: 0;
-  transform: translateY(-52px) scale(.80);
-  transform-origin: 150px 158px;
-  pointer-events: none;
-  transition: opacity .5s ease, transform .5s cubic-bezier(.34,1.2,.64,1);
-}
-
-/* Envelope: hidden, shifted down */
-.jrn-env-g {
-  opacity: 0;
-  transform: translateY(56px);
-  transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
-}
-
-/* Flap open */
-.jrn-flap {
-  transform-origin: 150px 289px;
-  transition: transform .6s ease .35s;
-}
-
-/* Envelope check + mark */
-.jrn-env-check  { opacity: 0; transition: opacity .4s ease .75s; }
-.jrn-check-mark {
-  stroke-dasharray: 26;
-  stroke-dashoffset: 26;
-  transition: stroke-dashoffset .52s ease .95s;
-}
-
-/* ── Stage 1: RECEIVED ─────────────────────────────────────── */
-.at-s1 .jrn-folder-g { opacity: 1; transform: translateY(0); }
-.at-s1 .jrn-doc-g    { opacity: 1; transform: translateY(-14px); }
-
-/* ── Stage 2: REVIEWED ─────────────────────────────────────── */
-.at-s2 .jrn-folder-g { opacity: 0; transform: translateY(20px); }
-.at-s2 .jrn-doc-g    { opacity: 1; transform: translateY(0); }
-.at-s2 .jrn-scan-g   {
-  opacity: 1;
-  animation: jrn-sweep 1.5s cubic-bezier(.4,0,.2,1) forwards;
-}
-.at-s2 .jrn-rl-1 { opacity: 1; transition-delay: .42s; }
-.at-s2 .jrn-rl-2 { opacity: 1; transition-delay: .80s; }
-.at-s2 .jrn-rl-3 { opacity: 1; transition-delay: 1.18s; }
-.at-s2 .jrn-rl-4 { opacity: 1; transition-delay: 1.56s; }
-
-@keyframes jrn-sweep {
-  from { transform: translateY(0); }
-  to   { transform: translateY(215px); }
-}
-
-/* ── Stage 3: PREPARED ─────────────────────────────────────── */
-.at-s3 .jrn-doc-g    { opacity: 1; transform: translateY(0); }
-.at-s3 .jrn-scan-g   { opacity: 0; }
-.at-s3 .jrn-rl-1,
-.at-s3 .jrn-rl-2,
-.at-s3 .jrn-rl-3,
-.at-s3 .jrn-rl-4     { opacity: .42; transition-delay: 0s; }
-.at-s3 .jrn-corner   { stroke-dashoffset: 0; }
-.at-s3 .jrn-status-g { opacity: 1; }
-
-/* ── Stage 4: AUTHENTICATED ──────────────────────────────────  */
-.at-s4 .jrn-doc-g          { opacity: 1; transform: translateY(0); }
-.at-s4 .jrn-corner         { stroke-dashoffset: 0; }
-.at-s4 .jrn-status-g       { opacity: 1; }
-.at-s4 .jrn-s-prep         { opacity: 0; }
-.at-s4 .jrn-s-auth         { opacity: 1; }
-.at-s4 .jrn-seal-g {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: jrn-seal-press .92s cubic-bezier(.34,1.2,.64,1) forwards;
-}
-
-@keyframes jrn-seal-press {
-  0%   { transform: translateY(-52px) scale(.80); opacity: 0; }
-  55%  { transform: translateY(6px)  scale(.97);  opacity: 1; }
-  74%  { transform: translateY(-5px) scale(1.04); opacity: 1; }
-  100% { transform: translateY(0)   scale(1);    opacity: 1; }
-}
-
-/* ── Stage 5: RETURNED ──────────────────────────────────────── */
-.at-s5 .jrn-doc-g  { opacity: 0; transform: translateY(56px); }
-.at-s5 .jrn-seal-g {
-  opacity: 0;
-  transform: translateY(56px) scale(.9);
-  animation: none;
-}
-.at-s5 .jrn-env-g     { opacity: 1; transform: translateY(0); }
-.at-s5 .jrn-env-check { opacity: 1; }
-.at-s5 .jrn-check-mark { stroke-dashoffset: 0; }
-
-/* ── Reduced motion ──────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .jrn-folder-g, .jrn-doc-g, .jrn-scan-g,
-  .jrn-env-g, .jrn-seal-g, .jrn-rl,
-  .jrn-status-g, .jrn-mob-card {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-/* ── Responsive adjustments ──────────────────────────────────── */
+/* ── Narrow desktop tuning ───────────────────────────────────── */
 @media (max-width: 1100px) and (min-width: 800px) {
-  .jrn-tl-inner { padding-left: 40px; padding-right: 32px; }
-  .jrn-vis { padding-left: 16px; padding-right: 36px; }
-  .jrn-canvas { max-width: 340px; }
+  .jrn-tl-inner { padding-left: 40px; padding-right: 30px; }
+  .jrn-vis      { padding-right: 32px; padding-left: 12px; }
 }
-@media (max-width: 920px) and (min-width: 800px) {
-  .jrn-lead { display: none; }
-  .jrn-tl-inner { padding-top: calc(var(--hh) + 8px); padding-bottom: 20px; }
-  .jrn-stages { margin-top: 14px; }
-  .jrn-step { padding: 6px 0; }
+@media (max-width: 940px) and (min-width: 800px) {
+  .jrn-lead   { display: none; }
+  .jrn-stages { margin-top: 12px; }
+  .jrn-step   { padding: 5px 0; }
 }
-@media (max-width: 400px) {
-  .jrn-mob-svg-wrap { padding-left: 32px; padding-right: 32px; }
-  .jrn-mob-stages { padding: 0 16px; }
-  .jrn-mob-footer { padding: 30px 16px 64px; }
+
+/* ── Reduced motion: JS renders the completed frame, no scrubbing ── */
+@media (prefers-reduced-motion: reduce) {
+  .jrn { height: auto; }
+  .jrn-pin { position: static; height: auto; min-height: 100vh; }
+  .jrn-cta-wrap { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
 }
