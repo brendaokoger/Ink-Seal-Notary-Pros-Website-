@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=32" />
+  <link rel="stylesheet" href="css/styles.css?v=33" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -1743,8 +1743,28 @@
       <text font-family="'Playfair Display',Georgia,serif" font-size="22" font-weight="600" letter-spacing="7" fill="var(--gold)">
         <textPath href="#credArcB" startOffset="50%" text-anchor="middle">NOTARY PROS</textPath>
       </text>
-      <text x="400" y="424" text-anchor="middle" font-family="'Playfair Display',Georgia,serif"
-            font-size="92" font-weight="700" letter-spacing="4" fill="var(--gold)">IS</text>
+      <!-- Quill/feather center mark — replaces the old "IS" monogram.
+           Same hand-drawn quill used elsewhere on the site, scaled to
+           sit inside the inner ring. No "IS" anywhere in this mark. -->
+      <g transform="translate(400,400) scale(.5) translate(-400,-400)">
+        <g transform="rotate(-24 400 400)">
+          <path d="M400,150 C345,205 328,278 352,345 C320,415 336,505 400,600
+                   C464,505 480,415 448,345 C472,278 455,205 400,150 Z"
+                fill="none" stroke="var(--gold)" stroke-width="2"/>
+          <path d="M400,168 Q393,385 400,585" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+          <g stroke="var(--gold)" stroke-width="1" stroke-linecap="round">
+            <path d="M400,210 L358,230 M400,210 L442,230"/>
+            <path d="M400,255 L350,278 M400,255 L450,278"/>
+            <path d="M400,300 L345,325 M400,300 L455,325"/>
+            <path d="M400,345 L344,370 M400,345 L456,370"/>
+            <path d="M400,390 L347,413 M400,390 L453,413"/>
+            <path d="M400,435 L354,455 M400,435 L446,455"/>
+            <path d="M400,478 L364,495 M400,478 L436,495"/>
+            <path d="M400,518 L376,530 M400,518 L424,530"/>
+          </g>
+          <path d="M400,600 L390,665 L400,700 L410,665 Z" fill="var(--gold)" stroke="none"/>
+        </g>
+      </g>
     </svg>
 
     <div class="container">
