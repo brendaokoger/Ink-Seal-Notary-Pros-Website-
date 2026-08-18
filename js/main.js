@@ -106,9 +106,9 @@
          CSS); .cred-item and .cred-seal use the generic fade as designed. */
       '.cred-strip', '.cred-item', '.cred-seal',
       /* About page */
-      '.ab-open-portrait-col', '.ab-open-text',
-      '.ab-trust-card', '.ab-pillar', '.ab-service-card',
-      '.ab-services-lead', '.ab-cta-inner'
+      '.abt-hero-inner', '.abt-standard-lead', '.abt-principle',
+      '.abt-why-text', '.abt-why-list', '.abt-services-lead',
+      '.abt-service', '.abt-cta-inner'
     ];
     var revealEls = Array.from(document.querySelectorAll(revealSels.join(',')));
     if (revealEls.length) {
