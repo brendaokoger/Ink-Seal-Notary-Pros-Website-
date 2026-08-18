@@ -8720,16 +8720,14 @@ a.btn-gold:hover {
 }
 
 /* ════════════════════════════════════════════════════════════
-   YOUR DOCUMENT'S JOURNEY — cinematic, scroll-controlled
+   YOUR DOCUMENT'S JOURNEY — cinematic, autoplay
    Namespace: jrn-*
 
-   .jrn reserves scroll distance (450vh); .jrn-pin is position:sticky
-   and stays pinned to the viewport for that whole distance while a
-   single progress value, read directly from scroll position, drives
-   every property below via inline styles written every frame — no
-   CSS transition or animation may fight that, and no click handlers
-   exist at all. body/html use overflow-x:clip (not hidden), which is
-   what makes position:sticky work here.
+   A normal-flow section (no scroll-hijacking, no position:sticky).
+   A single progress value, advanced by a requestAnimationFrame timer
+   once the section enters the viewport, drives every property below
+   via inline styles written every frame — no CSS transition or
+   animation may fight that, and no click handlers exist at all.
 
    Materials are SVG gradients + hand-placed shadow layers. No SVG
    filters on animated nodes, no images, no animation library —
@@ -8739,25 +8737,13 @@ a.btn-gold:hover {
 .jrn {
   background: var(--navy);
   position: relative;
-  height: 450vh;
   scroll-margin-top: var(--hh);
 }
-/* prefers-reduced-motion: un-pin AND collapse the reserved scroll
-   distance — un-pinning alone would leave a tall blank navy gap. */
-.jrn.jrn-static { height: auto; }
 
 .jrn-pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  padding-top: var(--hh);
+  position: relative;
+  padding: 64px 0 64px;
   box-sizing: border-box;
-  overflow: hidden;
-}
-.jrn.jrn-static .jrn-pin {
-  position: static;
-  height: auto;
-  padding: 56px 0 64px;
   overflow: visible;
 }
 
@@ -8766,15 +8752,14 @@ a.btn-gold:hover {
 .jrn-bg-seal {
   position: absolute;
   top: 50%; left: 50%;
-  width: clamp(620px, 68vw, 1000px);
-  height: clamp(620px, 68vw, 1000px);
+  width: clamp(520px, 60vw, 880px);
+  height: clamp(520px, 60vw, 880px);
   transform: translate(-50%, -50%);
   opacity: .05;
   fill: none;
   pointer-events: none;
   z-index: 0;
 }
-.jrn.jrn-static .jrn-bg-seal { display: none; }
 
 /* Tween-driven nodes: no CSS transition/animation. */
 .jrn-cam, .jrn-folder-b, .jrn-folder-f, .jrn-doc-g, .jrn-rl,
@@ -9099,24 +9084,53 @@ a.btn-gold:hover {
   font-style: italic;
   margin: 0 0 20px;
 }
+/* A restrained, dimensional invitation — deep navy, a thin gold
+   line, gold text, a faint inner sheen. No flat yellow, no bounce. */
 .jrn-cta-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: linear-gradient(135deg, #E0C368 0%, var(--gold) 48%, #B8912F 100%);
-  color: var(--navy);
+  justify-content: center;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(140% 140% at 30% -10%, rgba(212,175,55,.10) 0%, transparent 55%),
+    linear-gradient(180deg, #123256 0%, #0C233E 55%, #081627 100%);
+  color: var(--gold);
   font-family: var(--sans);
   font-size: .70rem;
-  font-weight: 700;
-  letter-spacing: .08em;
+  font-weight: 600;
+  letter-spacing: .14em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 15px 28px;
-  border-radius: 4px;
-  transition: filter .22s ease, transform .18s ease;
+  padding: 16px 34px;
+  border: 1px solid rgba(212,175,55,.5);
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 8px 20px rgba(2,8,16,.4);
+  transition: border-color .35s ease, box-shadow .35s ease,
+              transform .3s ease, color .3s ease;
 }
-.jrn-cta-btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
-.jrn-cta-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.jrn-cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(240,223,168,.22) 50%, transparent 65%);
+  transform: translateX(-130%);
+  transition: transform .85s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+.jrn-cta-btn:hover,
+.jrn-cta-btn:focus-visible {
+  color: #F3E4B4;
+  border-color: rgba(212,175,55,.95);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 10px 26px rgba(2,8,16,.48),
+              0 0 0 1px rgba(212,175,55,.18);
+  transform: translateY(-1px);
+}
+.jrn-cta-btn:hover::before,
+.jrn-cta-btn:focus-visible::before { transform: translateX(130%); }
+.jrn-cta-btn:focus-visible { outline: 2px solid rgba(212,175,55,.65); outline-offset: 3px; }
 
 /* ── Narrow desktop tuning ───────────────────────────────────── */
 @media (max-width: 1040px) and (min-width: 800px) {
@@ -9126,8 +9140,9 @@ a.btn-gold:hover {
   .jrn-lead     { font-size: .8rem; }
 }
 
-/* ── Reduced motion: static, complete, fully legible — see .jrn-static
-   above for the section/pin-level un-pinning that pairs with this. ── */
+/* ── Reduced motion: JS renders the completed p=1 frame directly and
+   never starts the timer; this just kills any leftover CSS transitions
+   on the passive rail/CTA so nothing animates on state changes. ── */
 @media (prefers-reduced-motion: reduce) {
   .jrn-cta-wrap, .jrn-dot, .jrn-snum, .jrn-slabel, .jrn-sdesc, .jrn-step {
     transition: none !important;
