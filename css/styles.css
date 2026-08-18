@@ -2377,15 +2377,32 @@ ul    { list-style: none; }
   .hero-br-m { display: inline; }
   .drawer-inner { padding: 0 20px; }
 
-  /* hero: single column */
+  /* hero: single column, full-bleed photo background — the same
+     approved hero photo, now behind the headline/copy/CTA as one
+     editorial composition instead of a stacked image block below
+     the text. Desktop (.hero-right/.hero-img as a separate visual)
+     is untouched above 840px. */
   .hero {
     grid-template-columns: 1fr;
-    min-height: auto;
+    min-height: 100vh;
+    background-image:
+      linear-gradient(180deg, rgba(6,14,28,.74) 0%, rgba(6,14,28,.70) 40%, rgba(6,14,28,.90) 100%),
+      url('../images/ink-seal-hero.png');
+    background-size: cover;
+    background-position: 58% center;
+    background-repeat: no-repeat;
+  }
+  @supports (height: 1dvh) {
+    .hero { min-height: 100dvh; }
   }
   .hero-left {
     padding: 44px 28px 40px;
     order: 1;
+    background: transparent;
+    min-height: 100%;
+    justify-content: center;
   }
+  .hero-left::after { display: none; }
   .hero-credential { font-size: .5rem; letter-spacing: .2em; margin-bottom: 16px; flex-wrap: wrap; }
   .hero-credential::before,
   .hero-credential::after { flex: 0 0 16px; }
@@ -2394,21 +2411,34 @@ ul    { list-style: none; }
   .headline-gold { white-space: normal; font-size: 1.18em; line-height: 1.2; margin-top: .04em; overflow-wrap: break-word; text-wrap: balance; }
   .hero-subline  { font-size: .66rem; gap: 8px; margin-top: 16px; }
   .hero-rule     { margin: 20px 0 24px; max-width: 260px; }
+
+  /* headline/copy flip to light-on-photo, with a soft shadow so
+     legibility holds even over the brighter parts of the image */
+  .hero-title {
+    color: var(--ivory);
+    text-shadow: 0 2px 16px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.4);
+  }
+  .hero-title-accent {
+    color: #EAD387;
+    text-shadow: 0 2px 16px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.4);
+  }
   .hero-sub {
     max-width: 100%;
     font-size: .86rem;
     margin-top: 20px;
     margin-bottom: 20px;
+    color: rgba(250,248,245,.88);
+    text-shadow: 0 1px 10px rgba(0,0,0,.45);
   }
   .hero-trust-list { gap: 8px 22px; margin-bottom: 32px; }
-  .hero-trust-list li { font-size: .64rem; }
+  .hero-trust-list li { font-size: .64rem; color: rgba(250,248,245,.82); }
   .hero-trust {
     flex-direction: column;
     gap: 12px;
     margin-bottom: 32px;
   }
   .ht-item    { flex: none; width: 100%; max-width: 380px; }
-  .ht-item > span { font-size: .76rem; }
+  .ht-item > span { font-size: .76rem; color: rgba(250,248,245,.82); }
   .hero-btns  { align-self: stretch; flex-direction: column; gap: 10px; }
   .btn-hero, .btn-hero-2 { padding: 16px 28px; }
   .hero-locale { text-align: center; }
@@ -2416,30 +2446,11 @@ ul    { list-style: none; }
   /* hero trust icons */
   .hero-trust-icons { margin-top: 24px; gap: 14px; }
   .hti-icon { width: 32px; height: 32px; border-radius: 6px; }
-  .hti-text { font-size: .84rem; }
+  .hti-text { font-size: .84rem; color: rgba(250,248,245,.82); }
 
-  /* hero image: polished rounded card below text */
-  .hero-right {
-    order: 2;
-    position: static;
-    overflow: visible;
-    background: transparent;
-    min-height: auto;
-    padding: 0 20px 56px;
-  }
-  .hero-right::before,
-  .hero-right::after { display: none; }
-  .hero-img {
-    position: static;
-    width: 100%;
-    height: 65vw;
-    min-height: 220px;
-    max-height: 420px;
-    object-fit: cover;
-    object-position: center 25%;
-    border-radius: 14px;
-    box-shadow: 0 14px 52px rgba(10,25,47,.14);
-  }
+  /* the old stacked photo block is now the hero's own background —
+     never rendered twice. */
+  .hero-right { display: none; }
 
   /* services */
   .services   { padding-top: 60px; padding-bottom: 68px; border-top: none; }
