@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=30" />
+  <link rel="stylesheet" href="css/styles.css?v=31" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -343,14 +343,41 @@
   <!-- ═══ HERO ═════════════════════════════════════════════ -->
   <section class="hero" id="home">
     <div class="hero-left hero-animate">
+
+      <!-- Approved quill/seal mark — extremely subtle, embossed into
+           the panel rather than pasted over the photo. No "IS". -->
+      <svg class="hero-seal" viewBox="0 0 800 800" aria-hidden="true" focusable="false">
+        <circle cx="400" cy="400" r="360" stroke="var(--gold)" stroke-width="1"/>
+        <circle cx="400" cy="400" r="280" stroke="var(--gold)" stroke-width="1"/>
+        <g transform="rotate(-24 400 400)">
+          <path d="M400,150 C345,205 328,278 352,345 C320,415 336,505 400,600
+                   C464,505 480,415 448,345 C472,278 455,205 400,150 Z"
+                fill="none" stroke="var(--gold)" stroke-width="2"/>
+          <path d="M400,168 Q393,385 400,585" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+          <g stroke="var(--gold)" stroke-width="1" stroke-linecap="round">
+            <path d="M400,210 L358,230 M400,210 L442,230"/>
+            <path d="M400,255 L350,278 M400,255 L450,278"/>
+            <path d="M400,300 L345,325 M400,300 L455,325"/>
+            <path d="M400,345 L344,370 M400,345 L456,370"/>
+            <path d="M400,390 L347,413 M400,390 L453,413"/>
+            <path d="M400,435 L354,455 M400,435 L446,455"/>
+            <path d="M400,478 L364,495 M400,478 L436,495"/>
+            <path d="M400,518 L376,530 M400,518 L424,530"/>
+          </g>
+          <path d="M400,600 L390,665 L400,700 L410,665 Z" fill="var(--gold)" stroke="none"/>
+        </g>
+      </svg>
+
+      <p class="hero-eyebrow">Apostille &middot; Notary &middot; Document Services</p>
+
       <h1 class="hero-title">
         Documents Handled
-        <span class="hero-title-accent">With Precision</span>
+        <span class="hero-title-accent">With Precision.</span>
       </h1>
 
       <p class="hero-sub">Apostille, online notarization, FD-258 fingerprinting, and certified translations handled securely by experienced professionals nationwide.</p>
 
-      <a href="/services/apostille/" class="btn-hero hero-primary-cta">Start My Apostille</a>
+      <a href="/services/apostille/" class="btn-premium hero-primary-cta">Start My Apostille</a>
     </div>
 
     <div class="hero-right">

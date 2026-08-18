@@ -391,6 +391,21 @@ ul    { list-style: none; }
   padding: 100px 72px 100px clamp(40px, 5.2vw, 96px);
   background: #FAF8F5;
   position: relative;
+  overflow: hidden;
+}
+
+/* Approved quill seal — large, faint, cropped by the panel edges so
+   it reads as embossed into the stock, never pasted on top. */
+.hero-seal {
+  position: absolute;
+  top: 50%; left: -6%;
+  width: clamp(480px, 56vw, 720px);
+  height: clamp(480px, 56vw, 720px);
+  transform: translateY(-50%);
+  opacity: .055;
+  fill: none;
+  pointer-events: none;
+  z-index: 0;
 }
 .hero-left::after {
   content: '';
@@ -401,7 +416,7 @@ ul    { list-style: none; }
   pointer-events: none;
   z-index: 0;
 }
-.hero-left > * { position: relative; z-index: 1; }
+.hero-left > *:not(.hero-seal) { position: relative; z-index: 1; }
 
 /* authority credential strip — above eyebrow */
 .hero-credential {
@@ -436,37 +451,42 @@ ul    { list-style: none; }
 }
 
 /* eyebrow above headline */
+/* restrained kicker line above the headline — small, tracked, a
+   single quiet gold rule beneath it. Never competes with the H1. */
 .hero-eyebrow {
   font-family: 'Manrope', var(--sans);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   color: #b38a2e;
-  margin: 0 0 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(180,138,46,.28);
+  margin: 0 0 22px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(180,138,46,.32);
   display: inline-block;
   align-self: flex-start;
 }
 
-/* hero headline — Playfair Display, exact specs from design system */
+/* hero headline — editorial two-weight pairing: a confident display
+   serif line, then a contrasting italic serif (same family, NOT a
+   script/cursive face) in a restrained champagne gold. */
 .hero-title {
   margin: 0;
   color: #071b46;
   font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(40px, 10vw, 54px);
+  font-size: clamp(40px, 4.6vw, 60px);
   font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.025em;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
 }
 .hero-title-accent {
   display: block;
-  margin-top: 6px;
-  color: #b38a2e;
+  margin-top: 8px;
+  color: #C9A662;
   font-style: italic;
   font-weight: 500;
-  font-size: 0.92em;
+  font-size: 1.06em;
+  letter-spacing: -0.01em;
 }
 
 /* headline container — sets the scale for both lines */
@@ -587,13 +607,14 @@ ul    { list-style: none; }
 }
 
 .hero-sub {
-  font-size: .82rem;
+  font-size: .84rem;
   font-weight: 400;
-  line-height: 1.72;
+  line-height: 1.8;
+  letter-spacing: .005em;
   color: var(--txt-b);
-  max-width: 540px;
-  margin-top: 28px;
-  margin-bottom: 36px;
+  max-width: 440px;
+  margin-top: 30px;
+  margin-bottom: 38px;
 }
 
 /* micro trust signals above the CTAs */
@@ -685,24 +706,10 @@ ul    { list-style: none; }
   box-shadow: 0 14px 48px rgba(10,25,47,.28), 0 0 28px rgba(212,175,55,.18);
   transform: translateY(-3px);
 }
-/* ── hero primary CTA — navy with gold border, matches reference ── */
-.hero-primary-cta {
-  background: #0F2148;
-  border: 1px solid var(--gold);
-  color: var(--ivory);
-  font-weight: 700;
-  border-radius: 16px;
-  padding: 20px 52px;
-  box-shadow: 0 4px 28px rgba(10,25,47,.22), inset 0 0 0 1px rgba(212,175,55,.14);
-  align-self: flex-start;
-}
-.hero-primary-cta:hover {
-  background: #162d5e;
-  border-color: var(--gold-2);
-  color: var(--ivory);
-  box-shadow: 0 14px 48px rgba(10,25,47,.32), 0 0 28px rgba(212,175,55,.18);
-  transform: translateY(-2px);
-}
+/* ── hero primary CTA — the shared .btn-premium pill (navy/gold,
+   established on About + Journey) supplies the visual treatment;
+   this class only positions it within the hero's flex column. ── */
+.hero-primary-cta { align-self: flex-start; }
 
 /* trust icon list beneath primary CTA — three items stacked */
 .hero-trust-icons {
@@ -2414,6 +2421,16 @@ ul    { list-style: none; }
 
   /* headline/copy flip to light-on-photo, with a soft shadow so
      legibility holds even over the brighter parts of the image */
+  .hero-eyebrow {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: .15em;
+    border-bottom-color: rgba(212,175,55,.4);
+    text-shadow: 0 1px 8px rgba(0,0,0,.4);
+  }
+  /* seal reads as texture in the dark scrim rather than a graphic
+     pasted on the photo — kept very faint and pushed toward the edge */
+  .hero-seal { opacity: .07; left: -18%; }
   .hero-title {
     color: var(--ivory);
     text-shadow: 0 2px 16px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.4);
