@@ -118,7 +118,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=27" />
+  <link rel="stylesheet" href="css/styles.css?v=28" />
   <style>
 /* ── Intro overlay: solid navy, covers page completely until signing ends ── */
 #is-intro{
@@ -927,10 +927,12 @@
        scrubbing, no Previous/Next. A single progress value p (0→1)
        drives render(p) — the "one function draws the whole scene"
        engine — advanced by a plain requestAnimationFrame timer over
-       ~8.8s once the section first enters the viewport (Intersection
-       Observer). Plays once per page session; revisiting the section
-       afterward simply shows the completed frame. The 01-05 rail is a
-       passive indicator, not a control.
+       ~8.8s. An IntersectionObserver starts the sequence from 01 every
+       time the section enters the viewport and resets it back to 01
+       the moment the section leaves, so returning to it later replays
+       the whole thing rather than sitting finished forever — it does
+       not loop while the visitor stays inside the section. The 01-05
+       rail is a passive indicator, not a control.
        Namespace: jrn-*   Do NOT modify sections outside this block.
   ═════════════════════════════════════════════════════════════ -->
   <section class="jrn" id="your-journey" aria-labelledby="jrn-title">
@@ -1579,12 +1581,16 @@
     if (ctaWrap) ctaWrap.classList.toggle('is-visible', p >= 0.985);
   }
 
-  /* ══════════ DRIVER — plays ONCE, automatically, the moment the
-     section first enters the viewport. No scroll-scrubbing, no click
-     handlers. p is advanced by elapsed time over TOTAL_MS; render(p)
-     itself is unchanged — only how p arrives has changed. ══════════ */
+  /* ══════════ DRIVER — plays automatically every time the section
+     enters the viewport, and resets back to the start the moment it
+     leaves — so returning to it later replays the whole sequence
+     from Received rather than sitting finished forever. No scroll-
+     scrubbing, no click handlers. p is advanced by elapsed time over
+     TOTAL_MS; render(p) itself is unchanged — only how p arrives has
+     changed. A single IntersectionObserver threshold only fires on
+     enter/exit crossings, so nothing re-triggers while the visitor
+     is simply sitting inside the section (no looping in place). ═══ */
   var reduced   = mq.matches;
-  var hasPlayed = false;
   var rafId     = null;
   var startTime = null;
   var io        = null;
@@ -1610,16 +1616,22 @@
     if (t < 1) {
       rafId = requestAnimationFrame(frame);
     } else {
-      rafId = null;
-      hasPlayed = true;
-      if (io) { io.disconnect(); io = null; }
+      rafId = null;              /* finished — holds on the Returned frame
+                                     until the section is left and re-entered */
     }
   }
 
   function startPlayback() {
-    if (reduced || hasPlayed || rafId !== null) return;
+    if (reduced || rafId !== null) return;
     startTime = null;
+    setP(0);                     /* reset the rail/scene to 01 before playing */
     rafId = requestAnimationFrame(frame);
+  }
+
+  function resetToStart() {
+    stopPlayback();
+    setP(0);                     /* invisible while off-screen; primes the
+                                     next entry to play from Received again */
   }
 
   function watchForEntry() {
@@ -1627,6 +1639,7 @@
     io = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
         if (entries[i].isIntersecting) startPlayback();
+        else resetToStart();
       }
     }, { threshold: 0.35 });
     io.observe(section);
@@ -1637,9 +1650,8 @@
     if (reduced) {
       stopPlayback();
       if (io) { io.disconnect(); io = null; }
-      hasPlayed = true;
       setP(1);                    /* fully complete, everything legible */
-    } else if (!hasPlayed) {
+    } else {
       setP(0);                    /* clean "not yet started" resting frame */
       watchForEntry();
     }
