@@ -118,13 +118,27 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="images/ink-seal-hero.png" />
-  <link rel="stylesheet" href="css/styles.css?v=33" />
+  <link rel="stylesheet" href="css/styles.css?v=34" />
   <style>
-/* ── Intro overlay: solid navy, covers page completely until signing ends ── */
+/* ── Intro overlay: solid navy, covers page completely until signing ends.
+   The final reveal is a horizontal side-wipe (the panel itself slides
+   off-screen via transform), not a fade — see the reveal script below. ── */
 #is-intro{
   position:fixed;inset:0;z-index:9000;
   background:#0A192F;
   pointer-events:all;        /* block all page interaction while visible */
+  will-change:transform;
+}
+/* Thin gold seam riding the panel's leading (left) edge as it sweeps
+   clear — this is what makes the reveal read as an "unsealing," not a
+   plain wipe. Part of the panel itself, so it travels with it. */
+#is-intro::after{
+  content:'';
+  position:absolute;
+  top:0; left:0; bottom:0;
+  width:2px;
+  background:#D4AF37;
+  box-shadow:0 0 18px 2px rgba(212,175,55,.55);
 }
 .is-intro-skip #is-intro,
 .is-intro-skip #is-stroke-svg,
@@ -157,7 +171,9 @@
   <!-- ═══ INTRO ANIMATION ══════════════════════════════════ -->
   <!--
     Sequence: quill appears → pen signs (navy solid) → quill lifts →
-              signature holds → signature fades → overlay fades → homepage
+              signature holds → signature fades → panel side-wipes away
+              (horizontal reveal, gold seam on its leading edge) → homepage
+              is already in place underneath, ready before the wipe starts
   -->
   <div id="is-intro" aria-hidden="true" role="presentation"></div>
 
@@ -229,9 +245,11 @@
      TQ  — quill lifts         (navy still covers page)
      TP  — signature holds     (deliberate pause — everything on navy)
      TSF — signature fades out (pen + stroke gone before homepage opens)
-     TOF — overlay fades       (homepage reveals, nothing on top)
-     Total ≈ 2 570 ms                                                      */
-  var TA=150, TS=1480, TQ=110, TP=350, TSF=180, TOF=300;
+     TOF — side-reveal wipe    (the panel itself slides off horizontally,
+                                 gold seam riding its leading edge — the
+                                 hero is already in place underneath)
+     Total ≈ 3 220 ms                                                      */
+  var TA=150, TS=1480, TQ=110, TP=350, TSF=180, TOF=950;
   var rmd={q:0,o:0,s:0}, t0=null;
 
   function rm(el,k){
@@ -291,9 +309,14 @@
     SSVG.style.display='none';
     rm(SSVG,'s');
 
-    /* ── Phase 5: overlay fades (→ +TOF) — homepage reveals cleanly ──── */
+    /* ── Phase 5: side-reveal wipe (→ +TOF) ─────────────────────────────
+       The navy panel itself slides horizontally off-screen — a real
+       side reveal, not a fade — uncovering the hero that's already in
+       place underneath. The thin gold seam (an ::after on the panel)
+       rides its leading edge the whole way across. ── */
     if(dt<TA+TS+TQ+TP+TSF+TOF){
-      OVL.style.opacity = Math.max(0, 1-(dt-TA-TS-TQ-TP-TSF)/TOF).toFixed(3);
+      var wp = Math.min((dt-TA-TS-TQ-TP-TSF)/TOF, 1);
+      OVL.style.transform = 'translate3d(' + (eio(wp)*100).toFixed(2) + '%,0,0)';
       requestAnimationFrame(tick); return;
     }
 
@@ -308,16 +331,6 @@
   <!-- ═══ HEADER ═══════════════════════════════════════════ -->
   <header class="header" id="header">
     <div class="header-inner">
-      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
-        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
-      </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="index.html"       class="nav-link active">Home</a>
-        <a href="about.html"       class="nav-link">About Us</a>
-        <a href="#services"        class="nav-link">Services</a>
-        <a href="faq.html"         class="nav-link">FAQs</a>
-        <a href="#contact"         class="nav-link">Contact</a>
-      </nav>
       <div class="header-end">
         <a href="/services/apostille/" class="btn-nav">Start My Apostille</a>
         <button class="burger" id="burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer">
@@ -327,6 +340,16 @@
           <span class="burger-text">MENU</span>
         </button>
       </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="index.html"       class="nav-link active">Home</a>
+        <a href="about.html"       class="nav-link">About Us</a>
+        <a href="#services"        class="nav-link">Services</a>
+        <a href="faq.html"         class="nav-link">FAQs</a>
+        <a href="#contact"         class="nav-link">Contact</a>
+      </nav>
+      <a href="index.html" class="logo-wrap" aria-label="Ink &amp; Seal Notary Pros — Home">
+        <img src="images/ink-seal-feather-logo-web.png" alt="Ink &amp; Seal Notary Pros" class="logo" />
+      </a>
     </div>
     <div class="drawer" id="drawer" role="navigation" aria-label="Site navigation" aria-hidden="true">
       <div class="drawer-inner">
@@ -396,14 +419,6 @@
         <p class="hero-sub">Apostille and professional document services, handled securely from start to finish.</p>
 
         <a href="/services/apostille/" class="btn-premium hero-primary-cta">Start My Apostille</a>
-      </div>
-
-      <div class="hero-bridge">
-        <span class="hero-bridge-rule" aria-hidden="true"></span>
-        <a href="#document-routing" class="hero-bridge-link">
-          Not Sure What Your Document Needs?
-          <svg class="hero-bridge-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
       </div>
     </div>
 
