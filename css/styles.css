@@ -440,16 +440,17 @@ ul    { list-style: none; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 52px 64px;
+  padding: 0 52px 36px;
   box-sizing: border-box;
 }
 
 .hero-content {
   max-width: 560px;
+  padding-top: 64px;
 }
 
 /* restrained kicker: small tracked eyebrow, a quiet rule-gem-rule
@@ -2110,13 +2111,12 @@ ul    { list-style: none; }
   }
   .drawer-inner { padding: 0 20px; }
 
-  /* hero: mobile composition — content-driven height (no forced
-     viewport stretch, no dead space under the CTA), a vertical wash
+  /* hero: mobile composition — same fixed, generous min-height as
+     desktop (calc(--hh + 620px), inherited from the base rule) so
+     there's always intentional breathing room below the CTA before
+     the curved arch, regardless of content length. A vertical wash
      instead of the desktop's horizontal gradient since the text
      column now spans the full width. */
-  .hero {
-    min-height: auto;
-  }
   .hero-bg {
     background-image:
       linear-gradient(175deg, rgba(5,13,26,.74) 0%, rgba(5,13,26,.68) 44%, rgba(5,13,26,.88) 100%),
@@ -2124,11 +2124,12 @@ ul    { list-style: none; }
     background-position: 80% 24%;
   }
   .hero-inner {
-    justify-content: center;
-    padding: 0 24px 48px;
+    justify-content: flex-start;
+    padding: 0 24px 34px;
   }
   .hero-content {
     max-width: 100%;
+    padding-top: 96px;
   }
   .hero-kicker { margin-bottom: 22px; }
   .hero-eyebrow { font-size: 10px; letter-spacing: .2em; }
@@ -2218,6 +2219,7 @@ ul    { list-style: none; }
   .logo         { width: 210px; height: auto; max-height: 66px; max-width: 210px; }
   .drawer-inner { padding: 0 12px; }
   .container    { padding: 0 14px; }
+  .hero-content { padding-top: 80px; }
   .svc-card     { padding: 34px 16px 28px; }
   .footer-logo  { height: 130px; max-width: 320px; }
 }
