@@ -108,7 +108,8 @@
       /* About page */
       '.abt-hero-inner', '.abt-standard-lead', '.abt-principle',
       '.abt-why-text', '.abt-why-list', '.abt-services-lead',
-      '.abt-service', '.abt-cta-inner'
+      '.abt-service', '.abt-founder-portrait', '.abt-founder-text',
+      '.abt-cta-inner'
     ];
     var revealEls = Array.from(document.querySelectorAll(revealSels.join(',')));
     if (revealEls.length) {
