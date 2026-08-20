@@ -2111,12 +2111,18 @@ ul    { list-style: none; }
   }
   .drawer-inner { padding: 0 20px; }
 
-  /* hero: mobile composition — same fixed, generous min-height as
-     desktop (calc(--hh + 620px), inherited from the base rule) so
-     there's always intentional breathing room below the CTA before
-     the curved arch, regardless of content length. A vertical wash
+  /* hero: mobile composition — content-driven height, not the
+     desktop's fixed calc(--hh + 620px): on a single-column mobile
+     layout that constant left hundreds of px of empty background
+     below the CTA. .hero-inner's own bottom padding is the only
+     source of breathing room before the curved arch now — small
+     but deliberate, not a forced tall box. Nothing above the CTA
+     (padding-top, eyebrow, headline, sub) changed. A vertical wash
      instead of the desktop's horizontal gradient since the text
      column now spans the full width. */
+  .hero {
+    min-height: auto;
+  }
   .hero-bg {
     background-image:
       linear-gradient(175deg, rgba(5,13,26,.74) 0%, rgba(5,13,26,.68) 44%, rgba(5,13,26,.88) 100%),
@@ -2125,7 +2131,7 @@ ul    { list-style: none; }
   }
   .hero-inner {
     justify-content: flex-start;
-    padding: 0 24px 34px;
+    padding: 0 24px 56px;
   }
   .hero-content {
     max-width: 100%;
