@@ -8581,6 +8581,12 @@ a.btn-gold:hover {
   text-align: center;
 }
 .ctc-direct-inner { max-width: 480px; margin: 0 auto; }
+.ctc-direct-lead {
+  font-size: .88rem; font-weight: 300; line-height: 1.75;
+  color: var(--txt-b);
+  max-width: 26rem;
+  margin: 0 auto 22px;
+}
 .ctc-direct-phone {
   display: inline-block;
   font-family: var(--serif);
@@ -8588,10 +8594,39 @@ a.btn-gold:hover {
   font-weight: 700;
   color: var(--navy);
   letter-spacing: -.01em;
-  margin: 4px 0 24px;
+  margin: 0 0 22px;
   transition: color .2s var(--ease);
 }
 .ctc-direct-phone:hover { color: var(--gold-3); }
+
+/* Explicit Call / Text quick actions — a bare tel: link only covers
+   "Call"; "Text" needs its own sms: link to actually work. */
+.ctc-direct-actions {
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.ctc-direct-action {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px;
+  border: 1px solid rgba(212,175,55,.4);
+  border-radius: 999px;
+  background: var(--ivory);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
+}
+.ctc-direct-action svg { color: var(--gold-3); flex-shrink: 0; transition: color .2s var(--ease); }
+.ctc-direct-action:hover {
+  background: var(--navy);
+  border-color: var(--gold-2);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+.ctc-direct-action:hover svg { color: var(--gold); }
+
 .ctc-direct-social { justify-content: center; margin-bottom: 0; }
 
 /* ── Responsive ── */
