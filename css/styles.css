@@ -4762,8 +4762,8 @@ ul    { list-style: none; }
   color: #fff;
 }
 
-/* ── Spacing between cards on step 6 ── */
-#step6 .on-card + .on-card {
+/* ── Spacing between consecutive cards within any multi-step form step ── */
+.ms-step .on-card + .on-card {
   margin-top: 20px;
 }
 
@@ -8861,5 +8861,102 @@ a.btn-gold:hover {
   .trm-toc { padding: 24px 22px; }
   .trm-toc-grid { grid-template-columns: 1fr; }
   .trm-h { margin-top: 40px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   APOSTILLE INTAKE FORM — Section 1 (5-step simplification)
+   New pieces only: a quantity stepper (replaces the old 1–5 count
+   tiles), wider tri-card grids for 4/5-option conditional questions
+   (reuses .ar-tri-card itself, unchanged), the review-screen summary
+   rows, and a couple of small helpers. Everything else on this page
+   reuses existing .ar-*/.on-* classes unchanged. ═══════════════ */
+
+/* 4- and 5-option variants of the existing Yes/No/Not-Sure grid */
+.ar-tri-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.ar-tri-grid--5 { grid-template-columns: repeat(5, 1fr); }
+
+/* Quantity stepper — replaces the old 1–5 radio tiles with a real
+   "− N +" control; no upper limit is imposed (none was specified). */
+.ar-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.ar-qty-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  background: var(--ivory);
+  border: none;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background .18s var(--ease), color .18s var(--ease);
+}
+.ar-qty-btn:hover { background: var(--navy); color: var(--gold-2); }
+.ar-qty-btn:active { background: var(--navy-2); }
+.ar-qty-value {
+  min-width: 56px;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--txt-b);
+  border-left: 1.5px solid var(--border);
+  border-right: 1.5px solid var(--border);
+  padding: 0 8px;
+  line-height: 52px;
+}
+
+/* Upload step: "I'll provide documents later" is checked — dims the
+   dropzone as a visual cue only; upload is simply no longer required. */
+.ar-dropzone--optional { opacity: .55; }
+
+/* Inline links inside the single acknowledgment's checkbox text */
+.ar-inline-link {
+  color: var(--gold-3);
+  text-decoration: underline;
+  text-decoration-color: rgba(212,175,55,.4);
+  text-underline-offset: 2px;
+  transition: color .2s var(--ease);
+}
+.ar-inline-link:hover { color: var(--gold); }
+
+/* ── Review screen (Step 5) ── */
+.ar-review-group {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ar-review-group:first-child { padding-top: 0; }
+.ar-review-group--last { border-bottom: none; padding-bottom: 0; }
+.ar-review-group-title {
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 12px;
+}
+.ar-review-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 6px 0;
+  font-size: .86rem;
+}
+.ar-review-label { color: var(--txt-m); font-weight: 400; flex-shrink: 0; }
+.ar-review-value { color: var(--txt-b); font-weight: 600; text-align: right; }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .ar-tri-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .ar-tri-grid--5 { grid-template-columns: repeat(2, 1fr); }
+  .ar-qty-btn { width: 46px; height: 46px; }
+  .ar-qty-value { min-width: 46px; line-height: 46px; font-size: 1.15rem; }
+  .ar-review-row { flex-wrap: wrap; gap: 2px 20px; }
+  .ar-review-value { text-align: left; }
 }
 

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/styles.css?v=1" />
 </head>
 <body>
 
@@ -150,13 +150,13 @@
           Back to Services
         </a>
         <div class="aph-form-step-wrap">
-          <span class="aph-form-step-label" id="fhStepLabel">Step 1 of 8</span>
-          <span class="aph-form-step-name"  id="fhStepName">Select Your Service</span>
+          <span class="aph-form-step-label" id="fhStepLabel">Step 1 of 5</span>
+          <span class="aph-form-step-name"  id="fhStepName">Your Document</span>
         </div>
         <div style="min-width:100px"></div>
       </div>
       <div class="aph-form-progress-track">
-        <div class="aph-form-progress-fill" id="fhBar" style="width:12.5%"></div>
+        <div class="aph-form-progress-fill" id="fhBar" style="width:20%"></div>
       </div>
     </div>
 
@@ -220,7 +220,11 @@
         </div>
       </div>
 
-      <!-- Multi-step form -->
+      <!-- Multi-step form — simplified to 5 steps (Section 1). Field/
+           backend names are preserved wherever a prior equivalent
+           existed, so /api/submit-intake, the Google Apps Script, and
+           Google Sheets columns keep working unchanged. See the
+           field-mapping notes in the accompanying report. -->
       <form class="on-form" id="arForm"
             action="https://script.google.com/macros/s/AKfycbwVEacv0z5nAtA1Fs9LOoNJPVENyrM_py0Qnc9ZtoIgoJ5iwwJYI9mKB2FQOQFrw7Eq/exec"
             method="POST"
@@ -230,17 +234,259 @@
         <input type="hidden" name="orderNumber" value="" />
         <!-- Dropbox folder link: populated by /api/upload-to-dropbox and saved to Google Sheets -->
         <input type="hidden" id="arDropboxLink" name="dropboxFolderLink" value="" />
+        <!-- Signature support is kept in the backend/API layer, but the
+             draw/type-to-sign UI has been removed from this form per
+             Section 1. This field is always submitted empty. -->
+        <input type="hidden" id="arSigData" name="signature" value="" />
 
-        <!-- ── STEP 1 — PRICING & SERVICE OPTIONS ─────────── -->
+        <!-- ── STEP 1 — YOUR DOCUMENT ─────────────────────── -->
         <div class="ms-step" id="step1" data-step="1">
 
           <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 1 of 8</span>
-            <h2 class="ar-step-hdr-title">Select Your Service</h2>
-            <p class="ar-step-hdr-desc">Choose the service option that fits your timeline. Pricing shown is an estimate — final pricing is confirmed after your documents are reviewed.</p>
+            <span class="ar-step-hdr-eyebrow">Step 1 of 5</span>
+            <h2 class="ar-step-hdr-title">Tell Us About Your Document</h2>
+            <p class="ar-step-hdr-desc">These details help us determine the correct authentication process for your request.</p>
           </div>
 
-          <!-- Premium Service Selection Cards -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">1</span>
+              <h2 class="on-card-title">Your Document</h2>
+            </div>
+
+            <!-- Destination -->
+            <div class="on-field-row on-field-row--1">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="destinationCountry">Where will this document be used?</label>
+                <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
+                       placeholder="e.g. Mexico, Germany, Italy" required />
+              </div>
+            </div>
+
+            <!-- Issuing jurisdiction -->
+            <div class="ar-choice-group" style="margin-top:28px">
+              <p class="on-label on-label--req ar-choice-q">Where was your document issued?</p>
+              <div class="ar-tri-grid ar-tri-grid--4">
+                <label class="ar-tri-card">
+                  <input type="radio" name="issuingJurisdiction" value="Illinois" class="ar-tri-input" required />
+                  <span class="ar-tri-text">Illinois</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="issuingJurisdiction" value="Indiana" class="ar-tri-input" />
+                  <span class="ar-tri-text">Indiana</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="issuingJurisdiction" value="Another U.S. State" class="ar-tri-input" />
+                  <span class="ar-tri-text">Another U.S. State</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="issuingJurisdiction" value="U.S. Federal Government" class="ar-tri-input" />
+                  <span class="ar-tri-text">U.S. Federal Government</span>
+                </label>
+              </div>
+
+              <!-- Revealed only when "Another U.S. State" is selected. The
+                   full state list (and the "issuingState" field name) is
+                   unchanged from the prior form for backend compatibility. -->
+              <div id="arStateSelectWrap" style="display:none; margin-top:16px">
+                <div class="on-field">
+                  <label class="on-label on-label--req" for="issuingState">Select the issuing state</label>
+                  <select id="issuingState" name="issuingState" class="on-select">
+                    <option value="" disabled selected>Select issuing state</option>
+                    <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                    <option>Arkansas</option><option>California</option><option>Colorado</option>
+                    <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                    <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                    <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                    <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                    <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                    <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                    <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                    <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                    <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                    <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                    <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                    <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                    <option>Texas</option><option>Utah</option><option>Vermont</option>
+                    <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                    <option>Wisconsin</option><option>Wyoming</option>
+                    <option>Federal / U.S. Government</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Revealed only when "U.S. Federal Government" is selected -->
+              <div id="arFederalNotice" style="display:none; margin-top:16px">
+                <div class="on-upload-notice">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+                  <p>Federal documents follow a different authentication process. We&rsquo;ll review your request and confirm whether we can assist.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Document type -->
+            <div class="on-field-row on-field-row--1" style="margin-top:28px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="documentType">What type of document do you need authenticated?</label>
+                <select id="documentType" name="documentType" class="on-select" required>
+                  <option value="" disabled selected>Select document type</option>
+                  <option>Birth Certificate</option>
+                  <option>Marriage Certificate</option>
+                  <option>Death Certificate</option>
+                  <option>Divorce Decree</option>
+                  <option>Power of Attorney</option>
+                  <option>Diploma / Transcript</option>
+                  <option>Corporate / Business Document</option>
+                  <option>Court Document</option>
+                  <option>Notarized Personal Document</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Revealed only when "Other" is selected -->
+            <div id="arDocOtherWrap" style="display:none; margin-top:16px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="documentTypeOther">Describe your document</label>
+                <input type="text" id="documentTypeOther" name="documentTypeOther" class="on-input" placeholder="Briefly describe your document" />
+              </div>
+            </div>
+
+            <!-- ── Smart conditional questions — only one group shows,
+                 based on the selected document type. ── -->
+
+            <!-- Birth / Marriage / Death / Court: certified copy -->
+            <div class="ar-choice-group" id="arCertifiedWrap" style="display:none; margin-top:28px">
+              <p class="on-label ar-choice-q" id="arCertifiedQ">Do you have a certified copy of this record?</p>
+              <div class="ar-tri-grid">
+                <label class="ar-tri-card">
+                  <input type="radio" name="hasCertifiedOriginal" value="Yes" class="ar-tri-input" />
+                  <span class="ar-tri-text">Yes</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="hasCertifiedOriginal" value="No" class="ar-tri-input" />
+                  <span class="ar-tri-text">No</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="hasCertifiedOriginal" value="Not Sure" class="ar-tri-input" />
+                  <span class="ar-tri-text">Not Sure</span>
+                </label>
+              </div>
+              <p class="ar-field-helper">If you&rsquo;re unsure, that&rsquo;s okay. We can review the document before processing.</p>
+            </div>
+
+            <!-- Power of Attorney / Notarized Personal Document: already notarized -->
+            <div class="ar-choice-group" id="arNotarizedWrap" style="display:none; margin-top:28px">
+              <p class="on-label ar-choice-q">Is this document already notarized?</p>
+              <div class="ar-tri-grid">
+                <label class="ar-tri-card">
+                  <input type="radio" name="isAlreadyNotarized" value="Yes" class="ar-tri-input" />
+                  <span class="ar-tri-text">Yes</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="isAlreadyNotarized" value="No" class="ar-tri-input" />
+                  <span class="ar-tri-text">No</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="isAlreadyNotarized" value="Not Sure" class="ar-tri-input" />
+                  <span class="ar-tri-text">Not Sure</span>
+                </label>
+              </div>
+              <div id="arNotarizedNotice" style="display:none; margin-top:12px">
+                <div class="on-upload-notice">
+                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+                  <p>Notarization may be required before apostille processing. We&rsquo;ll confirm this during review.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Corporate / Business Document -->
+            <div class="ar-choice-group" id="arCorporateWrap" style="display:none; margin-top:28px">
+              <p class="on-label ar-choice-q">Is this document already signed and/or notarized if required?</p>
+              <div class="ar-tri-grid ar-tri-grid--4">
+                <label class="ar-tri-card">
+                  <input type="radio" name="corporateStatus" value="Yes" class="ar-tri-input" />
+                  <span class="ar-tri-text">Yes</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="corporateStatus" value="No" class="ar-tri-input" />
+                  <span class="ar-tri-text">No</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="corporateStatus" value="Not Sure" class="ar-tri-input" />
+                  <span class="ar-tri-text">Not Sure</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="corporateStatus" value="Not Applicable" class="ar-tri-input" />
+                  <span class="ar-tri-text">Not Applicable</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Diploma / Transcript -->
+            <div class="ar-choice-group" id="arAcademicWrap" style="display:none; margin-top:28px">
+              <p class="on-label ar-choice-q">Which best describes your academic document?</p>
+              <div class="ar-tri-grid ar-tri-grid--5">
+                <label class="ar-tri-card">
+                  <input type="radio" name="academicDocumentType" value="Original Diploma" class="ar-tri-input" />
+                  <span class="ar-tri-text">Original Diploma</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="academicDocumentType" value="Copy of Diploma" class="ar-tri-input" />
+                  <span class="ar-tri-text">Copy of Diploma</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="academicDocumentType" value="Official Transcript" class="ar-tri-input" />
+                  <span class="ar-tri-text">Official Transcript</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="academicDocumentType" value="Other Academic Record" class="ar-tri-input" />
+                  <span class="ar-tri-text">Other Academic Record</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="academicDocumentType" value="Not Sure" class="ar-tri-input" />
+                  <span class="ar-tri-text">Not Sure</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="ar-choice-group" style="margin-top:28px">
+              <p class="on-label ar-choice-q">How many documents need apostille service?</p>
+              <div class="ar-qty-stepper">
+                <button type="button" class="ar-qty-btn" id="arQtyMinus" aria-label="Decrease document count">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="14" height="14"><line x1="3" y1="8" x2="13" y2="8"/></svg>
+                </button>
+                <span class="ar-qty-value" id="arQtyValue" aria-live="polite">1</span>
+                <button type="button" class="ar-qty-btn" id="arQtyPlus" aria-label="Increase document count">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="14" height="14"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+                </button>
+              </div>
+              <input type="hidden" id="documentCount" name="documentCount" value="1" />
+            </div>
+
+          </div>
+
+          <div class="ms-nav">
+            <div></div>
+            <button type="button" class="ms-btn-continue" data-next="2">
+              Continue
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2 — CHOOSE YOUR SERVICE ────────────────── -->
+        <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 2 of 5</span>
+            <h2 class="ar-step-hdr-title">Choose Your Service</h2>
+            <p class="ar-step-hdr-desc">See your estimated investment before providing your contact information. No payment is due today.</p>
+          </div>
+
+          <!-- Review Speed -->
+          <p class="ar-option-group-label on-label" style="margin-bottom:14px">Review Speed</p>
           <div class="ar-service-grid">
 
             <label class="ar-service-card">
@@ -338,7 +584,7 @@
             </div>
 
             <div class="ar-pricing-group">
-              <p class="ar-pricing-group-label">Return Shipping</p>
+              <p class="ar-pricing-group-label">Return Delivery</p>
               <div class="ar-pricing-row">
                 <span class="ar-pricing-item">USPS Priority Return Shipping</span>
                 <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
@@ -397,10 +643,10 @@
             </div>
           </details>
 
-          <!-- Processing & Shipping Options card -->
+          <!-- Processing & Return Delivery card -->
           <div class="on-card">
             <div class="on-card-head">
-              <h2 class="on-card-title">Processing &amp; Shipping Options</h2>
+              <h2 class="on-card-title">Processing &amp; Return Delivery</h2>
             </div>
 
             <!-- Processing Speed -->
@@ -426,15 +672,15 @@
               </div>
             </div>
 
-            <!-- Return Shipping -->
+            <!-- Return Delivery -->
             <div class="ar-option-group" style="margin-top:32px">
-              <p class="ar-option-group-label on-label">Return Shipping Method</p>
+              <p class="ar-option-group-label on-label">Return Delivery</p>
               <div class="ar-option-col">
                 <label class="ar-option-card">
                   <input type="radio" name="returnShipping" value="usps-priority"
                          data-shipping-fee="0" class="ar-option-input" checked />
                   <span class="ar-option-check"></span>
-                  <span class="ar-option-name">USPS Priority Return Shipping</span>
+                  <span class="ar-option-name">USPS Priority</span>
                   <span class="ar-option-price">Included</span>
                   <span class="ar-option-desc">Delivery in 1–3 business days</span>
                 </label>
@@ -442,7 +688,7 @@
                   <input type="radio" name="returnShipping" value="overnight"
                          data-shipping-fee="45" class="ar-option-input" />
                   <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Overnight Return Shipping</span>
+                  <span class="ar-option-name">Overnight</span>
                   <span class="ar-option-price">+ $45</span>
                   <span class="ar-option-desc">Next-day delivery for time-sensitive documents</span>
                 </label>
@@ -450,7 +696,7 @@
                   <input type="radio" name="returnShipping" value="international"
                          data-shipping-fee="75" class="ar-option-input" />
                   <span class="ar-option-check"></span>
-                  <span class="ar-option-name">International Return Shipping</span>
+                  <span class="ar-option-name">International</span>
                   <span class="ar-option-price">Starting at $75</span>
                   <span class="ar-option-desc">Door-to-door international courier delivery</span>
                 </label>
@@ -466,363 +712,12 @@
 
           </div>
 
-          <div class="ms-nav">
-            <div></div>
-            <button type="button" class="ms-btn-continue" data-next="2">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 2 — CLIENT INFORMATION ────────────────── -->
-        <div class="ms-step" id="step2" data-step="2" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 2 of 8</span>
-            <h2 class="ar-step-hdr-title">Tell Us About You</h2>
-            <p class="ar-step-hdr-desc">Your contact information is kept strictly confidential and used only to process your apostille review request.</p>
-          </div>
-
+          <!-- YOUR ESTIMATE — structure only; calcEstimate() (unchanged
+               formula) populates this. Section 2 will finalize/verify
+               the calculator. -->
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num">2</span>
-              <h2 class="on-card-title">Client Information</h2>
-            </div>
-
-            <div class="on-field-row on-field-row--1">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="fullName">Full Legal Name</label>
-                <input type="text" id="fullName" name="fullName" class="on-input"
-                       placeholder="Enter your full legal name" autocomplete="name" required />
-              </div>
-            </div>
-
-            <div class="on-field-row" style="margin-top:20px">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="email">Email Address</label>
-                <input type="email" id="email" name="email" class="on-input"
-                       placeholder="your@email.com" autocomplete="email" required />
-              </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="phone">Mobile Phone Number</label>
-                <input type="tel" id="phone" name="phone" class="on-input"
-                       placeholder="(312) 967-7696" autocomplete="tel" required />
-              </div>
-            </div>
-
-            <div class="on-field-row on-field-row--1" style="margin-top:20px">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="state">State of Residence</label>
-                <select id="state" name="state" class="on-select" required>
-                  <option value="" disabled selected>Select your state</option>
-                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
-                  <option>Arkansas</option><option>California</option><option>Colorado</option>
-                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
-                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
-                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
-                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
-                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
-                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
-                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
-                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
-                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
-                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
-                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
-                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
-                  <option>Texas</option><option>Utah</option><option>Vermont</option>
-                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
-                  <option>Wisconsin</option><option>Wyoming</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="1">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="3">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 3 — DOCUMENT INFORMATION ────────────────── -->
-        <div class="ms-step" id="step3" data-step="3" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 3 of 8</span>
-            <h2 class="ar-step-hdr-title">About Your Document</h2>
-            <p class="ar-step-hdr-desc">Help us understand your document so we can confirm apostille eligibility and provide accurate pricing.</p>
-          </div>
-
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">3</span>
-              <h2 class="on-card-title">Document Information</h2>
-            </div>
-
-            <!-- Destination + Issuing State -->
-            <div class="on-field-row" style="margin-bottom:28px">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="destinationCountry">Destination Country</label>
-                <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
-                       placeholder="e.g. Mexico, Germany, Italy" required />
-              </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="issuingState">State or Jurisdiction Where Document Was Issued</label>
-                <select id="issuingState" name="issuingState" class="on-select" required>
-                  <option value="" disabled selected>Select issuing state or jurisdiction</option>
-                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
-                  <option>Arkansas</option><option>California</option><option>Colorado</option>
-                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
-                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
-                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
-                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
-                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
-                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
-                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
-                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
-                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
-                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
-                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
-                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
-                  <option>Texas</option><option>Utah</option><option>Vermont</option>
-                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
-                  <option>Wisconsin</option><option>Wyoming</option>
-                  <option>Federal / U.S. Government</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Document Type -->
-            <div class="on-field-row on-field-row--1" style="margin-bottom:0">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="documentType">Document Type</label>
-                <select id="documentType" name="documentType" class="on-select" required>
-                  <option value="" disabled selected>Select document type</option>
-                  <option>Birth Certificate</option>
-                  <option>Marriage Certificate</option>
-                  <option>Death Certificate</option>
-                  <option>Divorce Decree</option>
-                  <option>Power of Attorney</option>
-                  <option>Affidavit</option>
-                  <option>Passport Copy</option>
-                  <option>Driver License Copy</option>
-                  <option>School Document</option>
-                  <option>Business Document</option>
-                  <option>Other</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Card-style questions -->
-            <div class="ar-doc-questions">
-
-              <!-- Document Count -->
-              <div class="ar-choice-group">
-                <p class="on-label on-label--req ar-choice-q">How many documents are being submitted?</p>
-                <div class="ar-count-grid">
-                  <label class="ar-count-card">
-                    <input type="radio" name="documentCount" value="1" class="ar-count-input" checked required />
-                    <span class="ar-count-num">1</span>
-                  </label>
-                  <label class="ar-count-card">
-                    <input type="radio" name="documentCount" value="2" class="ar-count-input" />
-                    <span class="ar-count-num">2</span>
-                  </label>
-                  <label class="ar-count-card">
-                    <input type="radio" name="documentCount" value="3" class="ar-count-input" />
-                    <span class="ar-count-num">3</span>
-                  </label>
-                  <label class="ar-count-card">
-                    <input type="radio" name="documentCount" value="4" class="ar-count-input" />
-                    <span class="ar-count-num">4</span>
-                  </label>
-                  <label class="ar-count-card">
-                    <input type="radio" name="documentCount" value="5" class="ar-count-input" />
-                    <span class="ar-count-num">5</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Vital Record -->
-              <div class="ar-choice-group">
-                <p class="on-label on-label--req ar-choice-q">Is this document a vital record?</p>
-                <div class="ar-tri-grid">
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isVitalRecord" value="Yes" class="ar-tri-input" required />
-                    <span class="ar-tri-text">Yes</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isVitalRecord" value="No" class="ar-tri-input" />
-                    <span class="ar-tri-text">No</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isVitalRecord" value="Not Sure" class="ar-tri-input" />
-                    <span class="ar-tri-text">Not Sure</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Certified Original -->
-              <div class="ar-choice-group">
-                <p class="on-label on-label--req ar-choice-q">Do you have the original certified document?</p>
-                <div class="ar-tri-grid">
-                  <label class="ar-tri-card">
-                    <input type="radio" name="hasCertifiedOriginal" value="Yes" class="ar-tri-input" required />
-                    <span class="ar-tri-text">Yes</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="hasCertifiedOriginal" value="No" class="ar-tri-input" />
-                    <span class="ar-tri-text">No</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="hasCertifiedOriginal" value="Not Sure" class="ar-tri-input" />
-                    <span class="ar-tri-text">Not Sure</span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Already Notarized -->
-              <div class="ar-choice-group">
-                <p class="on-label on-label--req ar-choice-q">Is the document already notarized?</p>
-                <div class="ar-tri-grid">
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isAlreadyNotarized" value="Yes" class="ar-tri-input" required />
-                    <span class="ar-tri-text">Yes</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isAlreadyNotarized" value="No" class="ar-tri-input" />
-                    <span class="ar-tri-text">No</span>
-                  </label>
-                  <label class="ar-tri-card">
-                    <input type="radio" name="isAlreadyNotarized" value="Not Sure" class="ar-tri-input" />
-                    <span class="ar-tri-text">Not Sure</span>
-                  </label>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="2">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="4">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 4 — DOCUMENT UPLOAD ───────────────────── -->
-        <div class="ms-step" id="step4" data-step="4" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 4 of 8</span>
-            <h2 class="ar-step-hdr-title">Upload Your Documents</h2>
-            <p class="ar-step-hdr-desc">Upload up to 5 documents for review.</p>
-          </div>
-
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">4</span>
-              <h2 class="on-card-title">Document Upload</h2>
-            </div>
-
-            <!-- Drop zone — file input has no name so it is not sent to GAS -->
-            <div class="ar-dropzone" id="arDropzone" role="region" aria-label="Document upload area">
-              <input type="file" id="docUploads" accept=".pdf,.jpg,.jpeg,.png" multiple class="ar-dropzone-input" tabindex="-1" />
-              <div class="ar-dropzone-body">
-                <div class="ar-dropzone-icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
-                    <rect x="6" y="8" width="36" height="32" rx="5"/>
-                    <line x1="24" y1="30" x2="24" y2="18"/>
-                    <polyline points="17,24 24,17 31,24"/>
-                    <line x1="16" y1="34" x2="32" y2="34"/>
-                  </svg>
-                </div>
-                <p class="ar-dropzone-title">Drop your documents here</p>
-                <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
-                <p class="ar-dropzone-hint">PDF, JPG, JPEG, PNG &middot; Up to 5 documents</p>
-              </div>
-            </div>
-
-            <!-- File list populated by JS -->
-            <div class="ar-file-list" id="arFileList" aria-live="polite"></div>
-
-            <!-- Uploaded file count sent to Google Sheets; file data stored via Dropbox (future) -->
-            <input type="hidden" id="uploadedFileCount" name="uploadedFileCount" value="0" />
-
-          </div>
-
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="3">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="5">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 5 — ADDITIONAL NOTES ─────────────────── -->
-        <div class="ms-step" id="step5" data-step="5" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 5 of 8</span>
-            <h2 class="ar-step-hdr-title">Any Additional Notes?</h2>
-            <p class="ar-step-hdr-desc">Share any special instructions, deadlines, destination requirements, or context that will help us review your documents accurately.</p>
-          </div>
-
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">5</span>
-              <h2 class="on-card-title">Additional Notes</h2>
-            </div>
-
-            <div class="on-field on-field--full">
-              <label class="on-label" for="notes">Additional Notes</label>
-              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
-                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
-            </div>
-          </div>
-
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="4">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="6">
-              Continue
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- ── STEP 6 — REVIEW & ACKNOWLEDGMENT ──────────── -->
-        <div class="ms-step" id="step6" data-step="6" style="display:none">
-
-          <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 6 of 8</span>
-            <h2 class="ar-step-hdr-title">Estimated Investment</h2>
-            <p class="ar-step-hdr-desc">Review your estimated pricing below. Final pricing is confirmed after your documents are reviewed.</p>
-          </div>
-
-          <!-- ── Estimated Investment ─────────────────────── -->
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-num">6</span>
-              <h2 class="on-card-title">Estimated Investment</h2>
+              <h2 class="on-card-title">Your Estimate</h2>
             </div>
 
             <div class="ar-estimate-wrap">
@@ -863,7 +758,6 @@
               </div>
             </div>
 
-            <!-- ── Pricing notice ──────────────────────────────── -->
             <div class="ar-pricing-notice">
               <div class="ar-info-card-head">
                 <span class="ar-info-card-icon" aria-hidden="true">
@@ -884,86 +778,249 @@
           </div>
 
           <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="5">
+            <button type="button" class="ms-btn-back" data-prev="1">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
-            <button type="button" class="ms-btn-continue" data-next="7">
+            <button type="button" class="ms-btn-continue" data-next="3">
               Continue
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
             </button>
           </div>
         </div>
 
-        <!-- ── STEP 7 — WHAT HAPPENS NEXT ─────────────────────────────────── -->
-        <div class="ms-step" id="step7" data-step="7" style="display:none">
+        <!-- ── STEP 3 — UPLOAD DOCUMENTS ──────────────────── -->
+        <div class="ms-step" id="step3" data-step="3" style="display:none">
 
           <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 7 of 8</span>
-            <h2 class="ar-step-hdr-title">What Happens Next</h2>
-            <p class="ar-step-hdr-desc">Here is what to expect after your apostille review request is submitted.</p>
+            <span class="ar-step-hdr-eyebrow">Step 3 of 5</span>
+            <h2 class="ar-step-hdr-title">Upload Your Documents</h2>
+            <p class="ar-step-hdr-desc">Uploading a clear copy allows us to identify potential issues before processing begins.</p>
           </div>
 
-          <div class="ar-info-grid ar-info-grid--single">
-
-            <div class="ar-info-card">
-              <div class="ar-info-card-head">
-                <span class="ar-info-card-icon" aria-hidden="true">
-                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-                    <polyline points="3,9 7,13 15,5"/>
-                  </svg>
-                </span>
-                <h3 class="ar-info-card-title">Your Document Review</h3>
-              </div>
-              <ul class="ar-info-list">
-                <li>Your documents will be reviewed by our team before processing begins.</li>
-                <li>We will confirm apostille eligibility, document requirements, and destination-country requirements.</li>
-                <li>If additional services are required, we will provide a personalized quote before any work begins.</li>
-              </ul>
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">3</span>
+              <h2 class="on-card-title">Document Upload</h2>
             </div>
 
-            <div class="ar-info-card">
-              <div class="ar-info-card-head">
-                <span class="ar-info-card-icon" aria-hidden="true">
-                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-                    <path d="M9 2 L16 5 L16 10 C16 13.8 12.9 16.8 9 17.5 C5.1 16.8 2 13.8 2 10 L2 5 Z"/>
+            <!-- "Provide later" toggle — the customer can continue without
+                 uploading a file when this is checked. -->
+            <label class="ar-ack-item" id="arDocsLaterToggle" style="margin-bottom:20px">
+              <input type="checkbox" id="docsLater" name="documentsLater" class="ar-ack-input" />
+              <span class="ar-ack-mark" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+              </span>
+              <span class="ar-ack-text">I&rsquo;ll Provide My Documents Later</span>
+            </label>
+
+            <!-- Drop zone — file input has no name so it is not sent to GAS -->
+            <div class="ar-dropzone" id="arDropzone" role="region" aria-label="Document upload area">
+              <input type="file" id="docUploads" accept=".pdf,.jpg,.jpeg,.png" multiple class="ar-dropzone-input" tabindex="-1" />
+              <div class="ar-dropzone-body">
+                <div class="ar-dropzone-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
+                    <rect x="6" y="8" width="36" height="32" rx="5"/>
+                    <line x1="24" y1="30" x2="24" y2="18"/>
+                    <polyline points="17,24 24,17 31,24"/>
+                    <line x1="16" y1="34" x2="32" y2="34"/>
                   </svg>
-                </span>
-                <h3 class="ar-info-card-title">Important Notice</h3>
+                </div>
+                <p class="ar-dropzone-title">Drop your documents here</p>
+                <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
+                <p class="ar-dropzone-hint">PDF, JPG, JPEG, PNG &middot; Up to 5 documents</p>
               </div>
-              <ul class="ar-info-list">
-                <li>Submission of this form does not begin apostille processing.</li>
-                <li>Submission does not guarantee apostille eligibility or acceptance.</li>
-                <li>All documents are reviewed prior to processing.</li>
-                <li>Final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</li>
-                <li>If Remote Online Notarization is required, a separate quote will be provided.</li>
-              </ul>
             </div>
+
+            <!-- File list populated by JS -->
+            <div class="ar-file-list" id="arFileList" aria-live="polite"></div>
+
+            <!-- Uploaded file count sent to Google Sheets; file data stored via Dropbox (future) -->
+            <input type="hidden" id="uploadedFileCount" name="uploadedFileCount" value="0" />
 
           </div>
 
           <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="6">
+            <button type="button" class="ms-btn-back" data-prev="2">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
-            <button type="button" class="ms-btn-continue" data-next="8">
-              Continue to Review
+            <button type="button" class="ms-btn-continue" data-next="4">
+              Continue
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
             </button>
           </div>
         </div>
 
-        <!-- ── STEP 8 — REVIEW & CONFIRM ──────────────────────────────────── -->
-        <div class="ms-step" id="step8" data-step="8" style="display:none">
+        <!-- ── STEP 4 — YOUR INFORMATION ──────────────────── -->
+        <div class="ms-step" id="step4" data-step="4" style="display:none">
 
           <div class="ar-step-hdr">
-            <span class="ar-step-hdr-eyebrow">Step 8 of 8</span>
-            <h2 class="ar-step-hdr-title">Review &amp; Confirm</h2>
-            <p class="ar-step-hdr-desc">Confirm each acknowledgment and sign below to submit your apostille review request.</p>
+            <span class="ar-step-hdr-eyebrow">Step 4 of 5</span>
+            <h2 class="ar-step-hdr-title">Your Information</h2>
+            <p class="ar-step-hdr-desc">Tell us where to send your review results and next steps.</p>
           </div>
 
-          <!-- ── Acknowledgments ─────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">4</span>
+              <h2 class="on-card-title">Contact Information</h2>
+            </div>
+
+            <div class="on-field-row on-field-row--1">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" class="on-input"
+                       placeholder="Enter your full legal name" autocomplete="name" required />
+              </div>
+            </div>
+
+            <div class="on-field-row" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="on-input"
+                       placeholder="your@email.com" autocomplete="email" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="phone">Mobile Number</label>
+                <input type="tel" id="phone" name="phone" class="on-input"
+                       placeholder="(312) 967-7696" autocomplete="tel" required />
+              </div>
+            </div>
+
+            <div class="on-field-row on-field-row--1" style="margin-top:20px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="state">State</label>
+                <select id="state" name="state" class="on-select" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+                  <option>Arkansas</option><option>California</option><option>Colorado</option>
+                  <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+                  <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+                  <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+                  <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+                  <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+                  <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+                  <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+                  <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+                  <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+                  <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+                  <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+                  <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+                  <option>Texas</option><option>Utah</option><option>Vermont</option>
+                  <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+                  <option>Wisconsin</option><option>Wyoming</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="ar-choice-group" style="margin-top:28px">
+              <p class="on-label on-label--req ar-choice-q">Preferred Contact Method</p>
+              <div class="ar-tri-grid">
+                <label class="ar-tri-card">
+                  <input type="radio" name="preferredContactMethod" value="Text" class="ar-tri-input" required />
+                  <span class="ar-tri-text">Text</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="preferredContactMethod" value="Email" class="ar-tri-input" />
+                  <span class="ar-tri-text">Email</span>
+                </label>
+                <label class="ar-tri-card">
+                  <input type="radio" name="preferredContactMethod" value="Phone" class="ar-tri-input" />
+                  <span class="ar-tri-text">Phone</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notes — moved here from its own step -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <h2 class="on-card-title">Anything Else We Should Know?</h2>
+            </div>
+            <p class="ar-card-sub" style="margin-top:-8px; margin-bottom:20px">Share deadlines, special instructions, or anything else that may help us review your request.</p>
+
+            <div class="on-field on-field--full">
+              <label class="on-label" for="notes">Additional Notes <span style="text-transform:none; font-weight:300; letter-spacing:0">(optional)</span></label>
+              <textarea id="notes" name="notes" class="on-textarea ar-notes-textarea"
+                        placeholder="Please share any important details about your document, deadline, destination country requirements, or how the document will be used."></textarea>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Review My Request
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="9,3 14,8 9,13"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ── STEP 5 — REVIEW & SUBMIT ───────────────────── -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 5 of 5</span>
+            <h2 class="ar-step-hdr-title">Review &amp; Submit</h2>
+            <p class="ar-step-hdr-desc">Please confirm your details below before submitting your apostille review request.</p>
+          </div>
+
+          <!-- ── Review summary ──────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num">5</span>
+              <h2 class="on-card-title">Your Request</h2>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Document</p>
+              <div class="ar-review-row"><span class="ar-review-label">Document Type</span><span class="ar-review-value" id="revDocType">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Issuing Jurisdiction</span><span class="ar-review-value" id="revJurisdiction">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Destination</span><span class="ar-review-value" id="revDestination">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Document Count</span><span class="ar-review-value" id="revDocCount">&mdash;</span></div>
+              <div class="ar-review-row" id="revConditionalRow" style="display:none"><span class="ar-review-label" id="revConditionalLabel">&mdash;</span><span class="ar-review-value" id="revConditionalValue">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Service</p>
+              <div class="ar-review-row"><span class="ar-review-label">Review Speed</span><span class="ar-review-value" id="revReviewSpeed">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Processing Speed</span><span class="ar-review-value" id="revProcessingSpeed">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Return Delivery</span><span class="ar-review-value" id="revReturnDelivery">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Documents</p>
+              <div class="ar-review-row"><span class="ar-review-label">Uploaded</span><span class="ar-review-value" id="revDocuments">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Contact</p>
+              <div class="ar-review-row"><span class="ar-review-label">Name</span><span class="ar-review-value" id="revName">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Email</span><span class="ar-review-value" id="revEmail">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Mobile</span><span class="ar-review-value" id="revMobile">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">State</span><span class="ar-review-value" id="revState">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Preferred Contact Method</span><span class="ar-review-value" id="revContactMethod">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group ar-review-group--last">
+              <p class="ar-review-group-title">Estimated Investment</p>
+              <div class="ar-estimate-wrap">
+                <div class="ar-estimate-box">
+                  <div class="ar-estimate-row">
+                    <span class="ar-estimate-label">Estimated Total</span>
+                    <span class="ar-estimate-total" id="arEstimateTotal2">$175</span>
+                  </div>
+                  <p class="ar-estimate-intl" id="arEstimateIntl2" style="display:none">International return shipping is shown as a starting estimate. Final shipping will be quoted after document review and destination verification.</p>
+                </div>
+              </div>
+              <p class="ar-field-helper">This is an estimate only. Final pricing is confirmed after document review, before processing begins.</p>
+            </div>
+          </div>
+
+          <!-- ── Acknowledgment ───────────────────────────── -->
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-icon" aria-hidden="true">
@@ -972,111 +1029,20 @@
                   <polyline points="7,10 9.5,12.5 14,8"/>
                 </svg>
               </span>
-              <div class="on-card-head-text">
-                <h2 class="on-card-title">Acknowledgments</h2>
-                <p class="ar-card-sub">Please read each statement and check all boxes before submitting.</p>
-              </div>
+              <h2 class="on-card-title">Acknowledgment</h2>
             </div>
 
-            <div class="ar-ack-list">
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack1" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand all pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack2" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand this submission is for document review only and does not begin apostille processing.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack3" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand submission of documents does not guarantee apostille eligibility or acceptance.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack4" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand all documents are reviewed prior to processing.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack5" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand final acceptance is determined by the receiving authority, foreign government, embassy, consulate, court, school, or requesting agency.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack6" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand Remote Online Notarization services are quoted separately and only when notarization is required.</span>
-              </label>
-
-              <label class="ar-ack-item">
-                <input type="checkbox" name="ack7" class="ar-ack-input" required />
-                <span class="ar-ack-mark" aria-hidden="true">
-                  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
-                </span>
-                <span class="ar-ack-text">I understand RON pricing is available separately for documents requiring notarization.</span>
-              </label>
-
-            </div>
-          </div>
-
-          <!-- ── Signature ────────────────────────────────── -->
-          <div class="on-card">
-            <div class="on-card-head">
-              <span class="on-card-icon" aria-hidden="true">
-                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
-                  <path d="M3 15 C5 13 7 11 9 13 C11 15 13 10 17 7"/>
-                  <line x1="3" y1="17" x2="8" y2="17"/>
-                </svg>
+            <label class="ar-ack-item">
+              <input type="checkbox" name="ack1" class="ar-ack-input" required />
+              <span class="ar-ack-mark" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
               </span>
-              <div class="on-card-head-text">
-                <h2 class="on-card-title">Signature</h2>
-                <p class="ar-card-sub">Type your full legal name and sign below to confirm your submission.</p>
-              </div>
-            </div>
-
-            <!-- Full legal name -->
-            <div class="on-field on-field--full" style="margin-bottom:28px">
-              <label class="on-label on-label--req" for="ackName">Full Legal Name</label>
-              <input type="text" id="ackName" name="ackName" class="on-input"
-                     placeholder="Type your full legal name" required />
-              <p class="ar-field-helper">Type your full legal name to acknowledge this request.</p>
-            </div>
-
-            <!-- Signature pad -->
-            <div class="ar-sig-wrap">
-              <label class="on-label on-label--req">Signature</label>
-              <div class="ar-sig-box" id="arSigBox">
-                <canvas id="arSigCanvas" class="ar-sig-canvas"></canvas>
-                <span class="ar-sig-placeholder" id="arSigPlaceholder">Sign here using your mouse or finger</span>
-              </div>
-              <button type="button" class="ar-sig-clear" id="arSigClear">Clear Signature</button>
-              <input type="hidden" id="arSigData" name="signature" />
-            </div>
-
+              <span class="ar-ack-text">I understand that this submission is a request for document review, pricing shown is an estimate until confirmed, and submission does not guarantee apostille eligibility or acceptance. I agree to the <a href="/terms.html" target="_blank" rel="noopener" class="ar-inline-link">Terms of Service</a> and <a href="/privacy.html" target="_blank" rel="noopener" class="ar-inline-link">Privacy Policy</a>.</span>
+            </label>
           </div>
 
           <div class="ms-nav ms-nav--submit">
-            <button type="button" class="ms-btn-back" data-prev="7">
+            <button type="button" class="ms-btn-back" data-prev="4">
               <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><line x1="14" y1="8" x2="2" y2="8"/><polyline points="7,3 2,8 7,13"/></svg>
               Back
             </button>
@@ -1093,7 +1059,7 @@
                 </svg>
                 Submit Apostille Review
               </button>
-              <p class="on-required-note">* All acknowledgments must be checked and a signature provided before submitting.</p>
+              <p class="on-required-note">* Acknowledgment must be checked before submitting.</p>
             </div>
           </div>
         </div>
@@ -1197,12 +1163,120 @@
   <script src="/js/main.js"></script>
   <script>
     (function () {
-      var TOTAL_STEPS = 8;
+      var TOTAL_STEPS = 5;
       var currentStep = 1;
-      var sigPadReady = false;
-      var sigResizeFn = null;
       var selectedFiles = [];
-      var STEP_NAMES = ['', 'Select Your Service', 'Client Information', 'Document Details', 'Upload Documents', 'Additional Notes', 'Estimated Investment', 'What Happens Next', 'Review & Confirm'];
+      var STEP_NAMES = ['', 'Your Document', 'Choose Your Service', 'Upload Documents', 'Your Information', 'Review & Submit'];
+
+      function setRequired(el, isRequired) {
+        if (!el) return;
+        if (isRequired) el.setAttribute('required', '');
+        else el.removeAttribute('required');
+      }
+
+      function toggleRadioRequired(name, isRequired) {
+        document.querySelectorAll('input[name="' + name + '"]').forEach(function (el) {
+          setRequired(el, isRequired);
+        });
+      }
+
+      // ── Step 1: issuing jurisdiction -> issuingState (field name
+      // preserved from the prior form for backend compatibility) ──
+      function updateJurisdiction() {
+        var checked = document.querySelector('input[name="issuingJurisdiction"]:checked');
+        var val = checked ? checked.value : '';
+        var stateWrap   = document.getElementById('arStateSelectWrap');
+        var fedNotice   = document.getElementById('arFederalNotice');
+        var stateSelect = document.getElementById('issuingState');
+
+        var showState = (val === 'Another U.S. State');
+        var showFed   = (val === 'U.S. Federal Government');
+
+        if (stateWrap) stateWrap.style.display = showState ? '' : 'none';
+        if (fedNotice) fedNotice.style.display = showFed ? '' : 'none';
+        setRequired(stateSelect, showState);
+
+        if (!stateSelect) return;
+        if (val === 'Illinois')                      stateSelect.value = 'Illinois';
+        else if (val === 'Indiana')                   stateSelect.value = 'Indiana';
+        else if (val === 'U.S. Federal Government')   stateSelect.value = 'Federal / U.S. Government';
+        else if (!showState)                          stateSelect.value = '';
+      }
+      document.querySelectorAll('input[name="issuingJurisdiction"]').forEach(function (el) {
+        el.addEventListener('change', updateJurisdiction);
+      });
+
+      // ── Step 1: document type -> smart conditional questions ──
+      function updateDocType() {
+        var docTypeEl = document.getElementById('documentType');
+        var val = docTypeEl ? docTypeEl.value : '';
+
+        var otherWrap  = document.getElementById('arDocOtherWrap');
+        var otherInput = document.getElementById('documentTypeOther');
+        var isOther = (val === 'Other');
+        if (otherWrap) otherWrap.style.display = isOther ? '' : 'none';
+        setRequired(otherInput, isOther);
+
+        var certWrap = document.getElementById('arCertifiedWrap');
+        var certQ    = document.getElementById('arCertifiedQ');
+        var vitalSet = ['Birth Certificate', 'Marriage Certificate', 'Death Certificate'];
+        var showCert = (vitalSet.indexOf(val) !== -1) || (val === 'Court Document');
+        if (certWrap) certWrap.style.display = showCert ? '' : 'none';
+        if (certQ) {
+          certQ.textContent = (val === 'Court Document')
+            ? 'Is this a certified court-issued copy?'
+            : 'Do you have a certified copy of this record?';
+        }
+        toggleRadioRequired('hasCertifiedOriginal', showCert);
+
+        var notarizedWrap = document.getElementById('arNotarizedWrap');
+        var showNotarized = (val === 'Power of Attorney' || val === 'Notarized Personal Document');
+        if (notarizedWrap) notarizedWrap.style.display = showNotarized ? '' : 'none';
+        toggleRadioRequired('isAlreadyNotarized', showNotarized);
+        if (!showNotarized) {
+          var notice = document.getElementById('arNotarizedNotice');
+          if (notice) notice.style.display = 'none';
+        }
+
+        var corporateWrap = document.getElementById('arCorporateWrap');
+        var showCorporate = (val === 'Corporate / Business Document');
+        if (corporateWrap) corporateWrap.style.display = showCorporate ? '' : 'none';
+        toggleRadioRequired('corporateStatus', showCorporate);
+
+        var academicWrap = document.getElementById('arAcademicWrap');
+        var showAcademic = (val === 'Diploma / Transcript');
+        if (academicWrap) academicWrap.style.display = showAcademic ? '' : 'none';
+        toggleRadioRequired('academicDocumentType', showAcademic);
+      }
+      var docTypeSelect = document.getElementById('documentType');
+      if (docTypeSelect) docTypeSelect.addEventListener('change', updateDocType);
+
+      // "No" / "Not Sure" on already-notarized shows a short notice
+      document.querySelectorAll('input[name="isAlreadyNotarized"]').forEach(function (el) {
+        el.addEventListener('change', function () {
+          var notice = document.getElementById('arNotarizedNotice');
+          if (notice) notice.style.display = (this.value === 'No' || this.value === 'Not Sure') ? '' : 'none';
+        });
+      });
+
+      // ── Step 1: quantity stepper -> documentCount (field name
+      // preserved from the prior form for backend compatibility) ──
+      var qtyValueEl = document.getElementById('arQtyValue');
+      var qtyHidden  = document.getElementById('documentCount');
+      function setQty(n) {
+        n = Math.max(1, n || 1);
+        if (qtyValueEl) qtyValueEl.textContent = n;
+        if (qtyHidden)  qtyHidden.value = n;
+        calcEstimate();
+      }
+      var qtyMinusBtn = document.getElementById('arQtyMinus');
+      var qtyPlusBtn  = document.getElementById('arQtyPlus');
+      if (qtyMinusBtn) qtyMinusBtn.addEventListener('click', function () {
+        setQty((parseInt(qtyHidden.value, 10) || 1) - 1);
+      });
+      if (qtyPlusBtn) qtyPlusBtn.addEventListener('click', function () {
+        setQty((parseInt(qtyHidden.value, 10) || 1) + 1);
+      });
 
       function showStep(n) {
         currentStep = n;
@@ -1211,7 +1285,7 @@
           if (el) el.style.display = (i === n) ? '' : 'none';
         }
         var bar = document.getElementById('fhBar');
-        if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(1) + '%';
+        if (bar) bar.style.width = ((n / TOTAL_STEPS) * 100).toFixed(0) + '%';
         var lbl = document.getElementById('fhStepLabel');
         if (lbl) lbl.textContent = 'Step ' + n + ' of ' + TOTAL_STEPS;
         var nameEl = document.getElementById('fhStepName');
@@ -1222,12 +1296,12 @@
           void stepEl.offsetWidth;
           stepEl.classList.add('ms-step-enter');
         }
-        if (n === 6) {
+        if (n === 2) {
           calcEstimate();
         }
-        if (n === 8) {
-          if (!sigPadReady) { initSigPad(); sigPadReady = true; }
-          else if (sigResizeFn) { sigResizeFn(); }
+        if (n === 5) {
+          calcEstimate();
+          populateReview();
         }
         var startEl = document.getElementById('start');
         if (startEl) startEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1239,14 +1313,20 @@
         if (!stepEl) return true;
         var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
         for (var i = 0; i < fields.length; i++) {
+          // Skip validating fields that are currently hidden (e.g. a
+          // conditional block whose "required" hasn't been cleared yet)
+          if (fields[i].offsetParent === null && fields[i].type !== 'hidden') continue;
           if (!fields[i].checkValidity()) {
             fields[i].focus();
             fields[i].reportValidity();
+            fields[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
           }
         }
-        if (n === 4) {
-          if (selectedFiles.length === 0) {
+        if (n === 3) {
+          var docsLater = document.getElementById('docsLater');
+          var skipUpload = docsLater && docsLater.checked;
+          if (!skipUpload && selectedFiles.length === 0) {
             var dz = document.getElementById('arDropzone');
             if (dz) {
               dz.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -1256,35 +1336,23 @@
             return false;
           }
         }
-        if (n === 8) {
-          var sigData = document.getElementById('arSigData');
-          if (sigData && !sigData.value) {
-            var sigBox = document.getElementById('arSigBox');
-            if (sigBox) {
-              sigBox.classList.add('ar-sig-box--error');
-              sigBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-            return false;
-          }
-        }
         return true;
       }
 
       function calcEstimate() {
-        var countChecked = document.querySelector('input[name="documentCount"]:checked');
-        var numDocs = countChecked ? (parseInt(countChecked.value, 10) || 1) : 1;
+        var numDocs = parseInt((document.getElementById('documentCount') || {}).value, 10) || 1;
 
         var reviewChecked    = document.querySelector('input[name="sameDayReview"]:checked');
         var isSameDay        = reviewChecked && reviewChecked.value === 'same-day';
 
         var processingChecked = document.querySelector('input[name="processingSpeed"]:checked');
-        var isRush            = processingChecked && processingChecked.value === 'rush';
+        var isRush             = processingChecked && processingChecked.value === 'rush';
 
         var shippingChecked  = document.querySelector('input[name="returnShipping"]:checked');
         var isOvernight      = shippingChecked && shippingChecked.value === 'overnight';
         var isIntl           = shippingChecked && shippingChecked.value === 'international';
 
-        var addlAmt  = Math.max(0, numDocs - 1) * 100;
+        var addlAmt   = Math.max(0, numDocs - 1) * 100;
         var reviewFee = isSameDay ? 25 : 0;
         var rushFee   = isRush    ? 75 : 0;
         var shipFee   = isOvernight ? 45 : (isIntl ? 75 : 0);
@@ -1305,9 +1373,7 @@
         }
 
         var baseLbl = document.getElementById('arEstBaseLabel');
-        if (baseLbl) {
-          baseLbl.textContent = 'Standard Apostille Service (1 Document)';
-        }
+        if (baseLbl) baseLbl.textContent = 'Standard Apostille Service (1 Document)';
 
         var itemReview = document.getElementById('arEstItemReview');
         if (itemReview) itemReview.style.display = isSameDay ? '' : 'none';
@@ -1330,81 +1396,83 @@
 
         var totalEl = document.getElementById('arEstimateTotal');
         if (totalEl) totalEl.textContent = '$' + total.toLocaleString();
+        var totalEl2 = document.getElementById('arEstimateTotal2');
+        if (totalEl2) totalEl2.textContent = '$' + total.toLocaleString();
 
         var intlEl = document.getElementById('arEstimateIntl');
         if (intlEl) intlEl.style.display = isIntl ? '' : 'none';
+        var intlEl2 = document.getElementById('arEstimateIntl2');
+        if (intlEl2) intlEl2.style.display = isIntl ? '' : 'none';
       }
 
-      function initSigPad() {
-        var canvas      = document.getElementById('arSigCanvas');
-        if (!canvas) return;
-        var ctx         = canvas.getContext('2d');
-        var sigData     = document.getElementById('arSigData');
-        var placeholder = document.getElementById('arSigPlaceholder');
-        var clearBtn    = document.getElementById('arSigClear');
-        var sigBox      = document.getElementById('arSigBox');
-        var isDrawing   = false;
+      // ── Step 5: populate the review screen from current field values ──
+      function textOf(sel) {
+        var checked = document.querySelector(sel + ':checked');
+        return checked ? checked.value : '';
+      }
+      function valOf(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
+      }
+      function setRev(id, text) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = (text && String(text).trim()) ? text : '—';
+      }
 
-        function resize() {
-          var dpr = window.devicePixelRatio || 1;
-          var w   = canvas.parentElement.offsetWidth;
-          canvas.width        = w * dpr;
-          canvas.height       = 180 * dpr;
-          canvas.style.width  = w + 'px';
-          canvas.style.height = '180px';
-          ctx.scale(dpr, dpr);
-          ctx.strokeStyle = '#0B1829';
-          ctx.lineWidth   = 2.2;
-          ctx.lineCap     = 'round';
-          ctx.lineJoin    = 'round';
-        }
-        sigResizeFn = resize;
+      var CONDITIONAL_LABELS = {
+        'Birth Certificate':   { field: 'hasCertifiedOriginal', label: 'Certified Copy' },
+        'Marriage Certificate':{ field: 'hasCertifiedOriginal', label: 'Certified Copy' },
+        'Death Certificate':   { field: 'hasCertifiedOriginal', label: 'Certified Copy' },
+        'Court Document':      { field: 'hasCertifiedOriginal', label: 'Certified Copy' },
+        'Power of Attorney':          { field: 'isAlreadyNotarized', label: 'Already Notarized' },
+        'Notarized Personal Document':{ field: 'isAlreadyNotarized', label: 'Already Notarized' },
+        'Corporate / Business Document': { field: 'corporateStatus', label: 'Signed / Notarized' },
+        'Diploma / Transcript':          { field: 'academicDocumentType', label: 'Academic Document' }
+      };
 
-        function getPos(e) {
-          var rect = canvas.getBoundingClientRect();
-          var src  = e.touches ? e.touches[0] : e;
-          return { x: src.clientX - rect.left, y: src.clientY - rect.top };
-        }
+      function populateReview() {
+        var docType = valOf('documentType');
+        setRev('revDocType', docType === 'Other' ? ('Other — ' + valOf('documentTypeOther')) : docType);
 
-        function startDraw(e) {
-          e.preventDefault();
-          isDrawing = true;
-          var pos = getPos(e);
-          ctx.beginPath();
-          ctx.moveTo(pos.x, pos.y);
-          if (placeholder) placeholder.style.display = 'none';
-          if (sigBox) sigBox.classList.remove('ar-sig-box--error');
-        }
+        var jurisdiction = textOf('input[name="issuingJurisdiction"]');
+        setRev('revJurisdiction', jurisdiction);
 
-        function draw(e) {
-          if (!isDrawing) return;
-          e.preventDefault();
-          var pos = getPos(e);
-          ctx.lineTo(pos.x, pos.y);
-          ctx.stroke();
-          if (sigData) sigData.value = 'signed';
+        setRev('revDestination', valOf('destinationCountry'));
+        setRev('revDocCount', valOf('documentCount'));
+
+        var condRow   = document.getElementById('revConditionalRow');
+        var condMeta  = CONDITIONAL_LABELS[docType];
+        if (condMeta) {
+          var condVal = textOf('input[name="' + condMeta.field + '"]');
+          if (condRow) condRow.style.display = '';
+          setRev('revConditionalLabel', condMeta.label);
+          setRev('revConditionalValue', condVal);
+        } else if (condRow) {
+          condRow.style.display = 'none';
         }
 
-        function endDraw() { isDrawing = false; }
+        var reviewChecked = document.querySelector('input[name="sameDayReview"]:checked');
+        setRev('revReviewSpeed', reviewChecked && reviewChecked.value === 'same-day' ? 'Priority (Same-Day Review)' : 'Standard Review');
 
-        canvas.addEventListener('mousedown',  startDraw);
-        canvas.addEventListener('mousemove',  draw);
-        canvas.addEventListener('mouseup',    endDraw);
-        canvas.addEventListener('mouseleave', endDraw);
-        canvas.addEventListener('touchstart', startDraw, { passive: false });
-        canvas.addEventListener('touchmove',  draw,      { passive: false });
-        canvas.addEventListener('touchend',   endDraw);
+        var processingChecked = document.querySelector('input[name="processingSpeed"]:checked');
+        setRev('revProcessingSpeed', processingChecked && processingChecked.value === 'rush' ? 'Rush Processing' : 'Standard Processing');
 
-        if (clearBtn) {
-          clearBtn.addEventListener('click', function () {
-            resize();
-            if (sigData) sigData.value = '';
-            if (placeholder) placeholder.style.display = '';
-          });
+        var shippingChecked = document.querySelector('input[name="returnShipping"]:checked');
+        var shipVal = shippingChecked ? shippingChecked.value : '';
+        setRev('revReturnDelivery', shipVal === 'overnight' ? 'Overnight' : shipVal === 'international' ? 'International' : 'USPS Priority');
+
+        var docsLater = document.getElementById('docsLater');
+        if (docsLater && docsLater.checked) {
+          setRev('revDocuments', 'Documents will be provided later');
+        } else {
+          setRev('revDocuments', selectedFiles.length + (selectedFiles.length === 1 ? ' file selected' : ' files selected'));
         }
 
-        window.addEventListener('resize', resize);
-        resize();
+        setRev('revName', valOf('fullName'));
+        setRev('revEmail', valOf('email'));
+        setRev('revMobile', valOf('phone'));
+        setRev('revState', valOf('state'));
+        setRev('revContactMethod', textOf('input[name="preferredContactMethod"]'));
       }
 
       // Continue buttons
@@ -1415,7 +1483,8 @@
         });
       });
 
-      // Back buttons
+      // Back buttons — previously entered selections are left untouched;
+      // showStep() only toggles visibility, it never clears field values.
       document.querySelectorAll('.ms-btn-back').forEach(function (btn) {
         btn.addEventListener('click', function () {
           var prev = parseInt(this.getAttribute('data-prev'), 10);
@@ -1424,7 +1493,7 @@
       });
 
       // Live estimate: recalc on any pricing field change
-      ['documentCount', 'sameDayReview', 'processingSpeed', 'returnShipping'].forEach(function (name) {
+      ['sameDayReview', 'processingSpeed', 'returnShipping'].forEach(function (name) {
         document.querySelectorAll('[name="' + name + '"]').forEach(function (el) {
           el.addEventListener('change', calcEstimate);
         });
@@ -1544,6 +1613,15 @@
           e.preventDefault();
           dzEl.classList.remove('ar-dropzone--drag');
           if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+        });
+      }
+
+      // "I'll Provide My Documents Later" — dims the dropzone as a visual
+      // cue but does not delete any already-selected files.
+      var docsLaterInput = document.getElementById('docsLater');
+      if (docsLaterInput) {
+        docsLaterInput.addEventListener('change', function () {
+          if (dzEl) dzEl.classList.toggle('ar-dropzone--optional', this.checked);
         });
       }
 
