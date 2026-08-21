@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy | Ink &amp; Seal Notary Pros</title>
-  <meta name="description" content="Privacy Policy for Ink &amp; Seal Notary Pros. Learn how we collect, use, and protect your personal information." />
+  <meta name="description" content="How Ink &amp; Seal Notary Pros collects, uses, and protects your personal information when you visit our website, submit a request, or contact us by phone, text, or email." />
+  <link rel="canonical" href="https://ink-seal-notary-pros-website.vercel.app/privacy.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,500;1,700&family=Manrope:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css?v=1" />
 </head>
 <body>
 
@@ -23,7 +24,7 @@
         <a href="about.html"          class="nav-link">About Us</a>
         <a href="index.html#services" class="nav-link">Services</a>
         <a href="faq.html"            class="nav-link">FAQs</a>
-        <a href="contact.html"  class="nav-link">Contact</a>
+        <a href="contact.html"        class="nav-link">Contact</a>
       </nav>
       <div class="header-end">
         <a href="/services/apostille/" class="btn-nav">Start My Apostille</a>
@@ -41,91 +42,185 @@
         <a href="about.html"          class="drawer-link">About Us</a>
         <a href="index.html#services" class="drawer-link">Services</a>
         <a href="faq.html"            class="drawer-link">FAQs</a>
-        <a href="contact.html"  class="drawer-link">Contact</a>
+        <a href="contact.html"        class="drawer-link">Contact</a>
+        <a href="/services/apostille/" class="drawer-link drawer-cta">Start My Apostille</a>
       </div>
     </div>
   </header>
 
-  <!-- ═══ PAGE HERO ══════════════════════════════════════════ -->
-  <section class="page-hero on-hero">
-    <div class="container">
-      <h1 class="h-page">Privacy Policy</h1>
-      <div class="on-hero-rule">
-        <span class="on-hero-line"></span>
-        <span class="on-hero-gem">◆</span>
-        <span class="on-hero-line"></span>
+  <!-- ═══ PRIVACY POLICY — Namespace: pvy-*
+       Rebuilt to match the site's current premium visual language
+       (reuses the established .abt-hero shell, quill-only seal
+       watermark and typography) without touching the shared
+       .page-hero/.h-page/.policy-* rules that terms.html still
+       depends on. Content only describes practices verified from
+       this codebase — see the accompanying audit report for what
+       still needs confirmation. ══════════════════════════════════ -->
+
+  <!-- ═══ HERO ═════════════════════════════════════════════════ -->
+  <section class="abt-hero pvy-hero" aria-label="Privacy Policy">
+
+    <svg class="abt-seal abt-hero-seal" viewBox="0 0 800 800" aria-hidden="true" focusable="false">
+      <circle cx="400" cy="400" r="360" stroke="var(--gold)" stroke-width="1"/>
+      <circle cx="400" cy="400" r="280" stroke="var(--gold)" stroke-width="1"/>
+      <g transform="rotate(-24 400 400)">
+        <path d="M400,150 C345,205 328,278 352,345 C320,415 336,505 400,600
+                 C464,505 480,415 448,345 C472,278 455,205 400,150 Z"
+              fill="none" stroke="var(--gold)" stroke-width="2"/>
+        <path d="M400,168 Q393,385 400,585" fill="none" stroke="var(--gold)" stroke-width="1.4"/>
+        <g stroke="var(--gold)" stroke-width="1" stroke-linecap="round">
+          <path d="M400,210 L358,230 M400,210 L442,230"/>
+          <path d="M400,255 L350,278 M400,255 L450,278"/>
+          <path d="M400,300 L345,325 M400,300 L455,325"/>
+          <path d="M400,345 L344,370 M400,345 L456,370"/>
+          <path d="M400,390 L347,413 M400,390 L453,413"/>
+          <path d="M400,435 L354,455 M400,435 L446,455"/>
+          <path d="M400,478 L364,495 M400,478 L436,495"/>
+          <path d="M400,518 L376,530 M400,518 L424,530"/>
+        </g>
+        <path d="M400,600 L390,665 L400,700 L410,665 Z" fill="var(--gold)" stroke="none"/>
+      </g>
+    </svg>
+
+    <div class="container abt-hero-inner">
+      <p class="abt-eyebrow abt-eyebrow--onDark">Legal</p>
+      <h1 class="abt-hero-h">Privacy Policy</h1>
+      <div class="abt-rule">
+        <span class="abt-rule-line"></span>
+        <span class="abt-rule-gem">&#9670;</span>
+        <span class="abt-rule-line"></span>
       </div>
+      <p class="abt-hero-lead">How we collect, use, and protect your information when you visit this website, submit a request, or contact us.</p>
     </div>
   </section>
 
-  <!-- ═══ CONTENT ══════════════════════════════════════════ -->
-  <section class="policy-section">
+  <!-- ═══ CONTENT ══════════════════════════════════════════════ -->
+  <section class="pvy-section">
     <div class="container">
-      <div class="policy-wrap">
+      <div class="pvy-wrap">
 
-        <p class="policy-date">Effective Date: January 1, 2026</p>
+        <p class="pvy-date">Last Updated: August 21, 2026</p>
 
-        <p class="policy-lead">Ink &amp; Seal Notary Pros ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your personal information when you visit our website or use our services.</p>
+        <p class="pvy-lead">Ink &amp; Seal Notary Pros (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) respects your privacy. This Privacy Policy explains what information we collect through this website and through phone or text contact, how we use it, when we may share it, and the choices available to you. It describes our current practices only.</p>
 
-        <h2 class="policy-h">Information We Collect</h2>
-        <p class="policy-p">We may collect the following types of personal information:</p>
-        <ul class="policy-list">
-          <li><strong>Contact information</strong> — such as your name, email address, phone number, and state of residence, provided when you submit a request or contact us.</li>
-          <li><strong>Appointment information</strong> — including preferred dates, times, document types, and notarization details submitted through our online request forms.</li>
-          <li><strong>Electronic signature data</strong> — your typed name and date submitted as an electronic signature on our forms.</li>
-          <li><strong>Usage data</strong> — general information about how you interact with our website, such as browser type and pages visited, collected automatically.</li>
+        <!-- Quick nav — keeps a long legal document scannable -->
+        <nav class="pvy-toc" aria-label="Privacy Policy sections">
+          <p class="pvy-toc-title">Contents</p>
+          <div class="pvy-toc-grid">
+            <a href="#information-we-collect" class="pvy-toc-link">Information We Collect</a>
+            <a href="#calls-texts" class="pvy-toc-link">Phone Calls &amp; Text Messages</a>
+            <a href="#document-uploads" class="pvy-toc-link">Document Uploads</a>
+            <a href="#payment-information" class="pvy-toc-link">Payment Information</a>
+            <a href="#how-we-use" class="pvy-toc-link">How We Use Your Information</a>
+            <a href="#when-we-share" class="pvy-toc-link">When We Share Information</a>
+            <a href="#cookies-storage" class="pvy-toc-link">Cookies &amp; Browser Storage</a>
+            <a href="#analytics" class="pvy-toc-link">Analytics &amp; Tracking</a>
+            <a href="#third-party-services" class="pvy-toc-link">Third-Party Services</a>
+            <a href="#security" class="pvy-toc-link">Information Security</a>
+            <a href="#retention" class="pvy-toc-link">Data Retention</a>
+            <a href="#your-rights" class="pvy-toc-link">Your Privacy Rights</a>
+            <a href="#childrens-privacy" class="pvy-toc-link">Children&rsquo;s Privacy</a>
+            <a href="#external-links" class="pvy-toc-link">External Links</a>
+            <a href="#changes" class="pvy-toc-link">Changes to This Policy</a>
+            <a href="#contact-us" class="pvy-toc-link">Contact Us</a>
+          </div>
+        </nav>
+
+        <h2 class="pvy-h" id="information-we-collect">Information We Collect</h2>
+        <p class="pvy-p">We collect information you provide directly, primarily through the forms on this website and through phone calls or text messages to (312) 967-7696:</p>
+        <ul class="pvy-list">
+          <li><strong>Contact information</strong> — your name, email address, phone number, and, where requested, your state of residence.</li>
+          <li><strong>Contact form submissions</strong> — when you use the general inquiry form on our Contact page, we collect your name, email, phone number, preferred contact method, the service you&rsquo;re asking about, and the message you write.</li>
+          <li><strong>Service intake information</strong> — when you request Apostille coordination, Remote Online Notarization, FD-258 Fingerprinting, or Certified Translation, we collect what&rsquo;s needed to process that specific request, such as document type, destination or issuing state, scheduling preferences, and, for translation requests, source and target language and page count.</li>
+          <li><strong>Electronic signature data</strong> — your typed name and date, submitted as an electronic signature on certain forms.</li>
+          <li><strong>Calls and text messages</strong> — your phone number and the content of a call or text you send to (312) 967-7696. See &ldquo;Phone Calls &amp; Text Messages&rdquo; below.</li>
+          <li><strong>Uploaded documents</strong> — files you upload through an intake form. See &ldquo;Document Uploads&rdquo; below.</li>
+          <li><strong>Usage data</strong> — general, non-identifying information about how you interact with our website, such as browser type and pages visited, collected automatically by our hosting provider.</li>
         </ul>
 
-        <h2 class="policy-h">How We Use Your Information</h2>
-        <p class="policy-p">We use the information you provide to:</p>
-        <ul class="policy-list">
-          <li>Process and fulfill your notarization or apostille service requests.</li>
-          <li>Contact you regarding your appointment, session invitation, or follow-up communications.</li>
+        <h2 class="pvy-h" id="calls-texts">Phone Calls &amp; Text Messages</h2>
+        <p class="pvy-p">You may reach Ink &amp; Seal Notary Pros by calling or texting <a href="tel:13129677696" class="pvy-link">(312) 967-7696</a>. When you do, we receive your phone number and the content of your call or message so we can respond to you and provide the assistance you asked for.</p>
+        <p class="pvy-p">Calling or texting us is a customer-service communication. It does not automatically enroll you in a recurring marketing or promotional text messaging program, and we do not send marketing text messages simply because you contacted us. If that were to change, we would provide appropriate notice and obtain any consent required by law before doing so. Standard message and data rates from your mobile carrier may apply.</p>
+
+        <h2 class="pvy-h" id="document-uploads">Document Uploads</h2>
+        <p class="pvy-p">When you upload documents through one of our intake forms, those files are transmitted to us and stored in a private, access-controlled Google Drive folder for the sole purpose of completing your service request. Uploaded documents are not shared with third parties beyond what&rsquo;s described in this policy, are not used for any other purpose, and are not retained beyond what&rsquo;s necessary to complete your service or as required by law.</p>
+        <p class="pvy-p">Please only upload documents that are necessary for your request, and avoid including sensitive financial information — such as full bank account numbers, credit card numbers, or tax identification numbers — unless it is specifically required for the service you&rsquo;re requesting.</p>
+
+        <h2 class="pvy-h" id="payment-information">Payment Information</h2>
+        <p class="pvy-p">We do not collect or store payment information through this website, and this site does not use an online payment processor. You will never be asked to enter card or banking information into our online forms. Payment for services is arranged directly between you and Ink &amp; Seal Notary Pros outside of this website.</p>
+
+        <h2 class="pvy-h" id="how-we-use">How We Use Your Information</h2>
+        <p class="pvy-p">We use the information described above to:</p>
+        <ul class="pvy-list">
+          <li>Respond to inquiries submitted through our Contact page or by phone or text.</li>
+          <li>Review, quote, and process your Apostille, notarization, fingerprinting, or translation request.</li>
+          <li>Contact you about your request — by phone, text, or email — including appointment details, session invitations, or follow-up.</li>
+          <li>Maintain accurate records of the services we provide.</li>
           <li>Improve our website and services.</li>
-          <li>Comply with applicable legal and regulatory requirements.</li>
+          <li>Comply with applicable legal, regulatory, or notarial recordkeeping requirements.</li>
         </ul>
-        <p class="policy-p">We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
+        <p class="pvy-p">We do not sell or rent your personal information, and we do not use it for advertising purposes.</p>
 
-        <h2 class="policy-h">How We Protect Your Information</h2>
-        <p class="policy-p">We take the security of your personal information seriously. We use industry-standard measures to protect data transmitted through our website and stored in connection with your service requests. However, no method of transmission over the internet is completely secure, and we cannot guarantee absolute security.</p>
+        <h2 class="pvy-h" id="when-we-share">When We Share Information</h2>
+        <p class="pvy-p">We share information only where necessary to provide the service you requested:</p>
+        <ul class="pvy-list">
+          <li><strong>Government agencies</strong> — for example, submitting your documents to a Secretary of State&rsquo;s office as part of apostille processing.</li>
+          <li><strong>Service providers who support our operations</strong> — described in &ldquo;Third-Party Services&rdquo; below, who process or store information on our behalf.</li>
+          <li><strong>Remote Online Notarization sessions</strong> — if you complete a Remote Online Notarization, you are connected to a secure third-party video notarization platform to complete identity verification and the notarial act itself, in accordance with applicable notary law. That platform has its own privacy practices, separate from this website.</li>
+          <li><strong>As required by law</strong> — if we are legally required to disclose information, such as in response to a valid legal request.</li>
+        </ul>
+        <p class="pvy-p">We do not share your information with third parties for their own marketing purposes.</p>
 
-        <h2 class="policy-h">Document Uploads</h2>
-        <p class="policy-p">When you upload documents through our intake portal, those files are transmitted securely and stored in a private, access-controlled cloud folder for the sole purpose of completing your service request. Uploaded documents are not shared with third parties, used for any other purpose, or retained beyond the completion of your service unless required by law.</p>
-        <p class="policy-p">You should only upload documents that are necessary for your service request. Please do not upload documents that contain sensitive financial information such as bank account numbers, credit card numbers, or tax identification numbers unless specifically required for your service.</p>
+        <h2 class="pvy-h" id="cookies-storage">Cookies &amp; Browser Storage</h2>
+        <p class="pvy-p">This website does not set traditional tracking cookies. We use limited browser session storage for basic functionality only — for example, to avoid replaying an introductory animation you&rsquo;ve already seen, or to briefly remember a selection (such as a document destination) as you move between pages. This information is stored only on your own device, is automatically cleared when you close your browser, and is never transmitted to us or shared with anyone.</p>
 
-        <h2 class="policy-h">Payment Information</h2>
-        <p class="policy-p">We do not collect or store payment information through this website. Payment arrangements are handled directly between you and Ink &amp; Seal Notary Pros outside of this website. We do not use online payment processors on this site, and you will never be asked to enter card or banking information through our online forms.</p>
+        <h2 class="pvy-h" id="analytics">Analytics &amp; Tracking</h2>
+        <p class="pvy-p">We do not currently use analytics platforms, advertising pixels, or other behavioral tracking technologies on this website.</p>
 
-        <h2 class="policy-h">Third-Party Services</h2>
-        <p class="policy-p">Our website uses third-party tools to support service delivery, including form processing and secure document storage services. Information you submit through our request forms and document uploads is handled in accordance with the privacy practices of those providers. We select service providers who maintain appropriate security and privacy standards.</p>
-        <p class="policy-p">Our website is hosted on Vercel, a secure web hosting provider. We use Google Drive for document storage, and Formspree for certain form submissions on sub-pages. We encourage you to review the privacy practices of these providers if you have questions about how they handle data.</p>
+        <h2 class="pvy-h" id="third-party-services">Third-Party Services</h2>
+        <p class="pvy-p">We use a small number of third-party services to operate this website and process the information described above:</p>
+        <ul class="pvy-list">
+          <li><strong>Vercel</strong> — hosts this website.</li>
+          <li><strong>Google Drive</strong> — securely stores documents uploaded through our intake forms.</li>
+          <li><strong>Google Sheets / Google Workspace</strong> — securely receives and stores information submitted through our request forms so our team can review and follow up.</li>
+          <li><strong>Formspree</strong> — processes submissions for some of our forms.</li>
+          <li><strong>Google Fonts</strong> — loads the typefaces used on this website; your browser may contact Google&rsquo;s servers directly to load these fonts.</li>
+        </ul>
+        <p class="pvy-p">These providers process information on our behalf and maintain their own privacy and security practices. We encourage you to review those practices directly if you have questions beyond what&rsquo;s described here.</p>
 
-        <h2 class="policy-h">Cookies</h2>
-        <p class="policy-p">Our website may use basic cookies to support functionality and improve your experience. We do not use cookies for targeted advertising or behavioral tracking.</p>
+        <h2 class="pvy-h" id="security">Information Security</h2>
+        <p class="pvy-p">We take reasonable measures to protect the information transmitted through this website and stored in connection with your service request, and we limit access to information you submit to those who need it to complete your request. That said, no method of transmission over the internet or method of electronic storage is completely secure, and we cannot guarantee absolute security.</p>
 
-        <h2 class="policy-h">Your Rights</h2>
-        <p class="policy-p">You may contact us at any time to request access to, correction of, or deletion of personal information we hold about you. We will respond to your request within a reasonable timeframe.</p>
+        <h2 class="pvy-h" id="retention">Data Retention</h2>
+        <p class="pvy-p">We retain the information you submit for as long as reasonably necessary to complete your request, respond to your inquiry, and satisfy any legal, tax, or notarial recordkeeping obligations that apply to our services. Uploaded documents are handled as described in &ldquo;Document Uploads&rdquo; above. We do not retain information longer than necessary for these purposes.</p>
 
-        <h2 class="policy-h">Children's Privacy</h2>
-        <p class="policy-p">Our services are not directed to individuals under the age of 18. We do not knowingly collect personal information from minors.</p>
+        <h2 class="pvy-h" id="your-rights">Your Privacy Rights</h2>
+        <p class="pvy-p">You may contact us at any time to request access to, correction of, or deletion of the personal information we hold about you. We will respond to valid requests within a reasonable timeframe. Depending on where you live, applicable state law may provide you with additional privacy rights; we will honor valid requests to the extent required by law.</p>
 
-        <h2 class="policy-h">Changes to This Policy</h2>
-        <p class="policy-p">We may update this Privacy Policy from time to time. When we do, we will revise the effective date at the top of this page. We encourage you to review this policy periodically.</p>
+        <h2 class="pvy-h" id="childrens-privacy">Children&rsquo;s Privacy</h2>
+        <p class="pvy-p">Our services are not directed to individuals under the age of 18, and we do not knowingly collect personal information from minors.</p>
 
-        <h2 class="policy-h">Contact Us</h2>
-        <p class="policy-p">If you have questions about this Privacy Policy or how we handle your information, please contact us:</p>
-        <ul class="policy-list">
-          <li><strong>Email:</strong> <a href="mailto:hello@inkandsealnotarypros.com" class="policy-link">hello@inkandsealnotarypros.com</a></li>
-          <li><strong>Phone:</strong> <a href="tel:13129677696" class="policy-link">(312) 967-7696</a></li>
+        <h2 class="pvy-h" id="external-links">External Links</h2>
+        <p class="pvy-p">Our website may link to third-party websites — for example, a government agency&rsquo;s site or one of the service providers described above. We are not responsible for the privacy practices or content of external websites, and we encourage you to review their privacy policies directly.</p>
+
+        <h2 class="pvy-h" id="changes">Changes to This Policy</h2>
+        <p class="pvy-p">We may update this Privacy Policy from time to time to reflect changes in our practices. When we do, we will revise the &ldquo;Last Updated&rdquo; date at the top of this page. We encourage you to review this page periodically.</p>
+
+        <h2 class="pvy-h" id="contact-us">Contact Us</h2>
+        <p class="pvy-p">If you have questions about this Privacy Policy or how we handle your information, reach us any of these ways:</p>
+        <ul class="pvy-list">
+          <li><strong>Email:</strong> <a href="mailto:hello@inkandsealnotarypros.com" class="pvy-link">hello@inkandsealnotarypros.com</a></li>
+          <li><strong>Phone or text:</strong> <a href="tel:13129677696" class="pvy-link">(312) 967-7696</a></li>
+          <li><strong>Contact page:</strong> <a href="contact.html" class="pvy-link">inkandsealnotarypros.com/contact.html</a></li>
         </ul>
 
-        <p class="policy-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
+        <p class="pvy-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
 
       </div>
     </div>
   </section>
 
-  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
   <footer class="footer" aria-label="Site footer">
 
     <div class="ft-brand-strip">
@@ -157,11 +252,11 @@
         <div class="ft-col">
           <h3 class="ft-col-title">Company</h3>
           <ul class="ft-list">
-            <li><a href="about.html"         class="ft-link">About Us</a></li>
-            <li><a href="faq.html"           class="ft-link">FAQs</a></li>
-            <li><a href="contact.html" class="ft-link">Contact</a></li>
-            <li><a href="privacy.html"       class="ft-link">Privacy Policy</a></li>
-            <li><a href="terms.html"         class="ft-link">Terms of Service</a></li>
+            <li><a href="about.html"    class="ft-link">About Us</a></li>
+            <li><a href="faq.html"      class="ft-link">FAQs</a></li>
+            <li><a href="contact.html"  class="ft-link">Contact</a></li>
+            <li><a href="privacy.html"  class="ft-link">Privacy Policy</a></li>
+            <li><a href="terms.html"    class="ft-link">Terms of Service</a></li>
           </ul>
         </div>
 
@@ -185,11 +280,17 @@
             <li>Illinois</li>
           </ul>
           <p class="ft-areas-note">Remote Online Notarization available in all 50 states. Apostille services coordinated nationwide.</p>
+
+          <!-- Social icons: Instagram, TikTok and Facebook are the three
+               requested platforms. Real profile URLs have not been
+               provided yet — do NOT invent them. Each href below is a
+               clearly-marked placeholder; replace PLACEHOLDER_*_URL with
+               the actual profile link when supplied, then remove the
+               aria-label "(coming soon)" suffix. -->
           <div class="ft-social" aria-label="Social media">
-            <a href="#" class="ft-social-link" aria-label="Facebook"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-            <a href="#" class="ft-social-link" aria-label="Instagram"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
-            <a href="#" class="ft-social-link" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-            <a href="#" class="ft-social-link" aria-label="TikTok"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+            <a href="PLACEHOLDER_INSTAGRAM_URL" class="ft-social-link" aria-label="Instagram (coming soon)"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+            <a href="PLACEHOLDER_TIKTOK_URL" class="ft-social-link" aria-label="TikTok (coming soon)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.01a8.16 8.16 0 0 0 4.78 1.52V7.08a4.85 4.85 0 0 1-1.01-.39z"/></svg></a>
+            <a href="PLACEHOLDER_FACEBOOK_URL" class="ft-social-link" aria-label="Facebook (coming soon)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
           </div>
         </div>
 

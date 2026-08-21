@@ -8640,3 +8640,115 @@ a.btn-gold:hover {
   .ctc-direct-inner { transition: none !important; }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   PRIVACY POLICY PAGE — Namespace: pvy-*
+   Hero reuses the established .abt-hero/.abt-eyebrow/.abt-rule/
+   .abt-seal shell (same as About/Contact) via a compact .pvy-hero
+   padding override — same technique as .ctc-hero. Content styling
+   below is intentionally independent from .policy-* (which
+   terms.html still uses), so this page can be rebranded without
+   touching terms.html's appearance. ═══════════════════════════ */
+.pvy-hero { padding: calc(var(--hh) + 56px) 0 64px; }
+
+.pvy-section { background: var(--ivory); padding: 76px 0 100px; }
+.pvy-wrap { max-width: 760px; margin: 0 auto; }
+
+.pvy-date {
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 20px;
+}
+.pvy-lead {
+  font-size: .96rem; font-weight: 300; line-height: 1.9;
+  color: var(--txt-b);
+  padding-bottom: 32px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Quick nav / table of contents — keeps a long legal document
+   scannable, per the "clear headings, easy to scan" requirement. */
+.pvy-toc {
+  background: var(--ivory-2);
+  border: 1px solid var(--border);
+  border-top: 2px solid rgba(212,175,55,.4);
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin: 36px 0 56px;
+}
+.pvy-toc-title {
+  font-size: .62rem; font-weight: 600;
+  letter-spacing: .28em; text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 16px;
+}
+.pvy-toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 28px;
+}
+.pvy-toc-link {
+  display: inline-block;
+  font-size: .84rem; font-weight: 500;
+  color: var(--navy);
+  border-bottom: 1px solid transparent;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.pvy-toc-link:hover { color: var(--gold-3); border-color: rgba(212,175,55,.5); }
+
+.pvy-h {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 1.9vw, 1.5rem);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -.01em;
+  margin: 52px 0 16px;
+  scroll-margin-top: calc(var(--hh) + 20px);
+}
+.pvy-h:first-of-type { margin-top: 0; }
+.pvy-p {
+  font-size: .9rem; font-weight: 300; line-height: 1.85;
+  color: var(--txt-b);
+  margin-bottom: 14px;
+}
+.pvy-list { margin: 4px 0 14px; }
+.pvy-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: .9rem; font-weight: 300; line-height: 1.8;
+  color: var(--txt-b);
+  margin-bottom: 10px;
+}
+.pvy-list li::before {
+  content: '\25C6';
+  position: absolute; left: 0; top: 1px;
+  font-size: .5rem;
+  color: var(--gold);
+}
+.pvy-list strong { color: var(--navy); font-weight: 600; }
+.pvy-link {
+  color: var(--gold-3);
+  text-decoration: underline;
+  text-decoration-color: rgba(212,175,55,.4);
+  text-underline-offset: 2px;
+  transition: color .2s var(--ease);
+}
+.pvy-link:hover { color: var(--gold); }
+.pvy-disclaimer {
+  font-size: .78rem; font-weight: 300; font-style: italic;
+  color: var(--txt-m);
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .pvy-hero { padding: calc(var(--hh) + 36px) 0 48px; }
+  .pvy-section { padding: 56px 0 72px; }
+  .pvy-toc { padding: 24px 22px; }
+  .pvy-toc-grid { grid-template-columns: 1fr; }
+  .pvy-h { margin-top: 40px; }
+}
+
