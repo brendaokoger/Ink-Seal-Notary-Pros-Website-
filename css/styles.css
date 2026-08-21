@@ -8528,3 +8528,111 @@ a.btn-gold:hover {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   CONTACT PAGE — Namespace: ctc-*
+   Deliberately thin: the hero reuses .abt-hero/.abt-eyebrow/
+   .abt-rule/.abt-seal, the routing options reuse the .abt-service
+   card, and the general inquiry form reuses the .on-form-section /
+   .on-card / .on-field / .on-input family already shared by every
+   intake form on the site. Only the pieces below are new. Kept
+   isolated at the end of the file so nothing here can affect any
+   other page. ═══════════════════════════════════════════════════ */
+
+/* Compact hero — About's hero padding is deliberately tall; Contact
+   asks for "premium and compact, no excessive empty space." Wins
+   over .abt-hero via the two-class selector without touching the
+   base rule other pages rely on. */
+.ctc-hero { padding: calc(var(--hh) + 64px) 0 72px; }
+
+/* Inline text link inside a lead paragraph (e.g. "send us a
+   message") — a quiet gold underline, not a button. */
+.ctc-inline-link {
+  color: var(--gold-3);
+  text-decoration: underline;
+  text-decoration-color: rgba(212,175,55,.45);
+  text-underline-offset: 3px;
+  transition: color .2s var(--ease), text-decoration-color .2s var(--ease);
+}
+.ctc-inline-link:hover { color: var(--gold); text-decoration-color: var(--gold); }
+
+/* ── Routing options ── */
+.ctc-options {
+  background: var(--ivory-2);
+  border-top: 1px solid var(--border);
+  padding: 100px 0 108px;
+}
+.ctc-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* ── Preferred Contact Method — small pill radios ── */
+.ctc-pill-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+.ctc-pill { position: relative; cursor: pointer; }
+.ctc-pill input {
+  position: absolute; inset: 0;
+  opacity: 0; margin: 0; cursor: pointer;
+}
+.ctc-pill span {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 74px;
+  padding: 13px 20px;
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: .78rem; font-weight: 600;
+  color: var(--navy);
+  transition: background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.ctc-pill input:checked + span {
+  background: var(--navy);
+  border-color: var(--gold-2);
+  color: var(--gold);
+}
+.ctc-pill input:focus-visible + span {
+  outline: 2px solid rgba(212,175,55,.6);
+  outline-offset: 2px;
+}
+
+/* ── Direct contact band ── */
+.ctc-direct {
+  background: var(--ivory-2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 72px 0;
+  text-align: center;
+}
+.ctc-direct-inner { max-width: 480px; margin: 0 auto; }
+.ctc-direct-phone {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -.01em;
+  margin: 4px 0 24px;
+  transition: color .2s var(--ease);
+}
+.ctc-direct-phone:hover { color: var(--gold-3); }
+.ctc-direct-social { justify-content: center; margin-bottom: 0; }
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .ctc-options-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .ctc-hero { padding: calc(var(--hh) + 40px) 0 52px; }
+  .ctc-options { padding: 64px 0 72px; }
+  .ctc-options-grid { grid-template-columns: 1fr; }
+  .ctc-direct { padding: 56px 0; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .ctc-direct-inner { transition: none !important; }
+}
+

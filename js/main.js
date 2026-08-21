@@ -109,7 +109,11 @@
       '.abt-hero-inner', '.abt-standard-lead', '.abt-principle',
       '.abt-why-text', '.abt-why-list', '.abt-services-lead',
       '.abt-service', '.abt-founder-portrait', '.abt-founder-text',
-      '.abt-cta-inner'
+      '.abt-cta-inner',
+      /* Contact page — hero/lead/option-card reveal is already covered
+         by the About selectors above (contact.html reuses those same
+         classes); only its direct-contact band is new. */
+      '.ctc-direct-inner'
     ];
     var revealEls = Array.from(document.querySelectorAll(revealSels.join(',')));
     if (revealEls.length) {
