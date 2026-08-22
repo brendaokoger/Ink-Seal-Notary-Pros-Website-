@@ -211,6 +211,13 @@
              no "$" — the Sheet column formats currency on its own. -->
         <input type="hidden" id="arEstimatedTotalField" name="estimatedTotal" value="175" />
 
+        <!-- Hague Apostille eligibility result for the selected destination
+             (see /js/hague-apostille-data.js). Only ever "Hague Apostille —
+             Eligible" — a submission can't reach Step 5 / Submit at all
+             for a non-eligible destination (see validateStep(1)), so this
+             field is either that exact value or empty. -->
+        <input type="hidden" id="arDestinationEligibilityField" name="destinationEligibility" value="" />
+
         <!-- ── STEP 1 — YOUR DOCUMENT ─────────────────────── -->
         <div class="ms-step" id="step1" data-step="1">
 
@@ -226,12 +233,40 @@
               <h2 class="on-card-title">Your Document</h2>
             </div>
 
-            <!-- Destination -->
+            <!-- Destination — searchable country dropdown. Selecting a
+                 country runs an immediate Hague Apostille Convention
+                 eligibility check (see /js/hague-apostille-data.js). A
+                 native <select> is used rather than a custom widget: it's
+                 already the pattern this form uses elsewhere (state,
+                 document type), and every major browser makes a <select>
+                 searchable via type-ahead — no redesign, no new UI
+                 paradigm, no added library. -->
             <div class="on-field-row on-field-row--1">
               <div class="on-field">
                 <label class="on-label on-label--req" for="destinationCountry">Where will this document be used?</label>
-                <input type="text" id="destinationCountry" name="destinationCountry" class="on-input"
-                       placeholder="e.g. Mexico, Germany, Italy" required />
+                <select id="destinationCountry" name="destinationCountry" class="on-select" required>
+                  <option value="" disabled selected>Select a country</option>
+                </select>
+                <p class="ar-field-helper">Start typing a country name to jump to it in the list.</p>
+              </div>
+
+              <!-- Eligible — shown immediately on selection; customer may continue -->
+              <div id="arEligibleNotice" class="ar-eligible-notice" style="display:none" role="status">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="9" cy="9" r="7.25"/><polyline points="5.5,9.2 7.8,11.5 12.5,6.5"/></svg>
+                <div>
+                  <p class="ar-eligible-notice-title">&#10003; Apostille Eligible</p>
+                  <p>This destination participates in the Hague Apostille Convention.</p>
+                </div>
+              </div>
+
+              <!-- Not eligible — blocks Step 1 from continuing; no Apostille intake for this destination -->
+              <div id="arIneligibleNotice" class="ar-ineligible-notice" style="display:none" role="alert">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="9" cy="9" r="7.25"/><line x1="9" y1="5.5" x2="9" y2="10"/><line x1="9" y1="12.3" x2="9" y2="12.4"/></svg>
+                <div>
+                  <p class="ar-ineligible-notice-title">This destination requires a different document authentication process.</p>
+                  <p>Ink &amp; Seal Notary Pros currently provides Apostille coordination for Hague Apostille Convention destinations only.</p>
+                  <a href="/contact.html" class="btn-premium">Contact Ink &amp; Seal</a>
+                </div>
               </div>
             </div>
 
@@ -1001,6 +1036,7 @@
   </footer>
 
   <script src="/js/main.js"></script>
+  <script src="/js/hague-apostille-data.js"></script>
   <script>
     (function () {
       var TOTAL_STEPS = 5;
@@ -1019,6 +1055,56 @@
           setRequired(el, isRequired);
         });
       }
+
+      // ── Step 1: destination country -> Hague Apostille eligibility ──
+      // Dataset/lookup lives in /js/hague-apostille-data.js (loaded above)
+      // so it stays a single, clearly-documented, offline-maintained
+      // module shared by nothing else redesigning this form.
+      var destinationEligible = null; // null = nothing selected yet
+      var destSelect = document.getElementById('destinationCountry');
+
+      // Populate the dropdown from the shared country list, defensively —
+      // if the data file failed to load for any reason, the field still
+      // behaves as a normal required <select> with no eligibility gate
+      // rather than silently breaking Step 1 for every customer.
+      if (destSelect && typeof HAGUE_COUNTRY_DROPDOWN_LIST !== 'undefined') {
+        HAGUE_COUNTRY_DROPDOWN_LIST.forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          destSelect.appendChild(opt);
+        });
+      }
+
+      function updateDestinationEligibility() {
+        var eligibleNotice   = document.getElementById('arEligibleNotice');
+        var ineligibleNotice = document.getElementById('arIneligibleNotice');
+        var eligibilityField = document.getElementById('arDestinationEligibilityField');
+        var val = destSelect ? destSelect.value : '';
+
+        if (!val || typeof getHagueEligibility !== 'function') {
+          destinationEligible = null;
+          if (eligibleNotice)   eligibleNotice.style.display = 'none';
+          if (ineligibleNotice) ineligibleNotice.style.display = 'none';
+          if (eligibilityField) eligibilityField.value = '';
+          return;
+        }
+
+        var result = getHagueEligibility(val);
+        destinationEligible = result.eligible;
+
+        if (eligibleNotice)   eligibleNotice.style.display   = result.eligible ? '' : 'none';
+        if (ineligibleNotice) ineligibleNotice.style.display = result.eligible ? 'none' : '';
+        // Only ever populated for an eligible destination — a non-eligible
+        // selection blocks the form before Submit is reachable (see
+        // validateStep(1)), so this never carries a "not eligible" value.
+        if (eligibilityField) eligibilityField.value = result.eligible ? 'Hague Apostille — Eligible' : '';
+
+        if (!result.eligible && ineligibleNotice) {
+          ineligibleNotice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      if (destSelect) destSelect.addEventListener('change', updateDestinationEligibility);
 
       // ── Step 1: issuing jurisdiction -> issuingState (field name
       // preserved from the prior form for backend compatibility) ──
@@ -1160,6 +1246,16 @@
             fields[i].focus();
             fields[i].reportValidity();
             fields[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+          }
+        }
+        if (n === 1) {
+          // A destination is selected (required, above) but not a Hague
+          // Apostille Convention destination — do not allow the customer
+          // into Step 2 or any further part of the intake for this request.
+          if (destinationEligible === false) {
+            var ineligibleNotice = document.getElementById('arIneligibleNotice');
+            if (ineligibleNotice) ineligibleNotice.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
           }
         }

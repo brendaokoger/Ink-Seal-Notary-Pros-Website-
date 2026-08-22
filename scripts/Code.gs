@@ -53,7 +53,7 @@ var TRANSLATION_HEADERS = [
   'Payment Status',         'Drive Folder Link'
 ];
 
-// 27 columns — order must match the Google Sheet header row. Reflects the
+// 28 columns — order must match the Google Sheet header row. Reflects the
 // CURRENT 5-step Apostille form. getHeaders() reads the sheet's actual
 // live row 1 at runtime (see below), so appendRow places each value by
 // NAME, not position — the live sheet's column order does not need to
@@ -69,16 +69,23 @@ var TRANSLATION_HEADERS = [
 // it's set to a default on every new row; the rest can still be added
 // back manually in the live sheet as admin-only columns if wanted, they
 // just won't be auto-populated by doPost).
+//
+// 'Destination Eligibility' added alongside 'Destination Country' — the
+// Step-1 Hague Apostille Convention eligibility check (see
+// /js/hague-apostille-data.js on the website) blocks submission entirely
+// for a non-eligible destination, so this column is always populated with
+// 'Hague Apostille — Eligible' on every row that reaches the sheet.
 var HEADERS = [
   'Request ID',                  'Submission Date/Time',        'Full Name',
   'Email',                       'Phone',                       'State',
-  'Preferred Contact Method',    'Destination Country',         'Issuing Jurisdiction',
-  'Issuing State',               'Document Type',               'Other Document Type',
-  'Certified Copy / Original',   'Already Notarized',           'Corporate Status',
-  'Academic Document Type',      'Document Count',              'Review Speed',
-  'Processing Speed',            'Return Delivery',             'Estimated Total',
-  'Documents Provided Later',    'Upload Folder / File Link',   'Additional Notes',
-  'Acknowledgment Accepted',     'Acknowledgment Timestamp',    'Status'
+  'Preferred Contact Method',    'Destination Country',         'Destination Eligibility',
+  'Issuing Jurisdiction',        'Issuing State',                'Document Type',
+  'Other Document Type',         'Certified Copy / Original',   'Already Notarized',
+  'Corporate Status',            'Academic Document Type',      'Document Count',
+  'Review Speed',                'Processing Speed',            'Return Delivery',
+  'Estimated Total',             'Documents Provided Later',    'Upload Folder / File Link',
+  'Additional Notes',            'Acknowledgment Accepted',     'Acknowledgment Timestamp',
+  'Status'
 ];
 
 // Maps sheet column names → form field values. Only 'Status' has no form
@@ -93,6 +100,13 @@ var FIELD_MAP = {
   'State':                       function (p)    { return p.state                 || ''; },
   'Preferred Contact Method':    function (p)    { return p.preferredContactMethod|| ''; },
   'Destination Country':         function (p)    { return p.destinationCountry    || ''; },
+  // Populated client-side only for a destination the Hague eligibility
+  // check (Step 1) approved — see /js/hague-apostille-data.js. A
+  // non-eligible destination can't reach Submit at all, so this is
+  // expected to be 'Hague Apostille — Eligible' on every row; it's read
+  // through rather than hard-coded here so a row is never mis-labeled if
+  // the client-side field is ever empty for an unexpected reason.
+  'Destination Eligibility':     function (p)    { return p.destinationEligibility || ''; },
   'Issuing Jurisdiction':        function (p)    { return p.issuingJurisdiction   || ''; },
   'Issuing State':               function (p)    { return p.issuingState          || ''; },
   'Document Type':               function (p)    { return p.documentType          || ''; },
@@ -335,10 +349,10 @@ function createApostilleIntakeSheet() {
 
   var widths = {
     1:160, 2:150, 3:160, 4:200, 5:120, 6:100,
-    7:170, 8:160, 9:170, 10:140, 11:180, 12:190,
-    13:180, 14:150, 15:150, 16:180, 17:120, 18:150,
-    19:160, 20:140, 21:130, 22:170, 23:220, 24:240,
-    25:160, 26:170, 27:150
+    7:170, 8:160, 9:190, 10:170, 11:140, 12:180,
+    13:190, 14:180, 15:150, 16:150, 17:180, 18:120,
+    19:150, 20:160, 21:140, 22:130, 23:170, 24:220,
+    25:240, 26:160, 27:170, 28:150
   };
   Object.keys(widths).forEach(function (col) {
     sheet.setColumnWidth(Number(col), widths[col]);

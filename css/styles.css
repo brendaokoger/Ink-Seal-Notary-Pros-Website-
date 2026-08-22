@@ -5065,6 +5065,55 @@ ul    { list-style: none; }
   margin: 0;
 }
 
+/* ── Step 1 — Hague Apostille destination eligibility notices ──
+   Shown the instant a destination country is selected. Same red/green
+   tokens already used by .ar-submit-error-inner and the success card's
+   #16a34a accent, so no new palette is introduced. ── */
+.ar-eligible-notice,
+.ar-ineligible-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  border-radius: 8px;
+}
+.ar-eligible-notice svg,
+.ar-ineligible-notice svg { flex-shrink: 0; margin-top: 1px; }
+.ar-eligible-notice p,
+.ar-ineligible-notice p {
+  font-size: .84rem;
+  font-weight: 300;
+  line-height: 1.6;
+  margin: 0;
+}
+.ar-eligible-notice-title,
+.ar-ineligible-notice-title {
+  font-weight: 600 !important;
+  margin-bottom: 4px !important;
+}
+
+.ar-eligible-notice {
+  background: rgba(22,163,74,.07);
+  border: 1px solid rgba(22,163,74,.3);
+  color: #14532d;
+}
+.ar-eligible-notice svg { color: #16a34a; }
+.ar-eligible-notice-title { color: #15803d; }
+
+.ar-ineligible-notice {
+  background: rgba(185,28,28,.06);
+  border: 1px solid rgba(185,28,28,.28);
+  color: #7a1616;
+}
+.ar-ineligible-notice svg { color: #9a1c1c; }
+.ar-ineligible-notice-title { color: #9a1c1c; }
+.ar-ineligible-notice .btn-premium {
+  margin-top: 12px;
+  padding: 11px 24px;
+  font-size: .6rem;
+}
+
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .ar-success-card     { padding: 40px 28px 36px; }
