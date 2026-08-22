@@ -39,24 +39,25 @@
   <section class="on-form-section">
     <div class="container">
 
-      <!-- Success message — shown ONLY after a confirmed Formspree response.
-           Reuses the same branded success-card system as the Apostille form
-           (navy/gold/green, animated check) so the RON confirmation looks
-           and feels like the rest of the site rather than a generic
-           Formspree thank-you page. -->
+      <!-- Success message — shown ONLY after a CONFIRMED Google Apps Script
+           save (json.success && json.requestId — see the submit handler
+           below), never merely because the browser attempted to submit.
+           Reuses the same branded success-card system as the Apostille
+           form (navy/gold, animated check) — GOLD here per spec, not the
+           green used on the Apostille confirmation screen. -->
       <div class="on-success" id="onSuccess" role="alert" aria-live="polite">
         <div class="ar-success-card">
 
-          <!-- Animated green checkmark (required: green, not gold) -->
+          <!-- Animated GOLD checkmark (required: gold, not green) -->
           <div class="ar-success-icon-wrap" aria-hidden="true">
             <svg class="ar-success-svg" viewBox="0 0 64 64" fill="none" width="80" height="80">
               <circle class="ar-success-circle" cx="32" cy="32" r="29"
-                      fill="rgba(22,163,74,.08)"
-                      stroke="#16a34a" stroke-width="2.2"
+                      fill="rgba(212,175,55,.08)"
+                      stroke="#D4AF37" stroke-width="2.2"
                       stroke-linecap="round"/>
               <polyline class="ar-success-check"
                         points="19,33 28,42 45,23"
-                        stroke="#16a34a" stroke-width="3.5"
+                        stroke="#D4AF37" stroke-width="3.5"
                         stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
@@ -70,24 +71,21 @@
             <span class="ar-success-rule-line"></span>
           </div>
 
-          <!-- Reserved for a RON Request ID — no backend request-ID system
-               exists for RON yet (see report). Kept hidden and unused
-               rather than fabricated; wiring a real one in later (e.g.
-               when BlueNotary automation is added, see the "future
-               automation" JS section below) only requires setting
-               ronRequestId.textContent and un-hiding ronRequestIdWrap. -->
+          <!-- Populated from the confirmed Google Apps Script response —
+               never shown until a real save is verified (see submit
+               handler). Format: IS-RON-YYYYMMDD-XXXX. -->
           <div class="ar-request-number" id="ronRequestIdWrap" style="display:none">
-            <p class="ar-request-number-label">Request Number</p>
+            <p class="ar-request-number-label">Request ID</p>
             <p class="ar-request-number-value" id="ronRequestIdValue">&mdash;</p>
           </div>
 
           <div class="ar-whats-next">
             <p class="ar-whats-next-title">What Happens Next</p>
             <ol class="ar-whats-next-list">
-              <li><strong>Document Review</strong> &mdash; Ink &amp; Seal will review your request and any documents you provided.</li>
-              <li><strong>Secure Invitation</strong> &mdash; Once your request is ready, you will receive an email invitation to our secure remote notarization platform.</li>
-              <li><strong>Verify &amp; Pay</strong> &mdash; Follow the invitation to complete identity verification and secure payment through the platform.</li>
-              <li><strong>Join Your Session</strong> &mdash; After completing the required steps, join your live video notarization session at the scheduled time.</li>
+              <li>Ink &amp; Seal reviews the request and documents.</li>
+              <li>The customer receives a secure remote notarization invitation.</li>
+              <li>The customer completes the platform&rsquo;s required identity verification and payment.</li>
+              <li>The customer joins the live online notarization session.</li>
             </ol>
           </div>
 
@@ -98,14 +96,31 @@
                 <polyline points="2,5 10,12 18,5"/>
               </svg>
             </span>
-            <p>Please monitor your email and text messages for your invitation and next-step instructions.</p>
+            <p>Please monitor the email address provided in this request for your invitation and next-step instructions.</p>
+          </div>
+
+          <!-- Shown only if the intake row saved (Request ID above is
+               already valid) but the background Drive upload subsequently
+               failed. Retrying reuses the SAME Request ID — it never
+               creates another RON request. -->
+          <div class="ar-upload-issue" id="ronUploadIssue" style="display:none">
+            <div class="ar-info-card-head">
+              <span class="ar-info-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+              </span>
+              <h3 class="ar-info-card-title">Document Upload Issue</h3>
+            </div>
+            <p>Your request was received and your Request ID above is valid. We weren&rsquo;t able to upload your documents automatically. You can retry below, or email them to <a href="mailto:hello@inkandsealnotarypros.com" class="ar-inline-link">hello@inkandsealnotarypros.com</a> and reference your Request ID.</p>
+            <button type="button" class="btn-premium" id="ronRetryUploadBtn">Retry Upload</button>
+            <p class="ar-upload-issue-status" id="ronRetryUploadStatus" style="display:none"></p>
           </div>
 
         </div>
       </div>
 
-      <!-- Submission error — shown only when Formspree did NOT confirm a
-           successful save. The form itself stays visible underneath;
+      <!-- Submission error — shown only when the backend did NOT confirm a
+           successful save (network failure, or a response that came back
+           reporting failure). The form itself stays visible underneath;
            nothing here clears any entered data. -->
       <div class="ar-submit-error" id="ronSubmitError" role="alert" aria-live="assertive" style="display:none">
         <div class="ar-submit-error-inner">
@@ -121,29 +136,51 @@
       <p class="form-intro-text" id="ronIntroText">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
 
       <!-- FORM
-           Field-name reference for future BlueNotary/automation work:
+           Field-name reference:
              fullName, email, phone, signerState, preferredContactMethod  (Step 1)
              documentType, numDocs, sealCount, signerCount, addlSignersCount,
              additionalSigner{N}Name/Email, witnessRequired, notes          (Step 2)
-             documents (file, multiple)                                    (Step 3)
+             uploadedFileCount (files themselves go to Google Drive via
+             /api/upload-to-drive, NOT through this form — see Step 3)      (Step 3)
              asapPreferred, appointmentDate, appointmentTime, timezone      (Step 4)
              estimatedTotal, ronTermsAck                                   (Step 5)
-           Formspree still receives all of this as-is (see section 5/6 of
-           the accompanying report for why no GAS/Sheets backend was added
-           here yet). -->
+
+           PRIMARY submission target is now /api/submit-intake -> Google
+           Apps Script -> the "RON Requests" tab (same spreadsheet as
+           Apostille). Formspree below is kept configured and still
+           receives a best-effort copy of every CONFIRMED submission
+           (fired only after the Apps Script save succeeds) so nothing
+           currently depending on Formspree notifications loses them
+           during this transition — but Formspree's response no longer
+           gates the success screen, Request ID, or Drive upload. See the
+           submit handler and the accompanying report for exactly when
+           it's safe to remove the Formspree call entirely. -->
       <form class="on-form" id="onForm"
             action="https://formspree.io/f/mpqnojvj"
             method="POST"
-            enctype="multipart/form-data"
             novalidate>
 
-        <!-- Formspree subject (hidden) -->
+        <!-- Formspree subject — kept for the best-effort secondary
+             Formspree copy (see submit handler); no longer the primary
+             submission target. -->
         <input type="hidden" name="_subject" value="New Online Notarization Request — Ink &amp; Seal Notary Pros" />
+
+        <!-- Routes this submission to handleRonSubmission() in Code.gs
+             (doPost checks formType === 'ron' before falling through to
+             the Apostille branch) — does not affect the Formspree copy,
+             which ignores unrecognized fields. -->
+        <input type="hidden" name="formType" value="ron" />
 
         <!-- Calculator's final total — written by updateEstimate() (same
              unchanged pricing formula) so the number the customer sees on
-             the Review step is the exact number Formspree receives. -->
+             the Review step is the exact number that gets submitted and
+             stored. -->
         <input type="hidden" id="estimatedTotalField" name="estimatedTotal" value="25" />
+
+        <!-- File count at submit time — lets the backend derive "Documents
+             Provided Later" without waiting on the separate, independent
+             Drive-upload call (see attemptRonDriveUpload()). -->
+        <input type="hidden" id="ronUploadedFileCountField" name="uploadedFileCount" value="0" />
 
         <!-- ══ STEP 1: Your Information ══ -->
         <div class="ms-step" id="step1" data-step="1">
@@ -352,12 +389,14 @@
 
             <p class="ar-field-helper" style="margin-bottom:18px">Optional, but recommended — you may also bring your documents to your live session instead.</p>
 
-            <!-- Real, named file input so it's included in the form's
-                 normal multipart submission to Formspree (unlike the
-                 Apostille form's dropzone, which routes files through a
-                 separate Google Drive API and deliberately omits `name`). -->
+            <!-- No `name` attribute — same reasoning as the Apostille
+                 form's dropzone: files are uploaded through the Google
+                 Apps Script Drive endpoint (see attemptRonDriveUpload())
+                 as a separate, independent call, NOT through this form's
+                 own submission, so they must never ride along in either
+                 the Formspree POST or the /api/submit-intake JSON body. -->
             <div class="ar-dropzone" id="ronDropzone" role="region" aria-label="Document upload area">
-              <input type="file" id="ronDocInput" name="documents"
+              <input type="file" id="ronDocInput"
                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png"
                      multiple class="ar-dropzone-input" tabindex="-1" />
               <div class="ar-dropzone-body">
@@ -1109,21 +1148,35 @@
         setRev('revTimezone', tzLabel);
       }
 
-      /* ── Form submit — reliability-first, matches the Apostille form's
-         pattern: the branded success screen is shown ONLY after Formspree
-         confirms the submission (response.ok). Any other outcome — a
-         network failure, or a response that came back but reported
-         failure — leaves the form fully visible with everything the
-         customer entered still intact, shows a clear error, and lets
-         them retry. Formspree still receives the raw submission (see
-         report); the branded on-site confirmation replaces its default
-         redirect/thank-you page via this fetch + preventDefault. ── */
+      /* ── Form submit — reliability-first, GAS is now the PRIMARY,
+         authoritative save. The branded success screen and Request ID
+         are shown ONLY after /api/submit-intake -> Google Apps Script
+         confirms a real row was saved to the RON Requests tab
+         (json.success && json.requestId) — never merely because the
+         browser attempted to submit. Any other outcome — a network
+         failure, or a response that came back but reported failure —
+         leaves the form fully visible with everything the customer
+         entered still intact, shows a clear error, and lets them retry.
+         Formspree is fired as a SECONDARY, best-effort, non-blocking
+         copy only AFTER a confirmed GAS save (see submitToFormspreeBestEffort_
+         below) — its outcome never affects the success screen, the
+         Request ID, or the Drive upload. This is the "keep Formspree
+         configured, don't let it gate anything" transition state
+         described in the report; once the GAS path has been verified
+         live, that secondary call can be removed. ── */
       var form         = document.getElementById('onForm');
       var success      = document.getElementById('onSuccess');
       var introText    = document.getElementById('ronIntroText');
       var submitError  = document.getElementById('ronSubmitError');
       var submitErrorText = document.getElementById('ronSubmitErrorText');
-      var isSubmitting = false;
+      var ronRequestIdWrap  = document.getElementById('ronRequestIdWrap');
+      var ronRequestIdValue = document.getElementById('ronRequestIdValue');
+      var ronUploadIssue    = document.getElementById('ronUploadIssue');
+      var ronRetryUploadBtn = document.getElementById('ronRetryUploadBtn');
+      var ronRetryStatus    = document.getElementById('ronRetryUploadStatus');
+      var isSubmitting  = false;
+      var lastRonRequestId = null;
+      var lastRonFullName  = null;
 
       function hideSubmitError() {
         if (submitError) submitError.style.display = 'none';
@@ -1134,6 +1187,91 @@
           submitError.style.display = '';
           submitError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+      }
+
+      // Best-effort, fire-and-forget secondary copy to Formspree — never
+      // awaited by the submit handler, never shown to the customer,
+      // failures only logged. Only called after a CONFIRMED GAS save, so
+      // Formspree never receives a notification for a request that
+      // didn't actually make it into the RON Requests tab.
+      function submitToFormspreeBestEffort_(formObj) {
+        try {
+          var data = new FormData();
+          Object.keys(formObj).forEach(function (k) { data.append(k, formObj[k]); });
+          if (formObj.email) data.append('_replyto', formObj.email);
+          fetch('https://formspree.io/f/mpqnojvj', {
+            method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+          }).then(function (r) {
+            console.log('[ron-form] Formspree secondary copy:', r.ok ? 'ok' : 'non-ok (' + r.status + ')');
+          }).catch(function (err) {
+            console.warn('[ron-form] Formspree secondary copy failed (non-blocking):', err && err.message ? err.message : String(err));
+          });
+        } catch (err) {
+          console.warn('[ron-form] Formspree secondary copy setup failed (non-blocking):', err && err.message ? err.message : String(err));
+        }
+      }
+
+      // Converts the currently-selected RON files to base64 and posts them
+      // to /api/upload-to-drive with the confirmed Request ID as
+      // orderNumber. Shared by the initial post-submit attempt and the
+      // "Retry Upload" button — both need identical logic, and neither
+      // ever generates a new Request ID (the existing one is always
+      // reused), so a retry can never create a duplicate RON request.
+      function attemptRonDriveUpload(requestId, nameVal) {
+        if (ronSelectedFiles.length === 0) {
+          console.log('[ron-form] No files selected — skipping Drive upload');
+          return Promise.resolve({ success: true, skipped: true });
+        }
+        console.log('[ron-form] Starting Drive upload |', ronSelectedFiles.length, 'file(s) | request:', requestId);
+        return Promise.all(ronSelectedFiles.map(function (f) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function () { resolve({ name: f.name, data: reader.result }); };
+            reader.onerror = reject;
+            reader.readAsDataURL(f);
+          });
+        }))
+        .then(function (b64files) {
+          var payload = JSON.stringify({ clientName: nameVal, orderNumber: requestId, files: b64files });
+          return fetch('/api/upload-to-drive', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload
+          });
+        })
+        .then(function (r) {
+          return r.text().then(function (text) {
+            try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+          });
+        })
+        .then(function (drv) {
+          if (drv.success) {
+            console.log('[ron-form] Drive upload complete | folder:', drv.folderLink, '| files:', drv.uploadCount,
+                        drv.skipped && drv.skipped.length ? ('| skipped: ' + drv.skipped.join(', ')) : '');
+          } else {
+            console.warn('[ron-form] Drive upload failed:', drv.error);
+          }
+          return drv;
+        })
+        .catch(function (err) {
+          console.warn('[ron-form] Drive upload network error:', err && err.message ? err.message : String(err));
+          return { success: false, error: err && err.message ? err.message : String(err) };
+        });
+      }
+
+      if (ronRetryUploadBtn) {
+        ronRetryUploadBtn.addEventListener('click', function () {
+          if (!lastRonRequestId) return;
+          ronRetryUploadBtn.disabled = true;
+          if (ronRetryStatus) { ronRetryStatus.style.display = ''; ronRetryStatus.textContent = 'Retrying upload…'; }
+          attemptRonDriveUpload(lastRonRequestId, lastRonFullName).then(function (drv) {
+            ronRetryUploadBtn.disabled = false;
+            if (drv.success) {
+              if (ronUploadIssue) ronUploadIssue.style.display = 'none';
+              if (ronRetryStatus) ronRetryStatus.style.display = 'none';
+            } else if (ronRetryStatus) {
+              ronRetryStatus.textContent = 'Retry failed — please email your documents to hello@inkandsealnotarypros.com, referencing your Request ID.';
+            }
+          });
+        });
       }
 
       if (form && success) {
@@ -1147,54 +1285,88 @@
           var submitBtn = form.querySelector('button[type="submit"]');
           if (submitBtn) submitBtn.disabled = true;
 
-          var data = new FormData(form);
-          var emailEl = document.getElementById('email');
-          if (emailEl && emailEl.value) data.append('_replyto', emailEl.value);
+          var fileCountEl = document.getElementById('ronUploadedFileCountField');
+          if (fileCountEl) fileCountEl.value = ronSelectedFiles.length;
 
-          fetch('https://formspree.io/f/mpqnojvj', {
-            method: 'POST',
-            body: data,
-            headers: { 'Accept': 'application/json' }
+          var nameInput = form.querySelector('[name="fullName"]');
+          var nameVal   = nameInput ? nameInput.value.trim() : 'Client';
+
+          // Collect all form fields into a plain object for JSON transport
+          // to /api/submit-intake -> Google Apps Script. The file input has
+          // no `name` attribute (see Step 3 markup) so files are never
+          // part of this payload.
+          var formObj = {};
+          var fd = new FormData(form);
+          fd.forEach(function (value, key) { formObj[key] = value; });
+
+          console.log('[ron-form] Starting GAS submission | fields:', Object.keys(formObj).join(', '));
+
+          fetch('/api/submit-intake', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(formObj)
           })
-          .then(function (response) {
-            if (response.ok) {
-              // Confirmed save — now, and only now, show the branded
-              // Ink & Seal success screen. Formspree's own redirect/
-              // thank-you page is never reached because the native
-              // form submission was prevented above.
-              form.style.display = 'none';
-              if (introText) introText.style.display = 'none';
-              success.classList.add('show');
-              success.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-              return response.json().then(function (payload) {
-                var msg = (payload.errors || [])
-                  .map(function (err) { return err.message; })
-                  .join(' ') || 'We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost — please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.';
-                showSubmitError(msg);
-                isSubmitting = false;
-                if (submitBtn) submitBtn.disabled = false;
-              });
+          .then(function (r) {
+            return r.text().then(function (text) {
+              try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+            });
+          })
+          .then(function (json) {
+            if (!json || json.success !== true || !json.requestId) {
+              // Backend responded, but did NOT confirm a successful save.
+              // Do not show the success screen; do not touch the form.
+              console.warn('[ron-form] Submission not confirmed:', json && (json.error || JSON.stringify(json.gasResponse || json)));
+              isSubmitting = false;
+              if (submitBtn) submitBtn.disabled = false;
+              showSubmitError('We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost — please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
+              return;
             }
+
+            console.log('[ron-form] Submission confirmed | request:', json.requestId);
+            lastRonRequestId = json.requestId;
+            lastRonFullName  = nameVal;
+
+            // ── Confirmed save — now, and only now, show the success screen ──
+            form.style.display = 'none';
+            if (introText) introText.style.display = 'none';
+            if (ronRequestIdValue) ronRequestIdValue.textContent = json.requestId;
+            if (ronRequestIdWrap)  ronRequestIdWrap.style.display = '';
+            success.classList.add('show');
+            success.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // ── Secondary, best-effort Formspree copy — independent of
+            // the confirmed save above, never affects what the customer sees. ──
+            submitToFormspreeBestEffort_(formObj);
+
+            // ── Google Drive upload — independent of intake success. Its
+            // own failure never hides the confirmation already shown; it
+            // surfaces as a separate, honest sub-notice with a retry
+            // mechanism that reuses the SAME Request ID (never creates a
+            // second RON request). ──
+            attemptRonDriveUpload(json.requestId, nameVal).then(function (drv) {
+              if (!drv.success && !drv.skipped && ronUploadIssue) {
+                ronUploadIssue.style.display = '';
+              }
+            });
           })
-          .catch(function () {
-            showSubmitError('Unable to reach our server. Please check your connection and try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
+          .catch(function (err) {
+            // Genuine network error — can't reach /api/submit-intake at all
+            console.error('[ron-form] Network error:', err && err.message ? err.message : String(err));
             isSubmitting = false;
             if (submitBtn) submitBtn.disabled = false;
+            showSubmitError('Unable to reach our server. Please check your connection and try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
           });
         });
       }
 
       /* ── Reserved for future BlueNotary automation ──────────────────
-         Do not add BlueNotary API calls or credentials here yet (see
-         report, section 6). When that automation exists, the intended
-         hook point is inside the `response.ok` branch above: after
-         Formspree confirms the request was received, an additional
-         (server-side, credential-free from this file's perspective)
-         call would create/queue the BlueNotary session and could return
-         a RON Request ID to display via ronRequestIdWrap/ronRequestIdValue
-         above. No changes to the form fields or steps should be needed
-         to wire that in. ── */
+         Do not add BlueNotary API calls, webhooks, or credentials here
+         yet (see report). No BlueNotary integration exists in this
+         codebase. When it's built, the intended hook point is
+         server-side, inside handleRonSubmission() in Code.gs (see the
+         comment there) — after the row is appended, not in this
+         client-side file — so nothing here should need to change to
+         wire it in. ── */
 
     }());
   </script>
