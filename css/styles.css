@@ -4943,6 +4943,128 @@ ul    { list-style: none; }
   margin: 0;
 }
 
+/* ── Dynamic request number ── */
+.ar-request-number {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 18px 24px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.ar-request-number-label {
+  font-size: .58rem;
+  font-weight: 700;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 6px;
+}
+.ar-request-number-value {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: .02em;
+}
+
+/* ── What Happens Next ── */
+.ar-whats-next {
+  text-align: left;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.ar-whats-next-title {
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+  margin-bottom: 14px;
+}
+.ar-whats-next-list {
+  list-style: none;
+  counter-reset: whatsnext;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ar-whats-next-list li {
+  counter-increment: whatsnext;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: .88rem;
+  font-weight: 300;
+  color: var(--txt-b);
+  line-height: 1.6;
+}
+.ar-whats-next-list li::before {
+  content: counter(whatsnext);
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--gold-2);
+  font-family: var(--serif);
+  font-size: .74rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Upload-issue sub-notice (shown only if intake saved but the
+   background Drive upload failed) ── */
+.ar-upload-issue {
+  text-align: left;
+  margin-top: 24px;
+  padding: 20px 22px;
+  background: rgba(212,175,55,.05);
+  border: 1px solid rgba(212,175,55,.22);
+  border-radius: 8px;
+}
+.ar-upload-issue p {
+  font-size: .86rem;
+  font-weight: 300;
+  color: var(--txt-b);
+  line-height: 1.7;
+  margin: 10px 0 16px;
+}
+.ar-upload-issue .btn-premium {
+  padding: 13px 28px;
+  font-size: .62rem;
+}
+.ar-upload-issue-status {
+  font-size: .78rem;
+  color: var(--txt-m);
+  margin-top: 10px !important;
+  margin-bottom: 0 !important;
+}
+
+/* ── Submission error banner (backend did not confirm success) ── */
+.ar-submit-error {
+  padding: 20px 0;
+}
+.ar-submit-error-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 18px 22px;
+  background: rgba(185,28,28,.06);
+  border: 1px solid rgba(185,28,28,.28);
+  border-radius: 8px;
+  color: #9a1c1c;
+}
+.ar-submit-error-inner svg { flex-shrink: 0; margin-top: 1px; }
+.ar-submit-error-inner p {
+  font-size: .88rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #7a1616;
+  margin: 0;
+}
+
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .ar-success-card     { padding: 40px 28px 36px; }

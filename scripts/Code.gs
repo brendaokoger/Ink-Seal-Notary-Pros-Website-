@@ -33,41 +33,65 @@ var TRANSLATION_HEADERS = [
   'Payment Status',         'Drive Folder Link'
 ];
 
-// 32 base columns — order must match the Google Sheet header row
+// 27 columns — order must match the Google Sheet header row. Reflects the
+// CURRENT 5-step Apostille form. getHeaders() reads the sheet's actual
+// live row 1 at runtime (see below), so appendRow places each value by
+// NAME, not position — the live sheet's column order does not need to
+// match this array exactly, only the column NAMES need to match.
+//
+// Replaces the older 32-column layout: dropped 'Order Number' (renamed
+// 'Request ID'), 'Certified Vital Record' (the isVitalRecord question no
+// longer exists in the form), 'RON Needed' (never asked in this form),
+// 'Signature' (the draw/type-to-sign UI was removed — no valid source
+// remains), 'Dropbox Folder Link' (renamed 'Upload Folder / File Link'),
+// and the admin-only Quote/Payment/Shipment-tracking columns that were
+// never populated from form data in the first place (Status is kept —
+// it's set to a default on every new row; the rest can still be added
+// back manually in the live sheet as admin-only columns if wanted, they
+// just won't be auto-populated by doPost).
 var HEADERS = [
-  'Order Number',                'Intake Date',                 'Client First Name',
-  'Client Last Name',            'Email Address',               'Phone Number',
-  'State',                       'Destination Country',         'Issuing State',
-  'Document Type',               'Document Count',              'Certified Vital Record',
-  'Certified Original Required', 'Already Notarized',           'RON Needed',
-  'Review Type',                 'Notes',                       'Signature',
-  'Status',                      'Quote Amount',                'Quote Sent Date',
-  'Payment Status',              'Payment Received Date',       'Payment Link Sent',
-  'Processing Start Date',       'Completion Date',             'Return Shipping Method',
-  'Tracking Number',             'Delivery Status',             'Delivery Date',
-  'Delivery Confirmed',          'Dropbox Folder Link'
+  'Request ID',                  'Submission Date/Time',        'Full Name',
+  'Email',                       'Phone',                       'State',
+  'Preferred Contact Method',    'Destination Country',         'Issuing Jurisdiction',
+  'Issuing State',               'Document Type',               'Other Document Type',
+  'Certified Copy / Original',   'Already Notarized',           'Corporate Status',
+  'Academic Document Type',      'Document Count',              'Review Speed',
+  'Processing Speed',            'Return Delivery',             'Estimated Total',
+  'Documents Provided Later',    'Upload Folder / File Link',   'Additional Notes',
+  'Acknowledgment Accepted',     'Acknowledgment Timestamp',    'Status'
 ];
 
-// Maps form field names → sheet values.  Admin-only columns are left blank.
+// Maps sheet column names → form field values. Only 'Status' has no form
+// source (defaulted below) and no admin-only columns remain unmapped —
+// every column here is populated from the actual current form.
 var FIELD_MAP = {
-  'Order Number':                function (p, m) { return m.orderNum;               },
-  'Intake Date':                 function (p, m) { return m.intakeDate;             },
-  'Client First Name':           function (p, m) { return m.firstName;              },
-  'Client Last Name':            function (p, m) { return m.lastName;               },
-  'Email Address':               function (p)    { return p.email                || ''; },
-  'Phone Number':                function (p)    { return p.phone                || ''; },
-  'State':                       function (p)    { return p.state                || ''; },
-  'Destination Country':         function (p)    { return p.destinationCountry   || ''; },
-  'Issuing State':               function (p)    { return p.issuingState         || ''; },
-  'Document Type':               function (p)    { return p.documentType         || ''; },
-  'Document Count':              function (p)    { return p.documentCount        || ''; },
-  'Certified Vital Record':      function (p)    { return p.isVitalRecord        || ''; },
-  'Certified Original Required': function (p)    { return p.hasCertifiedOriginal || ''; },
-  'Already Notarized':           function (p)    { return p.isAlreadyNotarized   || ''; },
-  'Review Type':                 function (p, m) { return m.reviewLabel;             },
-  'Notes':                       function (p)    { return p.notes                || ''; },
-  'Signature':                   function (p, m) { return m.sigValue;               },
-  'Dropbox Folder Link':         function (p)    { return p.dropboxFolderLink    || ''; }
+  'Request ID':                  function (p, m) { return m.requestId;              },
+  'Submission Date/Time':        function (p, m) { return m.submittedAt;            },
+  'Full Name':                   function (p)    { return p.fullName              || ''; },
+  'Email':                       function (p)    { return p.email                 || ''; },
+  'Phone':                       function (p)    { return p.phone                 || ''; },
+  'State':                       function (p)    { return p.state                 || ''; },
+  'Preferred Contact Method':    function (p)    { return p.preferredContactMethod|| ''; },
+  'Destination Country':         function (p)    { return p.destinationCountry    || ''; },
+  'Issuing Jurisdiction':        function (p)    { return p.issuingJurisdiction   || ''; },
+  'Issuing State':               function (p)    { return p.issuingState          || ''; },
+  'Document Type':               function (p)    { return p.documentType          || ''; },
+  'Other Document Type':         function (p)    { return p.documentTypeOther     || ''; },
+  'Certified Copy / Original':   function (p)    { return p.hasCertifiedOriginal  || ''; },
+  'Already Notarized':           function (p)    { return p.isAlreadyNotarized    || ''; },
+  'Corporate Status':            function (p)    { return p.corporateStatus       || ''; },
+  'Academic Document Type':      function (p)    { return p.academicDocumentType  || ''; },
+  'Document Count':              function (p)    { return p.documentCount         || ''; },
+  'Review Speed':                function (p, m) { return m.reviewLabel;              },
+  'Processing Speed':            function (p, m) { return m.processingLabel;          },
+  'Return Delivery':             function (p, m) { return m.deliveryLabel;            },
+  'Estimated Total':             function (p)    { return p.estimatedTotal        || ''; },
+  'Documents Provided Later':    function (p)    { return p.documentsLater ? 'Yes' : 'No'; },
+  'Upload Folder / File Link':   function (p)    { return p.uploadFolderLink      || ''; },
+  'Additional Notes':            function (p)    { return p.notes                 || ''; },
+  'Acknowledgment Accepted':     function (p)    { return p.ack1 ? 'Yes' : 'No';        },
+  'Acknowledgment Timestamp':    function (p, m) { return p.ack1 ? m.submittedAt : '';  },
+  'Status':                      function ()     { return 'Review Pending';             }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -101,29 +125,34 @@ function doPost(e) {
     Logger.log('Worksheet opened : ' + sheet.getName());
     Logger.log('Rows before append: ' + sheet.getLastRow());
 
-    var tz         = Session.getScriptTimeZone();
-    var intakeDate = Utilities.formatDate(new Date(), tz, 'MM/dd/yyyy hh:mm a');
+    var tz          = Session.getScriptTimeZone();
+    var submittedAt = Utilities.formatDate(new Date(), tz, 'MM/dd/yyyy hh:mm a');
 
-    var orderNum = (p.orderNumber || '').trim();
-    if (!orderNum) orderNum = generateOrderNumber(sheet);
+    // Request ID is always generated here — the client never sends one,
+    // since none exists until a save is actually confirmed. Uses a
+    // lock-protected, per-day persistent counter (see generateRequestId),
+    // not row count, so concurrent submissions can't collide.
+    var requestId = generateRequestId();
 
-    var fullName  = (p.fullName || '').trim();
-    var spaceIdx  = fullName.indexOf(' ');
-    var firstName = spaceIdx > -1 ? fullName.slice(0, spaceIdx)  : fullName;
-    var lastName  = spaceIdx > -1 ? fullName.slice(spaceIdx + 1) : '';
+    var fullName = (p.fullName || '').trim();
 
     var reviewLabel = (p.sameDayReview || '').toLowerCase().trim() === 'same-day'
       ? 'Same-Day Review'
       : 'Standard Review';
 
-    var sigValue = (p.signature && p.signature.length > 10)
-      ? 'Captured — ' + intakeDate
-      : '';
+    var processingLabel = (p.processingSpeed || '').toLowerCase().trim() === 'rush'
+      ? 'Rush Processing'
+      : 'Standard Processing';
+
+    var deliveryRaw   = (p.returnShipping || '').toLowerCase().trim();
+    var deliveryLabel = deliveryRaw === 'overnight'    ? 'Overnight'
+                       : deliveryRaw === 'international' ? 'International'
+                       : 'USPS Priority';
 
     var meta = {
-      orderNum: orderNum, intakeDate: intakeDate,
-      firstName: firstName, lastName: lastName,
-      reviewLabel: reviewLabel, sigValue: sigValue
+      requestId: requestId, submittedAt: submittedAt,
+      reviewLabel: reviewLabel, processingLabel: processingLabel,
+      deliveryLabel: deliveryLabel
     };
 
     var headers = getHeaders(sheet);
@@ -132,10 +161,13 @@ function doPost(e) {
     }));
 
     Logger.log('appendRow complete — row number: ' + sheet.getLastRow());
-    Logger.log('Order: ' + orderNum + ' | Name: ' + fullName);
+    Logger.log('Request: ' + requestId + ' | Name: ' + fullName);
 
+    // 'order' kept alongside 'requestId' for backward compatibility with
+    // any code still reading the old key name (e.g. the Drive-upload
+    // hand-off) — both carry the same value.
     return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok', order: orderNum }))
+      .createTextOutput(JSON.stringify({ status: 'ok', requestId: requestId, order: requestId }))
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
@@ -195,7 +227,7 @@ function handleFileUpload(p) {
     // 5. Write the folder URL back to the matching sheet row (apostille or translation)
     if (orderNumber) {
       var ss = SpreadsheetApp.openById(SHEET_ID);
-      var wrote = writeFolderLinkToSheet_(ss, SHEET_NAME, 'Dropbox Folder Link', orderNumber, folderUrl);
+      var wrote = writeFolderLinkToSheet_(ss, SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
       if (!wrote) writeFolderLinkToSheet_(ss, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
     }
 
@@ -243,39 +275,30 @@ function setupNewSheet() {
   sheet.setConditionalFormatRules([bandRule]);
 
   var widths = {
-    1:160, 2:150, 3:120, 4:120, 5:210, 6:130,
-    7:120, 8:160, 9:150, 10:160, 11:110, 12:130,
-    13:165, 14:130, 15:110, 16:140, 17:220, 18:140,
-    19:140, 20:110, 21:130, 22:130, 23:150, 24:140,
-    25:150, 26:130, 27:170, 28:160, 29:150, 30:120,
-    31:130, 32:200
+    1:160, 2:150, 3:160, 4:200, 5:120, 6:100,
+    7:170, 8:160, 9:170, 10:140, 11:180, 12:190,
+    13:180, 14:150, 15:150, 16:180, 17:120, 18:150,
+    19:160, 20:140, 21:130, 22:170, 23:220, 24:240,
+    25:160, 26:170, 27:150
   };
   Object.keys(widths).forEach(function (col) {
     sheet.setColumnWidth(Number(col), widths[col]);
   });
 
-  addDropdown(sheet, 'RON Needed',           ['Yes','No','Not Sure']);
-  addDropdown(sheet, 'Review Type',          ['Standard Review','Same-Day Review']);
+  addDropdown(sheet, 'Review Speed',              ['Standard Review','Same-Day Review']);
+  addDropdown(sheet, 'Processing Speed',          ['Standard Processing','Rush Processing']);
+  addDropdown(sheet, 'Return Delivery',           ['USPS Priority','Overnight','International']);
+  addDropdown(sheet, 'Certified Copy / Original', ['Yes','No','Not Sure']);
+  addDropdown(sheet, 'Already Notarized',         ['Yes','No','Not Sure']);
+  addDropdown(sheet, 'Corporate Status',          ['Yes','No','Not Sure','Not Applicable']);
+  addDropdown(sheet, 'Documents Provided Later',  ['Yes','No']);
+  addDropdown(sheet, 'Acknowledgment Accepted',   ['Yes','No']);
   addDropdown(sheet, 'Status', [
     'Review Pending','Quote Sent','Awaiting Documents','Awaiting Payment',
     'Processing','Completed','Shipped','Delivered','Closed','Cancelled'
   ]);
-  addDropdown(sheet, 'Payment Status',
-    ['Unpaid','Invoice Sent','Partially Paid','Paid','Refunded']);
-  addDropdown(sheet, 'Return Shipping Method', [
-    'USPS Priority','USPS Express','FedEx Overnight','UPS Overnight',
-    'Client Provided Label','International Shipping','Local Pickup'
-  ]);
-  addDropdown(sheet, 'Delivery Status', [
-    'Pending Shipment','Shipped','In Transit','Delivered','Returned','Delivery Exception'
-  ]);
-  addDropdown(sheet, 'Delivery Confirmed', ['Yes','No']);
 
-  setColumnFormat(sheet, 'Quote Amount', '$#,##0.00');
-  ['Quote Sent Date','Payment Received Date','Payment Link Sent',
-   'Processing Start Date','Completion Date','Delivery Date'].forEach(function (c) {
-    setColumnFormat(sheet, c, 'MM/dd/yyyy');
-  });
+  setColumnFormat(sheet, 'Estimated Total', '$#,##0.00');
 
   Logger.log('Sheet created: ' + ss.getName());
   Logger.log('URL: '          + ss.getUrl());
@@ -488,7 +511,7 @@ function setupApostilleTracker() {
   // Build COUNTIF formulas using the actual column letters
   var SN  = SHEET_NAME;
   var SC  = colLetter(colOf('Status'));
-  var RC  = colLetter(colOf('Review Type'));
+  var RC  = colLetter(colOf('Review Speed')); // was 'Review Type'
 
   var metrics = [
     ['Total Orders',     '=COUNTA(' + SN + '!A:A)-1'],
@@ -537,18 +560,18 @@ function buildDashboard() {
 
   var SN = SHEET_NAME;
   var SC  = cl('Status');
-  var PC  = cl('Payment Status');
-  var QC  = cl('Quote Amount');
-  var RC  = cl('Review Type');
-  var OC  = cl('RON Needed');
+  var PC  = cl('Payment Status');       // admin-only column — not written by doPost, kept for manual staff use
+  var QC  = cl('Quote Amount');         // admin-only column — not written by doPost, kept for manual staff use
+  var RC  = cl('Review Speed');         // was 'Review Type'
+  var OC  = cl('RON Needed');           // no longer a form field — formulas using this are IFERROR-wrapped
   var PSC = cl('Processing Start Date');
   var CC  = cl('Completion Date');
   var HC  = cl('Destination Country');
   var GC  = cl('State');
   var DC  = cl('Document Type');
-  var FNC = cl('Client First Name');
-  var LNC = cl('Client Last Name');
-  var AC  = cl('Order Number');
+  var FNC = cl('Full Name');            // was split 'Client First Name' + 'Client Last Name' — now a single column
+  var LNC = cl('Client Last Name');     // no longer exists — resolves empty; the "First + Last" formula below degrades to showing Full Name plus a trailing blank, not a crash
+  var AC  = cl('Request ID');           // was 'Order Number'
 
   var dash = ss.getSheetByName('Dashboard');
   if (!dash) {
@@ -939,7 +962,12 @@ function writeFolderLinkToSheet_(ss, sheetName, linkColName, orderNumber, url) {
   if (!sheet || sheet.getLastRow() < 2) return false;
 
   var hdrs = getHeaders(sheet);
-  var oCol = hdrs.indexOf('Order Number') + 1;
+  // 'Request ID' is the current apostille column name; 'Order Number' is
+  // kept as a fallback both for the (unrelated, untouched) Translation
+  // Requests tab and for a live apostille sheet not yet migrated.
+  var oColIdx = hdrs.indexOf('Request ID');
+  if (oColIdx === -1) oColIdx = hdrs.indexOf('Order Number');
+  var oCol = oColIdx + 1;
   // Accept legacy apostille column names too
   var lColIdx = hdrs.indexOf(linkColName);
   if (lColIdx === -1) lColIdx = hdrs.indexOf('Document Upload Folder Link');
@@ -997,9 +1025,26 @@ function setColumnFormat(sheet, colName, format) {
   sheet.getRange(2, col, 1000, 1).setNumberFormat(format);
 }
 
-function generateOrderNumber(sheet) {
-  var tz   = Session.getScriptTimeZone();
-  var yymm = Utilities.formatDate(new Date(), tz, 'yyyyMM');
-  var seq  = String(Math.max(sheet.getLastRow(), 1)).padStart(4, '0');
-  return 'INS-' + yymm + '-' + seq;
+// Generates IS-AP-YYYYMMDD-XXXX. Uses a script-wide lock plus a
+// PropertiesService counter keyed per-day, NOT sheet.getLastRow() — row
+// count is not a safe uniqueness source on its own (two submissions
+// arriving close together could read the same row count before either
+// has appended, producing duplicate IDs). The lock serializes access to
+// the counter across concurrent executions; the counter persists
+// independently of the sheet and resets naturally each new day since
+// the property key itself is date-scoped.
+function generateRequestId() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var tz  = Session.getScriptTimeZone();
+    var ymd = Utilities.formatDate(new Date(), tz, 'yyyyMMdd');
+    var props = PropertiesService.getScriptProperties();
+    var key = 'reqSeq_' + ymd;
+    var seq = parseInt(props.getProperty(key) || '0', 10) + 1;
+    props.setProperty(key, String(seq));
+    return 'IS-AP-' + ymd + '-' + String(seq).padStart(4, '0');
+  } finally {
+    lock.releaseLock();
+  }
 }

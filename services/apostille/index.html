@@ -106,13 +106,11 @@
           </div>
 
           <!-- Heading -->
-          <h2 class="ar-success-heading">
-            Thank you for choosing<br>Ink &amp; Seal Notary Pros.
-          </h2>
+          <h2 class="ar-success-heading">Request Received</h2>
 
           <!-- Confirmation lead -->
           <p class="ar-success-received">Your apostille review request has been received.</p>
-          <p class="ar-success-subtext">Our team will review your information and contact you with next steps.</p>
+          <p class="ar-success-subtext">We&rsquo;ll review your information and contact you with your next steps.</p>
 
           <!-- Ornamental divider -->
           <div class="ar-success-rule" aria-hidden="true">
@@ -121,10 +119,17 @@
             <span class="ar-success-rule-line"></span>
           </div>
 
+          <!-- Dynamic request number — populated from the backend's
+               confirmed response, never shown until a save is verified. -->
+          <div class="ar-request-number" id="arRequestNumberWrap" style="display:none">
+            <p class="ar-request-number-label">Request Number</p>
+            <p class="ar-request-number-value" id="arRequestNumberValue">&mdash;</p>
+          </div>
+
           <!-- Timeline & process details -->
           <div class="ar-success-details">
-            <p>Most apostille review requests are reviewed within 1 business day. Additional review time may be required for complex or international document requests.</p>
-            <p>Clients who select Same-Day Review receive priority placement in our review queue and are typically contacted the same business day.</p>
+            <p><strong>Standard Review:</strong> Typically reviewed within 1 business day.</p>
+            <p><strong>Same-Day Review:</strong> Priority review the same business day.</p>
           </div>
 
           <!-- Final notice -->
@@ -135,9 +140,50 @@
                 <polyline points="2,5 10,12 18,5"/>
               </svg>
             </span>
-            <p>Please monitor your email and phone for follow-up instructions from our team.</p>
+            <p>Please monitor your email, text messages, or phone for our response.</p>
           </div>
 
+          <!-- What happens next -->
+          <div class="ar-whats-next">
+            <p class="ar-whats-next-title">What Happens Next</p>
+            <ol class="ar-whats-next-list">
+              <li>We review your document information.</li>
+              <li>We confirm requirements, eligibility, and final pricing.</li>
+              <li>You approve your order before processing begins.</li>
+            </ol>
+          </div>
+
+          <!-- Shown only if the intake save succeeded but the background
+               Drive upload failed — the Request Number above is still
+               valid either way, since intake and upload are independent. -->
+          <div class="ar-upload-issue" id="arUploadIssue" style="display:none">
+            <div class="ar-info-card-head">
+              <span class="ar-info-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+              </span>
+              <h3 class="ar-info-card-title">Document Upload Issue</h3>
+            </div>
+            <p>Your request was received and your Request Number above is valid. We weren&rsquo;t able to upload your documents automatically. You can retry below, or email them to <a href="mailto:hello@inkandsealnotarypros.com" class="ar-inline-link">hello@inkandsealnotarypros.com</a> and reference your Request Number.</p>
+            <button type="button" class="btn-premium" id="arRetryUploadBtn">Retry Upload</button>
+            <p class="ar-upload-issue-status" id="arRetryUploadStatus" style="display:none"></p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Submission error — shown only when the backend did NOT confirm
+           a successful save. The form itself stays visible underneath;
+           nothing here clears any entered data. -->
+      <div class="ar-submit-error" id="arSubmitError" role="alert" aria-live="assertive" style="display:none">
+        <div class="container">
+          <div class="ar-submit-error-inner">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
+              <circle cx="10" cy="10" r="8"/>
+              <line x1="10" y1="6" x2="10" y2="11"/>
+              <circle cx="10" cy="14" r=".6" fill="currentColor" stroke="none"/>
+            </svg>
+            <p id="arSubmitErrorText">We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost — please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.</p>
+          </div>
         </div>
       </div>
 
@@ -159,6 +205,11 @@
              draw/type-to-sign UI has been removed from this form per
              Section 1. This field is always submitted empty. -->
         <input type="hidden" id="arSigData" name="signature" value="" />
+        <!-- Calculator's final total — written by calcEstimate() (same
+             unchanged formula) so the number the customer sees is the
+             exact number that gets submitted and stored. Plain digits,
+             no "$" — the Sheet column formats currency on its own. -->
+        <input type="hidden" id="arEstimatedTotalField" name="estimatedTotal" value="175" />
 
         <!-- ── STEP 1 — YOUR DOCUMENT ─────────────────────── -->
         <div class="ms-step" id="step1" data-step="1">
@@ -1188,6 +1239,12 @@
         var totalEl2 = document.getElementById('arEstimateTotal2');
         if (totalEl2) totalEl2.textContent = '$' + total.toLocaleString();
 
+        // Same number shown above — written to the hidden field that
+        // actually gets submitted, so Sheets stores exactly what the
+        // customer saw. Not part of the formula itself.
+        var totalField = document.getElementById('arEstimatedTotalField');
+        if (totalField) totalField.value = total;
+
         var intlEl = document.getElementById('arEstimateIntl');
         if (intlEl) intlEl.style.display = isIntl ? '' : 'none';
         var intlEl2 = document.getElementById('arEstimateIntl2');
@@ -1414,23 +1471,112 @@
         });
       }
 
-      // Form submit
-      // Order: GAS proxy (guaranteed first) → thank-you page → Google Drive upload (background, non-blocking)
-      var arForm    = document.getElementById('arForm');
-      var arSuccess = document.getElementById('arSuccess');
-      var submitBtn = arForm ? arForm.querySelector('button[type="submit"]') : null;
+      // ── Form submit — reliability-first ─────────────────────────────
+      // The success screen is shown ONLY after /api/submit-intake
+      // confirms a real save (json.success === true). Any other outcome
+      // — a network failure, or a response that came back but reported
+      // failure — leaves the form fully visible with everything the
+      // customer entered still intact, shows a clear error, and lets
+      // them retry. Order: GAS proxy (blocking, must succeed) → success
+      // screen → Google Drive upload (background, independent — its own
+      // failure never hides the confirmed intake success).
+      var arForm          = document.getElementById('arForm');
+      var arSuccess        = document.getElementById('arSuccess');
+      var arSubmitError    = document.getElementById('arSubmitError');
+      var arSubmitErrorTxt = document.getElementById('arSubmitErrorText');
+      var arRequestNumWrap = document.getElementById('arRequestNumberWrap');
+      var arRequestNumVal  = document.getElementById('arRequestNumberValue');
+      var arUploadIssue    = document.getElementById('arUploadIssue');
+      var arRetryUploadBtn = document.getElementById('arRetryUploadBtn');
+      var arRetryStatus    = document.getElementById('arRetryUploadStatus');
+      var submitBtn        = arForm ? arForm.querySelector('button[type="submit"]') : null;
+      var isSubmitting     = false; // extra guard alongside submitBtn.disabled
+      var lastRequestId    = '';
+      var lastClientName   = '';
+
+      function showSubmitError(message) {
+        if (arSubmitErrorTxt) arSubmitErrorTxt.innerHTML = message;
+        if (arSubmitError) {
+          arSubmitError.style.display = '';
+          arSubmitError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+      function hideSubmitError() {
+        if (arSubmitError) arSubmitError.style.display = 'none';
+      }
+
+      // Converts the currently-selected files to base64 and posts them to
+      // /api/upload-to-drive. Shared by the initial post-submit attempt
+      // and the "Retry Upload" button, since both need identical logic.
+      function attemptDriveUpload(requestId, nameVal) {
+        if (selectedFiles.length === 0) {
+          console.log('[ar-form] No files selected — skipping Drive upload');
+          return Promise.resolve({ success: true, skipped: true });
+        }
+        console.log('[ar-form] Starting Drive upload |', selectedFiles.length, 'file(s) | request:', requestId);
+        return Promise.all(selectedFiles.map(function (f) {
+          return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+            reader.onload = function () { resolve({ name: f.name, data: reader.result }); };
+            reader.onerror = reject;
+            reader.readAsDataURL(f);
+          });
+        }))
+        .then(function (b64files) {
+          var payload = JSON.stringify({ clientName: nameVal, orderNumber: requestId, files: b64files });
+          return fetch('/api/upload-to-drive', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload
+          });
+        })
+        .then(function (r) {
+          return r.text().then(function (text) {
+            try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
+          });
+        })
+        .then(function (drv) {
+          if (drv.success) {
+            console.log('[ar-form] Drive upload complete | folder:', drv.folderLink, '| files:', drv.uploadCount);
+          } else {
+            console.warn('[ar-form] Drive upload failed:', drv.error);
+          }
+          return drv;
+        })
+        .catch(function (err) {
+          console.warn('[ar-form] Drive upload network error:', err && err.message ? err.message : String(err));
+          return { success: false, error: err && err.message ? err.message : String(err) };
+        });
+      }
+
+      if (arRetryUploadBtn) {
+        arRetryUploadBtn.addEventListener('click', function () {
+          arRetryUploadBtn.disabled = true;
+          if (arRetryStatus) { arRetryStatus.style.display = ''; arRetryStatus.textContent = 'Retrying upload…'; }
+          attemptDriveUpload(lastRequestId, lastClientName).then(function (drv) {
+            arRetryUploadBtn.disabled = false;
+            if (drv.success) {
+              if (arUploadIssue) arUploadIssue.style.display = 'none';
+              if (arRetryStatus) arRetryStatus.style.display = 'none';
+            } else if (arRetryStatus) {
+              arRetryStatus.textContent = 'Retry failed — please email your documents to hello@inkandsealnotarypros.com, referencing your Request Number.';
+            }
+          });
+        });
+      }
 
       if (arForm) {
         arForm.addEventListener('submit', function (e) {
           e.preventDefault();
+          if (isSubmitting) return; // belt-and-suspenders alongside submitBtn.disabled
           if (!validateStep(currentStep)) return;
 
           console.log('[ar-form] Submit clicked');
+          hideSubmitError();
+          isSubmitting = true;
           if (submitBtn) submitBtn.disabled = true;
 
-          var countEl    = document.getElementById('uploadedFileCount');
-          var orderInput = arForm.querySelector('[name="orderNumber"]');
-          var nameInput  = arForm.querySelector('[name="fullName"]');
+          var countEl   = document.getElementById('uploadedFileCount');
+          var nameInput = arForm.querySelector('[name="fullName"]');
+          var nameVal   = nameInput ? nameInput.value.trim() : 'Client';
 
           if (countEl) countEl.value = selectedFiles.length;
 
@@ -1439,10 +1585,8 @@
           var fd = new FormData(arForm);
           fd.forEach(function (value, key) { formObj[key] = value; });
 
-          console.log('[ar-form] Starting GAS submission | action:', arForm.action, '| fields:', Object.keys(formObj).join(', '));
+          console.log('[ar-form] Starting GAS submission | fields:', Object.keys(formObj).join(', '));
 
-          // ── Step 1: Submit to Google Apps Script via Vercel proxy ────────────
-          // Using a proxy lets us read the actual GAS response and log any errors.
           fetch('/api/submit-intake', {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -1454,75 +1598,44 @@
             });
           })
           .then(function (json) {
-            if (json.success) {
-              console.log('[ar-form] GAS submission confirmed | order:', json.order);
-            } else {
-              console.warn('[ar-form] GAS returned error:', json.error || JSON.stringify(json.gasResponse || json));
+            if (!json || json.success !== true || !json.requestId) {
+              // Backend responded, but did NOT confirm a successful save.
+              // Do not show the success screen; do not touch the form.
+              console.warn('[ar-form] Submission not confirmed:', json && (json.error || JSON.stringify(json.gasResponse || json)));
+              isSubmitting = false;
+              if (submitBtn) submitBtn.disabled = false;
+              showSubmitError('We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost &mdash; please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
+              return;
             }
 
-            // Show thank-you page after GAS submission was attempted
+            console.log('[ar-form] Submission confirmed | request:', json.requestId);
+            lastRequestId  = json.requestId;
+            lastClientName = nameVal;
+
+            // ── Confirmed save — now, and only now, show the success screen ──
             arForm.style.display = 'none';
+            if (arRequestNumVal)  arRequestNumVal.textContent = json.requestId;
+            if (arRequestNumWrap) arRequestNumWrap.style.display = '';
             if (arSuccess) arSuccess.classList.add('show');
             var startEl = document.getElementById('start');
             if (startEl) startEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
             else window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // ── Step 2: Google Drive upload (background — never blocks the client) ──
-            if (selectedFiles.length === 0) {
-              console.log('[ar-form] No files selected — skipping Drive upload');
-              return;
-            }
-
-            console.log('[ar-form] Starting Drive upload |', selectedFiles.length, 'file(s)');
-            selectedFiles.forEach(function (f, i) {
-              console.log('[ar-form] file[' + i + ']:', f.name, '| size:', f.size, 'bytes | type:', f.type);
-            });
-            var nameVal  = nameInput  ? nameInput.value.trim()  : 'Client';
-            var orderVal = (orderInput ? orderInput.value.trim() : '') || (json.order || '');
-            console.log('[ar-form] Drive clientName:', nameVal, '| orderNumber:', orderVal);
-
-            // Convert files to base64 — no multipart parser needed on the server
-            Promise.all(selectedFiles.map(function (f) {
-              return new Promise(function (resolve, reject) {
-                var reader    = new FileReader();
-                reader.onload = function () {
-                  console.log('[ar-form] base64 ready for:', f.name, '| data length:', reader.result.length);
-                  resolve({ name: f.name, data: reader.result });
-                };
-                reader.onerror = reject;
-                reader.readAsDataURL(f);
-              });
-            }))
-            .then(function (b64files) {
-              var payload = JSON.stringify({ clientName: nameVal, orderNumber: orderVal, files: b64files });
-              console.log('[ar-form] Sending to /api/upload-to-drive | payload size:', payload.length, 'bytes');
-              return fetch('/api/upload-to-drive', {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body:    payload
-              });
-            })
-            .then(function (r) {
-              return r.text().then(function (text) {
-                try { return JSON.parse(text); } catch (_) { return { success: false, error: text.slice(0, 300) }; }
-              });
-            })
-            .then(function (drv) {
-              if (drv.success) {
-                console.log('[ar-form] Drive upload complete | folder:', drv.folderLink, '| files:', drv.uploadCount);
-              } else {
-                console.warn('[ar-form] Drive upload failed but GAS row was saved |', drv.error);
+            // ── Google Drive upload — independent of intake success.
+            // Its own failure never hides the confirmation already shown;
+            // it surfaces as a separate, honest sub-notice instead. ──
+            attemptDriveUpload(json.requestId, nameVal).then(function (drv) {
+              if (!drv.success && !drv.skipped && arUploadIssue) {
+                arUploadIssue.style.display = '';
               }
-            })
-            .catch(function (err) {
-              console.warn('[ar-form] Drive upload failed but GAS row was saved |', err && err.message ? err.message : String(err));
             });
           })
           .catch(function (err) {
-            // Network error — can't reach /api/submit-intake
-            console.error('[ar-form] GAS submission network error:', err && err.message ? err.message : String(err));
-            alert('Unable to submit. Please check your connection or contact us directly.');
+            // Genuine network error — can't reach /api/submit-intake at all
+            console.error('[ar-form] Network error:', err && err.message ? err.message : String(err));
+            isSubmitting = false;
             if (submitBtn) submitBtn.disabled = false;
+            showSubmitError('Unable to reach our server. Please check your connection and try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
           });
         });
       }

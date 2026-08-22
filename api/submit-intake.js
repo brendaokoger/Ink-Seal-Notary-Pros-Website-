@@ -56,11 +56,13 @@ const handler = async function (req, res) {
     }
 
     const success = (gasRes.status === 200 && gasJson.status === 'ok');
-    console.log('[submit-intake] Row saved:', success, '| order:', gasJson.order || '(none)');
+    const requestId = gasJson.requestId || gasJson.order || null;
+    console.log('[submit-intake] Row saved:', success, '| request:', requestId || '(none)');
 
     return res.status(200).json({
       success,
-      order:       gasJson.order   || null,
+      requestId,
+      order:       requestId, // kept alongside requestId for any older callers still reading this key
       gasStatus:   gasRes.status,
       gasResponse: gasJson
     });
