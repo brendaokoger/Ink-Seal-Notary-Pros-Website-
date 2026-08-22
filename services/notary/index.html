@@ -27,11 +27,11 @@
         <span class="form-hdr-title">Remote Online Notarization Request</span>
       </div>
       <div class="form-hdr-step">
-        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 6</span>
+        <span class="form-hdr-step-label" id="fhStepLabel">Step 1 of 5</span>
       </div>
     </div>
     <div class="form-hdr-progress">
-      <div class="form-hdr-bar" id="fhBar" style="width:16.7%"></div>
+      <div class="form-hdr-bar" id="fhBar" style="width:20%"></div>
     </div>
   </header>
 
@@ -39,27 +39,125 @@
   <section class="on-form-section">
     <div class="container">
 
-      <p class="form-intro-text">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
+      <!-- Success message — shown ONLY after a confirmed Formspree response.
+           Reuses the same branded success-card system as the Apostille form
+           (navy/gold/green, animated check) so the RON confirmation looks
+           and feels like the rest of the site rather than a generic
+           Formspree thank-you page. -->
+      <div class="on-success" id="onSuccess" role="alert" aria-live="polite">
+        <div class="ar-success-card">
 
-      <!-- FORM -->
-      <!-- TODO: Replace Formspree action with Google Apps Script endpoint when ready.
-           Example: action="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
-           Google Sheet ID: 1Kt9KsGlYnpzcjoCYNUBvkWnBxSW5MfJi41gfzP_wYlE -->
+          <!-- Animated green checkmark (required: green, not gold) -->
+          <div class="ar-success-icon-wrap" aria-hidden="true">
+            <svg class="ar-success-svg" viewBox="0 0 64 64" fill="none" width="80" height="80">
+              <circle class="ar-success-circle" cx="32" cy="32" r="29"
+                      fill="rgba(22,163,74,.08)"
+                      stroke="#16a34a" stroke-width="2.2"
+                      stroke-linecap="round"/>
+              <polyline class="ar-success-check"
+                        points="19,33 28,42 45,23"
+                        stroke="#16a34a" stroke-width="3.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <h2 class="ar-success-heading">Remote Notarization Request Received</h2>
+          <p class="ar-success-received">Your request has been submitted successfully.</p>
+
+          <div class="ar-success-rule" aria-hidden="true">
+            <span class="ar-success-rule-line"></span>
+            <span class="ar-success-rule-gem">◆</span>
+            <span class="ar-success-rule-line"></span>
+          </div>
+
+          <!-- Reserved for a RON Request ID — no backend request-ID system
+               exists for RON yet (see report). Kept hidden and unused
+               rather than fabricated; wiring a real one in later (e.g.
+               when BlueNotary automation is added, see the "future
+               automation" JS section below) only requires setting
+               ronRequestId.textContent and un-hiding ronRequestIdWrap. -->
+          <div class="ar-request-number" id="ronRequestIdWrap" style="display:none">
+            <p class="ar-request-number-label">Request Number</p>
+            <p class="ar-request-number-value" id="ronRequestIdValue">&mdash;</p>
+          </div>
+
+          <div class="ar-whats-next">
+            <p class="ar-whats-next-title">What Happens Next</p>
+            <ol class="ar-whats-next-list">
+              <li><strong>Document Review</strong> &mdash; Ink &amp; Seal will review your request and any documents you provided.</li>
+              <li><strong>Secure Invitation</strong> &mdash; Once your request is ready, you will receive an email invitation to our secure remote notarization platform.</li>
+              <li><strong>Verify &amp; Pay</strong> &mdash; Follow the invitation to complete identity verification and secure payment through the platform.</li>
+              <li><strong>Join Your Session</strong> &mdash; After completing the required steps, join your live video notarization session at the scheduled time.</li>
+            </ol>
+          </div>
+
+          <div class="ar-success-notice">
+            <span class="ar-success-notice-icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M3 5h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/>
+                <polyline points="2,5 10,12 18,5"/>
+              </svg>
+            </span>
+            <p>Please monitor your email and text messages for your invitation and next-step instructions.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Submission error — shown only when Formspree did NOT confirm a
+           successful save. The form itself stays visible underneath;
+           nothing here clears any entered data. -->
+      <div class="ar-submit-error" id="ronSubmitError" role="alert" aria-live="assertive" style="display:none">
+        <div class="ar-submit-error-inner">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" aria-hidden="true">
+            <circle cx="10" cy="10" r="8"/>
+            <line x1="10" y1="6" x2="10" y2="11"/>
+            <circle cx="10" cy="14" r=".6" fill="currentColor" stroke="none"/>
+          </svg>
+          <p id="ronSubmitErrorText">We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost — please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.</p>
+        </div>
+      </div>
+
+      <p class="form-intro-text" id="ronIntroText">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
+
+      <!-- FORM
+           Field-name reference for future BlueNotary/automation work:
+             fullName, email, phone, signerState, preferredContactMethod  (Step 1)
+             documentType, numDocs, sealCount, signerCount, addlSignersCount,
+             additionalSigner{N}Name/Email, witnessRequired, notes          (Step 2)
+             documents (file, multiple)                                    (Step 3)
+             asapPreferred, appointmentDate, appointmentTime, timezone      (Step 4)
+             estimatedTotal, ronTermsAck                                   (Step 5)
+           Formspree still receives all of this as-is (see section 5/6 of
+           the accompanying report for why no GAS/Sheets backend was added
+           here yet). -->
       <form class="on-form" id="onForm"
             action="https://formspree.io/f/mpqnojvj"
             method="POST"
+            enctype="multipart/form-data"
             novalidate>
 
         <!-- Formspree subject (hidden) -->
         <input type="hidden" name="_subject" value="New Online Notarization Request — Ink &amp; Seal Notary Pros" />
 
-        <!-- ══ STEP 1: Signer Information ══ -->
+        <!-- Calculator's final total — written by updateEstimate() (same
+             unchanged pricing formula) so the number the customer sees on
+             the Review step is the exact number Formspree receives. -->
+        <input type="hidden" id="estimatedTotalField" name="estimatedTotal" value="25" />
+
+        <!-- ══ STEP 1: Your Information ══ -->
         <div class="ms-step" id="step1" data-step="1">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 1 of 5</span>
+            <h2 class="ar-step-hdr-title">Your Information</h2>
+            <p class="ar-step-hdr-desc">Tell us who we&rsquo;ll be working with for this notarization request.</p>
+          </div>
 
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num" aria-hidden="true">1</span>
-              <h2 class="on-card-title">Signer Information</h2>
+              <h2 class="on-card-title">Your Information</h2>
             </div>
 
             <div class="on-field-row">
@@ -103,25 +201,14 @@
               </div>
             </div>
 
-            <div class="on-field-row on-field-row--3" style="margin-top:22px">
+            <div class="on-field-row on-field-row--1" style="margin-top:22px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="appointmentDate">Preferred Appointment Date</label>
-                <input type="date" id="appointmentDate" name="appointmentDate" class="on-input" required />
-              </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="appointmentTime">Preferred Appointment Time</label>
-                <input type="time" id="appointmentTime" name="appointmentTime" class="on-input" required />
-              </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="timezone">Time Zone</label>
-                <select id="timezone" name="timezone" class="on-select" required>
-                  <option value="" disabled selected>Select time zone</option>
-                  <option value="ET">Eastern Time</option>
-                  <option value="CT">Central Time</option>
-                  <option value="MT">Mountain Time</option>
-                  <option value="PT">Pacific Time</option>
-                  <option value="AKT">Alaska Time</option>
-                  <option value="HT">Hawaii Time</option>
+                <label class="on-label on-label--req" for="preferredContactMethod">Preferred Contact Method</label>
+                <select id="preferredContactMethod" name="preferredContactMethod" class="on-select" required>
+                  <option value="" disabled selected>Select contact method</option>
+                  <option>Email</option>
+                  <option>Phone Call</option>
+                  <option>Text Message</option>
                 </select>
               </div>
             </div>
@@ -137,13 +224,19 @@
 
         </div>
 
-        <!-- ══ STEP 2: Document Information ══ -->
+        <!-- ══ STEP 2: Document Details ══ -->
         <div class="ms-step" id="step2" data-step="2" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 2 of 5</span>
+            <h2 class="ar-step-hdr-title">Document Details</h2>
+            <p class="ar-step-hdr-desc">Tell us about the document(s) and any additional signers or witnesses needed.</p>
+          </div>
 
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num" aria-hidden="true">2</span>
-              <h2 class="on-card-title">Document Information</h2>
+              <h2 class="on-card-title">Document Details</h2>
             </div>
 
             <div class="on-field-row">
@@ -176,7 +269,7 @@
 
             <div class="on-field-row" style="margin-top:22px">
               <div class="on-field">
-                <label class="on-label on-label--req" for="sealCount">Number of Notarial Seals Needed</label>
+                <label class="on-label on-label--req" for="sealCount">Number of Notarizations / Seals Needed</label>
                 <select id="sealCount" name="sealCount" class="on-select" required>
                   <option value="" disabled selected>Select number</option>
                   <option value="1">1</option>
@@ -205,6 +298,22 @@
                 <option value="3">3</option>
                 <option value="4+">4+</option>
               </select>
+
+              <!-- Per-signer name/email — built by JS to match addlSignersCount.
+                   Collects, at minimum, full name and email for each
+                   additional signer. -->
+              <div id="addlSignerDetails" style="margin-top:18px"></div>
+            </div>
+
+            <div class="on-field on-field--full" style="margin-top:28px">
+              <label class="on-label on-label--req" for="witnessRequired">Does your document require witnesses?</label>
+              <select id="witnessRequired" name="witnessRequired" class="on-select" required>
+                <option value="" disabled selected>Select option</option>
+                <option value="no">No</option>
+                <option value="own">I will provide my own witness</option>
+                <option value="was">I need assistance with a witness (+$10)</option>
+              </select>
+              <p class="ar-field-helper">The witness-assistance fee only applies if you select &ldquo;I need assistance with a witness.&rdquo;</p>
             </div>
 
             <div class="on-field on-field--full" style="margin-top:28px">
@@ -226,24 +335,47 @@
 
         </div>
 
-        <!-- ══ STEP 3: Witness Requirements ══ -->
+        <!-- ══ STEP 3: Upload Documents ══ -->
         <div class="ms-step" id="step3" data-step="3" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 3 of 5</span>
+            <h2 class="ar-step-hdr-title">Upload Documents</h2>
+            <p class="ar-step-hdr-desc">Uploading your document(s) now lets us review them before creating your remote notarization session.</p>
+          </div>
 
           <div class="on-card">
             <div class="on-card-head">
               <span class="on-card-num" aria-hidden="true">3</span>
-              <h2 class="on-card-title">Witness Requirements</h2>
+              <h2 class="on-card-title">Document Upload</h2>
             </div>
 
-            <div class="on-field on-field--full">
-              <label class="on-label on-label--req" for="witnessRequired">Does your document require witnesses?</label>
-              <select id="witnessRequired" name="witnessRequired" class="on-select" required>
-                <option value="" disabled selected>Select option</option>
-                <option value="no">No</option>
-                <option value="own">Yes — I will provide my own witness</option>
-                <option value="was">Yes — I need Witness as a Service (+$10)</option>
-              </select>
+            <p class="ar-field-helper" style="margin-bottom:18px">Optional, but recommended — you may also bring your documents to your live session instead.</p>
+
+            <!-- Real, named file input so it's included in the form's
+                 normal multipart submission to Formspree (unlike the
+                 Apostille form's dropzone, which routes files through a
+                 separate Google Drive API and deliberately omits `name`). -->
+            <div class="ar-dropzone" id="ronDropzone" role="region" aria-label="Document upload area">
+              <input type="file" id="ronDocInput" name="documents"
+                     accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/png"
+                     multiple class="ar-dropzone-input" tabindex="-1" />
+              <div class="ar-dropzone-body">
+                <div class="ar-dropzone-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="52" height="52">
+                    <rect x="6" y="8" width="36" height="32" rx="5"/>
+                    <line x1="24" y1="30" x2="24" y2="18"/>
+                    <polyline points="17,24 24,17 31,24"/>
+                    <line x1="16" y1="34" x2="32" y2="34"/>
+                  </svg>
+                </div>
+                <p class="ar-dropzone-title">Drop your documents here</p>
+                <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
+                <p class="ar-dropzone-hint">PDF, Word, JPG, PNG &middot; Multiple files allowed</p>
+              </div>
             </div>
+
+            <div class="ar-file-list" id="ronFileList" aria-live="polite"></div>
           </div>
 
           <div class="ms-nav">
@@ -259,16 +391,126 @@
 
         </div>
 
-        <!-- ══ STEP 4: Pricing Estimate ══ -->
+        <!-- ══ STEP 4: Appointment Preference ══ -->
         <div class="ms-step" id="step4" data-step="4" style="display:none">
 
-          <!-- Rate reference card -->
-          <div class="on-pricing-card">
-            <div class="on-card-head on-pricing-head">
-              <span class="on-card-num on-pricing-num" aria-hidden="true">4</span>
-              <h2 class="on-card-title on-pricing-title">Online Notarization Pricing</h2>
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 4 of 5</span>
+            <h2 class="ar-step-hdr-title">Appointment Preference</h2>
+            <p class="ar-step-hdr-desc">Let us know when works best for you — we&rsquo;ll confirm your exact session time.</p>
+          </div>
+
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">4</span>
+              <h2 class="on-card-title">Appointment Preference</h2>
             </div>
 
+            <label class="ar-ack-item" id="ronAsapToggle" style="margin-bottom:22px">
+              <input type="checkbox" id="ronAsap" name="asapPreferred" class="ar-ack-input" />
+              <span class="ar-ack-mark" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+              </span>
+              <span class="ar-ack-text">As Soon As Possible &mdash; I&rsquo;m flexible on date and time</span>
+            </label>
+
+            <div class="on-field-row" id="ronDateTimeWrap">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="appointmentDate">Preferred Date</label>
+                <input type="date" id="appointmentDate" name="appointmentDate" class="on-input" required />
+              </div>
+              <div class="on-field">
+                <label class="on-label on-label--req" for="appointmentTime">Preferred Time</label>
+                <input type="time" id="appointmentTime" name="appointmentTime" class="on-input" required />
+              </div>
+            </div>
+
+            <div class="on-field-row on-field-row--1" style="margin-top:22px">
+              <div class="on-field">
+                <label class="on-label on-label--req" for="timezone">Time Zone</label>
+                <select id="timezone" name="timezone" class="on-select" required>
+                  <option value="" disabled selected>Select time zone</option>
+                  <option value="ET">Eastern Time</option>
+                  <option value="CT">Central Time</option>
+                  <option value="MT">Mountain Time</option>
+                  <option value="PT">Pacific Time</option>
+                  <option value="AKT">Alaska Time</option>
+                  <option value="HT">Hawaii Time</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="on-upload-notice" style="margin-top:24px">
+              <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+              <p>This is an appointment <strong>request</strong>, not a confirmed booking. Your session is not confirmed until we send your secure remote notarization invitation.</p>
+            </div>
+          </div>
+
+          <div class="ms-nav">
+            <button type="button" class="ms-btn-back" data-prev="3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back
+            </button>
+            <button type="button" class="ms-btn-continue" data-next="5">
+              Continue
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ══ STEP 5: Review & Submit ══ -->
+        <div class="ms-step" id="step5" data-step="5" style="display:none">
+
+          <div class="ar-step-hdr">
+            <span class="ar-step-hdr-eyebrow">Step 5 of 5</span>
+            <h2 class="ar-step-hdr-title">Review &amp; Submit</h2>
+            <p class="ar-step-hdr-desc">Please confirm your details below before submitting your request.</p>
+          </div>
+
+          <!-- ── Review summary ──────────────────────────── -->
+          <div class="on-card">
+            <div class="on-card-head">
+              <span class="on-card-num" aria-hidden="true">5</span>
+              <h2 class="on-card-title">Your Request</h2>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Your Information</p>
+              <div class="ar-review-row"><span class="ar-review-label">Full Name</span><span class="ar-review-value" id="revFullName">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Email</span><span class="ar-review-value" id="revEmail">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Phone</span><span class="ar-review-value" id="revPhone">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">State</span><span class="ar-review-value" id="revState">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Preferred Contact Method</span><span class="ar-review-value" id="revContactMethod">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Document Details</p>
+              <div class="ar-review-row"><span class="ar-review-label">Document Type</span><span class="ar-review-value" id="revDocType">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Number of Documents</span><span class="ar-review-value" id="revNumDocs">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Notarizations / Seals</span><span class="ar-review-value" id="revSealCount">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Additional Signers</span><span class="ar-review-value" id="revSigners">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Witness</span><span class="ar-review-value" id="revWitness">&mdash;</span></div>
+              <div class="ar-review-row" id="revNotesRow" style="display:none"><span class="ar-review-label">Notes</span><span class="ar-review-value" id="revNotes">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group">
+              <p class="ar-review-group-title">Documents</p>
+              <div class="ar-review-row"><span class="ar-review-label">Uploaded</span><span class="ar-review-value" id="revUploads">&mdash;</span></div>
+            </div>
+
+            <div class="ar-review-group ar-review-group--last">
+              <p class="ar-review-group-title">Appointment Preference</p>
+              <div class="ar-review-row"><span class="ar-review-label">Preferred Date/Time</span><span class="ar-review-value" id="revAppointment">&mdash;</span></div>
+              <div class="ar-review-row"><span class="ar-review-label">Time Zone</span><span class="ar-review-value" id="revTimezone">&mdash;</span></div>
+            </div>
+          </div>
+
+          <!-- ── Pricing reference ───────────────────────── -->
+          <div class="on-pricing-card">
+            <div class="on-card-head on-pricing-head">
+              <h2 class="on-card-title on-pricing-title">Online Notarization Pricing</h2>
+            </div>
             <div class="on-pricing-grid">
               <div class="on-pricing-item">
                 <span class="on-pricing-name">Standard Online Notarization (1 Seal)</span>
@@ -283,13 +525,13 @@
                 <span class="on-pricing-price">$5</span>
               </div>
               <div class="on-pricing-item">
-                <span class="on-pricing-name">Witness as a Service</span>
+                <span class="on-pricing-name">Witness Assistance</span>
                 <span class="on-pricing-price">$10</span>
               </div>
             </div>
           </div>
 
-          <!-- Live fee estimate card -->
+          <!-- ── Live fee estimate ───────────────────────── -->
           <div class="on-estimate-card">
             <div class="on-card-head on-estimate-head">
               <span class="on-card-num on-estimate-num" aria-hidden="true">
@@ -318,7 +560,7 @@
                 <span class="on-estimate-val" id="estSigners">—</span>
               </div>
               <div class="on-estimate-row">
-                <span class="on-estimate-label">Witness Service</span>
+                <span class="on-estimate-label">Witness Assistance</span>
                 <span class="on-estimate-val" id="estWitness">—</span>
               </div>
             </div>
@@ -328,99 +570,49 @@
               <span class="on-estimate-total-val" id="estTotal">$25</span>
             </div>
 
-            <p class="on-estimate-note">Final pricing may vary depending on signer count, document requirements, and session complexity. No payment is requested at this time.</p>
+            <p class="on-estimate-note">Final pricing may vary depending on signer count, document requirements, and session complexity. No payment is collected on this website — payment is completed later, through our secure remote notarization platform.</p>
           </div>
 
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="5">
-              Continue
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- ══ STEP 5: Identity Verification & Consent ══ -->
-        <div class="ms-step" id="step5" data-step="5" style="display:none">
-
+          <!-- ── Third-party platform disclosure (required before Submit) ── -->
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num" aria-hidden="true">5</span>
-              <h2 class="on-card-title">Identity Verification &amp; Electronic Consent</h2>
+              <span class="on-card-icon" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                  <path d="M10 2 L17 5 L17 10 C17 14 13.5 17.5 10 18 C6.5 17.5 3 14 3 10 L3 5 Z"/>
+                  <polyline points="7,10 9.5,12.5 14,8"/>
+                </svg>
+              </span>
+              <h2 class="on-card-title">Remote Online Notarization Process</h2>
             </div>
 
-            <div class="on-check-list">
-
-              <label class="on-check-item">
-                <input type="checkbox" class="on-check-input" name="consent1" required />
-                <span class="on-check-box" aria-hidden="true"></span>
-                <span class="on-check-text">I understand all signers must complete identity verification prior to notarization.</span>
-              </label>
-
-              <label class="on-check-item">
-                <input type="checkbox" class="on-check-input" name="consent2" required />
-                <span class="on-check-box" aria-hidden="true"></span>
-                <span class="on-check-text">I understand a valid government-issued photo ID is required.</span>
-              </label>
-
-              <label class="on-check-item">
-                <input type="checkbox" class="on-check-input" name="consent3" required />
-                <span class="on-check-box" aria-hidden="true"></span>
-                <span class="on-check-text">I understand all signers must appear live during the online notarization session.</span>
-              </label>
-
-              <label class="on-check-item">
-                <input type="checkbox" class="on-check-input" name="consent4" required />
-                <span class="on-check-box" aria-hidden="true"></span>
-                <span class="on-check-text">I consent to conducting this notarization electronically.</span>
-              </label>
-
-              <label class="on-check-item">
-                <input type="checkbox" class="on-check-input" name="consent5" required />
-                <span class="on-check-box" aria-hidden="true"></span>
-                <span class="on-check-text">I understand unsigned documents must be presented during the live session.</span>
-              </label>
-
-            </div>
+            <p class="ar-field-helper" style="font-size:.86rem; line-height:1.75; margin-bottom:14px">
+              Your online notarization session will be completed through our secure third-party remote notarization platform.
+            </p>
+            <p class="ar-field-helper" style="font-size:.86rem; line-height:1.75; margin-bottom:10px">
+              After Ink &amp; Seal reviews your request, you will receive a secure invitation by email with instructions to:
+            </p>
+            <ol class="ar-whats-next-list" style="margin-bottom:14px">
+              <li>Complete the platform&rsquo;s required identity verification.</li>
+              <li>Complete payment for your online notarization session.</li>
+              <li>Access your scheduled live video notarization session.</li>
+            </ol>
+            <p class="ar-field-helper" style="font-size:.86rem; line-height:1.75">
+              Please use the same email address provided in this request when completing the remote notarization process.
+            </p>
           </div>
 
-          <div class="ms-nav">
-            <button type="button" class="ms-btn-back" data-prev="4">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-              Back
-            </button>
-            <button type="button" class="ms-btn-continue" data-next="6">
-              Continue
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- ══ STEP 6: Electronic Signature ══ -->
-        <div class="ms-step" id="step6" data-step="6" style="display:none">
-
+          <!-- ── Acknowledgment ───────────────────────────── -->
           <div class="on-card">
             <div class="on-card-head">
-              <span class="on-card-num" aria-hidden="true">6</span>
-              <h2 class="on-card-title">Electronic Signature</h2>
+              <h2 class="on-card-title">Acknowledgment</h2>
             </div>
-
-            <div class="on-field-row">
-              <div class="on-field">
-                <label class="on-label on-label--req" for="eSignature">Signature</label>
-                <input type="text" id="eSignature" name="eSignature" class="on-input on-sig-input" placeholder="Type your full legal name" required autocomplete="off" />
-                <p class="on-sig-hint">By typing your name above, you are providing your electronic signature.</p>
-              </div>
-              <div class="on-field">
-                <label class="on-label on-label--req" for="sigDate">Date</label>
-                <input type="date" id="sigDate" name="sigDate" class="on-input" required />
-              </div>
-            </div>
+            <label class="ar-ack-item">
+              <input type="checkbox" name="ronTermsAck" class="ar-ack-input" required />
+              <span class="ar-ack-mark" aria-hidden="true">
+                <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" width="11" height="11"><polyline points="2,6.5 5,9.5 10,3"/></svg>
+              </span>
+              <span class="ar-ack-text">I understand this submission is an appointment request, pricing shown is an estimate, and no payment is being made on this website. I agree to the <a href="/terms.html" target="_blank" rel="noopener" class="ar-inline-link">Terms of Service</a> and <a href="/privacy.html" target="_blank" rel="noopener" class="ar-inline-link">Privacy Policy</a>.</span>
+            </label>
           </div>
 
           <div class="on-submit-rule">
@@ -430,14 +622,14 @@
           </div>
 
           <div class="ms-nav ms-nav--submit">
-            <button type="button" class="ms-btn-back" data-prev="5">
+            <button type="button" class="ms-btn-back" data-prev="4">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
               Back
             </button>
             <div class="ms-submit-col">
               <button type="submit" class="on-submit-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                Start Online Notarization
+                Submit Request
               </button>
               <p class="on-required-note">Fields marked with <span style="color:var(--gold)">*</span> are required.</p>
             </div>
@@ -446,19 +638,6 @@
         </div>
 
       </form>
-
-      <!-- SUCCESS MESSAGE (shown after submit) -->
-      <div class="on-success" id="onSuccess" role="alert" aria-live="polite">
-        <div class="on-success-icon">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="64" height="64" aria-hidden="true">
-            <circle cx="32" cy="32" r="28"/>
-            <polyline points="20,34 28,42 44,24"/>
-          </svg>
-        </div>
-        <h2 class="on-success-h">Request Submitted Successfully</h2>
-        <p class="on-success-p">Thank you for submitting your Remote Online Notarization request.</p>
-        <p class="on-success-p" style="margin-top:14px">A member of Ink &amp; Seal Notary Pros will review your request and send your secure online session invitation shortly.</p>
-      </div>
 
       <!-- Disclaimer -->
       <p class="on-disclaimer">Ink &amp; Seal Notary Pros is not a law firm and does not provide legal advice.</p>
@@ -550,57 +729,16 @@
   <script>
     (function () {
 
-      /* ── Default today's date in signature field ── */
-      var today = new Date().toISOString().split('T')[0];
-      var sigDateEl = document.getElementById('sigDate');
-      if (sigDateEl) sigDateEl.value = today;
-
-      /* ── Pricing / live estimate ── */
-      var numSealsEl     = document.getElementById('sealCount');
-      var addlSignersEl  = document.getElementById('signerCount');
-      var addlSigWrap    = document.getElementById('addlSignersWrap');
-      var addlSigCountEl = document.getElementById('addlSignersCount');
-      var witnessEl      = document.getElementById('witnessRequired');
-      var estSealsEl     = document.getElementById('estSeals');
-      var estSignersEl   = document.getElementById('estSigners');
-      var estWitnessEl   = document.getElementById('estWitness');
-      var estTotalEl     = document.getElementById('estTotal');
-
-      function toNum(select, fallback) {
-        if (!select || !select.value) return fallback;
-        return select.value === '4+' ? 4 : (parseInt(select.value, 10) || fallback);
-      }
-      function fmt(n) { return n > 0 ? '+$' + n : '—'; }
-
-      function updateEstimate() {
-        var seals     = toNum(numSealsEl, 1);
-        var addlSeals = Math.max(0, seals - 1);
-        var sealsAmt  = addlSeals * 8;
-        var hasSigners = addlSignersEl && addlSignersEl.value === 'yes';
-        var sigCount   = hasSigners ? toNum(addlSigCountEl, 1) : 0;
-        var signersAmt = sigCount * 5;
-        if (addlSigWrap) {
-          addlSigWrap.style.display = hasSigners ? 'block' : 'none';
-          if (addlSigCountEl) addlSigCountEl.required = hasSigners;
-        }
-        var needsWAS   = witnessEl && witnessEl.value === 'was';
-        var witnessAmt = needsWAS ? 10 : 0;
-        var total = 25 + sealsAmt + signersAmt + witnessAmt;
-        if (estSealsEl)   estSealsEl.textContent   = fmt(sealsAmt);
-        if (estSignersEl) estSignersEl.textContent = fmt(signersAmt);
-        if (estWitnessEl) estWitnessEl.textContent = fmt(witnessAmt);
-        if (estTotalEl)   estTotalEl.textContent   = '$' + total;
-      }
-
-      if (numSealsEl)     numSealsEl.addEventListener('change', updateEstimate);
-      if (addlSignersEl)  addlSignersEl.addEventListener('change', updateEstimate);
-      if (addlSigCountEl) addlSigCountEl.addEventListener('change', updateEstimate);
-      if (witnessEl)      witnessEl.addEventListener('change', updateEstimate);
-      updateEstimate();
-
       /* ── Multi-step navigation ── */
-      var TOTAL_STEPS = 6;
+      var TOTAL_STEPS = 5;
       var currentStep = 1;
+      var STEP_NAMES = ['', 'Your Information', 'Document Details', 'Upload Documents', 'Appointment Preference', 'Review & Submit'];
+
+      function setRequired(el, isRequired) {
+        if (!el) return;
+        if (isRequired) el.setAttribute('required', '');
+        else el.removeAttribute('required');
+      }
 
       function showStep(n) {
         currentStep = n;
@@ -618,7 +756,7 @@
           void stepEl.offsetWidth;
           stepEl.classList.add('ms-step-enter');
         }
-        if (n === 4) updateEstimate();
+        if (n === 5) { updateEstimate(); populateReview(); }
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
@@ -627,16 +765,19 @@
         if (!stepEl) return true;
         var fields = stepEl.querySelectorAll('input[required], select[required], textarea[required]');
         for (var i = 0; i < fields.length; i++) {
+          // Skip validating fields that are currently hidden (e.g. date/time
+          // while "As Soon As Possible" is checked)
+          if (fields[i].offsetParent === null && fields[i].type !== 'hidden') continue;
           if (!fields[i].checkValidity()) {
             fields[i].focus();
             fields[i].reportValidity();
+            fields[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
           }
         }
         return true;
       }
 
-      /* Continue buttons */
       var continueBtns = document.querySelectorAll('.ms-btn-continue');
       for (var c = 0; c < continueBtns.length; c++) {
         continueBtns[c].addEventListener('click', (function (btn) {
@@ -647,7 +788,6 @@
         })(continueBtns[c]));
       }
 
-      /* Back buttons */
       var backBtns = document.querySelectorAll('.ms-btn-back');
       for (var b = 0; b < backBtns.length; b++) {
         backBtns[b].addEventListener('click', (function (btn) {
@@ -660,17 +800,351 @@
 
       showStep(1);
 
-      /* ── Form submit → Formspree (fetch) → branded success ── */
-      var form      = document.getElementById('onForm');
-      var success   = document.getElementById('onSuccess');
-      var submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+      /* ── Step 2: additional signers — count select + per-signer name/email ── */
+      var signerCountEl     = document.getElementById('signerCount');
+      var addlSignersWrap   = document.getElementById('addlSignersWrap');
+      var addlSignersCountEl= document.getElementById('addlSignersCount');
+      var addlSignerDetails = document.getElementById('addlSignerDetails');
+
+      function toSignerN(select) {
+        if (!select || !select.value) return 0;
+        return select.value === '4+' ? 4 : (parseInt(select.value, 10) || 0);
+      }
+
+      function rebuildSignerFields() {
+        if (!addlSignerDetails) return;
+        addlSignerDetails.innerHTML = '';
+        var n = toSignerN(addlSignersCountEl);
+        for (var i = 1; i <= n; i++) {
+          var row = document.createElement('div');
+          row.className = 'on-field-row';
+          row.style.marginTop = (i > 1 ? '16px' : '0');
+
+          var nameField = document.createElement('div');
+          nameField.className = 'on-field';
+          nameField.innerHTML =
+            '<label class="on-label on-label--req" for="addlSigner' + i + 'Name">Signer ' + i + ' &mdash; Full Name</label>' +
+            '<input type="text" id="addlSigner' + i + 'Name" name="additionalSigner' + i + 'Name" class="on-input" required />';
+
+          var emailField = document.createElement('div');
+          emailField.className = 'on-field';
+          emailField.innerHTML =
+            '<label class="on-label on-label--req" for="addlSigner' + i + 'Email">Signer ' + i + ' &mdash; Email</label>' +
+            '<input type="email" id="addlSigner' + i + 'Email" name="additionalSigner' + i + 'Email" class="on-input" required />';
+
+          row.appendChild(nameField);
+          row.appendChild(emailField);
+          addlSignerDetails.appendChild(row);
+        }
+        if (addlSignersCountEl && addlSignersCountEl.value === '4+') {
+          var note = document.createElement('p');
+          note.className = 'ar-field-helper';
+          note.style.marginTop = '14px';
+          note.textContent = 'For more than 4 additional signers, please list the rest by name and email in Additional Notes below.';
+          addlSignerDetails.appendChild(note);
+        }
+      }
+
+      function updateAddlSigners() {
+        var showYes = signerCountEl && signerCountEl.value === 'yes';
+        if (addlSignersWrap) addlSignersWrap.style.display = showYes ? 'block' : 'none';
+        setRequired(addlSignersCountEl, showYes);
+        if (!showYes) {
+          if (addlSignersCountEl) addlSignersCountEl.value = '';
+          if (addlSignerDetails) addlSignerDetails.innerHTML = '';
+        }
+      }
+      if (signerCountEl)      signerCountEl.addEventListener('change', updateAddlSigners);
+      if (addlSignersCountEl) addlSignersCountEl.addEventListener('change', rebuildSignerFields);
+      updateAddlSigners();
+
+      /* ── Step 3: document upload (dropzone, accumulate, remove) ──
+         Files are kept in a real, named <input type="file" multiple> so
+         the browser's normal multipart/form-data submission carries them
+         to Formspree with the rest of the form — no separate upload
+         endpoint needed for this step. Since native file inputs can't
+         "add to" an existing selection on their own, a DataTransfer object
+         is used to keep the input's real .files list in sync with the
+         accumulated selection shown to the customer (same accumulate/
+         remove UX as the Apostille form's dropzone, adapted here to also
+         populate a submitted field rather than being upload-only). */
+      var ronSelectedFiles = [];
+      var ronDropzone = document.getElementById('ronDropzone');
+      var ronDocInput = document.getElementById('ronDocInput');
+      var ronFileList = document.getElementById('ronFileList');
+      var MAX_RON_FILES = 10;
+
+      function formatFileSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
+        return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+      }
+
+      function syncRonFileInput() {
+        if (!ronDocInput || typeof DataTransfer === 'undefined') return;
+        var dt = new DataTransfer();
+        ronSelectedFiles.forEach(function (f) { dt.items.add(f); });
+        ronDocInput.files = dt.files;
+      }
+
+      function renderRonFileList() {
+        if (!ronFileList) return;
+        ronFileList.innerHTML = '';
+
+        ronSelectedFiles.forEach(function (file, idx) {
+          var item = document.createElement('div');
+          item.className = 'ar-file-item';
+
+          var icon = document.createElement('div');
+          icon.className = 'ar-file-item-icon';
+          icon.setAttribute('aria-hidden', 'true');
+          icon.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M12 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8z"/><polyline points="12 2 12 8 18 8"/></svg>';
+
+          var info = document.createElement('div');
+          info.className = 'ar-file-item-info';
+          var nameSpan = document.createElement('span');
+          nameSpan.className = 'ar-file-item-name';
+          nameSpan.textContent = file.name;
+          var sizeSpan = document.createElement('span');
+          sizeSpan.className = 'ar-file-item-size';
+          sizeSpan.textContent = formatFileSize(file.size);
+          info.appendChild(nameSpan);
+          info.appendChild(sizeSpan);
+
+          var removeBtn = document.createElement('button');
+          removeBtn.type = 'button';
+          removeBtn.className = 'ar-file-item-remove';
+          removeBtn.setAttribute('aria-label', 'Remove ' + file.name);
+          removeBtn.addEventListener('click', function () {
+            ronSelectedFiles.splice(idx, 1);
+            syncRonFileInput();
+            renderRonFileList();
+          });
+          removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" width="13" height="13"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg>';
+
+          item.appendChild(icon);
+          item.appendChild(info);
+          item.appendChild(removeBtn);
+          ronFileList.appendChild(item);
+        });
+
+        if (ronSelectedFiles.length > 0) {
+          var countLine = document.createElement('p');
+          var isFull = ronSelectedFiles.length >= MAX_RON_FILES;
+          countLine.className = 'ar-upload-count' + (isFull ? ' ar-upload-count--full' : '');
+          countLine.textContent = ronSelectedFiles.length + ' of ' + MAX_RON_FILES + ' file' +
+            (ronSelectedFiles.length !== 1 ? 's' : '') + ' added' + (isFull ? ' — maximum reached' : '');
+          ronFileList.appendChild(countLine);
+        }
+        if (ronDropzone) ronDropzone.classList.toggle('ar-dropzone--full', ronSelectedFiles.length >= MAX_RON_FILES);
+      }
+
+      function addRonFiles(fileList) {
+        for (var i = 0; i < fileList.length; i++) {
+          if (ronSelectedFiles.length >= MAX_RON_FILES) break;
+          var f = fileList[i];
+          var exists = false;
+          for (var j = 0; j < ronSelectedFiles.length; j++) {
+            if (ronSelectedFiles[j].name === f.name && ronSelectedFiles[j].size === f.size) { exists = true; break; }
+          }
+          if (!exists) ronSelectedFiles.push(f);
+        }
+        syncRonFileInput();
+        renderRonFileList();
+      }
+
+      if (ronDocInput) {
+        ronDocInput.addEventListener('change', function () {
+          if (this.files) addRonFiles(this.files);
+        });
+      }
+      if (ronDropzone) {
+        ronDropzone.addEventListener('click', function (e) {
+          if (ronDropzone.classList.contains('ar-dropzone--full')) return;
+          if (e.target.closest('.ar-file-item-remove')) return;
+          if (ronDocInput) ronDocInput.click();
+        });
+        ronDropzone.addEventListener('dragover', function (e) {
+          e.preventDefault();
+          if (!ronDropzone.classList.contains('ar-dropzone--full')) ronDropzone.classList.add('ar-dropzone--drag');
+        });
+        ronDropzone.addEventListener('dragleave', function (e) {
+          if (!ronDropzone.contains(e.relatedTarget)) ronDropzone.classList.remove('ar-dropzone--drag');
+        });
+        ronDropzone.addEventListener('drop', function (e) {
+          e.preventDefault();
+          ronDropzone.classList.remove('ar-dropzone--drag');
+          if (e.dataTransfer && e.dataTransfer.files) addRonFiles(e.dataTransfer.files);
+        });
+      }
+
+      /* ── Step 4: "As Soon As Possible" toggle ── */
+      var ronAsapEl      = document.getElementById('ronAsap');
+      var ronDateTimeWrap= document.getElementById('ronDateTimeWrap');
+      var appointmentDateEl = document.getElementById('appointmentDate');
+      var appointmentTimeEl = document.getElementById('appointmentTime');
+
+      function updateAsap() {
+        var isAsap = ronAsapEl && ronAsapEl.checked;
+        if (ronDateTimeWrap) ronDateTimeWrap.style.display = isAsap ? 'none' : '';
+        setRequired(appointmentDateEl, !isAsap);
+        setRequired(appointmentTimeEl, !isAsap);
+        if (isAsap) {
+          if (appointmentDateEl) appointmentDateEl.value = '';
+          if (appointmentTimeEl) appointmentTimeEl.value = '';
+        }
+      }
+      if (ronAsapEl) ronAsapEl.addEventListener('change', updateAsap);
+      updateAsap();
+
+      /* ── Pricing / live estimate (unchanged formula) ──
+         Witness logic: the assistance fee ($10) applies ONLY when
+         witnessRequired === 'was' ("I need assistance with a witness").
+         Choosing "I will provide my own witness" (own) or "No" never
+         adds a charge — this matches the required behavior and was
+         already correct in the prior form; only the option copy changed. */
+      var numSealsEl     = document.getElementById('sealCount');
+      var addlSignersSelEl = document.getElementById('signerCount');
+      var addlSigCountEl = document.getElementById('addlSignersCount');
+      var witnessEl      = document.getElementById('witnessRequired');
+      var estSealsEl     = document.getElementById('estSeals');
+      var estSignersEl   = document.getElementById('estSigners');
+      var estWitnessEl   = document.getElementById('estWitness');
+      var estTotalEl     = document.getElementById('estTotal');
+      var estimatedTotalField = document.getElementById('estimatedTotalField');
+
+      function toNum(select, fallback) {
+        if (!select || !select.value) return fallback;
+        return select.value === '4+' ? 4 : (parseInt(select.value, 10) || fallback);
+      }
+      function fmt(n) { return n > 0 ? '+$' + n : '—'; }
+
+      function updateEstimate() {
+        var seals     = toNum(numSealsEl, 1);
+        var addlSeals = Math.max(0, seals - 1);
+        var sealsAmt  = addlSeals * 8;
+        var hasSigners = addlSignersSelEl && addlSignersSelEl.value === 'yes';
+        var sigCount   = hasSigners ? toNum(addlSigCountEl, 0) : 0;
+        var signersAmt = sigCount * 5;
+        var needsWAS   = witnessEl && witnessEl.value === 'was';
+        var witnessAmt = needsWAS ? 10 : 0;
+        var total = 25 + sealsAmt + signersAmt + witnessAmt;
+        if (estSealsEl)   estSealsEl.textContent   = fmt(sealsAmt);
+        if (estSignersEl) estSignersEl.textContent = fmt(signersAmt);
+        if (estWitnessEl) estWitnessEl.textContent = fmt(witnessAmt);
+        if (estTotalEl)   estTotalEl.textContent   = '$' + total;
+        if (estimatedTotalField) estimatedTotalField.value = total;
+      }
+
+      if (numSealsEl)         numSealsEl.addEventListener('change', updateEstimate);
+      if (addlSignersSelEl)   addlSignersSelEl.addEventListener('change', updateEstimate);
+      if (addlSigCountEl)     addlSigCountEl.addEventListener('change', updateEstimate);
+      if (witnessEl)          witnessEl.addEventListener('change', updateEstimate);
+      updateEstimate();
+
+      /* ── Step 5: populate the review screen from current field values ── */
+      function valOf(id) {
+        var el = document.getElementById(id);
+        return el ? el.value : '';
+      }
+      function setRev(id, text) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = (text && String(text).trim()) ? text : '—';
+      }
+
+      function populateReview() {
+        setRev('revFullName',      valOf('fullName'));
+        setRev('revEmail',         valOf('email'));
+        setRev('revPhone',         valOf('phone'));
+        setRev('revState',         valOf('signerState'));
+        setRev('revContactMethod', valOf('preferredContactMethod'));
+
+        var docType = valOf('documentType');
+        setRev('revDocType', docType);
+        setRev('revNumDocs', valOf('numDocs'));
+        setRev('revSealCount', valOf('sealCount'));
+
+        var hasSigners = signerCountEl && signerCountEl.value === 'yes';
+        if (hasSigners) {
+          var n = toSignerN(addlSigCountEl);
+          var names = [];
+          for (var i = 1; i <= n; i++) {
+            var nm = valOf('addlSigner' + i + 'Name');
+            if (nm) names.push(nm);
+          }
+          setRev('revSigners', n + (n === 1 ? ' additional signer' : ' additional signers') +
+            (names.length ? ' (' + names.join(', ') + ')' : ''));
+        } else {
+          setRev('revSigners', 'None');
+        }
+
+        var witnessVal = valOf('witnessRequired');
+        var witnessLabel = witnessVal === 'own' ? 'I will provide my own witness'
+                          : witnessVal === 'was' ? 'I need assistance with a witness (+$10)'
+                          : 'No';
+        setRev('revWitness', witnessLabel);
+
+        var notesVal = valOf('notes');
+        var notesRow = document.getElementById('revNotesRow');
+        if (notesVal && notesRow) {
+          notesRow.style.display = '';
+          setRev('revNotes', notesVal);
+        } else if (notesRow) {
+          notesRow.style.display = 'none';
+        }
+
+        setRev('revUploads', ronSelectedFiles.length > 0
+          ? (ronSelectedFiles.length + (ronSelectedFiles.length === 1 ? ' file selected' : ' files selected'))
+          : 'None provided — will bring to session');
+
+        if (ronAsapEl && ronAsapEl.checked) {
+          setRev('revAppointment', 'As soon as possible');
+        } else {
+          var dateVal = valOf('appointmentDate');
+          var timeVal = valOf('appointmentTime');
+          setRev('revAppointment', (dateVal || '—') + (timeVal ? ' at ' + timeVal : ''));
+        }
+        var tzSelect = document.getElementById('timezone');
+        var tzLabel = tzSelect && tzSelect.selectedOptions.length ? tzSelect.selectedOptions[0].textContent : '';
+        setRev('revTimezone', tzLabel);
+      }
+
+      /* ── Form submit — reliability-first, matches the Apostille form's
+         pattern: the branded success screen is shown ONLY after Formspree
+         confirms the submission (response.ok). Any other outcome — a
+         network failure, or a response that came back but reported
+         failure — leaves the form fully visible with everything the
+         customer entered still intact, shows a clear error, and lets
+         them retry. Formspree still receives the raw submission (see
+         report); the branded on-site confirmation replaces its default
+         redirect/thank-you page via this fetch + preventDefault. ── */
+      var form         = document.getElementById('onForm');
+      var success      = document.getElementById('onSuccess');
+      var introText    = document.getElementById('ronIntroText');
+      var submitError  = document.getElementById('ronSubmitError');
+      var submitErrorText = document.getElementById('ronSubmitErrorText');
+      var isSubmitting = false;
+
+      function hideSubmitError() {
+        if (submitError) submitError.style.display = 'none';
+      }
+      function showSubmitError(msg) {
+        if (submitErrorText && msg) submitErrorText.innerHTML = msg;
+        if (submitError) {
+          submitError.style.display = '';
+          submitError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
 
       if (form && success) {
         form.addEventListener('submit', function (e) {
           e.preventDefault();
+          if (isSubmitting) return;
+          if (!validateStep(5)) return;
 
-          if (!validateStep(6)) return;
-
+          hideSubmitError();
+          isSubmitting = true;
+          var submitBtn = form.querySelector('button[type="submit"]');
           if (submitBtn) submitBtn.disabled = true;
 
           var data = new FormData(form);
@@ -684,25 +1158,43 @@
           })
           .then(function (response) {
             if (response.ok) {
+              // Confirmed save — now, and only now, show the branded
+              // Ink & Seal success screen. Formspree's own redirect/
+              // thank-you page is never reached because the native
+              // form submission was prevented above.
               form.style.display = 'none';
+              if (introText) introText.style.display = 'none';
               success.classList.add('show');
               success.scrollIntoView({ behavior: 'smooth', block: 'start' });
             } else {
               return response.json().then(function (payload) {
                 var msg = (payload.errors || [])
                   .map(function (err) { return err.message; })
-                  .join(' ') || 'There was a problem submitting your request. Please try again.';
-                alert(msg);
+                  .join(' ') || 'We weren&rsquo;t able to submit your request. Your information hasn&rsquo;t been lost — please try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.';
+                showSubmitError(msg);
+                isSubmitting = false;
                 if (submitBtn) submitBtn.disabled = false;
               });
             }
           })
           .catch(function () {
-            alert('Unable to submit. Please check your connection or contact us directly.');
+            showSubmitError('Unable to reach our server. Please check your connection and try again, or contact us directly at <a href="tel:13129677696" class="ar-inline-link">(312) 967-7696</a>.');
+            isSubmitting = false;
             if (submitBtn) submitBtn.disabled = false;
           });
         });
       }
+
+      /* ── Reserved for future BlueNotary automation ──────────────────
+         Do not add BlueNotary API calls or credentials here yet (see
+         report, section 6). When that automation exists, the intended
+         hook point is inside the `response.ok` branch above: after
+         Formspree confirms the request was received, an additional
+         (server-side, credential-free from this file's perspective)
+         call would create/queue the BlueNotary session and could return
+         a RON Request ID to display via ronRequestIdWrap/ronRequestIdValue
+         above. No changes to the form fields or steps should be needed
+         to wire that in. ── */
 
     }());
   </script>
