@@ -1,11 +1,12 @@
 // Vercel serverless function — forwards client files to Google Apps Script for Drive storage
 // Browser → /api/upload-to-drive → Google Apps Script (handleFileUpload) → Google Drive
 //
-// GAS creates:  Ink & Seal Apostille Uploads / INS-YYYYMM-#### - Client Name / file.pdf
-// GAS then writes the folder URL back to the "Dropbox Folder Link" column in Google Sheets.
+// GAS creates:  Ink & Seal Notary Pros / Apostille Requests / [Request ID] / file.pdf
+// GAS then writes the folder URL back to the "Upload Folder / File Link" column
+// in the Apostille Intake Tracker spreadsheet (matched by Request ID).
 //
 // /api/submit-intake (text fields) and this function (files) are independent calls.
-// The thank-you page is shown after submit-intake succeeds; this runs in the background.
+// The success screen is shown after submit-intake succeeds; this runs in the background.
 
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwVEacv0z5nAtA1Fs9LOoNJPVENyrM_py0Qnc9ZtoIgoJ5iwwJYI9mKB2FQOQFrw7Eq/exec';
 

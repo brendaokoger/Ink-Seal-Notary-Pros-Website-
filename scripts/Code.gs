@@ -2,24 +2,44 @@
 // Ink & Seal Notary Pros — Apostille Review Intake
 //
 // LIVE WEB APP FUNCTIONS  (do NOT redeploy unless doPost changes)
-//   doPost()   — receives form submissions from apostille-review.html
+//   doPost()   — receives form submissions from the 5-step Apostille form,
+//                writes to the Apostille Intake Tracker (APOSTILLE_SHEET_ID),
+//                and routes Translation submissions to the ORIGINAL spreadsheet
+//                (SHEET_ID) untouched.
 //   doGet()    — health-check endpoint
 //
 // SETUP FUNCTIONS  (run once from the GAS editor — no redeployment needed)
-//   setupNewSheet()         — creates a brand-new spreadsheet
-//   setupApostilleTracker() — enhances an existing sheet
+//   createApostilleIntakeSheet() — creates the NEW, separate Apostille Intake
+//                                  spreadsheet. Run this FIRST, then paste the
+//                                  Sheet ID it logs into APOSTILLE_SHEET_ID below.
+//   setupApostilleTracker()      — legacy admin utility for the OLD/ORIGINAL
+//                                  spreadsheet only (SHEET_ID) — unrelated to
+//                                  the new Apostille Intake Tracker, left as-is.
+//   buildDashboard()             — same: legacy dashboard builder for the OLD
+//                                  spreadsheet (SHEET_ID) only.
 //
-// ── How to run setupApostilleTracker ─────────────────────────────────────────
+// ── How to run createApostilleIntakeSheet ────────────────────────────────────
 //   1. Paste this file into your Apps Script project (replace all).
 //   2. Save  (Ctrl+S / Cmd+S).
-//   3. In the function dropdown at the top, choose  setupApostilleTracker.
+//   3. In the function dropdown at the top, choose  createApostilleIntakeSheet.
 //   4. Click Run.  Approve any permission prompt.
-//   5. Check Execution Log — look for "setupApostilleTracker complete."
-//   No redeployment required.  doPost and the Web App URL are unchanged.
+//   5. Check Execution Log for the new Sheet ID, then paste it into
+//      APOSTILLE_SHEET_ID below and re-save/redeploy.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// SHEET_ID / SHEET_NAME point at the ORIGINAL spreadsheet. It hosts the
+// "Translation Requests" tab and is used ONLY by handleTranslationSubmission
+// below — the Apostille flow no longer reads or writes this spreadsheet.
 var SHEET_ID   = '1qf9R3QLeL8gGCcFuWa0BrVIGmPm_uBqft4cDkuaZ7gI';
 var SHEET_NAME = 'ink_seal_apostille_tracker (1)';
+
+// The Apostille 5-step form writes to its OWN, separate spreadsheet — created
+// by createApostilleIntakeSheet() below. Run that function once from the Apps
+// Script editor, then paste the Sheet ID it logs into APOSTILLE_SHEET_ID here
+// and save. Until this is set to a real ID, Apostille submissions will fail
+// with a clear error rather than silently writing to the wrong spreadsheet.
+var APOSTILLE_SHEET_ID   = 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE';
+var APOSTILLE_SHEET_NAME = 'Apostille Intake';
 
 // Translation Requests — separate tab in the same spreadsheet
 var TRANSLATION_SHEET_NAME = 'Translation Requests';
@@ -85,13 +105,17 @@ var FIELD_MAP = {
   'Review Speed':                function (p, m) { return m.reviewLabel;              },
   'Processing Speed':            function (p, m) { return m.processingLabel;          },
   'Return Delivery':             function (p, m) { return m.deliveryLabel;            },
-  'Estimated Total':             function (p)    { return p.estimatedTotal        || ''; },
+  // Stored as a real number (not the raw string) so the sheet's currency
+  // number format actually applies to it, per this column's "$#,##0.00" format.
+  'Estimated Total':             function (p)    { var n = parseFloat(p.estimatedTotal); return isNaN(n) ? (p.estimatedTotal || '') : n; },
   'Documents Provided Later':    function (p)    { return p.documentsLater ? 'Yes' : 'No'; },
   'Upload Folder / File Link':   function (p)    { return p.uploadFolderLink      || ''; },
   'Additional Notes':            function (p)    { return p.notes                 || ''; },
   'Acknowledgment Accepted':     function (p)    { return p.ack1 ? 'Yes' : 'No';        },
+  // m.submittedAt is a real Date object (see doPost) so Sheets date/time
+  // formatting, sorting, and filtering work correctly on this column.
   'Acknowledgment Timestamp':    function (p, m) { return p.ack1 ? m.submittedAt : '';  },
-  'Status':                      function ()     { return 'Review Pending';             }
+  'Status':                      function ()     { return 'New';                        }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -114,19 +138,27 @@ function doPost(e) {
   }
 
   try {
-    var ss    = SpreadsheetApp.openById(SHEET_ID);
-    var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
+    if (!APOSTILLE_SHEET_ID || APOSTILLE_SHEET_ID === 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+      throw new Error('APOSTILLE_SHEET_ID is not configured — run createApostilleIntakeSheet() ' +
+        'and paste the resulting Sheet ID into APOSTILLE_SHEET_ID at the top of Code.gs.');
+    }
+
+    var ss    = SpreadsheetApp.openById(APOSTILLE_SHEET_ID);
+    var sheet = ss.getSheetByName(APOSTILLE_SHEET_NAME) || ss.getSheets()[0];
     var p     = e.parameter;
 
     Logger.log('=== doPost called ===');
-    Logger.log('Spreadsheet ID   : ' + SHEET_ID);
+    Logger.log('Spreadsheet ID   : ' + APOSTILLE_SHEET_ID);
     Logger.log('Spreadsheet name : ' + ss.getName());
-    Logger.log('SHEET_NAME const : ' + SHEET_NAME);
+    Logger.log('APOSTILLE_SHEET_NAME const : ' + APOSTILLE_SHEET_NAME);
     Logger.log('Worksheet opened : ' + sheet.getName());
     Logger.log('Rows before append: ' + sheet.getLastRow());
 
-    var tz          = Session.getScriptTimeZone();
-    var submittedAt = Utilities.formatDate(new Date(), tz, 'MM/dd/yyyy hh:mm a');
+    var tz = Session.getScriptTimeZone();
+    // A real Date object — not a pre-formatted string — so "Submission
+    // Date/Time" and "Acknowledgment Timestamp" behave as true date/time
+    // cells in Sheets (sortable, filterable, formattable).
+    var submittedAt = new Date();
 
     // Request ID is always generated here — the client never sends one,
     // since none exists until a save is actually confirmed. Uses a
@@ -186,12 +218,16 @@ function doGet() {
 // ─────────────────────────────────────────────────────────────────────────────
 // handleFileUpload — called by doPost when the JSON body contains action:'upload_files'
 //
-// 1. Finds (or creates) the shared parent folder "Ink & Seal Apostille Uploads" in Drive.
-// 2. Creates a per-order subfolder: "INS-YYYYMM-#### - Client Full Name"
-// 3. Decodes each base64 file and saves it inside the order folder.
-// 4. Writes the folder URL back to the matching row in the Google Sheet
-//    (searches the "Order Number" column; writes to "Dropbox Folder Link" or
-//    "Document Upload Folder Link" — whichever header is present in the live sheet).
+// 1. Finds (or creates) "Ink & Seal Notary Pros" in Drive.
+// 2. Finds (or creates) "Apostille Requests" inside it.
+// 3. Finds (or creates) a leaf folder named EXACTLY the Request ID inside that —
+//    the lookup is idempotent (find-or-create, never always-create), so calling
+//    this again for the same Request ID (e.g. the website's "Retry Upload" flow)
+//    reuses the same folder instead of creating a duplicate.
+// 4. Decodes each base64 file and saves it inside the request folder.
+// 5. Writes the folder URL back to the matching row — the Apostille Intake
+//    Tracker and the (separate, untouched) Translation Requests spreadsheet
+//    are two different files, so each is looked up independently.
 // ─────────────────────────────────────────────────────────────────────────────
 function handleFileUpload(p) {
   try {
@@ -199,18 +235,21 @@ function handleFileUpload(p) {
     var clientName  = (p.clientName  || 'Unknown Client').trim();
     var files       = p.files || [];
 
-    // 1. Find or create the shared parent folder
-    var parentName   = 'Ink & Seal Apostille Uploads';
-    var parentIter   = DriveApp.getFoldersByName(parentName);
-    var parentFolder = parentIter.hasNext()
-                       ? parentIter.next()
-                       : DriveApp.createFolder(parentName);
+    // 1. Find or create the top-level company folder
+    var topName   = 'Ink & Seal Notary Pros';
+    var topIter   = DriveApp.getFoldersByName(topName);
+    var topFolder = topIter.hasNext() ? topIter.next() : DriveApp.createFolder(topName);
 
-    // 2. Create the per-order subfolder: "INS-YYYYMM-#### - Client Full Name"
-    var folderName  = orderNumber ? (orderNumber + ' - ' + clientName) : clientName;
-    var orderFolder = parentFolder.createFolder(folderName);
+    // 2. Find or create the "Apostille Requests" folder inside it
+    var reqsIter   = topFolder.getFoldersByName('Apostille Requests');
+    var reqsFolder = reqsIter.hasNext() ? reqsIter.next() : topFolder.createFolder('Apostille Requests');
 
-    // 3. Decode and save each file
+    // 3. Find or create the per-request leaf folder, named exactly the Request ID
+    var leafName    = orderNumber || clientName;
+    var leafIter    = reqsFolder.getFoldersByName(leafName);
+    var orderFolder = leafIter.hasNext() ? leafIter.next() : reqsFolder.createFolder(leafName);
+
+    // 4. Decode and save each file
     var uploadCount = 0;
     files.forEach(function (f) {
       var dataUrl = f.data || '';
@@ -221,14 +260,31 @@ function handleFileUpload(p) {
       uploadCount++;
     });
 
-    // 4. Get the Drive folder URL
+    // 5. Get the Drive folder URL
     var folderUrl = orderFolder.getUrl();
 
-    // 5. Write the folder URL back to the matching sheet row (apostille or translation)
+    // 6. Write the folder URL back to the matching sheet row. Try the
+    //    Apostille Intake Tracker first, then fall back to the (separate,
+    //    untouched) Translation Requests spreadsheet — each opened
+    //    independently since they are now two different files.
     if (orderNumber) {
-      var ss = SpreadsheetApp.openById(SHEET_ID);
-      var wrote = writeFolderLinkToSheet_(ss, SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
-      if (!wrote) writeFolderLinkToSheet_(ss, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
+      var wrote = false;
+      if (APOSTILLE_SHEET_ID && APOSTILLE_SHEET_ID !== 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+        try {
+          var apoSs = SpreadsheetApp.openById(APOSTILLE_SHEET_ID);
+          wrote = writeFolderLinkToSheet_(apoSs, APOSTILLE_SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
+        } catch (apoErr) {
+          Logger.log('handleFileUpload: could not open APOSTILLE_SHEET_ID — ' + apoErr.toString());
+        }
+      }
+      if (!wrote) {
+        try {
+          var transSs = SpreadsheetApp.openById(SHEET_ID);
+          writeFolderLinkToSheet_(transSs, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
+        } catch (transErr) {
+          Logger.log('handleFileUpload: could not open SHEET_ID (translation) — ' + transErr.toString());
+        }
+      }
     }
 
     Logger.log('handleFileUpload: order=' + orderNumber + ' client=' + clientName +
@@ -247,12 +303,15 @@ function handleFileUpload(p) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// setupNewSheet — run ONCE to create a brand-new spreadsheet from scratch
+// createApostilleIntakeSheet — run ONCE to create the NEW, separate Apostille
+// Intake spreadsheet. Does NOT touch the original spreadsheet (SHEET_ID) in
+// any way. After running, paste the logged Sheet ID into APOSTILLE_SHEET_ID
+// at the top of this file.
 // ─────────────────────────────────────────────────────────────────────────────
-function setupNewSheet() {
-  var ss    = SpreadsheetApp.create('Ink & Seal Apostille Tracker');
+function createApostilleIntakeSheet() {
+  var ss    = SpreadsheetApp.create('Ink & Seal — Apostille Intake Tracker');
   var sheet = ss.getActiveSheet();
-  sheet.setName(SHEET_NAME);
+  sheet.setName(APOSTILLE_SHEET_NAME);
 
   var numCols = HEADERS.length;
   sheet.getRange(1, 1, 1, numCols).setValues([HEADERS]);
@@ -294,15 +353,20 @@ function setupNewSheet() {
   addDropdown(sheet, 'Documents Provided Later',  ['Yes','No']);
   addDropdown(sheet, 'Acknowledgment Accepted',   ['Yes','No']);
   addDropdown(sheet, 'Status', [
-    'Review Pending','Quote Sent','Awaiting Documents','Awaiting Payment',
-    'Processing','Completed','Shipped','Delivered','Closed','Cancelled'
+    'New','Reviewing','Awaiting Documents','Quote Sent',
+    'Approved','Processing','Completed','Cancelled'
   ]);
 
+  // Request ID must stay plain text — never auto-convert to a number
+  setColumnFormat(sheet, 'Request ID', '@');
+  // Real date/time values (see doPost) so these format, sort, and filter correctly
+  setColumnFormat(sheet, 'Submission Date/Time',     'MM/dd/yyyy hh:mm a');
+  setColumnFormat(sheet, 'Acknowledgment Timestamp', 'MM/dd/yyyy hh:mm a');
   setColumnFormat(sheet, 'Estimated Total', '$#,##0.00');
 
-  Logger.log('Sheet created: ' + ss.getName());
-  Logger.log('URL: '          + ss.getUrl());
-  Logger.log('>>> Paste this Sheet ID into SHEET_ID at the top of Code.gs:');
+  Logger.log('Apostille Intake Tracker created: ' + ss.getName());
+  Logger.log('URL: '                             + ss.getUrl());
+  Logger.log('>>> Paste this Sheet ID into APOSTILLE_SHEET_ID at the top of Code.gs:');
   Logger.log(ss.getId());
 }
 
@@ -1007,7 +1071,7 @@ function colLetter(n) {
   return s;
 }
 
-// Used by setupNewSheet for the original 32 columns
+// Used by createApostilleIntakeSheet — matches against HEADERS by name
 function addDropdown(sheet, colName, options) {
   var col = HEADERS.indexOf(colName) + 1;
   if (!col) return;
