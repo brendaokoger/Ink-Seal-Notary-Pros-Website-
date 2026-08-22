@@ -8,7 +8,7 @@
 // /api/submit-intake (text fields) and this function (files) are independent calls.
 // The success screen is shown after submit-intake succeeds; this runs in the background.
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwVEacv0z5nAtA1Fs9LOoNJPVENyrM_py0Qnc9ZtoIgoJ5iwwJYI9mKB2FQOQFrw7Eq/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzTrORBJvbIkkT0Dr1aOBlQ1Hpl4RxOAKyhvS24mskf3tubddAxcn4UciFUjT4ZvIksIw/exec';
 
 const handler = async function (req, res) {
   res.setHeader('Access-Control-Allow-Origin',  '*');
