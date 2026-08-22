@@ -132,13 +132,16 @@
     </div>
   </section>
 
-  <!-- ═══ FORM ANCHOR + INTRO ══════════════════════════════ -->
+  <!-- ═══ FORM ANCHOR + INTRO ══════════════════════════════
+       Kept deliberately compact — the customer should reach Step 1
+       quickly. No pricing tables, RON pricing, or long explanations
+       live here; those now live only where they're needed. ══════ -->
   <div id="start">
     <div class="aph-form-intro">
       <div class="container">
-        <span class="aph-form-intro-tag">Secure Review Request</span>
-        <h2 class="aph-form-intro-h">Begin Your Apostille Review</h2>
-        <p class="aph-form-intro-sub">Complete the form below and our team will review your documents and contact you with pricing and next steps.</p>
+        <h2 class="aph-form-intro-h">Start Your Apostille</h2>
+        <p class="aph-form-intro-sub">Tell us about your document and where it will be used.</p>
+        <p class="aph-form-intro-note">No payment due today.</p>
       </div>
     </div>
 
@@ -163,8 +166,6 @@
   <!-- ═══ FORM SECTION ══════════════════════════════════════ -->
   <section class="on-form-section">
     <div class="container">
-
-      <p class="price-disclaimer price-disclaimer--form">No payment is required to submit this form. Apostille service pricing starts at $175 per eligible document after your documents are reviewed and your order is approved. You will not be charged for submitting a request. Final pricing depends on document type, destination country, processing speed, notarization requirements, government fees, shipping, and any additional services.</p>
 
       <!-- Success message -->
       <div class="on-success" id="arSuccess" role="alert" aria-live="polite">
@@ -482,7 +483,7 @@
           <div class="ar-step-hdr">
             <span class="ar-step-hdr-eyebrow">Step 2 of 5</span>
             <h2 class="ar-step-hdr-title">Choose Your Service</h2>
-            <p class="ar-step-hdr-desc">See your estimated investment before providing your contact information. No payment is due today.</p>
+            <p class="ar-step-hdr-desc">Select your review speed, processing speed and return delivery to see your estimate.</p>
           </div>
 
           <!-- Review Speed -->
@@ -537,187 +538,72 @@
 
           </div>
 
-          <!-- Apostille Pricing Reference Card -->
-          <details class="ar-pricing-details">
-            <summary class="ar-pricing-summary">
-              <div class="ar-pricing-summary-text">
-                <span class="ar-pricing-summary-eyebrow">Estimated Service Pricing</span>
-                <span class="ar-pricing-summary-title">Standard Apostille Service Pricing</span>
-              </div>
-              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
-            </summary>
-            <div class="ar-pricing-details-body">
-
-            <div class="ar-pricing-feature">
-              <span class="ar-pricing-feature-label">Standard Apostille Service</span>
-              <span class="ar-pricing-feature-price">Starting at $175 <span class="ar-pricing-per">per document</span></span>
+          <!-- Processing Speed -->
+          <div class="ar-option-group" style="margin-top:32px">
+            <p class="ar-option-group-label on-label">Processing Speed</p>
+            <div class="ar-option-row">
+              <label class="ar-option-card">
+                <input type="radio" name="processingSpeed" value="standard"
+                       data-rush-fee="0" class="ar-option-input" checked />
+                <span class="ar-option-check"></span>
+                <span class="ar-option-name">Standard Processing</span>
+                <span class="ar-option-price">Included</span>
+                <span class="ar-option-desc">Typical 5–10 business day turnaround</span>
+              </label>
+              <label class="ar-option-card">
+                <input type="radio" name="processingSpeed" value="rush"
+                       data-rush-fee="75" class="ar-option-input" />
+                <span class="ar-option-check"></span>
+                <span class="ar-option-name">Rush Processing</span>
+                <span class="ar-option-price">+ $75</span>
+                <span class="ar-option-desc">Priority handling for faster turnaround</span>
+              </label>
             </div>
-            <div class="ar-pricing-row ar-pricing-row--sub">
-              <span class="ar-pricing-item">Additional Documents (same order)</span>
-              <span class="ar-pricing-amount">$100 each</span>
-            </div>
-
-            <div class="ar-pricing-divider"></div>
-
-            <div class="ar-pricing-group">
-              <p class="ar-pricing-group-label">Review Options</p>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Standard Review</span>
-                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Same-Day Review</span>
-                <span class="ar-pricing-amount">+ $25</span>
-              </div>
-            </div>
-
-            <div class="ar-pricing-group">
-              <p class="ar-pricing-group-label">Processing Options</p>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Standard Processing</span>
-                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Rush Processing</span>
-                <span class="ar-pricing-amount">+ $75</span>
-              </div>
-            </div>
-
-            <div class="ar-pricing-group">
-              <p class="ar-pricing-group-label">Return Delivery</p>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">USPS Priority Return Shipping</span>
-                <span class="ar-pricing-amount ar-pricing-amount--incl">Included</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Overnight Return Shipping</span>
-                <span class="ar-pricing-amount">+ $45</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">International Return Shipping</span>
-                <span class="ar-pricing-amount">Starting at $75</span>
-              </div>
-            </div>
-
-            <p class="ar-pricing-intl-note">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, package weight, delivery requirements, and shipping method selected. A final international shipping quote will be provided after document review and destination verification.</p>
-
-            <p class="ar-pricing-disclaimer">All pricing displayed is an estimate only. Final pricing will be confirmed after document review before processing begins.</p>
-            </div>
-          </details>
-
-          <!-- RON Pricing Reference Card -->
-          <details class="ar-pricing-details">
-            <summary class="ar-pricing-summary">
-              <div class="ar-pricing-summary-text">
-                <span class="ar-pricing-summary-eyebrow">Informational Pricing Only</span>
-                <span class="ar-pricing-summary-title">Remote Online Notarization (RON)</span>
-              </div>
-              <svg class="ar-pricing-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><polyline points="3,5 8,11 13,5"/></svg>
-            </summary>
-            <div class="ar-pricing-details-body">
-
-            <div class="ar-pricing-group">
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Standard RON <span class="ar-pricing-item-note">(1 signer / 1 seal)</span></span>
-                <span class="ar-pricing-amount">$25</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Additional Seal</span>
-                <span class="ar-pricing-amount">+ $10</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Additional Signer</span>
-                <span class="ar-pricing-amount">+ $15</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Witness Service</span>
-                <span class="ar-pricing-amount">$40</span>
-              </div>
-              <div class="ar-pricing-row">
-                <span class="ar-pricing-item">Authenticated Witness</span>
-                <span class="ar-pricing-amount">+ $20</span>
-              </div>
-            </div>
-
-            <p class="ar-pricing-disclaimer">RON services are quoted separately and only when notarization is required.</p>
-            </div>
-          </details>
-
-          <!-- Processing & Return Delivery card -->
-          <div class="on-card">
-            <div class="on-card-head">
-              <h2 class="on-card-title">Processing &amp; Return Delivery</h2>
-            </div>
-
-            <!-- Processing Speed -->
-            <div class="ar-option-group">
-              <p class="ar-option-group-label on-label">Processing Speed</p>
-              <div class="ar-option-row">
-                <label class="ar-option-card">
-                  <input type="radio" name="processingSpeed" value="standard"
-                         data-rush-fee="0" class="ar-option-input" checked />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Standard Processing</span>
-                  <span class="ar-option-price">Included</span>
-                  <span class="ar-option-desc">Typical 5–10 business day turnaround</span>
-                </label>
-                <label class="ar-option-card">
-                  <input type="radio" name="processingSpeed" value="rush"
-                         data-rush-fee="75" class="ar-option-input" />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Rush Processing</span>
-                  <span class="ar-option-price">+ $75</span>
-                  <span class="ar-option-desc">Priority handling for faster turnaround</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Return Delivery -->
-            <div class="ar-option-group" style="margin-top:32px">
-              <p class="ar-option-group-label on-label">Return Delivery</p>
-              <div class="ar-option-col">
-                <label class="ar-option-card">
-                  <input type="radio" name="returnShipping" value="usps-priority"
-                         data-shipping-fee="0" class="ar-option-input" checked />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">USPS Priority</span>
-                  <span class="ar-option-price">Included</span>
-                  <span class="ar-option-desc">Delivery in 1–3 business days</span>
-                </label>
-                <label class="ar-option-card">
-                  <input type="radio" name="returnShipping" value="overnight"
-                         data-shipping-fee="45" class="ar-option-input" />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">Overnight</span>
-                  <span class="ar-option-price">+ $45</span>
-                  <span class="ar-option-desc">Next-day delivery for time-sensitive documents</span>
-                </label>
-                <label class="ar-option-card">
-                  <input type="radio" name="returnShipping" value="international"
-                         data-shipping-fee="75" class="ar-option-input" />
-                  <span class="ar-option-check"></span>
-                  <span class="ar-option-name">International</span>
-                  <span class="ar-option-price">Starting at $75</span>
-                  <span class="ar-option-desc">Door-to-door international courier delivery</span>
-                </label>
-                <p class="ar-shipping-notice">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, weight, and delivery requirements.</p>
-              </div>
-            </div>
-
-            <!-- RON note -->
-            <div class="ar-ron-group">
-              <p class="ar-ron-eyebrow">Remote Online Notarization (RON)</p>
-              <p class="ar-ron-body">Some documents may require notarization prior to apostille processing. Remote Online Notarization (RON) is available for eligible documents. RON pricing is displayed above and quoted separately only when notarization is required.</p>
-            </div>
-
           </div>
 
-          <!-- YOUR ESTIMATE — structure only; calcEstimate() (unchanged
-               formula) populates this. Section 2 will finalize/verify
-               the calculator. -->
-          <div class="on-card">
+          <!-- Return Delivery -->
+          <div class="ar-option-group" style="margin-top:32px">
+            <p class="ar-option-group-label on-label">Return Delivery</p>
+            <div class="ar-option-col">
+              <label class="ar-option-card">
+                <input type="radio" name="returnShipping" value="usps-priority"
+                       data-shipping-fee="0" class="ar-option-input" checked />
+                <span class="ar-option-check"></span>
+                <span class="ar-option-name">USPS Priority</span>
+                <span class="ar-option-price">Included</span>
+                <span class="ar-option-desc">Delivery in 1–3 business days</span>
+              </label>
+              <label class="ar-option-card">
+                <input type="radio" name="returnShipping" value="overnight"
+                       data-shipping-fee="45" class="ar-option-input" />
+                <span class="ar-option-check"></span>
+                <span class="ar-option-name">Overnight</span>
+                <span class="ar-option-price">+ $45</span>
+                <span class="ar-option-desc">Next-day delivery for time-sensitive documents</span>
+              </label>
+              <label class="ar-option-card">
+                <input type="radio" name="returnShipping" value="international"
+                       data-shipping-fee="75" class="ar-option-input" />
+                <span class="ar-option-check"></span>
+                <span class="ar-option-name">International</span>
+                <span class="ar-option-price">Starting at $75</span>
+                <span class="ar-option-desc">Door-to-door international courier delivery</span>
+              </label>
+              <p class="ar-shipping-notice">International return shipping starts at $75 and varies based on destination country, carrier availability, package size, weight, and delivery requirements.</p>
+            </div>
+          </div>
+
+          <!-- RON — reduced to one short note; no RON pricing in this form -->
+          <div class="on-upload-notice" style="margin-top:32px">
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
+            <p>Not sure whether your document requires notarization first? We&rsquo;ll identify that during document review. Remote Online Notarization is available for eligible documents when needed.</p>
+          </div>
+
+          <!-- YOUR ESTIMATED TOTAL — structure only; calcEstimate()
+               (unchanged formula) populates this. -->
+          <div class="on-card" style="margin-top:32px">
             <div class="on-card-head">
-              <h2 class="on-card-title">Your Estimate</h2>
+              <h2 class="on-card-title">Your Estimated Total</h2>
             </div>
 
             <div class="ar-estimate-wrap">
@@ -754,27 +640,10 @@
                   <span class="ar-estimate-label">Estimated Total</span>
                   <span class="ar-estimate-total" id="arEstimateTotal">$175</span>
                 </div>
-                <p class="ar-estimate-intl" id="arEstimateIntl" style="display:none">International return shipping is shown as a starting estimate. Final shipping will be quoted after document review and destination verification.</p>
               </div>
             </div>
 
-            <div class="ar-pricing-notice">
-              <div class="ar-info-card-head">
-                <span class="ar-info-card-icon" aria-hidden="true">
-                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-                    <circle cx="9" cy="9" r="7"/>
-                    <line x1="9" y1="5.5" x2="9" y2="6.5"/>
-                    <line x1="9" y1="8"   x2="9" y2="12.5"/>
-                  </svg>
-                </span>
-                <h3 class="ar-info-card-title">Important Pricing Information</h3>
-              </div>
-              <div class="ar-pricing-notice-body">
-                <p>The estimate shown above is not a final invoice.</p>
-                <p>Final pricing may vary based on additional documents, notarization requirements, witness services, federal document processing, expedited requests, and international shipping requirements.</p>
-                <p>No additional charges will be processed without your approval.</p>
-              </div>
-            </div>
+            <p class="ar-field-helper" style="margin-top:14px; text-align:center">No payment due today. Final pricing is confirmed after document review.</p>
           </div>
 
           <div class="ms-nav">
