@@ -7556,19 +7556,21 @@ a.btn-gold:hover {
 .aph-card-cta svg { transition: transform .2s; }
 .aph-card-cta:hover svg { transform: translateX(2px); }
 
-/* #start is the anchor every "Start My Apostille" CTA (site-wide) jumps
-   to. Without this, the fixed header (var(--hh), responsive) covers the
-   entire navy intro band below — it's shorter than the header at every
-   breakpoint — so the jump visually lands inside the form instead of at
-   "Start Your Apostille." scroll-margin-top reserves that space so the
-   browser's own anchor jump, and the form's own scrollIntoView() calls
-   between steps, both land correctly with the header clear. */
-#start { scroll-margin-top: var(--hh); }
+/* #start no longer needs its own scroll-margin-top: .aph-form-intro
+   below (the section that now starts immediately inside #start) has
+   its own padding-top: var(--hh), since the hub hero that used to sit
+   above it — and clear the header on its own — was removed. That
+   section padding already reserves the header's height, so an anchor
+   jump to #start lands correctly without any extra offset; adding one
+   here too would double it and overshoot past the intro banner. */
 
 /* ── Form intro band (above sticky progress bar) ── */
 .aph-form-intro {
   background: var(--navy);
-  padding: 60px 0 52px;
+  /* Now the page's first section (the hub hero above it was removed) —
+     padding-top accounts for the fixed header, same pattern as .hero,
+     so this banner is never hidden underneath the nav on a fresh load. */
+  padding: calc(var(--hh) + 60px) 0 52px;
   text-align: center;
   border-top: 1px solid rgba(212,175,55,.15);
 }
@@ -7837,7 +7839,7 @@ a.btn-gold:hover {
   .aph-card-grid { grid-template-columns: 1fr; }
   .apspoke-body { padding: 56px 0 64px; }
   .apspoke-cta { padding: 56px 0 64px; }
-  .aph-form-intro { padding: 48px 0 40px; }
+  .aph-form-intro { padding: calc(var(--hh) + 40px) 0 40px; }
   .aph-form-progress-inner { flex-wrap: wrap; gap: 6px; }
 }
 
