@@ -8,15 +8,24 @@
 //                (SHEET_ID) untouched.
 //   doGet()    — health-check endpoint
 //
-// SETUP FUNCTIONS  (run once from the GAS editor — no redeployment needed)
-//   createApostilleIntakeSheet() — creates the NEW, separate Apostille Intake
-//                                  spreadsheet. Run this FIRST, then paste the
-//                                  Sheet ID it logs into APOSTILLE_SHEET_ID below.
-//   setupApostilleTracker()      — legacy admin utility for the OLD/ORIGINAL
-//                                  spreadsheet only (SHEET_ID) — unrelated to
-//                                  the new Apostille Intake Tracker, left as-is.
-//   buildDashboard()             — same: legacy dashboard builder for the OLD
-//                                  spreadsheet (SHEET_ID) only.
+// SETUP / MIGRATION FUNCTIONS  (run once from the GAS editor — no redeployment needed)
+//   createApostilleIntakeSheet()      — creates the NEW, separate Apostille
+//                                       Intake spreadsheet. Run this FIRST,
+//                                       then paste the Sheet ID it logs into
+//                                       APOSTILLE_SHEET_ID below.
+//   addDestinationEligibilityColumn() — safe, idempotent migration: adds the
+//                                       'Destination Eligibility' column to
+//                                       the LIVE Apostille Intake Tracker if
+//                                       it's missing. Run once after pulling
+//                                       in a Code.gs update that added this
+//                                       column to HEADERS/FIELD_MAP, if the
+//                                       live sheet predates that change.
+//   setupApostilleTracker()           — legacy admin utility for the OLD/
+//                                       ORIGINAL spreadsheet only (SHEET_ID)
+//                                       — unrelated to the new Apostille
+//                                       Intake Tracker, left as-is.
+//   buildDashboard()                  — same: legacy dashboard builder for
+//                                       the OLD spreadsheet (SHEET_ID) only.
 //
 // ── How to run createApostilleIntakeSheet ────────────────────────────────────
 //   1. Paste this file into your Apps Script project (replace all).
@@ -382,6 +391,93 @@ function createApostilleIntakeSheet() {
   Logger.log('URL: '                             + ss.getUrl());
   Logger.log('>>> Paste this Sheet ID into APOSTILLE_SHEET_ID at the top of Code.gs:');
   Logger.log(ss.getId());
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// addDestinationEligibilityColumn — SAFE, IDEMPOTENT migration for the LIVE
+// Apostille Intake Tracker (APOSTILLE_SHEET_ID). Run ONCE, manually, from the
+// Apps Script editor's function dropdown. Safe to re-run any number of times.
+//
+// What it does:
+//   1. Opens the EXISTING spreadsheet at APOSTILLE_SHEET_ID. Never creates a
+//      new spreadsheet, never touches SHEET_ID (the original/Translation
+//      spreadsheet).
+//   2. Reads the sheet's live header row (row 1) — not the hard-coded
+//      HEADERS array — so this reflects whatever the real sheet has today.
+//   3. If 'Destination Eligibility' is already a header, makes NO changes
+//      and logs that it already exists. This is what makes it safe to run
+//      more than once.
+//   4. Otherwise, inserts exactly ONE new column immediately after the
+//      existing 'Destination Country' column, via Sheet.insertColumnAfter()
+//      — the same operation as the Sheets UI's "Insert 1 column right".
+//      This shifts every column at or after that position — its data,
+//      formulas, data validation rules, and conditional-formatting ranges
+//      — one position to the right automatically, without loss. Nothing
+//      to the left of the insertion point is touched, and no existing
+//      column's contents, order, or formatting is modified or deleted.
+//   5. Writes the header 'Destination Eligibility' into the new column's
+//      row-1 cell, and copies the 'Destination Country' header cell's
+//      formatting onto it (format only — not its text) so the new header
+//      cell matches the rest of the header row visually, then sets a
+//      column width consistent with the one used by
+//      createApostilleIntakeSheet() for this column.
+//   6. Does not rebuild the sheet's active filter. Google Sheets natively
+//      extends an existing filter's range to include a column inserted
+//      inside its bounds (the same mechanism that shifts data and
+//      validation on insert) — rebuilding it here would risk discarding
+//      any column-specific filter criteria staff may already have set, so
+//      this function deliberately leaves the filter alone. If the new
+//      column doesn't show a filter control after running this, re-apply
+//      the filter once by hand (Data > Create a filter) — no data is at
+//      risk either way.
+//
+// Requires APOSTILLE_SHEET_ID to already be set to the live sheet's ID
+// (see the constant near the top of this file). Throws — and makes no
+// changes — if it is still the placeholder, or if 'Destination Country'
+// can't be found in the live header row (refuses to guess where to insert).
+// ─────────────────────────────────────────────────────────────────────────────
+function addDestinationEligibilityColumn() {
+  if (!APOSTILLE_SHEET_ID || APOSTILLE_SHEET_ID === 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+    throw new Error('addDestinationEligibilityColumn: APOSTILLE_SHEET_ID is not configured — ' +
+      'set it to the live Apostille Intake Tracker\'s Sheet ID before running this migration.');
+  }
+
+  var ss    = SpreadsheetApp.openById(APOSTILLE_SHEET_ID);
+  var sheet = ss.getSheetByName(APOSTILLE_SHEET_NAME) || ss.getSheets()[0];
+
+  var liveHeaders = getHeaders(sheet);
+  var existingIdx = liveHeaders.indexOf('Destination Eligibility');
+  if (existingIdx !== -1) {
+    Logger.log('addDestinationEligibilityColumn: "Destination Eligibility" already exists ' +
+      '(column ' + (existingIdx + 1) + ') — no changes made.');
+    return;
+  }
+
+  var destCol = liveHeaders.indexOf('Destination Country') + 1; // 1-based; 0 if not found
+  if (!destCol) {
+    throw new Error('addDestinationEligibilityColumn: "Destination Country" column was not found in the ' +
+      'live header row — refusing to guess where to insert "Destination Eligibility". No changes made.');
+  }
+
+  // Insert ONE new column immediately after "Destination Country". Sheets
+  // shifts every column at or after this position — including data,
+  // formulas, data validation, and conditional-format ranges anchored
+  // there — one position to the right automatically.
+  sheet.insertColumnAfter(destCol);
+  var newCol = destCol + 1;
+
+  var newHeaderCell = sheet.getRange(1, newCol);
+  newHeaderCell.setValue('Destination Eligibility');
+  // Copies formatting ONLY (background, font, weight, etc.) — does not
+  // touch the value just set above — from the 'Destination Country'
+  // header cell onto the new header cell, so it matches visually.
+  sheet.getRange(1, destCol).copyFormatToRange(sheet, newCol, newCol, 1, 1);
+  sheet.setColumnWidth(newCol, 190);
+
+  Logger.log('addDestinationEligibilityColumn: inserted "Destination Eligibility" as column ' + newCol +
+    ' (immediately after "Destination Country", column ' + destCol + ').');
+  Logger.log('All existing columns, data, formatting, and data validation were preserved via ' +
+    'Sheets\' native column-insert shifting. No existing column was modified or deleted.');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
