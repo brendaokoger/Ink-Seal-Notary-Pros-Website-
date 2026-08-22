@@ -7455,11 +7455,6 @@ a.btn-gold:hover {
   display: flex; gap: 14px;
   justify-content: center; flex-wrap: wrap;
 }
-/* .btn-hero-2's default text is navy — correct everywhere else it's
-   used (the ivory .page-hero on the four Apostille subpages), but
-   invisible here since this hero itself is navy. Scoped override so
-   the shared .btn-hero-2 rule (and its other usages) stay untouched. */
-.aph-hero-btns .btn-hero-2 { color: var(--ivory); }
 .aph-hero-rule {
   display: flex; align-items: center; gap: 14px;
   max-width: 200px; margin: 52px auto 0;
