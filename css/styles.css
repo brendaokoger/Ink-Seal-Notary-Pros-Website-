@@ -7556,6 +7556,15 @@ a.btn-gold:hover {
 .aph-card-cta svg { transition: transform .2s; }
 .aph-card-cta:hover svg { transform: translateX(2px); }
 
+/* #start is the anchor every "Start My Apostille" CTA (site-wide) jumps
+   to. Without this, the fixed header (var(--hh), responsive) covers the
+   entire navy intro band below — it's shorter than the header at every
+   breakpoint — so the jump visually lands inside the form instead of at
+   "Start Your Apostille." scroll-margin-top reserves that space so the
+   browser's own anchor jump, and the form's own scrollIntoView() calls
+   between steps, both land correctly with the header clear. */
+#start { scroll-margin-top: var(--hh); }
+
 /* ── Form intro band (above sticky progress bar) ── */
 .aph-form-intro {
   background: var(--navy);
