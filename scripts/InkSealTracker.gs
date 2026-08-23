@@ -386,6 +386,24 @@ function handleServiceSubmission_(e, tabName, tabDefFn, headersConst, fieldMap, 
 
     Logger.log(serviceLabel + ' Request: ' + requestId + ' | Rows after append: ' + sheet.getLastRow());
 
+    // Customer bookkeeping is secondary to the intake save itself — a
+    // failure here is logged and swallowed, never surfaced as a submission
+    // failure to the customer. Reuses the SAME fieldMap that just wrote the
+    // service row, so "Full Name"/"Email"/"Phone"/"State" are read exactly
+    // once per submission and can't drift from what was actually stored.
+    try {
+      upsertCustomer_(
+        ss, serviceLabel, requestId,
+        fieldMap['Full Name'] ? fieldMap['Full Name'](p, meta) : '',
+        fieldMap['Email']     ? fieldMap['Email'](p, meta)     : '',
+        fieldMap['Phone']     ? fieldMap['Phone'](p, meta)     : '',
+        fieldMap['State']     ? fieldMap['State'](p, meta)     : '',
+        fieldMap['Estimated Total'] ? fieldMap['Estimated Total'](p, meta) : 0
+      );
+    } catch (custErr) {
+      Logger.log('handleServiceSubmission_ (' + serviceLabel + '): customer upsert failed (non-blocking) — ' + custErr.toString());
+    }
+
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'ok', requestId: requestId, order: requestId }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -396,6 +414,174 @@ function handleServiceSubmission_(e, tabName, tabDefFn, headersConst, fieldMap, 
       .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+
+// ═════════════════════════════════════════════════════════════════════════════
+// CUSTOMER MATCHING — approved rule: EMAIL is the primary match key, PHONE is
+// secondary, and anything ambiguous is FLAGGED for manual review rather than
+// silently merged. Called once per successful intake submission, from inside
+// handleServiceSubmission_'s own try/catch (a failure here never blocks or
+// fails the intake save itself — customer bookkeeping is secondary to the
+// request).
+//
+// Matching logic, in order:
+//   1. Email matches an existing Customers row  -> merge into that row. This
+//      is the authoritative case; phone/name/state are refreshed to the
+//      latest submitted values (people's phone numbers legitimately change —
+//      that's not treated as a conflict).
+//   2. No email match, but email matches row A AND phone matches a DIFFERENT
+//      row B (A != B) -> merge into the EMAIL row (still primary), and
+//      append a dated note flagging that the phone number collides with a
+//      separate existing customer record, for manual review.
+//   3. No email match at all, but phone matches an existing row -> phone
+//      alone is NOT strong enough evidence to auto-merge (a shared household
+//      or work phone would incorrectly combine two different people) — a
+//      NEW customer row is created, and a dated note is appended to it
+//      flagging the phone collision and which existing row/email it matches,
+//      for manual review.
+//   4. No match on either -> new customer row.
+//
+// Wrapped in the same script-wide LockService lock used by the Request ID
+// generators (acquired and released here as its own, separate, non-nested
+// cycle) so two near-simultaneous submissions from the same new customer
+// can't each decide "no match" and create two duplicate rows.
+// ═════════════════════════════════════════════════════════════════════════════
+function upsertCustomer_(ss, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal) {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var sheet = ss.getSheetByName(TAB_CUSTOMERS);
+    if (!sheet) { sheet = ss.insertSheet(TAB_CUSTOMERS); buildTab_(sheet, CUSTOMERS_HEADERS, customersTabOpts_()); }
+
+    var normEmail = normalizeEmail_(email);
+    var normPhone = normalizePhone_(phone);
+
+    var lastRow = sheet.getLastRow();
+    var emailRowIdx = -1, phoneRowIdx = -1;
+    if (lastRow >= 2) {
+      var data = sheet.getRange(2, 1, lastRow - 1, CUSTOMERS_HEADERS.length).getValues();
+      var emailCol = CUSTOMERS_HEADERS.indexOf('Email');
+      var phoneCol = CUSTOMERS_HEADERS.indexOf('Phone');
+      for (var i = 0; i < data.length; i++) {
+        var rowEmail = normalizeEmail_(data[i][emailCol]);
+        var rowPhone = normalizePhone_(data[i][phoneCol]);
+        if (normEmail && emailRowIdx === -1 && rowEmail === normEmail) emailRowIdx = i;
+        if (normPhone && phoneRowIdx === -1 && rowPhone === normPhone) phoneRowIdx = i;
+      }
+    }
+
+    var now = new Date();
+
+    if (emailRowIdx !== -1 && phoneRowIdx !== -1 && emailRowIdx !== phoneRowIdx) {
+      // Case 2 — email is authoritative; phone points at a DIFFERENT
+      // existing customer. Merge into the email row, flag the collision.
+      var note = '[' + formatTs_(now) + '] CONFLICT: phone ' + phone +
+        ' also matches a different existing customer record (row ' + (phoneRowIdx + 2) + ') — review manually.';
+      updateCustomerRow_(sheet, emailRowIdx, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, note);
+
+    } else if (emailRowIdx !== -1) {
+      // Case 1 — clean primary match.
+      updateCustomerRow_(sheet, emailRowIdx, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, '');
+
+    } else if (phoneRowIdx !== -1) {
+      // Case 3 — phone-only match. Too weak to auto-merge on its own;
+      // create a new record and flag it against the phone-matched row.
+      var emailColLetter = CUSTOMERS_HEADERS.indexOf('Email') + 1;
+      var existingEmailAtPhoneRow = sheet.getRange(phoneRowIdx + 2, emailColLetter).getValue();
+      var phoneNote = '[' + formatTs_(now) + '] CONFLICT: phone ' + phone +
+        ' also matches existing customer record (row ' + (phoneRowIdx + 2) + ', email: ' + existingEmailAtPhoneRow +
+        ') — possible duplicate, review manually.';
+      createCustomerRow_(sheet, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, now, phoneNote);
+
+    } else {
+      // Case 4 — no match at all.
+      createCustomerRow_(sheet, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, now, '');
+    }
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function normalizeEmail_(email) {
+  return (email || '').toString().trim().toLowerCase();
+}
+function normalizePhone_(phone) {
+  return (phone || '').toString().replace(/\D/g, '');
+}
+function formatTs_(d) {
+  return Utilities.formatDate(d, Session.getScriptTimeZone(), 'MM/dd/yyyy hh:mm a');
+}
+
+function createCustomerRow_(sheet, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, now, note) {
+  var amount = typeof estimatedTotal === 'number' ? estimatedTotal : (parseFloat(estimatedTotal) || 0);
+  // customerId is generated under the SAME lock upsertCustomer_ already
+  // holds — nextCustomerId_() does not acquire its own lock, precisely so
+  // this never nests two LockService acquisitions from one execution.
+  var customerId = nextCustomerId_();
+  var row = CUSTOMERS_HEADERS.map(function (h) {
+    switch (h) {
+      case 'Customer ID':           return customerId;
+      case 'Full Name':             return fullName || '';
+      case 'Email':                 return email || '';
+      case 'Phone':                 return phone || '';
+      case 'State':                 return state || '';
+      case 'Services Used':         return serviceLabel;
+      case 'Request IDs':           return requestId;
+      case 'First Request Date':    return now;
+      case 'Total Requests':        return 1;
+      case 'Total Estimated Value': return amount;
+      case 'Notes':                 return note || '';
+      default:                      return '';
+    }
+  });
+  sheet.appendRow(row);
+}
+
+function updateCustomerRow_(sheet, rowIdx, serviceLabel, requestId, fullName, email, phone, state, estimatedTotal, conflictNote) {
+  var r = rowIdx + 2; // 1-based sheet row — row 1 is the header, data starts at row 2
+  function colOf(name) { return CUSTOMERS_HEADERS.indexOf(name) + 1; }
+  function cell(name) { return sheet.getRange(r, colOf(name)); }
+
+  // Keep name/phone/state in sync with the latest submission — these can
+  // legitimately change over time and are not conflict signals on their own.
+  if (fullName) cell('Full Name').setValue(fullName);
+  if (email)    cell('Email').setValue(email);
+  if (phone)    cell('Phone').setValue(phone);
+  if (state)    cell('State').setValue(state);
+
+  var servicesCell = cell('Services Used');
+  var services = (servicesCell.getValue() || '').toString().split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  if (services.indexOf(serviceLabel) === -1) services.push(serviceLabel);
+  servicesCell.setValue(services.join(', '));
+
+  var reqCell = cell('Request IDs');
+  var reqIds = (reqCell.getValue() || '').toString().split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  reqIds.push(requestId);
+  reqCell.setValue(reqIds.join(', '));
+
+  var totalReqCell = cell('Total Requests');
+  totalReqCell.setValue((parseInt(totalReqCell.getValue(), 10) || 0) + 1);
+
+  var totalValCell = cell('Total Estimated Value');
+  var addAmt = typeof estimatedTotal === 'number' ? estimatedTotal : (parseFloat(estimatedTotal) || 0);
+  totalValCell.setValue((parseFloat(totalValCell.getValue()) || 0) + addAmt);
+
+  if (conflictNote) {
+    var notesCell = cell('Notes');
+    var existingNotes = (notesCell.getValue() || '').toString();
+    notesCell.setValue(existingNotes ? existingNotes + '\n' + conflictNote : conflictNote);
+  }
+}
+
+// Assumes the caller already holds LockService's script lock — does NOT
+// acquire its own, so it's always safe to call from inside upsertCustomer_
+// without nesting two lock acquisitions in one execution.
+function nextCustomerId_() {
+  var props = PropertiesService.getScriptProperties();
+  var seq = parseInt(props.getProperty('custSeq') || '0', 10) + 1;
+  props.setProperty('custSeq', String(seq));
+  return 'CUST-' + String(seq).padStart(6, '0');
 }
 
 
