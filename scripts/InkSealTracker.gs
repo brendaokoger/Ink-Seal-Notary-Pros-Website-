@@ -803,6 +803,7 @@ function tabDef_(tabName) {
 function buildTab_(sheet, headers, opts) {
   opts = opts || {};
   var numCols = headers.length;
+  var ROWS = 1000;
 
   sheet.getRange(1, 1, 1, numCols).setValues([headers]);
   sheet.getRange(1, 1, 1, numCols)
@@ -816,21 +817,64 @@ function buildTab_(sheet, headers, opts) {
   sheet.setFrozenRows(1);
   sheet.getRange(1, 1, 1, numCols).createFilter();
 
-  sheet.setConditionalFormatRules([
+  function colOf(name) { return headers.indexOf(name) + 1; }
+
+  // ── Conditional formatting, built in priority order (first rule wins
+  // where more than one matches a cell): per-value status colors first,
+  // then the Customers conflict-row highlight, then the generic alternating
+  // row banding last as a fallback for everything the status colors didn't
+  // touch. All three come from the SAME shared CRM_COLORS palette. ──
+  var rules = [];
+
+  Object.keys(opts.statusColorCols || {}).forEach(function (colName) {
+    var col = colOf(colName);
+    if (!col) return;
+    var valueMap = opts.statusColorCols[colName];
+    Object.keys(valueMap).forEach(function (value) {
+      var token = CRM_COLORS[valueMap[value]];
+      if (!token) return;
+      rules.push(
+        SpreadsheetApp.newConditionalFormatRule()
+          .whenTextEqualTo(value)
+          .setBackground(token.bg)
+          .setFontColor(token.fg)
+          .setRanges([sheet.getRange(2, col, ROWS, 1)])
+          .build()
+      );
+    });
+  });
+
+  if (opts.conflictHighlightCol) {
+    var conflictCol = colOf(opts.conflictHighlightCol);
+    if (conflictCol) {
+      var conflictColLetter = colLetter_(conflictCol);
+      var warn = CRM_COLORS.yellow;
+      rules.push(
+        SpreadsheetApp.newConditionalFormatRule()
+          .whenFormulaSatisfied('=REGEXMATCH($' + conflictColLetter + '2,"CONFLICT")')
+          .setBackground(warn.bg)
+          .setFontColor(warn.fg)
+          .setRanges([sheet.getRange(2, 1, ROWS, numCols)])
+          .build()
+      );
+    }
+  }
+
+  rules.push(
     SpreadsheetApp.newConditionalFormatRule()
       .whenFormulaSatisfied('=MOD(ROW(),2)=0')
       .setBackground('#F7F4EE')
-      .setRanges([sheet.getRange(2, 1, 1000, numCols)])
+      .setRanges([sheet.getRange(2, 1, ROWS, numCols)])
       .build()
-  ]);
+  );
+
+  sheet.setConditionalFormatRules(rules);
 
   // Column widths — sensible default from header length, overridable per column
   headers.forEach(function (h, i) {
     var w = (opts.widths && opts.widths[h]) || Math.max(120, Math.min(260, h.length * 9 + 40));
     sheet.setColumnWidth(i + 1, w);
   });
-
-  function colOf(name) { return headers.indexOf(name) + 1; }
 
   (opts.textCols || []).forEach(function (name) {
     var col = colOf(name);
@@ -860,6 +904,85 @@ function buildTab_(sheet, headers, opts) {
   });
 }
 
+// ═════════════════════════════════════════════════════════════════════════════
+// CRM COLOR SYSTEM — one shared, on-brand palette used for every conditional
+// status color across all 8 tabs, so the whole backend reads as one unified
+// CRM rather than 8 differently-styled spreadsheets. Every token pairs a
+// light background with dark, readable text of the same hue family (not the
+// stark white-on-saturated-color pairing that fights the Ink & Seal navy/
+// gold identity). These are the SAME pastel tones already used by the
+// existing, live setupApostilleTracker() in scripts/Code.gs — reused
+// deliberately rather than inventing a second palette.
+// ═════════════════════════════════════════════════════════════════════════════
+var CRM_COLORS = {
+  blue:       { bg: '#BBDEFB', fg: '#0D47A1' }, // light blue
+  yellow:     { bg: '#FFF9C4', fg: '#7C6F00' }, // light yellow
+  orange:     { bg: '#FFE0B2', fg: '#8A5A00' }, // light orange
+  lightGreen: { bg: '#C8E6C9', fg: '#1B5E20' }, // light green
+  green:      { bg: '#A5D6A7', fg: '#1B5E20' }, // green (stronger — "done" states)
+  purple:     { bg: '#E1BEE7', fg: '#4A148C' }, // light purple
+  red:        { bg: '#FFCDD2', fg: '#B71C1C' }, // light red
+  gray:       { bg: '#F5F5F5', fg: '#424242' }, // light gray
+  grayRed:    { bg: '#F1DADA', fg: '#7A2E2E' }  // light gray/red — Refunded only
+};
+
+// Generic "Status" column, used by Apostille / RON / Fingerprinting / Translation.
+// Values not present in a given tab's own dropdown simply never match — safe
+// to keep this list a superset across all four services' vocabularies.
+var STATUS_COLOR_MAP = {
+  'New':                    'blue',
+  'Reviewing':              'yellow',
+  'Awaiting Documents':     'orange',
+  'Documents Requested':    'orange',
+  'Ready':                  'lightGreen',
+  'Approved':               'lightGreen',
+  'Ready for Invitation':   'lightGreen',
+  'Quote Sent':             'blue',
+  'Invitation Sent':        'blue',
+  'Processing':             'purple',
+  'Scheduled':              'purple',
+  'Completed':              'green',
+  'Delivered':              'green',
+  'Cancelled':              'red',
+  'Not Eligible':           'red',
+  // Fingerprinting's own vocabulary, mapped into the same semantic families
+  'Confirmed':              'lightGreen',
+  'Rescheduled':            'orange',
+  'No Show':                'orange'
+};
+
+// "Payment Status" column, used by RON and Payments.
+var PAYMENT_STATUS_COLOR_MAP = {
+  'Not Started':    'gray',
+  'Unpaid':         'gray',
+  'Pending':        'yellow',
+  'Invitation Sent':'yellow',
+  'Invoice Sent':   'yellow',
+  'Partially Paid': 'orange',
+  'Paid':           'green',
+  'Refunded':       'grayRed'
+};
+
+// "BlueNotary Invitation Sent" column — RON only.
+var BLUENOTARY_COLOR_MAP = { 'No': 'gray', 'Yes': 'blue' };
+
+// "Session Status" column — RON only.
+var SESSION_STATUS_COLOR_MAP = {
+  'Not Scheduled': 'gray',
+  'Scheduled':     'blue',
+  'Completed':     'green',
+  'No Show':       'orange',
+  'Cancelled':     'red'
+};
+
+// "Channel" column — Communications only.
+var CHANNEL_COLOR_MAP = {
+  'Email':         'blue',
+  'SMS/Text':      'lightGreen',
+  'Phone':         'yellow',
+  'Internal Note': 'gray'
+};
+
 // ── Per-tab formatting options ──────────────────────────────────────────────
 var STATUS_OPTIONS_INTAKE = ['New', 'Reviewing', 'Awaiting Documents', 'Quote Sent', 'Approved', 'Processing', 'Completed', 'Cancelled'];
 
@@ -878,7 +1001,8 @@ function apostilleTabOpts_() {
       'Documents Provided Later':  ['Yes', 'No'],
       'Acknowledgment Accepted':   ['Yes', 'No'],
       'Status': STATUS_OPTIONS_INTAKE
-    }
+    },
+    statusColorCols: { 'Status': STATUS_COLOR_MAP }
   };
 }
 
@@ -897,6 +1021,12 @@ function ronTabOpts_() {
       'Payment Status':            ['Not Started', 'Invitation Sent', 'Paid', 'Refunded'],
       'Session Status':            ['Not Scheduled', 'Scheduled', 'Completed', 'No Show', 'Cancelled'],
       'Status': ['New', 'Reviewing', 'Documents Requested', 'Ready for Invitation', 'Invitation Sent', 'Completed', 'Cancelled']
+    },
+    statusColorCols: {
+      'Status':                     STATUS_COLOR_MAP,
+      'BlueNotary Invitation Sent': BLUENOTARY_COLOR_MAP,
+      'Payment Status':             PAYMENT_STATUS_COLOR_MAP,
+      'Session Status':             SESSION_STATUS_COLOR_MAP
     }
   };
 }
@@ -911,7 +1041,8 @@ function fingerprintingTabOpts_() {
     dateTimeCols: ['Submission Date/Time'],
     dateCols: ['Appointment Date'],
     currencyCols: ['Estimated Total'],
-    dropdowns: dropdowns
+    dropdowns: dropdowns,
+    statusColorCols: { 'Status': STATUS_COLOR_MAP }
   };
 }
 
@@ -924,30 +1055,39 @@ function translationTabOpts_() {
     textCols: ['Request ID'],
     dateTimeCols: ['Submission Date/Time'],
     currencyCols: ['Estimated Total'],
-    dropdowns: dropdowns
+    dropdowns: dropdowns,
+    statusColorCols: { 'Status': STATUS_COLOR_MAP }
   };
 }
 
 function customersTabOpts_() {
   return {
     currencyCols: ['Total Estimated Value'],
-    dateCols: ['First Request Date']
+    dateCols: ['First Request Date'],
+    // Flags the ENTIRE row, not just the Notes cell, whenever a match/
+    // collision note (written by upsertCustomer_) is present — keeps the
+    // rest of the row's data neutral otherwise, per spec.
+    conflictHighlightCol: 'Notes'
   };
 }
 function paymentsTabOpts_() {
   return {
     currencyCols: ['Amount'],
     dateCols: ['Payment Date'],
-    dropdowns: { 'Payment Status': ['Not Started', 'Invoice Sent', 'Partially Paid', 'Paid', 'Refunded'] }
+    dropdowns: { 'Payment Status': ['Not Started', 'Invoice Sent', 'Partially Paid', 'Paid', 'Refunded'] },
+    statusColorCols: { 'Payment Status': PAYMENT_STATUS_COLOR_MAP }
   };
 }
 function communicationsTabOpts_() {
   return {
     dateTimeCols: ['Date/Time'],
     dropdowns: {
-      'Channel':   ['Email', 'Phone', 'Text', 'In-Person', 'Other'],
+      // Aligned to the exact channel categories the color system
+      // distinguishes: Email / SMS-Text / Phone / Internal Note.
+      'Channel':   ['Email', 'SMS/Text', 'Phone', 'Internal Note'],
       'Direction': ['Inbound', 'Outbound']
-    }
+    },
+    statusColorCols: { 'Channel': CHANNEL_COLOR_MAP }
   };
 }
 
@@ -1002,20 +1142,35 @@ function buildDashboardTab_(dash, ss) {
     dash.getRange(r, 1).setValue(svc.label);
     dash.getRange(r, 2).setFormula('=IFERROR(COUNTA(\'' + svc.tab + '\'!' + reqIdCol + ':' + reqIdCol + ')-1,0)');
 
+    // Per-status rows use the SAME CRM_COLORS/STATUS_COLOR_MAP tokens as the
+    // operational tabs themselves, so the Dashboard reads as one unified
+    // system rather than its own separate palette.
     svc.statuses.forEach(function (status, i) {
       dash.getRange(r, 3).setValue(status);
       dash.getRange(r, 4).setFormula(
         '=IFERROR(COUNTIF(\'' + svc.tab + '\'!' + statusCol + ':' + statusCol + ',"' + status + '"),0)'
       );
-      if (i % 2 === 1) dash.getRange(r, 3, 1, 2).setBackground('#F7F4EE');
+      var token = CRM_COLORS[STATUS_COLOR_MAP[status]];
+      if (token) {
+        dash.getRange(r, 3, 1, 2).setBackground(token.bg).setFontColor(token.fg);
+      } else if (i % 2 === 1) {
+        dash.getRange(r, 3, 1, 2).setBackground('#F7F4EE');
+      }
       dash.setRowHeight(r, 24);
       r++;
     });
 
-    // Merge the service name + total-requests cells down across their status rows
-    dash.getRange(startRow, 1, svc.statuses.length, 1).merge().setVerticalAlignment('middle').setFontWeight('bold');
-    dash.getRange(startRow, 2, svc.statuses.length, 1).merge().setVerticalAlignment('middle');
-    if (si % 2 === 1) dash.getRange(startRow, 1, svc.statuses.length, 2).setBackground('#F7F4EE');
+    // Merge the service name + total-requests cells down across their status
+    // rows into a clean, bordered navy/gold metric card — the "at a glance"
+    // summary for that service.
+    dash.getRange(startRow, 1, svc.statuses.length, 1).merge()
+      .setVerticalAlignment('middle').setHorizontalAlignment('center')
+      .setFontWeight('bold').setFontColor('#0B1829').setFontSize(11)
+      .setBorder(true, true, true, true, false, false, '#0B1829', SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+    dash.getRange(startRow, 2, svc.statuses.length, 1).merge()
+      .setVerticalAlignment('middle').setHorizontalAlignment('center')
+      .setFontWeight('bold').setFontColor('#C49A4A').setFontSize(18)
+      .setBorder(true, true, true, true, false, false, '#0B1829', SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
 
     r++; // spacer row between services
   });
