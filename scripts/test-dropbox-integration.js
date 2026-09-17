@@ -19,7 +19,7 @@
  *   Then run: node -r ./scripts/load-env.js scripts/test-dropbox-integration.js
  *
  * Option C — against production (requires the API to be reachable):
- *   PRODUCTION_URL=https://ink-seal-notary-pros-website.vercel.app \
+ *   PRODUCTION_URL=https://inkandsealpros.com \
  *   node scripts/test-dropbox-integration.js --production
  */
 
@@ -42,7 +42,7 @@ if (fs.existsSync(envFile)) {
 }
 
 const PRODUCTION_MODE = process.argv.includes('--production');
-const PRODUCTION_URL  = process.env.PRODUCTION_URL || 'https://ink-seal-notary-pros-website.vercel.app';
+const PRODUCTION_URL  = process.env.PRODUCTION_URL || 'https://inkandsealpros.com';
 const ROOT_FOLDER     = process.env.DROPBOX_ROOT_FOLDER || '/Ink & Seal Apostille Orders';
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -366,7 +366,7 @@ async function step8_productionEndToEnd() {
 
   if (!PRODUCTION_MODE) {
     info('Skipping — run with --production flag and ensure the calling IP is whitelisted');
-    info('Command: PRODUCTION_URL=https://ink-seal-notary-pros-website.vercel.app \\');
+    info('Command: PRODUCTION_URL=https://inkandsealpros.com \\');
     info('         node scripts/test-dropbox-integration.js --production');
     return;
   }
