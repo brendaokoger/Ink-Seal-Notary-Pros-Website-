@@ -322,11 +322,13 @@
                 </div>
               </div>
 
-              <!-- Revealed only when "U.S. Federal Government" is selected -->
-              <div id="arFederalNotice" style="display:none; margin-top:16px">
-                <div class="on-upload-notice">
-                  <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="9" cy="9" r="7"/><line x1="9" y1="5.5" x2="9" y2="6.5"/><line x1="9" y1="8" x2="9" y2="12.5"/></svg>
-                  <p>Federal documents follow a different authentication process. We&rsquo;ll review your request and confirm whether we can assist.</p>
+              <!-- Revealed only when "U.S. Federal Government" is selected — blocks
+                   Step 1 from continuing; no federal/FBI Apostille intake is offered -->
+              <div id="arFederalNotice" class="ar-ineligible-notice" style="display:none; margin-top:16px" role="alert">
+                <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="9" cy="9" r="7.25"/><line x1="9" y1="5.5" x2="9" y2="10"/><line x1="9" y1="12.3" x2="9" y2="12.4"/></svg>
+                <div>
+                  <p class="ar-ineligible-notice-title">Federal and FBI Apostille services are not currently offered.</p>
+                  <p>We apostille state-issued documents only. If your document requires a federal apostille through the U.S. Department of State, we recommend contacting a provider who handles federal-level authentication.</p>
                 </div>
               </div>
             </div>
@@ -1108,6 +1110,10 @@
 
       // ── Step 1: issuing jurisdiction -> issuingState (field name
       // preserved from the prior form for backend compatibility) ──
+      // Federal/FBI Apostille services are not currently offered, so
+      // selecting "U.S. Federal Government" blocks Step 1 from continuing
+      // (see validateStep(1)) the same way an ineligible destination does.
+      var federalJurisdictionSelected = false;
       function updateJurisdiction() {
         var checked = document.querySelector('input[name="issuingJurisdiction"]:checked');
         var val = checked ? checked.value : '';
@@ -1117,9 +1123,13 @@
 
         var showState = (val === 'Another U.S. State');
         var showFed   = (val === 'U.S. Federal Government');
+        federalJurisdictionSelected = showFed;
 
         if (stateWrap) stateWrap.style.display = showState ? '' : 'none';
         if (fedNotice) fedNotice.style.display = showFed ? '' : 'none';
+        if (showFed && fedNotice) {
+          fedNotice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         setRequired(stateSelect, showState);
 
         if (!stateSelect) return;
@@ -1256,6 +1266,14 @@
           if (destinationEligible === false) {
             var ineligibleNotice = document.getElementById('arIneligibleNotice');
             if (ineligibleNotice) ineligibleNotice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return false;
+          }
+          // Federal and FBI Apostille services are not currently offered —
+          // do not allow the customer into Step 2 or any further part of
+          // the intake for a federally-issued document.
+          if (federalJurisdictionSelected) {
+            var fedNotice = document.getElementById('arFederalNotice');
+            if (fedNotice) fedNotice.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return false;
           }
         }
