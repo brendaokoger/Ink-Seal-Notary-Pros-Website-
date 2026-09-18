@@ -133,7 +133,7 @@
         </div>
       </div>
 
-      <p class="form-intro-text" id="ronIntroText">Complete the secure form below. Our team will review your information and contact you with next steps.</p>
+      <p class="form-intro-text" id="ronIntroText">Complete the secure form below. Our team will review your information and contact you with next steps. Remote Online Notarization is available nationwide for eligible signers and documents, subject to applicable state requirements.</p>
 
       <!-- FORM
            Field-name reference:
@@ -410,10 +410,11 @@
                 </div>
                 <p class="ar-dropzone-title">Drop your documents here</p>
                 <p class="ar-dropzone-sub">or <span class="ar-dropzone-browse">browse files</span></p>
-                <p class="ar-dropzone-hint">PDF, Word, JPG, PNG &middot; Multiple files allowed</p>
+                <p class="ar-dropzone-hint">PDF, Word, JPG, PNG &middot; Up to 10 files, 10&nbsp;MB each (30&nbsp;MB total)</p>
               </div>
             </div>
 
+            <p class="ar-upload-count" id="ronFileSizeError" role="alert" style="display:none; color:#9a1c1c"></p>
             <div class="ar-file-list" id="ronFileList" aria-live="polite"></div>
           </div>
 
@@ -911,7 +912,18 @@
       var ronDropzone = document.getElementById('ronDropzone');
       var ronDocInput = document.getElementById('ronDocInput');
       var ronFileList = document.getElementById('ronFileList');
+      var ronFileSizeError = document.getElementById('ronFileSizeError');
       var MAX_RON_FILES = 10;
+      var MAX_RON_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB per file
+      // Combined raw size across all files — kept well under /api/upload-to-drive's
+      // 50 MB request-body limit once base64 (~33% overhead) is applied.
+      var MAX_RON_TOTAL_SIZE_BYTES = 30 * 1024 * 1024; // 30 MB total
+
+      function ronSelectedTotalSize() {
+        var total = 0;
+        for (var k = 0; k < ronSelectedFiles.length; k++) total += ronSelectedFiles[k].size;
+        return total;
+      }
 
       function formatFileSize(bytes) {
         if (bytes < 1024) return bytes + ' B';
@@ -956,6 +968,7 @@
           removeBtn.setAttribute('aria-label', 'Remove ' + file.name);
           removeBtn.addEventListener('click', function () {
             ronSelectedFiles.splice(idx, 1);
+            if (ronFileSizeError) ronFileSizeError.style.display = 'none';
             syncRonFileInput();
             renderRonFileList();
           });
@@ -979,14 +992,31 @@
       }
 
       function addRonFiles(fileList) {
+        var oversized = [];
+        var overTotal = false;
+        var runningTotal = ronSelectedTotalSize();
         for (var i = 0; i < fileList.length; i++) {
           if (ronSelectedFiles.length >= MAX_RON_FILES) break;
           var f = fileList[i];
+          if (f.size > MAX_RON_FILE_SIZE_BYTES) { oversized.push(f.name); continue; }
+          if (runningTotal + f.size > MAX_RON_TOTAL_SIZE_BYTES) { overTotal = true; continue; }
           var exists = false;
           for (var j = 0; j < ronSelectedFiles.length; j++) {
             if (ronSelectedFiles[j].name === f.name && ronSelectedFiles[j].size === f.size) { exists = true; break; }
           }
-          if (!exists) ronSelectedFiles.push(f);
+          if (!exists) { ronSelectedFiles.push(f); runningTotal += f.size; }
+        }
+        if (ronFileSizeError) {
+          if (oversized.length > 0) {
+            ronFileSizeError.textContent = (oversized.length === 1 ? oversized[0] + ' exceeds' : oversized.length + ' files exceed') +
+              ' the 10 MB per-file limit and ' + (oversized.length === 1 ? 'was' : 'were') + ' not added.';
+            ronFileSizeError.style.display = '';
+          } else if (overTotal) {
+            ronFileSizeError.textContent = 'Adding that file would exceed the 30 MB total upload limit. Remove a file or provide the rest by email or at your session.';
+            ronFileSizeError.style.display = '';
+          } else {
+            ronFileSizeError.style.display = 'none';
+          }
         }
         syncRonFileInput();
         renderRonFileList();
