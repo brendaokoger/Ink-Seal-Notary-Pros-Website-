@@ -1,39 +1,51 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Ink & Seal Notary Pros — Apostille Review Intake
+// Ink & Seal Notary Pros — Apostille + RON Intake
 //
 // LIVE WEB APP FUNCTIONS  (do NOT redeploy unless doPost changes)
-//   doPost()   — receives form submissions from the 5-step Apostille form,
-//                writes to the Apostille Intake Tracker (APOSTILLE_SHEET_ID),
-//                and routes Translation submissions to the ORIGINAL spreadsheet
-//                (SHEET_ID) untouched.
+//   doPost()   — routes each submission by type:
+//                  - JSON action:'upload_files'      -> handleFileUpload()
+//                  - formType containing 'translation' -> handleTranslationSubmission()
+//                    (writes to SHEET_ID — the ORIGINAL spreadsheet, untouched)
+//                  - formType === 'ron'               -> handleRonSubmission()
+//                    (writes to the RON Requests tab in the SAME spreadsheet
+//                    as Apostille — see INK_SEAL_SPREADSHEET_ID below)
+//                  - everything else (default)         -> Apostille intake,
+//                    writes to the Apostille Intake tab (APOSTILLE_SHEET_NAME)
+//                    — THIS BRANCH IS UNCHANGED by the RON work below.
 //   doGet()    — health-check endpoint
 //
 // SETUP / MIGRATION FUNCTIONS  (run once from the GAS editor — no redeployment needed)
-//   createApostilleIntakeSheet()      — creates the NEW, separate Apostille
-//                                       Intake spreadsheet. Run this FIRST,
-//                                       then paste the Sheet ID it logs into
-//                                       APOSTILLE_SHEET_ID below.
-//   addDestinationEligibilityColumn() — safe, idempotent migration: adds the
-//                                       'Destination Eligibility' column to
-//                                       the LIVE Apostille Intake Tracker if
-//                                       it's missing. Run once after pulling
-//                                       in a Code.gs update that added this
-//                                       column to HEADERS/FIELD_MAP, if the
-//                                       live sheet predates that change.
+//   createApostilleIntakeSheet()      — creates a NEW spreadsheet from
+//                                       scratch. Already run once for the
+//                                       live Apostille Intake Tracker — do
+//                                       NOT re-run this against the live
+//                                       spreadsheet; it is only for
+//                                       provisioning a brand-new workbook.
+//   addDestinationEligibilityColumn() — safe, idempotent migration for the
+//                                       Apostille Intake tab. Already applied
+//                                       to the live sheet if you're reading
+//                                       this after that rollout.
+//   createRONRequestsTab()            — safe, idempotent: adds the "RON
+//                                       Requests" tab to the SAME spreadsheet
+//                                       used by Apostille, if it doesn't
+//                                       already exist. Never touches the
+//                                       Apostille Intake tab. Run this once.
 //   setupApostilleTracker()           — legacy admin utility for the OLD/
 //                                       ORIGINAL spreadsheet only (SHEET_ID)
-//                                       — unrelated to the new Apostille
-//                                       Intake Tracker, left as-is.
+//                                       — unrelated to the Apostille Intake
+//                                       Tracker or RON Requests, left as-is.
 //   buildDashboard()                  — same: legacy dashboard builder for
 //                                       the OLD spreadsheet (SHEET_ID) only.
 //
-// ── How to run createApostilleIntakeSheet ────────────────────────────────────
+// ── How to run createRONRequestsTab ──────────────────────────────────────────
 //   1. Paste this file into your Apps Script project (replace all).
 //   2. Save  (Ctrl+S / Cmd+S).
-//   3. In the function dropdown at the top, choose  createApostilleIntakeSheet.
+//   3. In the function dropdown at the top, choose  createRONRequestsTab.
 //   4. Click Run.  Approve any permission prompt.
-//   5. Check Execution Log for the new Sheet ID, then paste it into
-//      APOSTILLE_SHEET_ID below and re-save/redeploy.
+//   5. Check Execution Log for confirmation. No redeployment is required
+//      for this step alone — but see the note on doPost/handleFileUpload
+//      changes below: THOSE require a new Web App deployment version
+//      before RON submissions will actually reach this code.
 // ─────────────────────────────────────────────────────────────────────────────
 
 // SHEET_ID / SHEET_NAME point at the ORIGINAL spreadsheet. It hosts the
@@ -47,8 +59,22 @@ var SHEET_NAME = 'ink_seal_apostille_tracker (1)';
 // Script editor, then paste the Sheet ID it logs into APOSTILLE_SHEET_ID here
 // and save. Until this is set to a real ID, Apostille submissions will fail
 // with a clear error rather than silently writing to the wrong spreadsheet.
+//
+// This is UNCHANGED — variable name and value both kept exactly as-is so
+// nothing about the live, working Apostille flow is disturbed. The owner is
+// renaming this spreadsheet's display name to "Ink & Seal Tracker" — that
+// does NOT change its Sheet ID, so no code change is needed for that rename.
 var APOSTILLE_SHEET_ID   = 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE';
 var APOSTILLE_SHEET_NAME = 'Apostille Intake';
+
+// RON now shares the SAME spreadsheet as Apostille (per this rollout) rather
+// than being a separate workbook. This alias exists purely so RON-specific
+// code below reads clearly as "the shared Ink & Seal spreadsheet" instead of
+// implying it's Apostille-only — it is always exactly equal to
+// APOSTILLE_SHEET_ID and never diverges from it. Nothing about
+// APOSTILLE_SHEET_ID itself changes.
+var INK_SEAL_SPREADSHEET_ID = APOSTILLE_SHEET_ID;
+var RON_SHEET_NAME = 'RON Requests';
 
 // Translation Requests — separate tab in the same spreadsheet
 var TRANSLATION_SHEET_NAME = 'Translation Requests';
@@ -142,6 +168,97 @@ var FIELD_MAP = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// RON (Remote Online Notarization) — separate tab, separate Request ID
+// sequence, separate field map. Lives in the SAME spreadsheet as Apostille
+// (INK_SEAL_SPREADSHEET_ID) but in its own "RON Requests" tab — entirely
+// additive, does not read or write anything in the Apostille Intake tab.
+//
+// 27 columns, order must match the RON Requests sheet's header row.
+// getHeaders() reads the sheet's actual live row 1 at runtime (same as the
+// Apostille path), so appendRow places each value by NAME, not position.
+var RON_HEADERS = [
+  'Request ID',                  'Submission Date/Time',        'Full Name',
+  'Email',                       'Phone',                       'State',
+  'Preferred Contact Method',    'Document Type',               'Number of Documents',
+  'Number of Notarial Seals',    'Additional Signers',          'Witness Required',
+  'Witness Source',              'Preferred Appointment Date',  'Preferred Appointment Time',
+  'Time Zone',                   'ASAP Requested',               'Documents Provided Later',
+  'Upload Folder / File Link',   'Estimated Total',             'Additional Notes',
+  'Acknowledgment Accepted',     'Acknowledgment Timestamp',    'BlueNotary Invitation Sent',
+  'Payment Status',              'Session Status',              'Status'
+];
+
+// Summarizes the RON form's dynamic additional-signer fields
+// (additionalSigner1Name/Email, additionalSigner2Name/Email, ...) into the
+// single "Additional Signers" column, since the sheet tracks one column for
+// this rather than a variable number of per-signer columns. Returns
+// 'None' when signerCount !== 'yes'.
+function ronSummarizeSigners_(p) {
+  if ((p.signerCount || '').toLowerCase() !== 'yes') return 'None';
+  var countLabel = p.addlSignersCount || '';
+  var n = countLabel === '4+' ? 4 : (parseInt(countLabel, 10) || 0);
+  var parts = [];
+  for (var i = 1; i <= n; i++) {
+    var name  = p['additionalSigner' + i + 'Name'];
+    var email = p['additionalSigner' + i + 'Email'];
+    if (name || email) parts.push((name || 'Unnamed signer') + (email ? ' (' + email + ')' : ''));
+  }
+  return (countLabel || String(n) || '0') + (parts.length ? ' — ' + parts.join('; ') : '');
+}
+
+// Maps RON sheet column names -> form field values. Field names on the left
+// of each `p.<name>` match the RON form's actual current input `name`
+// attributes (services/notary/index.html) — see the audit note in the
+// accompanying report for the full list.
+var RON_FIELD_MAP = {
+  'Request ID':                 function (p, m) { return m.requestId;             },
+  'Submission Date/Time':       function (p, m) { return m.submittedAt;           },
+  'Full Name':                  function (p)    { return p.fullName              || ''; },
+  'Email':                      function (p)    { return p.email                 || ''; },
+  'Phone':                      function (p)    { return p.phone                 || ''; },
+  'State':                      function (p)    { return p.signerState           || ''; },
+  'Preferred Contact Method':   function (p)    { return p.preferredContactMethod|| ''; },
+  'Document Type':              function (p)    { return p.documentType          || ''; },
+  'Number of Documents':        function (p)    { return p.numDocs               || ''; },
+  'Number of Notarial Seals':   function (p)    { return p.sealCount             || ''; },
+  'Additional Signers':         function (p)    { return ronSummarizeSigners_(p);         },
+  // witnessRequired on the form is a single field with three values
+  // (no / own / was) — split here into the two columns the sheet tracks.
+  'Witness Required':           function (p)    { return (p.witnessRequired === 'own' || p.witnessRequired === 'was') ? 'Yes' : 'No'; },
+  'Witness Source':             function (p)    {
+    return p.witnessRequired === 'own' ? 'Client-Provided'
+         : p.witnessRequired === 'was' ? 'Ink & Seal Assistance (+$10)'
+         : '';
+  },
+  // Blank when "As Soon As Possible" was selected — the form makes these two
+  // fields optional (and clears them) in that case; see updateAsap() client-side.
+  'Preferred Appointment Date': function (p)    { return p.asapPreferred ? '' : (p.appointmentDate || ''); },
+  'Preferred Appointment Time': function (p)    { return p.asapPreferred ? '' : (p.appointmentTime || ''); },
+  'Time Zone':                  function (p)    { return p.timezone              || ''; },
+  'ASAP Requested':             function (p)    { return p.asapPreferred ? 'Yes' : 'No'; },
+  // Derived from whether any files actually accompanied this submission
+  // (uploadedFileCount is sent by the client alongside the intake row,
+  // mirroring the Apostille form's same pattern) — the RON form has no
+  // separate "I'll provide documents later" toggle of its own; upload is
+  // simply optional, so "provided later" is true exactly when 0 files were
+  // selected at submission time.
+  'Documents Provided Later':   function (p)    { return (parseInt(p.uploadedFileCount, 10) || 0) > 0 ? 'No' : 'Yes'; },
+  'Upload Folder / File Link':  function (p)    { return p.uploadFolderLink      || ''; },
+  'Estimated Total':            function (p)    { var n = parseFloat(p.estimatedTotal); return isNaN(n) ? (p.estimatedTotal || '') : n; },
+  'Additional Notes':           function (p)    { return p.notes                 || ''; },
+  'Acknowledgment Accepted':    function (p)    { return p.ronTermsAck ? 'Yes' : 'No';   },
+  'Acknowledgment Timestamp':   function (p, m) { return p.ronTermsAck ? m.submittedAt : ''; },
+  // Admin/operational columns — not populated by the form itself, default
+  // to their "nothing has happened yet" state on every new row. Staff
+  // update these manually (or future BlueNotary automation will, per the
+  // architecture note on handleRonSubmission below) as a request progresses.
+  'BlueNotary Invitation Sent': function ()     { return 'No';             },
+  'Payment Status':             function ()     { return 'Not Started';    },
+  'Session Status':             function ()     { return 'Not Scheduled';  },
+  'Status':                     function ()     { return 'New';            }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // doPost — receives apostille review form submissions
 // ─────────────────────────────────────────────────────────────────────────────
 function doPost(e) {
@@ -158,6 +275,16 @@ function doPost(e) {
   var ep = e.parameter || {};
   if (ep.formType && ep.formType.toLowerCase().indexOf('translation') !== -1) {
     return handleTranslationSubmission(e);
+  }
+
+  // Route RON (Remote Online Notarization) submissions to the RON Requests
+  // tab. Checked with an EXACT match ('ron'), not .indexOf(), so it can
+  // never accidentally intercept anything else — everything below this
+  // check, including the entire Apostille try block, is unchanged and
+  // still runs exactly as before for every non-RON, non-translation,
+  // non-upload submission.
+  if (ep.formType && ep.formType.toLowerCase() === 'ron') {
+    return handleRonSubmission(e);
   }
 
   try {
@@ -239,82 +366,212 @@ function doGet() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// handleRonSubmission — receives RON (Remote Online Notarization) form
+// submissions, routed here from doPost() when formType === 'ron'. Mirrors
+// the Apostille intake branch's structure and reliability guarantees
+// (lock-protected Request ID generated server-side, real Date objects for
+// timestamp columns, append-by-header-name) but is fully self-contained —
+// it does not call, share state with, or depend on anything in the
+// Apostille branch above, and never touches the Apostille Intake tab.
+//
+// Writes to the "RON Requests" tab inside the SAME spreadsheet as
+// Apostille (INK_SEAL_SPREADSHEET_ID). If that tab doesn't exist yet (i.e.
+// createRONRequestsTab() hasn't been run), it is created automatically
+// here on first submission — safe because the creation logic itself is
+// idempotent (see createRonRequestsTab_ below), so this can never
+// duplicate or clobber an existing tab even under concurrent requests.
+//
+// ── Future BlueNotary automation hook point ──
+// This function intentionally does NOT call any BlueNotary API — none is
+// wired up, and no BlueNotary credentials are referenced anywhere in this
+// project. When that integration is built, the natural point to add it is
+// right after the row is appended below (e.g. queue a session-creation
+// job keyed by requestId) — no changes to the Request ID generation, the
+// sheet routing, or the response contract would be needed to add that.
+// ─────────────────────────────────────────────────────────────────────────────
+function handleRonSubmission(e) {
+  try {
+    if (!INK_SEAL_SPREADSHEET_ID || INK_SEAL_SPREADSHEET_ID === 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+      throw new Error('INK_SEAL_SPREADSHEET_ID is not configured — set APOSTILLE_SHEET_ID at the top of Code.gs.');
+    }
+
+    var ss    = SpreadsheetApp.openById(INK_SEAL_SPREADSHEET_ID);
+    var sheet = ss.getSheetByName(RON_SHEET_NAME);
+    if (!sheet) {
+      // Auto-provision on first use — idempotent, see createRonRequestsTab_.
+      // Re-checks for the tab's existence itself, so a race between two
+      // concurrent first-ever RON submissions can't create it twice.
+      sheet = createRonRequestsTab_(ss);
+    }
+
+    var p = e.parameter;
+
+    Logger.log('=== handleRonSubmission called ===');
+    Logger.log('Spreadsheet ID : ' + INK_SEAL_SPREADSHEET_ID);
+    Logger.log('Worksheet      : ' + sheet.getName());
+    Logger.log('Rows before append: ' + sheet.getLastRow());
+
+    // Real Date object — not a pre-formatted string — same reasoning as
+    // the Apostille branch: correct Sheets date/time sort/filter/format.
+    var submittedAt = new Date();
+
+    // RON's own lock-protected, per-day counter — fully independent of
+    // the Apostille Request ID sequence (see generateRonRequestId).
+    var requestId = generateRonRequestId();
+
+    var fullName = (p.fullName || '').trim();
+
+    var meta = { requestId: requestId, submittedAt: submittedAt };
+
+    var headers = getHeaders(sheet);
+    sheet.appendRow(headers.map(function (h) {
+      return RON_FIELD_MAP.hasOwnProperty(h) ? RON_FIELD_MAP[h](p, meta) : '';
+    }));
+
+    Logger.log('appendRow complete — row number: ' + sheet.getLastRow());
+    Logger.log('RON Request: ' + requestId + ' | Name: ' + fullName);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok', requestId: requestId, order: requestId }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    Logger.log('handleRonSubmission error: ' + err.toString());
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// File-type/size limits for RON uploads only (server-side validation, per
+// the RON GOOGLE DRIVE UPLOAD requirement). The Apostille upload path below
+// deliberately does NOT apply these — its existing, live behavior (accept
+// whatever the client sends) is left completely unchanged.
+var RON_ALLOWED_MIME = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'image/jpeg', 'image/png'
+];
+var RON_ALLOWED_EXT = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+var RON_MAX_FILE_BYTES = 15 * 1024 * 1024; // 15 MB per file
+
+// ─────────────────────────────────────────────────────────────────────────────
 // handleFileUpload — called by doPost when the JSON body contains action:'upload_files'
 //
+// Routes by Request ID prefix so ONE function safely serves both flows
+// without duplicating the folder/file-save logic:
+//   - orderNumber starts with 'IS-RON-'  -> RON path (new)
+//   - anything else (incl. 'IS-AP-...')  -> Apostille path (UNCHANGED —
+//     identical folder names, identical sheet-writeback logic, identical
+//     response shape to before this RON work existed)
+//
 // 1. Finds (or creates) "Ink & Seal Notary Pros" in Drive.
-// 2. Finds (or creates) "Apostille Requests" inside it.
-// 3. Finds (or creates) a leaf folder named EXACTLY the Request ID inside that —
-//    the lookup is idempotent (find-or-create, never always-create), so calling
-//    this again for the same Request ID (e.g. the website's "Retry Upload" flow)
-//    reuses the same folder instead of creating a duplicate.
-// 4. Decodes each base64 file and saves it inside the request folder.
-// 5. Writes the folder URL back to the matching row — the Apostille Intake
-//    Tracker and the (separate, untouched) Translation Requests spreadsheet
-//    are two different files, so each is looked up independently.
+// 2. Finds (or creates) "Apostille Requests" or "RON Requests" inside it,
+//    depending on the route above.
+// 3. Finds (or creates) a leaf folder named EXACTLY the Request ID inside
+//    that — idempotent (find-or-create, never always-create), so retrying
+//    an upload for the same Request ID reuses the same folder instead of
+//    creating a duplicate. This is the mechanism that satisfies "do NOT
+//    create another RON request on retry" for uploads.
+// 4. RON only: validates each file's type (PDF/Word/JPG/PNG) and size
+//    (<=15MB) before saving; anything rejected is skipped and listed in
+//    the response rather than silently dropped or silently saved anyway.
+// 5. Decodes each accepted base64 file and saves it inside the request folder.
+// 6. Writes the folder URL back to the matching row — Apostille writes to
+//    the Apostille Intake tab (falling back to the Translation Requests
+//    spreadsheet, exactly as before); RON writes to the RON Requests tab in
+//    the same shared spreadsheet (INK_SEAL_SPREADSHEET_ID).
 // ─────────────────────────────────────────────────────────────────────────────
 function handleFileUpload(p) {
   try {
     var orderNumber = (p.orderNumber || '').trim();
     var clientName  = (p.clientName  || 'Unknown Client').trim();
     var files       = p.files || [];
+    var isRon       = orderNumber.indexOf('IS-RON-') === 0;
 
-    // 1. Find or create the top-level company folder
+    // 1. Find or create the top-level company folder (shared by both flows)
     var topName   = 'Ink & Seal Notary Pros';
     var topIter   = DriveApp.getFoldersByName(topName);
     var topFolder = topIter.hasNext() ? topIter.next() : DriveApp.createFolder(topName);
 
-    // 2. Find or create the "Apostille Requests" folder inside it
-    var reqsIter   = topFolder.getFoldersByName('Apostille Requests');
-    var reqsFolder = reqsIter.hasNext() ? reqsIter.next() : topFolder.createFolder('Apostille Requests');
+    // 2. Find or create the type-specific requests folder inside it
+    var subfolderName = isRon ? 'RON Requests' : 'Apostille Requests';
+    var reqsIter   = topFolder.getFoldersByName(subfolderName);
+    var reqsFolder = reqsIter.hasNext() ? reqsIter.next() : topFolder.createFolder(subfolderName);
 
     // 3. Find or create the per-request leaf folder, named exactly the Request ID
     var leafName    = orderNumber || clientName;
     var leafIter    = reqsFolder.getFoldersByName(leafName);
     var orderFolder = leafIter.hasNext() ? leafIter.next() : reqsFolder.createFolder(leafName);
 
-    // 4. Decode and save each file
+    // 4-5. Decode and save each file (RON: validate type/size first)
     var uploadCount = 0;
+    var skipped = [];
     files.forEach(function (f) {
       var dataUrl = f.data || '';
       var m = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
       if (!m) return;
+
+      if (isRon) {
+        var mime = m[1];
+        var ext  = (f.name || '').split('.').pop().toLowerCase();
+        var typeOk = RON_ALLOWED_MIME.indexOf(mime) !== -1 || RON_ALLOWED_EXT.indexOf(ext) !== -1;
+        if (!typeOk) { skipped.push((f.name || 'file') + ' — unsupported file type'); return; }
+        var approxBytes = Math.floor((m[2].length * 3) / 4); // base64 length -> approx decoded bytes
+        if (approxBytes > RON_MAX_FILE_BYTES) { skipped.push((f.name || 'file') + ' — file too large (15MB limit)'); return; }
+      }
+
       var blob = Utilities.newBlob(Utilities.base64Decode(m[2]), m[1], f.name);
       orderFolder.createFile(blob);
       uploadCount++;
     });
 
-    // 5. Get the Drive folder URL
+    // 6. Get the Drive folder URL
     var folderUrl = orderFolder.getUrl();
 
-    // 6. Write the folder URL back to the matching sheet row. Try the
-    //    Apostille Intake Tracker first, then fall back to the (separate,
-    //    untouched) Translation Requests spreadsheet — each opened
-    //    independently since they are now two different files.
+    // 7. Write the folder URL back to the matching sheet row.
     if (orderNumber) {
       var wrote = false;
-      if (APOSTILLE_SHEET_ID && APOSTILLE_SHEET_ID !== 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
-        try {
-          var apoSs = SpreadsheetApp.openById(APOSTILLE_SHEET_ID);
-          wrote = writeFolderLinkToSheet_(apoSs, APOSTILLE_SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
-        } catch (apoErr) {
-          Logger.log('handleFileUpload: could not open APOSTILLE_SHEET_ID — ' + apoErr.toString());
+      if (isRon) {
+        // RON path: write to the RON Requests tab in the shared spreadsheet.
+        if (INK_SEAL_SPREADSHEET_ID && INK_SEAL_SPREADSHEET_ID !== 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+          try {
+            var ronSs = SpreadsheetApp.openById(INK_SEAL_SPREADSHEET_ID);
+            wrote = writeFolderLinkToSheet_(ronSs, RON_SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
+          } catch (ronErr) {
+            Logger.log('handleFileUpload: could not open RON Requests tab — ' + ronErr.toString());
+          }
         }
-      }
-      if (!wrote) {
-        try {
-          var transSs = SpreadsheetApp.openById(SHEET_ID);
-          writeFolderLinkToSheet_(transSs, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
-        } catch (transErr) {
-          Logger.log('handleFileUpload: could not open SHEET_ID (translation) — ' + transErr.toString());
+      } else {
+        // Apostille path — UNCHANGED from before this RON work: try the
+        // Apostille Intake Tracker first, then fall back to the (separate,
+        // untouched) Translation Requests spreadsheet.
+        if (APOSTILLE_SHEET_ID && APOSTILLE_SHEET_ID !== 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+          try {
+            var apoSs = SpreadsheetApp.openById(APOSTILLE_SHEET_ID);
+            wrote = writeFolderLinkToSheet_(apoSs, APOSTILLE_SHEET_NAME, 'Upload Folder / File Link', orderNumber, folderUrl);
+          } catch (apoErr) {
+            Logger.log('handleFileUpload: could not open APOSTILLE_SHEET_ID — ' + apoErr.toString());
+          }
+        }
+        if (!wrote) {
+          try {
+            var transSs = SpreadsheetApp.openById(SHEET_ID);
+            writeFolderLinkToSheet_(transSs, TRANSLATION_SHEET_NAME, 'Drive Folder Link', orderNumber, folderUrl);
+          } catch (transErr) {
+            Logger.log('handleFileUpload: could not open SHEET_ID (translation) — ' + transErr.toString());
+          }
         }
       }
     }
 
     Logger.log('handleFileUpload: order=' + orderNumber + ' client=' + clientName +
-               ' uploads=' + uploadCount + ' url=' + folderUrl);
+               ' isRon=' + isRon + ' uploads=' + uploadCount +
+               ' skipped=' + skipped.length + ' url=' + folderUrl);
 
     return ContentService
-      .createTextOutput(JSON.stringify({ success: true, folderLink: folderUrl, uploadCount: uploadCount }))
+      .createTextOutput(JSON.stringify({ success: true, folderLink: folderUrl, uploadCount: uploadCount, skipped: skipped }))
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
@@ -478,6 +735,126 @@ function addDestinationEligibilityColumn() {
     ' (immediately after "Destination Country", column ' + destCol + ').');
   Logger.log('All existing columns, data, formatting, and data validation were preserved via ' +
     'Sheets\' native column-insert shifting. No existing column was modified or deleted.');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// createRONRequestsTab — SAFE, IDEMPOTENT setup for the "RON Requests" tab.
+// Run ONCE, manually, from the Apps Script editor's function dropdown.
+// Safe to re-run any number of times.
+//
+// What it does:
+//   1. Opens the EXISTING spreadsheet at INK_SEAL_SPREADSHEET_ID (the same
+//      one Apostille already uses) — never creates a new spreadsheet.
+//   2. Checks whether a "RON Requests" tab already exists.
+//   3. If it exists: does NOT delete, clear, rebuild, or duplicate it —
+//      logs that it already exists and returns.
+//   4. If it does not exist: creates it via createRonRequestsTab_() below —
+//      headers, header formatting, frozen row 1, filter, alternating row
+//      banding, dropdowns, and number formats, matching the same visual
+//      system as the Apostille Intake tab.
+//   5. Never touches the Apostille Intake tab in any way — this function
+//      does not open, read, or write it.
+// ─────────────────────────────────────────────────────────────────────────────
+function createRONRequestsTab() {
+  if (!INK_SEAL_SPREADSHEET_ID || INK_SEAL_SPREADSHEET_ID === 'PASTE_NEW_APOSTILLE_SHEET_ID_HERE') {
+    throw new Error('createRONRequestsTab: INK_SEAL_SPREADSHEET_ID is not configured — ' +
+      'set APOSTILLE_SHEET_ID at the top of Code.gs to the shared spreadsheet\'s ID first.');
+  }
+
+  var ss = SpreadsheetApp.openById(INK_SEAL_SPREADSHEET_ID);
+  var existing = ss.getSheetByName(RON_SHEET_NAME);
+  if (existing) {
+    Logger.log('createRONRequestsTab: "' + RON_SHEET_NAME + '" already exists — no changes made.');
+    return;
+  }
+
+  createRonRequestsTab_(ss);
+  Logger.log('createRONRequestsTab: created "' + RON_SHEET_NAME + '" in ' + ss.getName() + '.');
+  Logger.log('The Apostille Intake tab was not opened, read, or modified by this function.');
+}
+
+// Internal builder — actually creates and formats the RON Requests sheet.
+// Shared by createRONRequestsTab() (explicit, manual setup) and
+// handleRonSubmission()'s auto-create-on-first-use fallback. Callers are
+// responsible for checking whether the tab already exists first — this
+// function always creates a new sheet via ss.insertSheet(), so calling it
+// without that check would duplicate the tab.
+function createRonRequestsTab_(ss) {
+  var sheet = ss.insertSheet(RON_SHEET_NAME);
+  var numCols = RON_HEADERS.length;
+
+  sheet.getRange(1, 1, 1, numCols).setValues([RON_HEADERS]);
+  sheet.getRange(1, 1, 1, numCols)
+    .setBackground('#0B1829')
+    .setFontColor('#C49A4A')
+    .setFontWeight('bold')
+    .setFontSize(10)
+    .setVerticalAlignment('middle')
+    .setWrap(false);
+  sheet.setRowHeight(1, 36);
+  sheet.setFrozenRows(1);
+  sheet.getRange(1, 1, 1, numCols).createFilter();
+
+  var bandRule = SpreadsheetApp.newConditionalFormatRule()
+    .whenFormulaSatisfied('=MOD(ROW(),2)=0')
+    .setBackground('#F7F4EE')
+    .setRanges([sheet.getRange(2, 1, 1000, numCols)])
+    .build();
+  sheet.setConditionalFormatRules([bandRule]);
+
+  var widths = {
+    1:160, 2:150, 3:160, 4:200, 5:120, 6:100,
+    7:170, 8:180, 9:150, 10:170, 11:260, 12:140,
+    13:210, 14:170, 15:170, 16:120, 17:140, 18:170,
+    19:220, 20:130, 21:240, 22:160, 23:170, 24:190,
+    25:150, 26:150, 27:150
+  };
+  Object.keys(widths).forEach(function (col) {
+    sheet.setColumnWidth(Number(col), widths[col]);
+  });
+
+  ronAddDropdown_(sheet, 'Witness Required',           ['Yes', 'No']);
+  ronAddDropdown_(sheet, 'ASAP Requested',              ['Yes', 'No']);
+  ronAddDropdown_(sheet, 'Documents Provided Later',    ['Yes', 'No']);
+  ronAddDropdown_(sheet, 'Acknowledgment Accepted',     ['Yes', 'No']);
+  ronAddDropdown_(sheet, 'BlueNotary Invitation Sent',  ['Yes', 'No']);
+  ronAddDropdown_(sheet, 'Payment Status',              ['Not Started', 'Invitation Sent', 'Paid', 'Refunded']);
+  ronAddDropdown_(sheet, 'Session Status',              ['Not Scheduled', 'Scheduled', 'Completed', 'No Show', 'Cancelled']);
+  ronAddDropdown_(sheet, 'Status', [
+    'New', 'Reviewing', 'Documents Requested', 'Ready for Invitation',
+    'Invitation Sent', 'Completed', 'Cancelled'
+  ]);
+
+  // Request ID must stay plain text — never auto-convert to a number
+  ronSetColumnFormat_(sheet, 'Request ID', '@');
+  ronSetColumnFormat_(sheet, 'Submission Date/Time',       'MM/dd/yyyy hh:mm a');
+  ronSetColumnFormat_(sheet, 'Acknowledgment Timestamp',   'MM/dd/yyyy hh:mm a');
+  ronSetColumnFormat_(sheet, 'Preferred Appointment Date', 'MM/dd/yyyy');
+  ronSetColumnFormat_(sheet, 'Estimated Total',            '$#,##0.00');
+
+  return sheet;
+}
+
+// RON-specific equivalents of addDropdown()/setColumnFormat() further down
+// this file — those two look up column positions in the Apostille HEADERS
+// array, so they must NOT be reused for the RON sheet (doing so would look
+// up the wrong array and silently target the wrong column, or no column).
+// These do the same job against RON_HEADERS instead.
+function ronAddDropdown_(sheet, colName, options) {
+  var col = RON_HEADERS.indexOf(colName) + 1;
+  if (!col) return;
+  sheet.getRange(2, col, 1000, 1).setDataValidation(
+    SpreadsheetApp.newDataValidation()
+      .requireValueInList(options, true)
+      .setAllowInvalid(false)
+      .build()
+  );
+}
+
+function ronSetColumnFormat_(sheet, colName, format) {
+  var col = RON_HEADERS.indexOf(colName) + 1;
+  if (!col) return;
+  sheet.getRange(2, col, 1000, 1).setNumberFormat(format);
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1218,6 +1595,31 @@ function generateRequestId() {
     var seq = parseInt(props.getProperty(key) || '0', 10) + 1;
     props.setProperty(key, String(seq));
     return 'IS-AP-' + ymd + '-' + String(seq).padStart(4, '0');
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// Generates IS-RON-YYYYMMDD-XXXX. Same concurrency-safe principle as
+// generateRequestId() above (LockService + a date-scoped PropertiesService
+// counter, not row count) — but with its OWN property key namespace
+// ('ronReqSeq_' vs 'reqSeq_'), so the RON and Apostille sequences are
+// fully independent: neither ever influences the other's numbering, and a
+// busy day for one doesn't skip or collide with the other's IDs. Both
+// generators do briefly share the same script-wide LockService mutex
+// while incrementing their own counter — that's the intended, safe use of
+// a single mutex to guard two independent counters, not a shared sequence.
+function generateRonRequestId() {
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var tz  = Session.getScriptTimeZone();
+    var ymd = Utilities.formatDate(new Date(), tz, 'yyyyMMdd');
+    var props = PropertiesService.getScriptProperties();
+    var key = 'ronReqSeq_' + ymd;
+    var seq = parseInt(props.getProperty(key) || '0', 10) + 1;
+    props.setProperty(key, String(seq));
+    return 'IS-RON-' + ymd + '-' + String(seq).padStart(4, '0');
   } finally {
     lock.releaseLock();
   }
